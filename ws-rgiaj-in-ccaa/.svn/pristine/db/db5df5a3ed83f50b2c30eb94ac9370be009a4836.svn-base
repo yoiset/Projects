@@ -1,0 +1,53 @@
+package com.dgoj.juegoExterno.business.bean;
+
+
+public class UsuarioQueryBean  extends ComunidadQueryBean{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+    private Long id;
+	private String usuario;
+	private String descripcion;
+	
+	public UsuarioQueryBean() {
+		super();
+	}
+	
+	public UsuarioQueryBean(String usuario) {
+		super();
+		this.usuario = usuario;
+	}
+	
+		
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	
+
+}

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J//EN" "http://logging.apache.org/log4j/docs/api/org/apache/log4j/xml/log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'
+	debug="true">
+
+	<!-- Appenders -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="jeveris: %d{dd MMM yyyy HH:mm:ss,SSS} %-5p %c - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="file" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="C:\\logs\\ws_rgiaj_ccaa.log" />
+		<param name="Append" value="true" />
+		<param name="MaxFileSize" value="10000KB" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="jeveris: %d{dd MMM yyyy HH:mm:ss,SSS} %-5p %c - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="requestTimes" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="C:\\logs\\requestTimes.log" />
+		<param name="Append" value="true" />
+		<param name="MaxFileSize" value="2MB" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="jeveris: %d{dd MMM yyyy HH:mm:ss,SSS} %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="sqlLogger" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="C:\\logs\\sqlLogger.log" />
+		<param name="Append" value="true" />
+		<param name="MaxFileSize" value="2MB" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="jeveris: %d{dd MMM yyyy HH:mm:ss,SSS} %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="sqlStatsLogger" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="C:\\logs\\sqlStatsLogger.log" />
+		<param name="Append" value="true" />
+		<param name="MaxFileSize" value="2MB" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="jeveris: %d{dd MMM yyyy HH:mm:ss,SSS} %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="performanceLogger" class="org.apache.log4j.RollingFileAppender">
+	    <param name="File" value="C:\\logs\\performanceLogger.log" />
+	    <param name="Append" value="true" />
+	    <param name="MaxFileSize" value="2MB" />
+	    <layout class="org.apache.log4j.PatternLayout">
+	      <param name="ConversionPattern"
+	        value="jeveris: %d{dd MMM yyyy HH:mm:ss,SSS} %m%n" />
+	    </layout>
+	  </appender>
+	
+	<category name="com.dgoj">
+		<level value="debug" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</category>
+	
+	<category name="org.apache.cxf">
+		<level value="debug" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</category>
+	
+	<category name="com.jeveris">
+		<level value="debug" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</category>
+	
+	<category name="com.jeveris.web.core.filter" additivity="false">
+		<level value="info" />
+		<appender-ref ref="requestTimes" />
+	</category>
+	
+	<category name="com.jeveris.SQL" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="sqlLogger" />
+		<appender-ref ref="console" />
+	</category>
+	
+	<category name="com.jeveris.SQLSTATS" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="sqlStatsLogger" />
+		<appender-ref ref="console" />
+	</category>
+	
+	 <category name="com.jeveris.PERFORMANCE" additivity="false">
+	    <level value="debug" />
+	    <appender-ref ref="performanceLogger" />
+	    <appender-ref ref="console" />
+	  </category> 
+	
+	<root>
+		<level value="info" />
+	</root>
+</log4j:configuration>

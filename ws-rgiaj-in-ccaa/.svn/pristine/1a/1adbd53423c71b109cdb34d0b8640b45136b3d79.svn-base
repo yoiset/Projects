@@ -1,0 +1,64 @@
+package com.dgoj.juegoExterno.business.bean;
+
+import com.dgoj.core.common.entity.AbstractQueryEntity;
+
+import es.dgoj.rgiaj.JugHistoricoQueryRequest;
+
+/**
+ * @author ylopezconnectis
+ *
+ */
+public class JugHistoricoQueryBean extends AbstractQueryEntity {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	private String codComunidad;
+	
+	
+	
+	
+	
+	public JugHistoricoQueryBean() {
+		super();
+	}
+	
+	public JugHistoricoQueryBean(String codComunidad) {
+		super();
+		this.codComunidad = codComunidad;
+	}
+
+
+	public String getCodComunidad() {
+		return codComunidad;
+	}
+
+
+	public void setCodComunidad(String codComunidad) {
+		this.codComunidad = codComunidad;
+	}
+	
+	
+	public static JugHistoricoQueryBean toBean(JugHistoricoQueryRequest request){
+		JugHistoricoQueryBean bean= new JugHistoricoQueryBean();
+		
+		if(request!=null){
+			bean.setCalculateNumResults(request.isCalculateNumResults());
+			bean.setCodComunidad(request.getCodComunidad());
+			bean.setFirstResult(request.getFirstResult());
+			bean.setFixDatetimes(request.isFixDatetimes());
+			bean.setMaxResults(request.getMaxResults());
+			bean.setQueryTimeout(request.getQueryTimeout());
+			bean.setFirstResult(request.getFirstResult());
+			
+		}
+		
+		return bean;
+	}
+	
+
+
+}

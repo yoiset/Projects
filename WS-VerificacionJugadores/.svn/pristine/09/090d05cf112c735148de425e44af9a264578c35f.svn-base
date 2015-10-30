@@ -1,0 +1,172 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
+
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJEntity;
+import es.gob.cnjuego.ws.entity.JugadoresOperador;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+
+public class JugadoresOperadorDAO {
+
+	private Logger log = Logger.getLogger(JugadoresOperadorDAO.class);
+
+	@PersistenceContext
+	EntityManager manager;
+	
+	@Transactional
+	public void almacenarJugadorOperador(JugadoresOperador jug)
+	{
+		manager.persist(jug);
+	}
+	
+	public List<JugadoresCambioRGIAJEntity> obtenerCambiosJugadores(OperadorEntity operador)
+	{
+		Query query = manager.createQuery("SELECT c FROM JugadoresCambioRGIAJ c where c.operador=:operador and c.fechaValor < sysdate");
+		query.setParameter("operador", operador);
+		List<JugadoresCambioRGIAJEntity> res = query.getResultList();
+		return res;
+	}
+	
+	public JugadoresOperador existeJugadorIdentificadoSinApellido2(String nif, Date fechaNac){
+		JugadoresOperador jugador = null;
+		Query query = manager.createQuery("SELECT c FROM JugadoresOperador c where c.dni=:dni and c.fechaNac=:fechaNac and c.resultadoIdentidad=:resIdentidad and c.cacheIdentidad=0 order by c.fechaAlta desc");
+		query.setParameter("dni", nif);
+		query.setParameter("fechaNac", fechaNac);
+		query.setParameter("resIdentidad", CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+		List<JugadoresOperador> res = query.getResultList();
+		if (res != null && !res.isEmpty())
+			{
+			jugador = (JugadoresOperador)res.iterator().next();
+			}
+		
+		return jugador;
+	}
+
+	public JugadoresOperador existeJugadorIdentificadoConApellido2(String nif, Date fechaNac){
+		JugadoresOperador jugador = null;
+		Query query = manager.createQuery("SELECT c FROM JugadoresOperador c where c.dni=:dni and c.fechaNac=:fechaNac and c.resultadoIdentidad=:resIdentidad and c.cacheIdentidad=0 and c.apellido2 is not null order by c.fechaAlta desc");
+		query.setParameter("dni", nif);
+		query.setParameter("fechaNac", fechaNac);
+		query.setParameter("resIdentidad", CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+		List<JugadoresOperador> res = query.getResultList();
+		if (res != null && !res.isEmpty())
+			{
+			jugador = (JugadoresOperador)res.iterator().next();
+			}
+		
+		return jugador;
+	}
+	
+	public JugadoresOperador existeJugadorIdentificado(String nif,String nombre, String apellido1, String apellido2, Date fechaNac, String numSoporte){
+		JugadoresOperador jugador = null;
+		String strQuery="SELECT c FROM JugadoresOperador c where c.dni=:dni and c.nombre=:nombre and c.apellido1=:apellido1 and c.fechaNac=:fechaNac and c.resultadoIdentidad=:resIdentidad and c.cacheIdentidad=0";
+		
+		if(apellido2!=null)
+			strQuery+=" and c.apellido2=:apellido2";
+		if(numSoporte!=null)
+			strQuery+=" and c.numSoporte=:numSoporte";
+		
+		Query query = manager.createQuery(strQuery);
+		query.setParameter("dni", nif);
+		query.setParameter("nombre", nombre);
+		query.setParameter("apellido1", apellido1);
+		query.setParameter("fechaNac", fechaNac);
+		query.setParameter("resIdentidad", CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+		
+		if(apellido2!=null)
+			query.setParameter("apellido2", apellido2);
+		if(numSoporte!=null)
+			query.setParameter("numSoporte", numSoporte);
+		
+		List<JugadoresOperador> res = query.getResultList();
+		if (res != null && !res.isEmpty())
+			{
+			jugador = (JugadoresOperador)res.iterator().next();
+			}
+		
+		return jugador;
+	}
+
+		
+	/**Retorna la lista de Peticiones por DNI y operador realizadas en el dia y que han fallado (COD005)
+	 * @param operador
+	 * @param dni
+	 * @param fecha_alta
+	 * @return
+	 */
+	public List<JugadoresOperador> listaPeticionesFallidos( OperadorEntity operador, String dni){
+		Date fechaAltaIni=Calendar.getInstance().getTime();
+		fechaAltaIni.setHours(00);
+		fechaAltaIni.setMinutes(00);
+		Date fechaAltaEnd=Calendar.getInstance().getTime();
+		fechaAltaEnd.setHours(23);
+		fechaAltaEnd.setMinutes(59);
+		
+		Query query = manager.createQuery("SELECT c FROM JugadoresOperador c where c.operador=:operador and c.dni=:dni and c.fechaAlta >=:fechaAltaIni and  c.fechaAlta<=:fechaAltaEnd and c.resultadoIdentidad=:resIdentidad");
+		query.setParameter("operador", operador);	
+		query.setParameter("dni", dni);		
+		query.setParameter("fechaAltaIni", fechaAltaIni);
+		query.setParameter("fechaAltaEnd", fechaAltaEnd);
+		query.setParameter("resIdentidad", CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD);
+		return query.getResultList();
+		
+	}
+	
+	
+	
+	
+	/**Devuelve el ultimo registro dado de alta si el Operador ha preguntado alguna vez por ese DNI en el RGIAJ, es decir COD001 o COD002.
+	 * @param operador
+	 * @param dni
+	 * @return
+	 */
+	public JugadoresOperador getDNIOperadorRGIAJ(OperadorEntity operador, String dni){
+		Query query = manager.createQuery("select jp from JugadoresOperador jp where jp.operador=:operador and jp.dni=:dni and (jp.resultadoRGIAJ='COD001' or jp.resultadoRGIAJ='COD002') order by jp.fechaAlta desc", JugadoresOperador.class)
+				                         .setParameter("operador", operador).setParameter("dni", dni).setMaxResults(1);
+		List<JugadoresOperador> list= query.getResultList();
+		
+		 if(list.size()==0) return null;
+		 
+		 return list.get(0);
+		
+		
+	}
+	
+	
+	/**Devuelve la baja asociada a un Operador y un DNI y fecha de alta posterior a la fecha pasada como parametro
+	 * @param operador
+	 * @param dni
+	 * @param lastFechaAltaRGIAJ
+	 * @return
+	 */
+	public JugadoresOperador getBajaDNIOperadorRGIAJ(OperadorEntity operador, String dni, Date lastFechaAltaRGIAJ){
+		Query query = manager.createQuery("select jp from JugadoresOperador jp where jp.operador=:operador and jp.dni=:dni and jp.resultadoRGIAJ='COD010' and jp.fechaAlta>:fechaAlta", JugadoresOperador.class)
+                .setParameter("operador", operador).setParameter("dni", dni).setParameter("fechaAlta", lastFechaAltaRGIAJ);
+		
+		 List<JugadoresOperador> list= query.getResultList();
+		
+		 if(list.size()==0) return null;
+		 
+		 return list.get(0);
+		 
+		
+	}
+
+	public EntityManager getManager() {
+		return manager;
+	}
+
+
+	
+	
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Definición del datasource utilizado por la aplicación. El datasource es declarado
+ en Tomcat y se accede por JNDI desde Spring. 
+ -->
+<Context>
+
+	<ResourceLink name="jdbc/RGIAJDS"
+	    global="jdbc/cnj001ap"
+	    type="javax.sql.DataSource"/>
+
+</Context>

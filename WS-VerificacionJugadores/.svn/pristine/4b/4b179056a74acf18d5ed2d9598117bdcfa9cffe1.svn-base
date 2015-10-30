@@ -1,0 +1,45 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<PeticionSincrona
+			xmlns="http://intermediacion.redsara.es/scsp/esquemas/ws/peticion"
+			xmlns:ns2="http://intermediacion.redsara.es/scsp/esquemas/ws/confirmacionPeticion"
+			xmlns:ns3="http://intermediacion.redsara.es/scsp/esquemas/ws/fault"
+			xmlns:ns4="http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta"
+			xmlns:ns5="http://www.map.es/scsp/esquemas/datosespecificos"
+			xmlns:ns6="http://intermediacion.redsara.es/scsp/esquemas/ws/solicitudRespuesta"
+			xmlns:ns7="http://intermediacion.redsara.es/scsp/esquemas/datosespecificos">
+			<Atributos>
+				<CodigoCertificado>VDISFWS01</CodigoCertificado>
+			</Atributos>
+			<Solicitudes>
+				<SolicitudTransmision>
+					<DatosGenericos>
+						<Solicitante>
+							<IdentificadorSolicitante>S2801109F</IdentificadorSolicitante>
+							<NombreSolicitante>DGOJ</NombreSolicitante>
+							<Finalidad>VerificaciÃ³n Identidad Jugadores</Finalidad>
+							<Consentimiento>Si</Consentimiento>
+						</Solicitante>
+						<Titular>
+							<Documentacion>10000949C</Documentacion>
+							<Nombre>Olga</Nombre>
+							<Apellido1>San Miguel</Apellido1>
+							<Apellido2>Chao</Apellido2>
+						</Titular>
+					</DatosGenericos>
+					<DatosEspecificos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						xsi:type="ns5:DatosEspecificos">
+						<ns5:SolicitanteDatos>
+							<ns5:Tipo>app</ns5:Tipo>
+						</ns5:SolicitanteDatos>
+						<ns5:Solicitud>
+							<ns5:DatosNacimiento>
+								<ns5:Fecha>20111118</ns5:Fecha>
+							</ns5:DatosNacimiento>
+						</ns5:Solicitud>
+					</DatosEspecificos>
+				</SolicitudTransmision>
+			</Solicitudes>
+		</PeticionSincrona>
+	</soap:Body>
+</soap:Envelope>

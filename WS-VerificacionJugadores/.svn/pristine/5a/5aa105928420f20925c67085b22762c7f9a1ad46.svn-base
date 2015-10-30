@@ -1,0 +1,79 @@
+package es.gob.cnjuego.ws.service;
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.EJB;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import es.gob.cnjuego.ws.dao.UtilDAO;
+import es.gob.cnjuego.ws.entity.ConfiguracionEntity;
+
+@Service(value="servicioConfiguracion")
+public class ServicioConfiguracionImpl implements ServicioConfiguracion{
+	
+	private static final String FORMATO_FECHA_MODIFICACION = "dd/MM/yyyy HH:mm:ss";
+
+	Logger log = Logger.getLogger(ServicioConfiguracionImpl.class);
+
+	@Autowired
+	private UtilDAO dao;
+	
+	@Override
+	public void actualizar(Collection<ConfiguracionEntity> configuracion) {
+		dao.updateCollection(configuracion);
+		actualizarFechaModificacion();
+	}
+
+	public Date obtenerFechaModificacion() {
+		ConfiguracionEntity tiempo = dao.find(ConfiguracionEntity.class, 0L);
+		Date fecha = null;
+		if (tiempo!=null){
+			String valor = tiempo.getValor();
+			if (valor!=null && !valor.equals("")){
+				SimpleDateFormat df = new SimpleDateFormat(FORMATO_FECHA_MODIFICACION);
+				try {
+					fecha = df.parse(valor);
+				} catch (ParseException e) {
+					log.warn("EJBPropertiesUpdater.execute() Fecha incorrecta en bbdd: " + valor);
+				}
+			}
+		}
+		return fecha;
+	}
+	
+	private void actualizarFechaModificacion() {
+		ConfiguracionEntity modificacion = dao.find(ConfiguracionEntity.class, new Long(0L));
+		if (modificacion!=null){
+			SimpleDateFormat df = new SimpleDateFormat(FORMATO_FECHA_MODIFICACION);
+			modificacion.setValor(df.format(new Date()));
+			dao.update(modificacion);
+		}
+	}
+
+	@Override
+	public void eliminar(Long idConfiguracion) {
+		dao.remove(ConfiguracionEntity.class, idConfiguracion);
+		actualizarFechaModificacion();		
+	}
+
+	@Override
+	public List<ConfiguracionEntity> leer() {
+		List<ConfiguracionEntity> listado = dao.findAll(ConfiguracionEntity.class, "idConfiguracion", true);
+		for (int i=0;i<listado.size();i++){
+			if (listado.get(i).getClave().equals("modificacion")){
+				listado.remove(i);
+				break;
+			}
+		}
+		return listado;
+	}
+
+}

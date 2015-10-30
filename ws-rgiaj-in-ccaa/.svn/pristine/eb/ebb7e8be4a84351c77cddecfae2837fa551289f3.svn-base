@@ -1,0 +1,154 @@
+package es.dgoj.rgiaj.ws;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import es.dgoj.rgiaj.JuegoRGIAJ;
+import es.dgoj.rgiaj.JugProhibicionQueryRequest;
+import es.dgoj.rgiaj.ProhibidosResponse;
+
+/**
+ * Esta clase implementa las pruebas unitarias del servicio web de JuegoRGIAJ. 
+ * Heredamos de AbstractJUnit4SpringContextTests para poder acceder al contexto de Spring y luego al stub
+ * de CXF directamente.
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:/spring/app-test-ws.xml"})
+public class JuegoRGIAJTest extends AbstractJUnit4SpringContextTests {
+
+	private JuegoRGIAJ servicio;
+
+	/**
+	 * Recuperamos el stub de CXF del contexto de Spring.
+	 * Nótese que en este caso no podemos usar el mecanismo de inyección automática
+	 * de dependencias de Spring (autowire).
+	 * -This is sad :(
+	 */
+	@Before
+	public void setUp() throws Exception {
+		JuegoRGIAJ stub = (JuegoRGIAJ)this.applicationContext.getBean("JuegoRGIAJServiceStub");
+		this.setServicio(stub);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	/**
+	 * En este caso, se descarga el registro completo, en un fichero zip que dentro tiene el XML.
+	 * Debe obtenerse la lista de prohibidos que fueron insertados en el registro con fecha posterior a la última descarga.
+	 * El XML que viaja en el zip tiene el siguiente formato:
+	 * <?xml version="1.0" encoding="UTF-8"?>
+	 * <Prohibidos>
+	 *   <Prohibicion>
+	 *       <Ambito>NAC</Ambito>
+	 *       ...
+	 *   </Prohibicion>
+	 * </Prohibidos>
+	 */
+	@Test
+	public void testGetListaProhibidosCompleta() throws Exception {
+		JugProhibicionQueryRequest parametros = new JugProhibicionQueryRequest();
+		parametros.setCodComunidad("5");
+		parametros.setFormatoDescarga("XML");
+		parametros.setTipoDescarga("Completa");
+		parametros.setLast(null);
+		parametros.setService(Boolean.TRUE);
+		ProhibidosResponse respuesta = this.getServicio().prohibidosList(parametros);
+		byte[] datosZip = respuesta.getResultado();
+		assertNotNull(datosZip);
+		this.writeBinaryFile("c:/temp/prueba_descarga_completa.zip", datosZip);
+	}
+	
+	/**
+	 * En este caso, el ID de la comunidad no es válido.
+	 * No debe obtenerse un fichero.
+	 */
+	@Test
+	public void testGetListaProhibidosCompletaComunidadNoValida() throws Exception {
+		JugProhibicionQueryRequest parametros = new JugProhibicionQueryRequest();
+		parametros.setCodComunidad("XXX");
+		parametros.setFormatoDescarga("XML");
+		parametros.setTipoDescarga("Completa");
+		parametros.setLast(null);
+		parametros.setService(Boolean.TRUE);
+		ProhibidosResponse respuesta = this.getServicio().prohibidosList(parametros);
+		byte[] datosZip = respuesta.getResultado();
+		assertNull(datosZip);
+	}
+	
+	/**
+	 * En este caso, se descarga el registro de prohibidos desde última descarga.
+	 * Debe obtenerse la lista de prohibidos que fueron insertados en el registro con fecha posterior a la última descarga.
+	 * Si no hubiera actualizaciones, el XML que viaja en el zip debe contener el siguiente fragmento:
+	 *   <?xml version="1.0" encoding="UTF-8"?>
+	 *   <Prohibidos></Prohibidos>
+	 */
+	@Test
+	public void testGetListaProhibidosIncrementalSinNumeroRegistroComunidadValida() throws Exception {
+		JugProhibicionQueryRequest parametros = new JugProhibicionQueryRequest();
+		parametros.setCodComunidad("5");
+		parametros.setFormatoDescarga("XML");
+		parametros.setTipoDescarga("Incremental");
+		parametros.setLast(null);
+		parametros.setService(Boolean.TRUE);
+		ProhibidosResponse respuesta = this.getServicio().prohibidosList(parametros);
+		byte[] datosZip = respuesta.getResultado();
+		assertNotNull(datosZip);
+		this.writeBinaryFile("c:/temp/prueba_descarga_incremental.zip", datosZip);
+	}
+	
+	/**
+	 * En este caso, se descargan los prohibidos desde un registro específico.
+	 * El XML que viaja en el zip tiene el siguiente formato:
+	 * <?xml version="1.0" encoding="UTF-8"?>
+	 * <Prohibidos>
+	 *   <Prohibicion>
+	 *       <Ambito>NAC</Ambito>
+	 *       ...
+	 *   </Prohibicion>
+	 * </Prohibidos>
+	 */
+	@Test
+	public void testGetListaProhibidosIncrementalConNumeroRegistroComunidadValida() throws Exception {
+		JugProhibicionQueryRequest parametros = new JugProhibicionQueryRequest();
+		parametros.setCodComunidad("NAC");
+		parametros.setFormatoDescarga("XML");
+		parametros.setTipoDescarga("Incremental");
+		parametros.setLast(23383L);
+		parametros.setService(Boolean.TRUE);
+		ProhibidosResponse respuesta = this.getServicio().prohibidosList(parametros);
+		byte[] datosZip = respuesta.getResultado();
+		assertNotNull(datosZip);
+		this.writeBinaryFile("c:/temp/prueba_descarga_incremental_desde_registro.zip", datosZip);
+	}
+
+	/**
+	 * Guarda el contenido binario en un fichero, en la ruta indicada.
+	 */
+	private void writeBinaryFile(String fileName, byte[] data) throws IOException {
+		FileOutputStream fos = new FileOutputStream(fileName);
+		fos.write(data);
+		fos.close();
+	}
+
+	private JuegoRGIAJ getServicio() {
+		return servicio;
+	}
+
+	private void setServicio(JuegoRGIAJ servicio) {
+		this.servicio = servicio;
+	}
+	
+}

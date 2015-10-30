@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Notas</title>
+<link href="documentacion/notas.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h2>INDICE</h2>
+<ul>
+<li><a href="#descripcion">Descripción</a></li>
+<li><a href="#deploy">Despliegue local</a></li>
+<li><a href="#cer">Comandos para manipulación de certificados</a></li>
+<li><a href="#db">Conexión a la base de datos</a></li>
+<li><a href="#seguridad">Gestión de la seguridad</a></li>
+<li><a href="#wsdl2java">Generar las clases del servicio web</a></li>
+<li><a href="#monitor">Configuración y uso del TCP/IP Monitor</a></li>
+<li><a href="#testcases">Ejecución de las pruebas unitarias</a></li>
+<li><a href="#war">Generar el fichero de despliegue (.war)</a></li>
+</ul>
+
+<h2><a name="descripcion">Descripción</a></h2>
+<ul>
+<li>
+Esta aplicación es un servicio-web para que las comunidades autónomas descarguen los ficheros con la información de RGIAJ.</li>
+<li>Tecnologías: Spring 3.0.7, CXF 2.7.0</li>
+<li>La definición del servicio está en el fichero <a href="src/main/resources/RGIAJComunidades.wsdl">/src/main/resources/RGIAJComunidades.wsdl</a>. Ese fichero se utiliza para generar
+las clases requeridas por CXF a partir de un script de Maven</li>
+<li>
+<b>Despliegue (local):</b> <a href="http://localhost:8080/WS-RGIAJ-CCAA/RGIAJComunidadesService/?wsdl">http://localhost:8080/WS-RGIAJ-CCAA/RGIAJComunidadesService/?wsdl</a>
+</li>
+<li>
+<b>Despliegue (PRE):</b> 
+</li>
+</ul>
+<h2><a name="deploy">Despliegue local</a></h2>
+<p>
+<b>Paso 1:</b> Asociar el servidor Tomcat 6.x a Eclipse (usando el plugin de Eclipse)
+</p>
+<p>
+<b>Paso 2:</b> Asociar el proyecto al servidor (usando el plugin de Eclipse)
+</p>
+<p>
+<b>Paso 3:</b> Arrancar el servidor
+</p>
+<p>
+<b>Paso 4:</b> Abrir la siguiente dirección para comprobar que el servicio está desplegado:
+</p>
+<p>
+<a href="http://localhost:8080/WS-RGIAJ-CCAA/RGIAJComunidadesService/?wsdl">http://localhost:8080/VerificacionJugadores/VerificacionJugadores?wsdl</a>
+</p>
+<p>
+<b>Paso 5:</b> Ejecutar las <a href="#testcases">pruebas unitarias</a>
+</p>
+
+<h2><a name="cer">Comandos para manipulación de certificados</a></h2>
+<p>
+A continuación, varios comandos para manipular certificados y almacenes. Los ejemplos usan los almacenes <b>aplicaciones.dgojuego.gob.es.p12</b> 
+(contiene el certificado usado para firmar las respuestas del servicio web) y <b>CNJ_keystore.jks</b> (guarda el certificado usado para firmar las invocaciones 
+desde los test cases).
+</p>
+<table>
+<tr>
+	<th width="50%">Comando</th><th width="50%">Descripción</th>
+</tr>
+<tr>
+	<td>keytool -v -list -keystore CNJ_keystore.jks -storepass clavedgoj -alias "operador01"</td>
+	<td>Lista la información del certificado cuyo alias es <b>operador01</b>. 
+	El certificado está en el almacén <b>CNJ_keystore.jks</b>. La contraseña para acceder al almacén es <b>clavedgoj</b>. </td>
+</tr>
+<tr>
+	<td>keytool -v -list -keystore aplicaciones.dgojuego.gob.es.p12 -storepass dgojuego -alias "24a1408645874e2749389480c8997989_e8d884b6-6e09-4e13-9e19-1e882c865018" -storetype PKCS12</td>
+	<td>Muestra la información del certificado usado para firmar las respuestas SOAP enviadas por el servidor. 
+	El certificado está en el almacén <b>aplicaciones.dgojuego.gob.es.p12</b>. La contraseña para acceder al almacén es <b>dgojuego</b>. </td>
+</tr>
+<tr>
+	<td>keytool -importcert  -file ChambersofCommerceRoot-2008.crt -keystore CNJ_keystore.jks -storepass clavedgoj -alias "operador_invalido"</td>
+	<td>Importa el certificado <b>ChambersofCommerceRoot-2008.crt</b> con el alias <b>operador_invalido</b> en el almacén <b>CNJ_keystore.jks</b>. 
+	La contraseña para acceder al almacén es <b>clavedgoj</b>.<br>
+	<b>Nota:</b> el certificado del ejemplo fue obtenido de Firefox (exportación).
+	</td>
+</tr>
+<tr>
+	<td>keytool -printcert -v -file ChambersofCommerceRoot-2008.crt</td>
+	<td>Muestra la información pública del certificado <b>ChambersofCommerceRoot-2008.crt</b>, que no está en un almacén.<br>
+	<b>Nota:</b> el certificado del ejemplo fue obtenido de Firefox (exportación).
+	</td>
+</tr>
+<tr>
+	<td>keytool -genkeypair -dname "cn=Operador invalido, ou=DGOJ, o=MAD, c=ES" -alias operador_invalido -keyalg RSA -keypass secret -keystore CNJ_keystore.jks -storepass clavedgoj -validity 3650</td>
+	<td>Crea un certificado autofirmado, con el alias <b>operador_invalido</b>, clave privada <b>secret</b> y válido por 3650 días. El certificado se crea en un almacén llamado
+	<b>mi_almacen</b> y que tiene clave de acceso <b>changeit</b>.<br>
+	<b>Nota:</b> si el almacén no existe, se crea el fichero del almacén. Caso contrario, el certificado se inserta en el almacén ya existente. 
+	Notar también que debemos poner <b>-keyalg RSA</b> para especificar 
+	el algoritmo RSA para que la clave se procese correctamente cuando se firman las peticiones.
+	</td>
+</tr>
+<tr>
+	<td>keytool -exportcert -alias "operador01" -file operador01.cer -keystore CNJ_keystore.jks -storepass clavedgoj -rfc</td>
+	<td>Exporta a un fichero, el certificado almacenado en el almacén con el alias es <b>operador01</b>. El certificado se exporta en formato imprimible (estándard RFC 1421), de tal manera
+	que pueda usarse para el alta de operadores. El nombre del fichero es <b>operador01.cer</b>
+	</td>
+</tr>
+
+
+</table>
+
+<h2><a name="db">Conexión a la base de datos</a></h2>
+<p>
+La aplicación se conecta a la base de datos a través de un datasource configurado en el servidor Tomcat.
+</p>
+<p>
+El datasource es recuperado por Spring a través de JNDI, de la siguiente manera:
+</p>
+<pre>
+&lt;bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"&gt;
+    &lt;property name="jndiName" value="java:comp/env/jdbc/RGIAJDS"/&gt;
+&lt;/bean&gt;
+</pre>
+<p>
+El datasource se declara en el fichero <b>server.xml</b> de Tomcat. Nótese que el usuario y
+contraseña NO se incluyen en el datasource, sino que son insertados cuando la aplicación arranca desde
+Spring:
+</p>
+<pre>
+&lt;Resource 
+    name="jdbc/cnjwsds" 
+    abandonedConnectionTimeout="600" 
+    auth="Container" 
+    connectionFactoryClassName="oracle.jdbc.pool.OracleDataSource" 
+    connectionPoolName="UCPPool" 
+    description="UCP Pool in Tomcat" 
+    driverClassName="oracle.jdbc.pool.OracleDataSource" 
+    factory="oracle.ucp.jdbc.PoolDataSourceImpl" 
+    inactiveConnectionTimeout="120" 
+    maxConnectionReuseTime="600" 
+    maxPoolSize="100" 
+    maxStatements="10" 
+    minPoolSize="3" 
+    sqlForValidateConnection="select 1 from DUAL" 
+    timeoutCheckInterval="60" type="oracle.ucp.jdbc.PoolDataSource" 
+    url="jdbc:oracle:thin:@(DESCRIPTION=(FAILOVER=ON)(LOADBALANCE=OFF)(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.34.104.242)(PORT=1521))(ADDRESS=(PROTOCOL=TCP)(HOST=10.34.104.243)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=PRE-SERVICE.cnjuego.es)))" 
+    user="XXX" 
+    password="XXX" 
+    ConnectionOnBorrow="true"/&gt;
+</pre>
+<p>
+El datasource se publica con JNDI en el fichero <b>/WebContent/META-INF/context.xml</b> del proyecto:
+</p>
+<pre>
+&lt;ResourceLink name="jdbc/RGIAJDS"
+    global="jdbc/cnjwsds"
+    type="javax.sql.DataSource"/&gt;
+</pre>
+
+<p>
+Para corregir un error del classloader cuando arranca la aplicación con los cambios anteriores, es necesario agregar
+la siguiente línea en el fichero <b>catalina.properties</b> de Tomcat:
+</p>
+<pre>
+org.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false
+</pre>
+
+<h2><a name="seguridad">Gestión de la seguridad</a></h2>
+<ul>
+<li>
+La seguridad del servicio web se gestiona en varios niveles: uso de comunicación HTTPS (solamente en el entorno de PRO), 
+validación de las IPs de conexión de los operadores y firma de los mensajes SOAP usando un certificado digital.
+</li>
+<li>
+La firma de las respuestas se configura con la política de seguridad definida en el WSDL del servicio. 
+Nótese que <b>la política va asociada solamente a los mensajes de salida</b>. La política es
+interpretada por CXF y éste pone las cabeceras correspondientes (token del certificado, firma, timestamp). 
+El WSDL no asocia ninguna política de seguridad para los mensajes de entrada.
+</li>
+<li>
+Para controlar la segurida de los mensajes de entrada, el servicio utiliza <a href="http://cxf.apache.org/docs/interceptors.html">interceptores</a>. 
+La función de los interceptores es controlar la firma digital del mensaje, la caducidad del timestamp, 
+recuperar los datos del operador a partir del certificado y guardar los mensajes 
+SOAP de entrada/salida en la base de datos (tabla PETICION_WS).
+</li>
+<li>
+Los interceptores se configuran en Spring (ver <b>app-custom-ws-service.xml</b>).
+</li>
+</ul>
+
+<h2><a name="wsdl2java">Generar las clases del servicio web</a></h2>
+
+<p>
+Las clases <i>skeleton</i> utilizadas por CXF para publicar el servicio y los <i>stubs</i> utilizados para acceder a los 2 servicios 
+web externos, son generadas por Maven a partir de la definición del servicio suministrada en el fichero <b>RGIAJComunidades.wsdl</b>. El fichero 
+<b>pom.xml</b> de incluye un fragmento con la configuración necesaria.
+</p>
+<p>
+Esto significa que si cambia la definición del servicio es necesario regenerar las clases correspondientes:
+</p>
+<br>
+<p>
+<b>Paso 1:</b> Modificar la definición del servicio (<b>RGIAJComunidades.wsdl</b>). Al guardar los cambios, Maven 
+automáticamente regenera las clases en la carpeta <b>/src/main/generated</b>
+</p>
+<br>
+<p>
+<b>Paso 2:</b> Refrescar el proyecto para que Eclipse cargue las clases generadas.
+</p>
+<br>
+<p>
+<b>Paso 3:</b> Implementar los cambios del funcionamiento del servicio en la clase
+<b>es.dgoj.rgiaj.ws.RGIAJComunidadesServiceImpl</b>
+</p>
+<br>
+<p>
+<b>Paso 4:</b> Copiar las clases generadas (<b>/src/main/generated</b>) al proyecto de la aplicación cliente: <b>Cliente-RGIAJ-CCAA</b>.<br>
+</p>
+
+
+
+<h2><a name="monitor">Configuración y uso del TCP/IP Monitor</a></h2>
+<p>
+El <b>TCP/IP monitor</b> es un plugin de Eclipse que permite inspeccionar los mensajes SOAP de las invocaciones de un web-service. El monitor intercepta las llamadas y muestra
+los mensajes de entrada y salida por una consola. Pasos para configurar TCP/IP Monitor:
+</p>
+<p>
+<b>Paso 1:</b> Abrir la vista del monitor desde el menú de Eclipse: <b>Window -> Show View -> Other...</b>
+</p>
+<br>
+<p>
+<b>Paso 2:</b> En la vista del monitor abrir el menú con el botón derecho. Elegir la opción <b>Properties</b>. 
+Configurar los valores como se muestra a continuación. Nótese que estamos configurando el puerto <b>80</b> para interceptar las llamadas, así que las
+invocaciones del servicio deben enviarse a ese puerto para que el monitor las intercepte.
+</p>
+<br>
+<img src="documentacion/imagen1.png"/><br>
+<br>
+<p>
+<b>Paso 3:</b> Para arrancar el monitor, seleccionar la configuración y pinchar en <b>Start</b>
+</p>
+<br>
+<img src="documentacion/imagen2.png"/><br>
+<br>
+<p>
+<b>Paso 4:</b> Invocar el web-service al puerto <b>80</b>. El monitor mostrará los mensajes interceptados.
+</p>
+<br>
+<h2><a name="testcases">Ejecución de las pruebas unitarias</a></h2>
+<p>
+<b>Paso 1:</b> Comprobar que el servicio está desplegado en local.
+</p>
+<p>
+<b>Paso 2:</b> Desde Eclipse, ejecutar la clase <b>es.dgoj.rgiaj.AllTests</b> con <b>JUnit</b>.
+</p>
+<p>
+<b>Paso 3:</b> La línea de ejecución de las pruebas debería estar siempre verde!.
+</p>
+<br>
+<h2><a name="war">Generar el fichero de despliegue (.war)</a></h2>
+<p>
+El fichero de despliegue se genera con Maven, haciendo lo siguiente:
+</p>
+<p>
+<b>Paso 1:</b> En Eclipse, seleccionar la raíz del proyecto. Abrir el menú secundario y elegir la opción <b>Run As -> Maven install</b>. 
+Con esto, Maven crea el fichero war en la carpeta target.<br>
+</p>
+<p>
+<b>Paso 2:</b> Copiar el fichero generado a la carpeta de despliegue.<br>
+</p>
+</body>
+</html>

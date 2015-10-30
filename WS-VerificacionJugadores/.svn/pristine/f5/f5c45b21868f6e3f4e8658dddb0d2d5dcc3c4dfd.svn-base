@@ -1,0 +1,294 @@
+package es.gob.cnjuego.ws.service;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import es.gob.cnjuego.ws.dao.JugadoresTestWSDAO;
+import es.gob.cnjuego.ws.entity.JugadorTestWS;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+import es.gob.cnjuego.ws.verificacionjugadores.Jugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoIdentidad;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoJugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoRGIAJ;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoType;
+
+/** Servicio para gestionar los Jugadores de Prueba. Test_WS
+ * 
+ * @author ylopezconnectis
+ *
+ */
+@Service(value="ServicioJugadoresTestWS")
+public class ServicioJugadoresTestWSImpl implements ServicioJugadoresTestWS{
+
+		Logger log = Logger.getLogger(ServicioIdentidadImpl.class);
+
+		
+		@Autowired 
+		private JugadoresTestWSDAO jugadoresTestWSDAO;
+		
+		@Override
+		public ResultadoJugador obtenerResultadoJugadorTestWS(int modo, Jugador jugador)
+		{
+			ResultadoJugador res = null;
+			
+			switch (modo)
+			{
+			case 1: // Habilitado para pruebas
+				{
+					JugadorTestWS jugPrueba = jugadoresTestWSDAO.obtenerJugadorPrueba(jugador.getDni());
+					if (jugPrueba != null)
+					{
+						if (jugPrueba.getNombre() != null && jugPrueba.getNombre().equalsIgnoreCase(jugador.getNombre())
+								&& jugPrueba.getApellido1() != null && jugPrueba.getApellido1().equalsIgnoreCase(jugador.getApellido1())
+								&& (jugador.getApellido2() == null || jugador.getApellido2().length() == 0 || 
+										(jugPrueba.getApellido2() != null && jugador.getApellido2() != null 
+												&& jugPrueba.getApellido2().equalsIgnoreCase(jugador.getApellido2())))	
+										&& jugador.getFechaNacimiento()./*toGregorianCalendar().getTime()*/equals(jugPrueba.getFechaNacimiento())
+										)
+							res = generarResultadoJugadorPrueba(jugPrueba);
+						else
+							res = generarResultadoJugadorIncorrecto(jugador.getDni(),jugPrueba);
+					}
+					else
+						res = generarResultadoJugadorIncorrecto(jugador.getDni(),null);
+				break;
+				}
+			case 2: //Habilitado para producción
+				{
+					break;
+				}
+			case 3: //Habilitado para pruebas y producción
+				{
+					JugadorTestWS jugPrueba = jugadoresTestWSDAO.obtenerJugadorPrueba(jugador.getDni());
+					if (jugPrueba != null)
+					{
+						if (jugPrueba.getNombre() != null && jugPrueba.getNombre().equalsIgnoreCase(jugador.getNombre())
+								&& jugPrueba.getApellido1() != null && jugPrueba.getApellido1().equalsIgnoreCase(jugador.getApellido1())
+								&& (jugador.getApellido2() == null || jugador.getApellido2().length() == 0 || 
+										(jugPrueba.getApellido2() != null && jugador.getApellido2() != null 
+												&& jugPrueba.getApellido2().equalsIgnoreCase(jugador.getApellido2())))	
+										&& jugador.getFechaNacimiento()./*toGregorianCalendar().getTime()*/equals(jugPrueba.getFechaNacimiento())
+										)
+							res = generarResultadoJugadorPrueba(jugPrueba);
+						else
+							res = generarResultadoJugadorIncorrecto(jugador.getDni(),jugPrueba);
+					}
+				}
+			default:
+				break;
+			}
+			
+			return res;
+		}
+
+
+		
+		@Override
+		public ResultadoRGIAJ obtenerResultadoRGIAJTestWS(int modo, Jugador jugador)
+		{
+			ResultadoRGIAJ res = null;
+			
+			switch (modo)
+			{
+			case 1: // Habilitado para pruebas
+				{
+					JugadorTestWS jugPrueba = jugadoresTestWSDAO.obtenerJugadorPrueba(jugador.getDni());
+					if (jugPrueba != null)
+					{
+						res = generarResultadoRGIAJPrueba(jugPrueba);
+					}
+					else
+						res = generarResultadoRGIAJIncorrecto(jugador.getDni());
+				break;
+				}
+			case 2: //Habilitado para producción
+				{
+					break;
+				}
+			case 3: //Habilitado para pruebas y producción
+				{
+					JugadorTestWS jugPrueba = jugadoresTestWSDAO.obtenerJugadorPrueba(jugador.getDni());
+					if (jugPrueba != null)
+					{
+							res = generarResultadoRGIAJPrueba(jugPrueba);
+					}
+				}
+			default:
+				break;
+			}
+			
+			return res;
+		}
+
+		
+		
+		@Override
+        public ResultadoIdentidad obtenerResultadoIdentidadTestWS(Jugador jugador){
+		  ResultadoIdentidad res = null;
+          JugadorTestWS jugPrueba = jugadoresTestWSDAO.obtenerJugadorPrueba(jugador.getDni());
+		  if (jugPrueba != null) {
+			if (jugPrueba.getNombre() != null
+					&& jugPrueba.getNombre().equalsIgnoreCase(
+							jugador.getNombre())
+					&& jugPrueba.getApellido1() != null
+					&& jugPrueba.getApellido1().equalsIgnoreCase(
+							jugador.getApellido1())
+					&& (jugador.getApellido2() == null
+							|| jugador.getApellido2().length() == 0 || (jugPrueba
+							.getApellido2() != null
+							&& jugador.getApellido2() != null && jugPrueba
+							.getApellido2().equalsIgnoreCase(
+									jugador.getApellido2())))
+					&& jugador.getFechaNacimiento()./*
+													 * toGregorianCalendar().getTime
+													 * ()
+													 */equals(
+							jugPrueba.getFechaNacimiento()))
+				res = generarResultadoIdentidadPrueba(jugPrueba);
+			else
+				res = generarResultadoIdentidadIncorrecto(jugador.getDni());
+		} else
+			res = generarResultadoIdentidadIncorrecto(jugador.getDni());
+		return res;
+	}
+
+		
+		
+		
+		
+		
+		
+		
+
+		private ResultadoJugador generarResultadoJugadorPrueba(JugadorTestWS jugPrueba)
+		{
+			ResultadoJugador res = new ResultadoJugador();
+			res.setDni(jugPrueba.getDni());
+			//Resultado RGIAJ
+			ResultadoType restype = new ResultadoType();
+//			restype.setCodPrueba(4);
+			restype.setCodigo(jugPrueba.getResultadoRGIAJ());
+			restype.setDescripcion(jugPrueba.getMensajeRGIAJ());
+			res.setResultadoRGIAJ(restype);
+			// Resultado Identidad
+			ResultadoType restype2 = new ResultadoType();
+//			restype2.setCodPrueba(4);
+			if (jugPrueba.getResultadoIdentidad() != null && 
+					jugPrueba.getResultadoIdentidad().equals(CodigosVerificacion.COD_IDENTIDAD_CORRECTA))
+				restype2.setCodigo(CodigosVerificacion.COD_IDENTIDAD_CORRECTA_TEST);
+			else if (jugPrueba.getResultadoIdentidad() != null && 
+					jugPrueba.getResultadoIdentidad().equals(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA))
+				restype2.setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_TEST);
+			else 
+				restype2.setCodigo(jugPrueba.getResultadoIdentidad());
+				
+				
+			
+			restype2.setDescripcion(jugPrueba.getMensajeIdentidad());
+			res.setResultadoIdentidad(restype2);
+					
+			return res;
+		}
+		
+		
+		private ResultadoRGIAJ generarResultadoRGIAJPrueba(JugadorTestWS jugPrueba)
+		{
+			ResultadoRGIAJ res = new ResultadoRGIAJ();
+			res.setDni(jugPrueba.getDni());
+			//Resultado RGIAJ
+			ResultadoType restype = new ResultadoType();
+//			restype.setCodPrueba(4);
+			restype.setCodigo(jugPrueba.getResultadoRGIAJ());
+			restype.setDescripcion(jugPrueba.getMensajeRGIAJ());
+			res.setResultadoRGIAJ(restype);
+			
+			return res;
+		}
+		
+		
+		private ResultadoIdentidad generarResultadoIdentidadPrueba(JugadorTestWS jugPrueba)
+		{
+			ResultadoIdentidad res = new ResultadoIdentidad();
+			res.setDni(jugPrueba.getDni());
+			// Resultado Identidad
+			ResultadoType restype2 = new ResultadoType();
+//			restype2.setCodPrueba(4);
+			if (jugPrueba.getResultadoIdentidad() != null && 
+					jugPrueba.getResultadoIdentidad().equals(CodigosVerificacion.COD_IDENTIDAD_CORRECTA))
+				restype2.setCodigo(CodigosVerificacion.COD_IDENTIDAD_CORRECTA_TEST);
+			else if (jugPrueba.getResultadoIdentidad() != null && 
+					jugPrueba.getResultadoIdentidad().equals(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA))
+				restype2.setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_TEST);
+			else if (jugPrueba.getResultadoIdentidad() != null && 
+					jugPrueba.getResultadoIdentidad().equals(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD))
+				restype2.setCodigo(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD_TEST);
+			else 
+				restype2.setCodigo(jugPrueba.getResultadoIdentidad());
+			restype2.setDescripcion(jugPrueba.getMensajeIdentidad());
+			res.setResultadoIdentidad(restype2);
+				
+			return res;
+		}
+
+
+		private ResultadoJugador generarResultadoJugadorIncorrecto(String dni,JugadorTestWS jugPrueba)
+		{
+			ResultadoJugador res = new ResultadoJugador();
+			res.setDni(dni);
+			//Resultado RGIAJ
+			ResultadoType restype = new ResultadoType();
+//			restype.setCodPrueba(4);
+			if (jugPrueba != null){
+				restype.setCodigo(jugPrueba.getResultadoRGIAJ());
+				restype.setDescripcion(jugPrueba.getMensajeRGIAJ());
+			}else{
+				restype.setCodigo(CodigosVerificacion.COD_NO_INSCRITO_RGIAJ);
+				restype.setDescripcion(CodigosVerificacion.DESC_NO_INSCRITO_RGIAJ);
+			}
+			res.setResultadoRGIAJ(restype);
+			// Resultado Identidad
+			ResultadoType restype2 = new ResultadoType();
+//			restype2.setCodPrueba(4);
+			restype2.setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_TEST);
+			restype2.setDescripcion(CodigosVerificacion.DESC_IDENTIDAD_INCORRECTA_TEST);
+			res.setResultadoIdentidad(restype2);
+					
+			return res;
+		}
+		
+		
+		private ResultadoRGIAJ generarResultadoRGIAJIncorrecto(String dni)
+		{
+			ResultadoRGIAJ res = new ResultadoRGIAJ();
+			res.setDni(dni);
+			//Resultado RGIAJ
+			ResultadoType restype = new ResultadoType();
+//			restype.setCodPrueba(4);
+			restype.setCodigo(CodigosVerificacion.COD_NO_INSCRITO_RGIAJ);
+			restype.setDescripcion(CodigosVerificacion.DESC_NO_INSCRITO_RGIAJ);
+			res.setResultadoRGIAJ(restype);
+			
+			return res;
+		}
+		
+		
+		private ResultadoIdentidad generarResultadoIdentidadIncorrecto(String dni)
+		{
+			ResultadoIdentidad res = new ResultadoIdentidad();
+			res.setDni(dni);
+			// Resultado Identidad
+			ResultadoType restype2 = new ResultadoType();
+//			restype2.setCodPrueba(4);
+			restype2.setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_TEST);
+			restype2.setDescripcion(CodigosVerificacion.DESC_IDENTIDAD_INCORRECTA_TEST);
+			res.setResultadoIdentidad(restype2);
+				
+			return res;
+		}
+
+
+		
+		
+
+}

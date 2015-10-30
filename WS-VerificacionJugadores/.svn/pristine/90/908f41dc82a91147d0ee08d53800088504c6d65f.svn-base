@@ -1,0 +1,93 @@
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+	<S:Body>
+		<ns2:verificarJugador
+			xmlns:ns2="http://ws.cnjuego.gob.es/VerificacionJugadores/">
+			<jugadores>
+				<dni>99999028L</dni>
+				<nombre>FICTITIOUS</nombre>
+				<apellido1>SPECIMEN</apellido1>
+				<apellido2>SPECIMEN</apellido2>
+				<fechaNacimiento>2005-10-19</fechaNacimiento>
+			</jugadores>
+		</ns2:verificarJugador>
+	</S:Body>
+</S:Envelope>
+feb 05, 2013 6:06:52 PM com.sun.xml.wss.impl.filter.DumpFilter process
+INFO: ==== Sending Message Start ====
+<?xml version="1.0" encoding="UTF-8"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+	<S:Header>
+		<wsse:Security
+			xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+			S:mustUnderstand="1">
+			<wsse:BinarySecurityToken
+				xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+				EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"
+				ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3"
+				wsu:Id="XWSSGID-1360084011603933265862">MIICtDCCAh0CCQCZB/OIdOHO9TANBgkqhkiG9w0BAQUFADCBnzELMAkGA1UEBhMCZXMxDzANBgNV
+				BAgMBm1hZHJpZDEPMA0GA1UEBwwGbWFkcmlkMQ8wDQYDVQQKDAZDQURHT0oxFjAUBgNVBAsMDUNB
+				SU5GT1JNQVRJQ0ExFzAVBgNVBAMMDmNuanVlZ28uZ29iLmVzMSwwKgYJKoZIhvcNAQkBFh1kZ29q
+				LnNvcG9ydGVvcGVyYWRvcmVzQG1laC5lczAeFw0xMTExMTYxMjMwMDNaFw0yMTA5MjQxMjMwMDNa
+				MIGcMQswCQYDVQQGEwJlczEPMA0GA1UECAwGbWFkcmlkMQ8wDQYDVQQHDAZtYWRyaWQxETAPBgNV
+				BAoMCG9wZXJhZG9yMREwDwYDVQQLDAhvcGVyYWRvcjEXMBUGA1UEAwwOY25qdWVnby5nb2IuZXMx
+				LDAqBgkqhkiG9w0BCQEWHWRnb2ouc29wb3J0ZW9wZXJhZG9yZXNAbWVoLmVzMIGfMA0GCSqGSIb3
+				DQEBAQUAA4GNADCBiQKBgQCr+jsE8atjTGBm9UCHPNMN8trU1cxkkvvHQxP+nVHAL2BCJSyb2CYY
+				qFzqmoO0lhByr8Yw2nf5NWyjl1LPqxz871VyfB8kTi6uR9jCtL6NhUDR8fCmxV0CfY10ajlcIHjS
+				kziVGO6MvXeaEGz3/0O1TiRr+SKm4Y9m+qqaun287QIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAIXH
+				1VHRRYaOe975xV1F3tTRiW3e5i7njhDBeFGpQtMFg1LRl78+E0IY5CgMHOVgny3qHEyOU0hkv/Nu
+				+OTFpb49NrZCDDGMyhX2wP/UmTVGtmv68W4CxGf0HPbRudjRynC/oyQi9WmI0vw/Kg4Nghx7PZT4
+				1Hi97tZweSEEcI1L
+			</wsse:BinarySecurityToken>
+			<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<ds:SignedInfo>
+					<ds:CanonicalizationMethod
+						Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+						<InclusiveNamespaces xmlns="http://www.w3.org/2001/10/xml-exc-c14n#"
+							PrefixList="wsse S" />
+					</ds:CanonicalizationMethod>
+					<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+					<ds:Reference URI="#XWSSGID-1360084011790455338758">
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>SqUpMJB3rM7k/W3MDyG71fVbWoY=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#XWSSGID-1360084011806-449720589">
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>/p51DmpCB8Sf+hpOUCqhx6+yPkw=</ds:DigestValue>
+					</ds:Reference>
+				</ds:SignedInfo>
+				<ds:SignatureValue>UR4XIeJVWvhXPHDCKciv+nh8yVAVmeL1osRP9px7xI1P2yA+9bKzKewTqtanfTOeSctrzxQTiH/O
+					b35wwPu7iFVq5LsjqFF7FJaQG4cP7uItb+ROdEaHFTSibimBzPuKOiqb2rTfUZrhfH7BPjB5RDyP
+					cskBrmq03Fwj884T23o=
+				</ds:SignatureValue>
+				<ds:KeyInfo>
+					<wsse:SecurityTokenReference
+						xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+						wsu:Id="XWSSGID-1360084011775-3076267">
+						<wsse:Reference URI="#XWSSGID-1360084011603933265862"
+							ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" />
+					</wsse:SecurityTokenReference>
+				</ds:KeyInfo>
+			</ds:Signature>
+			<wsu:Timestamp
+				xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+				wsu:Id="XWSSGID-1360084011806-449720589">
+				<wsu:Created>2013-02-05T17:06:51Z</wsu:Created>
+				<wsu:Expires>2013-02-05T17:06:56Z</wsu:Expires>
+			</wsu:Timestamp>
+		</wsse:Security>
+	</S:Header>
+	<S:Body
+		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+		wsu:Id="XWSSGID-1360084011790455338758">
+		<ns2:verificarJugador
+			xmlns:ns2="http://ws.cnjuego.gob.es/VerificacionJugadores/">
+			<jugadores>
+				<dni>99999028L</dni>
+				<nombre>FICTITIOUS</nombre>
+				<apellido1>SPECIMEN</apellido1>
+				<apellido2>SPECIMEN</apellido2>
+				<fechaNacimiento>2005-10-19</fechaNacimiento>
+			</jugadores>
+		</ns2:verificarJugador>
+	</S:Body>
+</S:Envelope>

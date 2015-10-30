@@ -1,0 +1,95 @@
+
+package es.dgoj.rgiaj;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Java class for SearchResponse complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="SearchResponse">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="numResults" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="hasNext" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="lapse" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "SearchResponse", propOrder = {
+    "numResults",
+    "hasNext",
+    "lapse"
+})
+@XmlSeeAlso({
+    ComunidadSearchResponse.class,
+    JugHistoricoSearchResponse.class
+})
+public class SearchResponse {
+
+    protected long numResults;
+    protected boolean hasNext;
+    protected long lapse;
+
+    /**
+     * Gets the value of the numResults property.
+     * 
+     */
+    public long getNumResults() {
+        return numResults;
+    }
+
+    /**
+     * Sets the value of the numResults property.
+     * 
+     */
+    public void setNumResults(long value) {
+        this.numResults = value;
+    }
+
+    /**
+     * Gets the value of the hasNext property.
+     * 
+     */
+    public boolean isHasNext() {
+        return hasNext;
+    }
+
+    /**
+     * Sets the value of the hasNext property.
+     * 
+     */
+    public void setHasNext(boolean value) {
+        this.hasNext = value;
+    }
+
+    /**
+     * Gets the value of the lapse property.
+     * 
+     */
+    public long getLapse() {
+        return lapse;
+    }
+
+    /**
+     * Sets the value of the lapse property.
+     * 
+     */
+    public void setLapse(long value) {
+        this.lapse = value;
+    }
+
+}

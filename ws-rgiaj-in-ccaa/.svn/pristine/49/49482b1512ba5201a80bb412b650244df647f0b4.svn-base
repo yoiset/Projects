@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+           http://www.springframework.org/schema/jdbc 
+           http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+           http://www.springframework.org/schema/jee 
+           http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+
+	<bean id="sessionFactory"
+		class="com.jeveris.core.persistence.hibernate4.spring.CustomLocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${persistence.dialect:HSQL}</prop>
+				<prop key="hibernate.show_sql">${persistence.showSQL:true}</prop>
+				<prop key="hibernate.format_sql">${persistence.formatSQL:true}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${persistence.generateDdl:false}</prop>
+				<prop key="hibernate.connection.autocommit">${persistence.hibernate.connection.autocommit:true}</prop>
+				<prop key="hibernate.generate_statistics">${persistence.hibernate.generate_statistics:false}</prop>
+				<prop key="hibernate.enable_lazy_load_no_trans">${persistence.hibernate.enable_lazy_load_no_trans:false}</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.dgoj.juegoExterno.business.model</value>
+			</list>
+		</property>
+		<property name="directoriesToScan">
+			<list>
+				<value>/hibernate/mappings</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<!-- DataSource configuration -->
+<!-- este datasource permite establecer el usuario y la contraseña desde la aplicacion
+al obtener el DS. Este caso sirve para cuando en el tomcat no se quiere establecer el usuario
+y la contrasenha como nos han indicado que pasa en algun caso. La factoria asume que 
+el tipo de datasource devuelto por tomcat es  -->
+	<bean id="dataSource"
+		class="com.dgoj.juegoExterno.business.bean.CustomJndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:comp/env/${jdbc.jndiName}</value>
+		</property>
+		<!-- <property name="datasourceUsername" value="CNJ03"/>
+		<property name="datasourcePassword" value="CN003pru"/> -->
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<!-- sql manager for queries -->
+	<bean id="dataSourceSqlManager" class="com.jeveris.core.persistence.aop.DataSourceAround">
+		<property name="connectionWrapper" ref="connectionSqlManager" />
+	</bean>
+
+	<bean id="connectionSqlManager"
+		class="com.jeveris.core.persistence.aop.jdbc.ConnectionSqlManager">
+		<property name="formatSql" value="false" />
+		<!-- default sqlManagerFactory, it can be overriden if necessary -->
+		<property name="sqlManagerFactory" ref="sqlAuditAndStatsManagerFactory" />
+	</bean>
+
+	<!-- 
+		Este poincut indica que se debe aplicar el advice "txAdvice" (definido a continuación) 
+		a todas las clases que tienen *Repository* en su nombre.
+		Para más detalles de esto, ver la documentación de Spring sobre AOP 
+	-->
+	<aop:config>
+		<aop:pointcut id="repositoryOperation" expression="bean(*Repository*)" />
+		<aop:advisor pointcut-ref="repositoryOperation"
+			advice-ref="txAdvice" />
+	</aop:config>
+
+	<!-- 
+		Este advice (AOP) intercepta todos los métodos que comienzan con "get*", "update*", etc.
+		El advice gestiona las transacciones sobre la base de datos: si ya existe una
+		transacción en curso, la propaga. Si no existe, crea una transacción nueva.
+		Para más detalles, ver la documentación de Spring sobre gestión de transacciones usando AOP 
+	-->
+	<!-- Advice to define transactionality for each kind of repository operation -->
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="filter*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="load*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="reload*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+
+</beans>

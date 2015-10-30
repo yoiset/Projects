@@ -1,0 +1,99 @@
+package es.gob.cnjuego.ws.util;
+
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+public class FormatoDatosIdentificacion {
+
+	/**
+	 * Función que normaliza un nombre, pasándolo a minúsculas y eliminando acentuación innecesaria
+	 * @param nombre
+	 * @return la cadena del nombre en minúsculas y sin acentos
+	 */
+	public static String formateaAcentos(String nombre, String original, String traduccion)
+	{
+		if (nombre==null)
+			return null;
+		
+		String res = nombre;
+		//Se quitan los guiones sustituyéndolos por espacios en blanco
+		res = res.replaceAll("-", " ");
+		//eliminar espacios en blanco duplicados
+		res = res.replaceAll("\\s+", " ");
+
+		if (nombre != null && nombre.length()>0){
+			// Cadena de caracteres original a sustituir.
+			//original = "áàäâéèëêíìïîóòöôúùû�?ÀÄÂÉÈËÊ�?Ì�?ÎÓÒÖÔÚÙÛ";
+			// Cadena de caracteres ASCII que reemplazarán los originales.
+			//traduccion = "aaaaeeeeiiiioooouuuAAAAEEEEIIIIOOOOUUU";
+			
+			for (int i=0; i<original.length(); i++){
+				// Reemplazamos los caracteres especiales.
+				res = res.replace(original.charAt(i), traduccion.charAt(i));
+			}//for i
+			res = res.toLowerCase();
+		
+		}
+		return res.trim();
+	}
+	
+	
+	/**
+	 * Función que formatea una fecha de nacimiento eliminando la zona horaria
+	 * @param fecha
+	 */
+	public static void formateaFechaNacimiento(XMLGregorianCalendar fecha)
+	{
+		fecha.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+	}
+	
+	
+	/**
+	 * Función que valida que un campo tenga contenido, y no sea una simple cadena de espacios en blanco
+	 * @param nombre
+	 * @return true si el campo tiene contenido, false si es nulo, o su longitud es 0, 
+	 * o si es únicamente una secuencia de espacios en blanco
+	 */
+	public static boolean validarCampo(String nombre)
+	{
+		boolean res = false;
+		if (nombre != null && nombre.length()>0 && nombre.trim().length() >0)
+			res = true;
+			
+		return res;
+	}
+	
+	
+	
+	
+	public static boolean validarCaracteres(String nombre, String invalidos)
+	{
+		boolean res = true;
+		for (int i=0; i<invalidos.length(); i++){
+			// Reemplazamos los caracteres especiales.
+			if (nombre.indexOf(invalidos.charAt(i)) != -1){
+				res = false;
+				break;
+			}
+		}
+		return res;
+	}
+	
+	
+	public static boolean todosCaracteresPermitidos(String nombre, String permitidos)
+	{
+		boolean res = true;
+		for (int i=0; i<nombre.length(); i++){
+			// Reemplazamos los caracteres especiales.
+			if (permitidos.indexOf(nombre.charAt(i)) == -1){
+				res = false;
+				break;
+			}
+		}
+		return res;
+		
+	}
+	
+	
+	
+}

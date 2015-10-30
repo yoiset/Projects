@@ -1,0 +1,64 @@
+package es.gob.cnjuego.ws.entity;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+	@Entity
+	@Table(name ="JUGADORES_CAMBIO_RGIAJ")
+	public class JugadoresCambioRGIAJ {
+		
+		@Id
+		@Column(name = "DNI" )
+		private String dni;
+		
+		@Column(name = "EVENTO" )
+		private String evento;
+		
+		@Column(name = "FECHA_VALOR" )
+		private Date fechaValor;
+		
+		@ManyToOne
+	    @JoinColumn(name="ID_OPERADOR")
+	    private OperadorEntity operador;
+		
+		public String getDni() {
+			return dni;
+		}
+
+		public void setDni(String dni) {
+			this.dni = dni;
+		}
+
+		public String getEvento() {
+			return evento;
+		}
+
+		public void setEvento(String evento) {
+			this.evento = evento;
+		}
+
+		public Date getFechaValor() {
+			return fechaValor;
+		}
+
+		public void setFechaValor(Date fechaValor) {
+			this.fechaValor = fechaValor;
+		}
+
+		public OperadorEntity getOperador() {
+			return operador;
+		}
+
+		public void setOperador(OperadorEntity operador) {
+			this.operador = operador;
+		}
+
+		
+	}

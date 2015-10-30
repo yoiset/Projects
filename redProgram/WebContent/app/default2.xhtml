@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+     <h:head>
+      
+    </h:head>
+      
+    <h:body>
+      
+    	<ui:composition template="/layout/layout.xhtml">
+<!--     	<ui:define name="script"><h:outputScript library="Javascripts" name="red.js"/> </ui:define> -->
+    	    <ui:define name="content">
+    			<h2>This is override content</h2>
+    			<h:outputLabel value="Hello World"></h:outputLabel>
+                <p>Today is: ${beanSession.date} </p>
+                <p>${beanSession.sayHello('pepe')}</p>
+    		   
+    		   <input type="button"  value="Say Hello" onclick="saySome()"/>
+    		      
+    		</ui:define>
+ 
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

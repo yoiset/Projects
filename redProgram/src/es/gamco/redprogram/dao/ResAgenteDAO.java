@@ -1,0 +1,227 @@
+/**
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %(c) Copyright 2007. GAMCO S.L.
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Proyecto: Red Program
+ * % Modulo: redProgram Web App
+ * % Autor/es: Yoiset Lopez<nombre>
+ * % Fecha: 05/08/2013
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Modificaciones (autor, fecha, modificaciones)
+ * % <Autor>, <fecha>, <modificaciones>
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %
+ * %  DAO Layer. Clase DAO para manejar los Agentes
+ * %
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+package es.gamco.redprogram.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import es.gamco.redprogram.entity.Agente;
+import es.gamco.redprogram.entity.Res_Agente_Mes;
+import es.gamco.redprogram.entity.Res_Agente_P;
+import es.gamco.redprogram.entity.Res_Agente_Semana;
+
+@Repository("resAgenteDAO")
+public class ResAgenteDAO {
+	
+	 /**
+	 * Contexto de persistencia
+	 */
+	 @PersistenceContext
+	 private EntityManager em;
+	 
+	 
+	/** Retorna todos los agentes por semana  de una agencia ordenados por Venta_netas_h, dado el ejercicio fiscal,mes, semana y la agencia
+	 * @param efiscal
+	 * @param mes
+	 * @param semana
+	 * @param idAgencia
+	 * @return
+	 */
+	public List<Res_Agente_Semana> getListAgenteSemana(int efiscal, int mes, int semana, int idAgencia){
+		 String strq="Select a from Res_Agente_Semana a " +
+		 		     "where a.id.ej_Fiscal_id=:efiscal " +
+		 		     "and a.id.mes=:mes " +
+		 		     "and a.id.semana=:semana " +
+		 		     "and a.agente.agencia.id=:idAgencia order by a.ventas_netas_h desc";
+		Query query=  em.createQuery(strq,Res_Agente_Semana.class).setParameter("efiscal", efiscal)
+		                     .setParameter("mes",mes)
+		                     .setParameter("semana", semana)
+		                      .setParameter("idAgencia", idAgencia);
+		 
+		 return query.getResultList();
+	 }
+	
+	/** Retorna para un agente los agentes semana (del mismo Agente)  de una agencia. Dado el ejercicio fiscal,mes, semana y la agencia
+	 * @param efiscal
+	 * @param mes
+	 * @param idAgente
+	 * @param idAgencia
+	 * @return
+	 */
+	public List<Res_Agente_Semana> getListAgenteSemanaAgente(int efiscal, int mes, int idAgente, int idAgencia){
+		 String strq="Select a from Res_Agente_Semana a " +
+		 		     "where a.id.ej_Fiscal_id=:efiscal " +
+		 		     "and a.id.mes=:mes " +
+		 		     "and a.agente.id=:idAgente " +
+		 		     "and a.agente.agencia.id=:idAgencia";
+		Query query=  em.createQuery(strq,Res_Agente_Semana.class).setParameter("efiscal", efiscal)
+		                     .setParameter("mes",mes)
+		                     .setParameter("idAgente", idAgente)
+		                      .setParameter("idAgencia", idAgencia);
+		 
+		 return query.getResultList();
+	 }
+	
+	
+	/** Retorna el valor mensual de todos los Agentes de una agencia dado el ejercicio fiscal,mes y la agencia
+	 * @param efiscal
+	 * @param mes
+	 * @param idAgencia
+	 * @return
+	 */
+	public List<Res_Agente_Mes> getListAgenteMes(int efiscal, int mes, int idAgencia){
+		 String strq="Select a from Res_Agente_Mes a " +
+		 		     "where a.id.ej_Fiscal_id=:efiscal " +
+		 		     "and a.id.mes=:mes " +
+		 		     "and a.agente.agencia.id=:idAgencia";
+		Query query=  em.createQuery(strq,Res_Agente_Mes.class).setParameter("efiscal", efiscal)
+		                     .setParameter("mes",mes)
+		                      .setParameter("idAgencia", idAgencia);
+		 
+		 return query.getResultList();
+	 }
+	
+	/** Retorna todos los Agentes que pertenecen a una Agencia
+	 * @param idAgencia
+	 * @return
+	 */
+	public List<Agente> getAgentesAgencia(int idAgencia){
+		 String strq="Select a from Agente a where a.agencia.id=:idAgencia";
+	     Query query=  em.createQuery(strq,Agente.class).setParameter("idAgencia", idAgencia); 
+	     return query.getResultList();
+	}
+	
+	/** Retorna todos los Agentes en BD
+	 * @return
+	 */
+	public List<Agente> getAllAgentes(){
+		 String strq="Select a from Agente a";
+	     Query query=  em.createQuery(strq,Agente.class);
+	     return query.getResultList();
+	}
+	
+	
+	/** Retorna todos los Agentes de un P por Agencia dado el P y el E Fiscal
+	 * @param efiscal
+	 * @param p
+	 * @param idAgencia
+	 * @return
+	 */
+	public List<Res_Agente_P> getAgentesP(int efiscal, int p, int idAgencia){
+		 String strq="Select a from Res_Agente_P a " +
+	 		     "where a.id.ej_Fiscal_id=:efiscal " +
+	 		     "and a.id.p_id=:p " +
+	 		     "and a.agente.agencia.id=:idAgencia";
+	Query query=  em.createQuery(strq,Res_Agente_P.class).setParameter("efiscal", efiscal)
+	                     .setParameter("p",p)
+	                      .setParameter("idAgencia", idAgencia);
+	 
+	 return query.getResultList();
+	}
+	
+	
+	
+	/** Retorna para un Agente todos los P (Res_Agente_P) dado el E Fiscal
+	 * @param efiscal
+	 * @param idAgente
+	 * @param idAgencia
+	 * @return
+	 */
+	public List<Res_Agente_P> getAgentesPAgentes(int efiscal, int idAgente){
+		 String strq="Select a from Res_Agente_P a " +
+	 		     "where a.id.ej_Fiscal_id=:efiscal " +
+	 		     "and a.agente.id=:idAgente" ;
+	Query query=  em.createQuery(strq,Res_Agente_P.class).setParameter("efiscal", efiscal)
+			              .setParameter("idAgente", idAgente);
+	 
+	 return query.getResultList();
+	}
+	
+	/** Retorna la lista de Agentes nuevo en un P por Agencia
+	 * @param efiscal
+	 * @param p
+	 * @param idAgencia
+	 * @return
+	 */
+	public List<Res_Agente_P> getAgentesNuevoP(int efiscal, int p, int idAgencia){
+		 String strq="Select a from Res_Agente_P a " +
+	 		     "where a.id.ej_Fiscal_id=:efiscal " +
+	 		     "and a.id.p_id=:p " +
+	 		     "and a.agente.agencia.id=:idAgencia" +
+	 		     "and a.agente_nuevo is true";
+	Query query=  em.createQuery(strq,Res_Agente_P.class).setParameter("efiscal", efiscal)
+	                     .setParameter("p",p)
+	                      .setParameter("idAgencia", idAgencia);
+	 
+	 return query.getResultList();
+	}
+	
+	/** Retorna todos los Agentes que participan en Carrera en un P de todas las Agencias. Ordenados por ptos_p
+	 * @param efiscal
+	 * @param p
+	 * @return
+	 */
+	public List<Res_Agente_P> getAgentesParticipanCarreraP(int efiscal, int p){
+		 String strq="Select a from Res_Agente_P a " +
+	 		     "where a.id.ej_Fiscal_id=:efiscal " +
+	 		     "and a.id.p_id=:p " +
+	 		     "and a.participa_carrera is true order by a.puntos_p desc";
+	Query query=  em.createQuery(strq,Res_Agente_P.class).setParameter("efiscal", efiscal)
+	                     .setParameter("p",p);
+	 
+	 return query.getResultList();
+	}
+	
+	
+	/** De de alta en la BD a un Agente, Res_Agente_Mes, Res_Agente_P,Res_Agente_Semana, segun se pase
+	 * @param entiy
+	 */
+	public void newAgente(Object entiy){
+		if (entiy instanceof Agente) 
+			em.persist((Agente)entiy);
+		else if (entiy instanceof Res_Agente_Mes)
+			em.persist((Res_Agente_Mes)entiy);
+		else if (entiy instanceof Res_Agente_P)
+			em.persist((Res_Agente_P)entiy);
+		else if (entiy instanceof Res_Agente_Semana)
+			em.persist((Res_Agente_Semana)entiy);		
+	}
+	
+	/**Actualiza en la BD a un Agente, Res_Agente_Mes, Res_Agente_P,Res_Agente_Semana, segun se pase
+	 * @param entiy
+	 */
+	public void updateAgente(Object entiy){
+		if (entiy instanceof Agente) 
+			em.merge((Agente)entiy);
+		else if (entiy instanceof Res_Agente_Mes)
+			em.merge((Res_Agente_Mes)entiy);
+		else if (entiy instanceof Res_Agente_P)
+			em.merge((Res_Agente_P)entiy);
+		else if (entiy instanceof Res_Agente_Semana)
+			em.merge((Res_Agente_Semana)entiy);		
+	}
+	
+		
+	
+
+}

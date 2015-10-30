@@ -1,0 +1,70 @@
+package es.gob.cnjuego.ws.service;
+
+
+
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import es.gob.cnjuego.ws.util.CodigoEstadoSCSP;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+
+@Service(value="servicioIdentidad")
+public class ServicioIdentidadImpl implements ServicioIdentidad {
+
+	Logger log = Logger.getLogger(ServicioIdentidadImpl.class);
+	
+	
+	@Autowired
+	ServicioGestionJugadores gestionJugadores;
+	
+	@Override
+	public CodigoEstadoSCSP consultarIdentidadUsuario(String nif, String nombre, String apellido1, String apellido2, Date fechaNacimiento) throws Exception
+	{
+		CodigoEstadoSCSP res = null;
+		try {
+// TODO Descomentar			res = AccesoSCSP.getInstance().verificarIdentidad(nif, nombre, apellido1, apellido2, fechaNacimiento);
+			
+//			if (AccesoSCSP.getInstance().verificarIdentidad(nif, nombre, apellido1, apellido2, fechaNacimiento))
+//				res = CodigosVerificacion.COD_IDENTIDAD_CORRECTA;
+//			else
+//				res = CodigosVerificacion.COD_IDENTIDAD_INCORRECTA;
+
+		}catch(Exception ex)
+		{
+			throw ex;
+		}
+		return res;
+	}
+	
+	
+	@Override
+	public CodigoEstadoSCSP consultarIdentidadUsuarioConCache(String nif, String nombre, String apellido1, String apellido2, Date fechaNacimiento) throws Exception
+	{
+		CodigoEstadoSCSP res = new CodigoEstadoSCSP();
+		String ident = null;
+		try {
+			ident = gestionJugadores.identidadJugadorCache(nif,fechaNacimiento,nombre,apellido1,apellido2);
+			if (ident != null){
+				res.setCodigo(ident);
+				res.setDescripcion(CodigosVerificacion.getDescripcion(ident));
+			}
+			else { 
+// TODO Descomentar				res = AccesoSCSP.getInstance().verificarIdentidad(nif, nombre, apellido1, apellido2, fechaNacimiento);
+//				if (AccesoSCSP.getInstance().verificarIdentidad(nif, nombre, apellido1, apellido2, fechaNacimiento).getCodigo().equals(CodigoEstadoSCSP.SCSP_ESTADO_RES)))
+//					res = CodigosVerificacion.COD_IDENTIDAD_CORRECTA;
+//				else
+//					res = CodigosVerificacion.COD_IDENTIDAD_INCORRECTA;
+			}
+			
+		}catch(Exception ex)
+		{
+			log.error("ServicioIdentidadImpl.consultarIdentidadUsuarioConCache(): Error al consultar identidad",ex);
+			throw ex;
+		}
+		return res;
+	}
+	
+}

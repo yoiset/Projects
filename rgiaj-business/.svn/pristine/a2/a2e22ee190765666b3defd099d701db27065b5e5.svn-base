@@ -1,0 +1,225 @@
+
+package es.dgoj.rgiaj;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Java class for AbstractQueryEntityRquest complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="AbstractQueryEntityRquest">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="firstResult" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="maxResults" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="queryTimeout" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="calculateNumResults" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="fixDatetimes" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="orders" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="order" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="fieldName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "AbstractQueryEntityRquest", propOrder = {
+    "firstResult",
+    "maxResults",
+    "queryTimeout",
+    "calculateNumResults",
+    "fixDatetimes",
+    "orders",
+    "order",
+    "fieldName"
+})
+@XmlSeeAlso({
+    ComunidadQueryRequest.class,
+    JugHistoricoQueryRequest.class,
+    JugProhibicionQueryRequest.class
+})
+public class AbstractQueryEntityRquest {
+
+    protected int firstResult;
+    protected int maxResults;
+    protected int queryTimeout;
+    protected boolean calculateNumResults;
+    protected boolean fixDatetimes;
+    protected List<String> orders;
+    @XmlElement(required = true)
+    protected String order;
+    @XmlElement(required = true)
+    protected String fieldName;
+
+    /**
+     * Gets the value of the firstResult property.
+     * 
+     */
+    public int getFirstResult() {
+        return firstResult;
+    }
+
+    /**
+     * Sets the value of the firstResult property.
+     * 
+     */
+    public void setFirstResult(int value) {
+        this.firstResult = value;
+    }
+
+    /**
+     * Gets the value of the maxResults property.
+     * 
+     */
+    public int getMaxResults() {
+        return maxResults;
+    }
+
+    /**
+     * Sets the value of the maxResults property.
+     * 
+     */
+    public void setMaxResults(int value) {
+        this.maxResults = value;
+    }
+
+    /**
+     * Gets the value of the queryTimeout property.
+     * 
+     */
+    public int getQueryTimeout() {
+        return queryTimeout;
+    }
+
+    /**
+     * Sets the value of the queryTimeout property.
+     * 
+     */
+    public void setQueryTimeout(int value) {
+        this.queryTimeout = value;
+    }
+
+    /**
+     * Gets the value of the calculateNumResults property.
+     * 
+     */
+    public boolean isCalculateNumResults() {
+        return calculateNumResults;
+    }
+
+    /**
+     * Sets the value of the calculateNumResults property.
+     * 
+     */
+    public void setCalculateNumResults(boolean value) {
+        this.calculateNumResults = value;
+    }
+
+    /**
+     * Gets the value of the fixDatetimes property.
+     * 
+     */
+    public boolean isFixDatetimes() {
+        return fixDatetimes;
+    }
+
+    /**
+     * Sets the value of the fixDatetimes property.
+     * 
+     */
+    public void setFixDatetimes(boolean value) {
+        this.fixDatetimes = value;
+    }
+
+    /**
+     * Gets the value of the orders property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the orders property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getOrders().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link String }
+     * 
+     * 
+     */
+    public List<String> getOrders() {
+        if (orders == null) {
+            orders = new ArrayList<String>();
+        }
+        return this.orders;
+    }
+
+    /**
+     * Gets the value of the order property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getOrder() {
+        return order;
+    }
+
+    /**
+     * Sets the value of the order property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setOrder(String value) {
+        this.order = value;
+    }
+
+    /**
+     * Gets the value of the fieldName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    /**
+     * Sets the value of the fieldName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFieldName(String value) {
+        this.fieldName = value;
+    }
+
+}

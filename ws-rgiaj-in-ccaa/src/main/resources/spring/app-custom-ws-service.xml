@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd		
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!--
+	Las clases del siguiente paquete serán escaneadas para la inyección automática de dependencias 
+	 -->
+	<context:component-scan base-package="es.dgoj.rgiaj"></context:component-scan>
+	
+	<bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+ 	
+ 	<bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+	
+	
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />	
+
+	<cxf:bus>
+		<cxf:features>
+			<cxf:logging />
+		</cxf:features>
+	</cxf:bus>
+
+     <bean id="controller" class="es.dgoj.rgiaj.ws.JuegoRGIAJController" scope="prototype"></bean>
+     
+	<bean id="JuegoRGIAJImpl"	class="es.dgoj.rgiaj.ws.JuegoRGIAJImpl">
+	   <property name="controller" ref="controller"/>
+	</bean>
+
+	<!-- 
+		Define y publica el servicio web. Nótese que se definen varios interceptores
+		que son invocados antes de que la petición llegue al servicio web. 
+		Nótese que los interceptores tienen referencias al bean del repositorio. Esta referencia
+		es inyectada por Spring de forma automática (autowire="byType")
+    -->
+	<jaxws:endpoint xmlns:s="http://rgiaj.dgoj.es/" 
+		id="JuegoRGIAJServiceEndpoint" 
+		address="/JuegoRGIAJ"
+		serviceName="s:JuegoRGIAJ" 
+		wsdlLocation="classpath:JuegoRGIAJ.wsdl"
+		implementor="#JuegoRGIAJImpl">
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+<!-- 		<jaxws:inInterceptors> -->
+<!-- 			<bean class="es.dgoj.rgiaj.ws.InterceptorEntradaProcesarCertificado" autowire="byType"> -->
+<!-- 			</bean> -->
+<!-- 			<bean class="es.dgoj.rgiaj.ws.InterceptorEntradaControlarSeguridad" autowire="byType"> -->
+<!-- 			</bean> -->
+<!-- 		</jaxws:inInterceptors> -->
+<!-- 		<jaxws:properties> -->
+<!-- 			<entry key="ws-security.callback-handler" value="es.dgoj.rgiaj.ws.ServerPasswordCallback"/> -->
+<!-- 			<entry key="ws-security.signature.username" value="24a1408645874e2749389480c8997989_e8d884b6-6e09-4e13-9e19-1e882c865018"/>  -->
+<!-- 			<entry key="ws-security.signature.properties" value="server_sign.properties"/>  -->
+<!--  			<entry key="schema-validation-enabled" value="true" /> -->
+<!--  			Este flag indica que se debe comprimir el contenido binario -->
+<!--  			<entry key="mtom-enabled" value="true"/> -->
+<!--  		</jaxws:properties>  -->
+	</jaxws:endpoint>
+
+	<!-- 
+	   Cuando la aplicación arranca, automáticamente escanea las clases e intenta desplegar aquellas
+	   que definen web-services. En esta aplicación web-service está configurado manualmente (en este fichero), 
+	   y es necesario incluir la definición del bean "excludesAnnotatedWSNames" para desactivar el mecanismo que
+	   escanea y publica las clases que definen servicios.
+	 -->
+	<bean id="excludesAnnotatedWSNames"
+		class="org.springframework.beans.factory.config.ListFactoryBean">
+		<property name="sourceList">
+			<list>
+				<value>RGIAJComunidadesPort</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

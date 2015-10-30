@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="juegoDniService" targetNamespace="http://service.ws.component.juego.mir.es/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.ws.component.juego.mir.es/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <types>
+  <xs:schema targetNamespace="http://service.ws.component.juego.mir.es/" version="1.0" xmlns:tns="http://service.ws.component.juego.mir.es/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="JuegoDniException" type="tns:JuegoDniException"/>
+   <xs:element name="listaDniRequest" type="tns:listaDniRequest"/>
+   <xs:element name="listaDniResponse" type="tns:listaDniResponse"/>
+   <xs:element name="infoResultado" type="tns:infoResultado"/>
+   <xs:complexType name="listaDniRequest">
+    <xs:sequence>
+     <xs:element maxOccurs="unbounded" minOccurs="0" name="dni" type="xs:string"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="listaDniResponse">
+    <xs:sequence>
+     <xs:element maxOccurs="unbounded" minOccurs="0" name="inforesultado" type="tns:infoResultado"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="infoResultado">
+    <xs:sequence>
+     <xs:element minOccurs="0" name="dni" type="xs:string"/>
+     <xs:element minOccurs="0" name="resultado" type="xs:boolean"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="JuegoDniException">
+    <xs:sequence>
+     <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+   </xs:complexType>
+  </xs:schema>
+ </types>
+ <message name="juegoDni_listaDniRequest">
+  <part element="tns:listaDniRequest" name="listaDniRequest"/>
+ </message>
+ <message name="JuegoDniException">
+  <part element="tns:JuegoDniException" name="JuegoDniException"/>
+ </message>
+ <message name="juegoDni_listaDniResponse">
+  <part element="tns:listaDniResponse" name="listaDniResponse"/>
+ </message>
+ <portType name="juegoDni">
+  <operation name="listaDni" parameterOrder="listaDniRequest">
+   <input message="tns:juegoDni_listaDniRequest"/>
+   <output message="tns:juegoDni_listaDniResponse"/>
+   <fault message="tns:JuegoDniException" name="JuegoDniException"/>
+  </operation>
+ </portType>
+ <binding name="juegoDniBinding" type="tns:juegoDni">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="listaDni">
+   <soap:operation soapAction=""/>
+   <input>
+    <soap:body use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+   </output>
+   <fault name="JuegoDniException">
+    <soap:fault name="JuegoDniException" use="literal"/>
+   </fault>
+  </operation>
+ </binding>
+ <service name="juegoDniService">
+  <port binding="tns:juegoDniBinding" name="juegoDniPort">
+   <soap:address location="http://localhost:8080/cnj_usuarios_ws/servicios/juegoDniService"/>
+  </port>
+ </service>
+</definitions>

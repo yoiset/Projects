@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+
+	<bean id="performanceManager" class="com.jeveris.core.performance.aop.PerformanceAround">
+		<property name="performanceManagerFactory" ref="performanceManagerFactory" />
+	</bean>
+
+	<bean id="performanceManagerFactory"
+		class="com.jeveris.core.performance.aop.PerformanceLoggerAndStatsManagerFactory" />
+
+	  <aop:config>
+		<aop:aspect ref="performanceManager">
+			<aop:pointcut id="loggerAndStatsPerformance" expression="execution(* es.dgoj.rgiaj.business..*.*(..))" />
+<!-- 			<aop:pointcut id="loggerPerformanceRepository" expression="target(com.jeveris.core.persistence.repository.IBaseRepository)" /> -->
+			<aop:around pointcut-ref="loggerAndStatsPerformance" method="invoke" />
+<!-- 			<aop:around pointcut-ref="loggerPerformanceRepository" method="invoke" />  -->
+		</aop:aspect>
+	</aop:config>
+	
+</beans>

@@ -1,0 +1,43 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+
+public interface UtilDAO {
+
+	@SuppressWarnings("unchecked")
+	public abstract <T extends Object> List<T> findAll(
+			Class<T> transferObjectClass, String sortColumn, boolean ascending);
+
+	@SuppressWarnings("unchecked")
+	public abstract <T extends Object> List<T> findAll(
+			Class<T> transferObjectClass);
+
+	public abstract <T> T find(Class<T> transferObjectClass, Object id);
+
+	public abstract <T> T find(Class<T> transferObjectClass, Long id);
+
+	@SuppressWarnings("unchecked")
+	public abstract <T> List<T> findAllAndFilterLike(
+			Class<T> transferObjectClass, Map<String, Object> params,
+			String sortColumn, boolean ascending);
+
+	@SuppressWarnings("unchecked")
+	public abstract <T> List<T> findAllByQuery(String query,
+			Map<String, Object> params);
+
+	@SuppressWarnings("unchecked")
+	public abstract <T> T findSingleByQuery(String query,
+			Map<String, Object> params);
+
+	public abstract <T> T find_s(Class<T> transferObjectClass, String id);
+
+	public abstract <T> void updateCollection(Collection<T> obj);
+
+	public abstract void update(Object obj);
+
+	public abstract <T> void remove(Class<T> tipo, Object id);
+
+}

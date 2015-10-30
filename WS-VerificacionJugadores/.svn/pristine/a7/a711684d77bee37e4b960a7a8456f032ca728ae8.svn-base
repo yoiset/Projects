@@ -1,0 +1,67 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Header>
+		<wsse:Security
+			xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+			xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+			soap:mustUnderstand="1">
+			<wsu:Timestamp wsu:Id="TS-3">
+				<wsu:Created>2013-01-30T16:18:30.573Z</wsu:Created>
+				<wsu:Expires>2013-01-30T16:23:30.573Z</wsu:Expires>
+			</wsu:Timestamp>
+			<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+				Id="SIG-2">
+				<ds:SignedInfo>
+					<ds:CanonicalizationMethod
+						Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+						<ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#"
+							PrefixList="soap" />
+					</ds:CanonicalizationMethod>
+					<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+					<ds:Reference URI="#id-1">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+								<ec:InclusiveNamespaces
+									xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="" />
+							</ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>4ubWovQcwBvNseme/n6DW+/NHbw=</ds:DigestValue>
+					</ds:Reference>
+				</ds:SignedInfo>
+				<ds:SignatureValue>lKhtnrq/K6GBP+ZXvoO1/zK9WtpSsPo0sa0Mo0tjD+fCurm0u4LY0sRFi19Qvg4HmYBfPKTNXy28zYQfB0HBxV15WI/ROSG/+SKEQ1RbUWqFUIe74Me38MnsP/xiwFdOfq2i+o7b8nfRGjziEptWHlyzWA46RVeP3sZOod58yrs=
+				</ds:SignatureValue>
+				<ds:KeyInfo Id="KI-A4923D788E697F948413595627104482">
+					<wsse:SecurityTokenReference wsu:Id="STR-A4923D788E697F948413595627104483">
+						<ds:X509Data>
+							<ds:X509IssuerSerial>
+								<ds:X509IssuerName>1.2.840.113549.1.9.1=#161d64676f6a2e736f706f7274656f70657261646f726573406d65682e6573,CN=cnjuego.gob.es,OU=CAINFORMATICA,O=CADGOJ,L=madrid,ST=madrid,C=es
+								</ds:X509IssuerName>
+								<ds:X509SerialNumber>11027049980042006261</ds:X509SerialNumber>
+							</ds:X509IssuerSerial>
+						</ds:X509Data>
+					</wsse:SecurityTokenReference>
+				</ds:KeyInfo>
+			</ds:Signature>
+		</wsse:Security>
+	</soap:Header>
+	<soap:Body
+		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+		wsu:Id="id-1">
+		<ns2:verificarJugador
+			xmlns:ns2="http://ws.cnjuego.gob.es/VerificacionJugadores/">
+			<jugadores>
+				<dni>12345678Z</dni>
+				<nombre>Billy</nombre>
+				<apellido1>Gates</apellido1>
+				<apellido2>Mortaleda</apellido2>
+				<fechaNacimiento>1890-01-15+01:00</fechaNacimiento>
+			</jugadores>
+			<jugadores>
+				<dni>12345678Z</dni>
+				<nombre>Juanita</nombre>
+				<apellido1>LÃ³pez</apellido1>
+				<fechaNacimiento>1950-07-20+01:00</fechaNacimiento>
+			</jugadores>
+		</ns2:verificarJugador>
+	</soap:Body>
+</soap:Envelope>

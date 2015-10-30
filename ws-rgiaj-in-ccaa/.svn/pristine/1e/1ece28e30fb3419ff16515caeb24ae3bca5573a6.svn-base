@@ -1,0 +1,15 @@
+#
+# Application configuration file
+# -------------------------------------------
+#
+#	Property						Required	Description
+#	---------------------------------------------------------------------------------
+#	application.Id	 	 	 	 	Yes	 		Identificador de la aplicación
+#	application.name			 	Yes	 		Nombre de la aplicación
+#	application.version			 	Yes	 		Versión de la aplicación (Debe corresponder con la versión del tag)
+#	application.defaultLanguage	 	Yes	 		Idioma por defecto de la aplicación
+# 
+*.application.Id = WSRGIAJCCAA
+*.application.name = WSRGIAJCCAA
+*.application.version = 1.0.0
+*.application.defaultLanguage = es_ES

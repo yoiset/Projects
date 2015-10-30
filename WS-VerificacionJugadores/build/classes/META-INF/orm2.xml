@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+    version="2.0">
+    <description>VerificacionJugadores</description>
+    <package>jpa.model</package>
+    <entity class="es.gob.cnjuego.ws.verificacionjugadores.Contacto" name="Contacto" access="FIELD">
+    	<table name="CONTACTOS"/>
+    	<attributes>
+            <id name="id">
+                <generated-value strategy="SEQUENCE" generator="sqContacto"/>
+                <sequence-generator name="sqContacto" sequence-name="SEQ_CONTACTO" allocation-size="1"/>
+            </id>
+        	<basic name="id" optional="false">
+                <column name="ID_CONTACTO" />
+            </basic>
+        	<basic name="nombre" optional="true">
+                <column name="NOMBRE" />
+            </basic>
+            <basic name="apellidos" optional="false">
+                <column name="APELLIDOS" />
+            </basic>
+            <basic name="fechaNacimiento" optional="true">
+                <column name="FECHA_NACIMIENTO" />
+            </basic>
+            <basic name="telefono" optional="true">
+                <column name="TELEFONO" />
+            </basic>
+            <basic name="direccion" optional="true">
+                <column name="DIRECCION" />
+            </basic>
+            <basic name="email" optional="true">
+                <column name="EMAIL" />
+            </basic>
+            <basic name="sexo" optional="false">
+                <column name="SEXO" />
+            </basic>
+            <basic name="estadoCivil" optional="true">
+                <column name="ESTADO_CIVIL" />
+            </basic>
+            <basic name="empleadoConnectisInt" optional="true">
+                <column name="EMPLEADO_CONNECTIS" />
+            </basic>
+            
+        </attributes>
+    </entity>
+</entity-mappings>

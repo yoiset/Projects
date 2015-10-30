@@ -1,0 +1,44 @@
+package es.gamco.redprogram.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import es.gamco.redprogram.dao.TeleDAO;
+
+
+ @Service(value="teleService")
+ public class TeleService {
+
+	
+	
+	private String name="Yoiset";
+	
+	@Resource
+	private TeleDAO teleDAO;
+	
+		
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public List<String> getSalerList() {
+		return salerList;
+	}
+	public void setSalerList(List<String> salerList) {
+		this.salerList = salerList;
+	}
+	private List<String> salerList;
+	
+	public String sayHello(String name){
+		return "Hello "+ name + ", my name's " + this.name + ", what can I help you? ";
+	}
+	public void setTeleDAO(TeleDAO teleDAO) {
+		this.teleDAO = teleDAO;
+	}
+
+}

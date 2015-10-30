@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Vodafone Red Program</title>
+<!--   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"> -->
+
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <link rel="stylesheet" href="css/style.css" media="screen"> </link>
+    <!--[if lte IE 7]><link rel="stylesheet" href="style.ie7.css" media="screen" /><![endif]-->
+    <link rel="stylesheet" href="css/style.responsive.css" media="all"></link>
+
+</head>
+<body>
+<div id="redmain">
+ <div style="float:left;padding-left: 900px; padding-top: 100px" > <img src="images/LogoGO.png" /></div>
+  <div class="redsheet clearfix">
+    
+            <div class="redlayout-wrapper clearfix">
+<!--                 <div class="redcontent-layout"> -->
+                    <div class="redcontent-layout-row">
+                                                          
+                                 <div class="redpostcontent redpostcontent-0 clearfix">
+                                     <p align="left" style="color: #ffffff">Bienvenido a</p>
+                                      <p align="left" style="color: #ffffff"><strong>RED Program</strong>  </p>
+                                 <input type="text" value="user" style="width: 100%; background-color: #272524; height: 25px; font-size: medium;"/> 
+                                 <br /> 
+                                 <input type="text" value="pass" style="width: 100%; background-color: #272524; height: 25px; font-size: medium; padding-bottom: 5px"/> 
+                                 <br />  
+                                 <input type="button" value="Entrar" style="width: 100%; background-color: #b12726; height: 30px; color: white; font-size: medium; border: 1px solid #b12726"/>    
+                                 </div>
+                    </div>
+<!--                 </div> -->
+            </div>
+			<!-- <footer class="redfooter clearfix">
+<p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
+<p>Copyright © 2013. All Rights Reserved.</p>
+</footer> -->
+
+    </div>
+    
+    <p class="redpage-footer">
+        <span id="redfootnote-links"><a href="http://www.gamco.es/" target="_blank">GAMCO SL</a> created with Artisteer by Yoiset.</span>
+    </p>
+</div>
+
+
+</body></html>

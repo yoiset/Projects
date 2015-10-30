@@ -1,0 +1,85 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import es.gob.cnjuego.ws.util.CodigoEstadoSCSP;
+
+public class ClienteSCSPServiceTestCase extends SpringTestCase {
+
+	private ClienteSCSPService clienteServicio;
+	
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		ClienteSCSPService proxyBean = (ClienteSCSPService)this.getContext().getBean("ClienteSCSPService");
+		proxyBean.setCertificadoVerificacion("VDISFWS01");
+		proxyBean.setFinalidad("Verificación Identidad Jugadores");
+		proxyBean.setNombreSolicitante("DGOJ");
+		proxyBean.setIdentificadorSolicitante("S2801109F");
+		this.setClienteServicio(proxyBean);
+	}
+
+	/**
+	 * Verificamos que la configuración de los ficheros es correcta.
+	 */
+	@Test
+	public void testInit() throws Exception {
+		assertNotNull(this.getClienteServicio());
+	}
+
+	/**
+	 * Esta prueba comprueba que la invocación funciona correctamente.
+	 * Todos los datos son correctos. Debe retornar un código COD003.
+	 */
+	@Test
+	public void testVerificarIdentidadDatosCorrectos() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String nif = "10000949C";
+		String nombre = "Olga";
+		String apellido1 = "San Miguel";
+		String apellido2 = "Chao";
+		Date fechaNacimiento = dateFormat.parse("1940-06-02");
+		CodigoEstadoSCSP respuesta = this.getClienteServicio().verificarIdentidad(nif, nombre, apellido1, apellido2, fechaNacimiento);
+		
+		// Comprobamos la respuesta
+		assertNotNull(respuesta);
+		assertEquals("COD003", respuesta.getCodigo());
+		assertEquals("La identidad del usuario es correcta", respuesta.getDescripcion());
+	}
+
+	/**
+	 * Esta prueba comprueba que la invocación funciona correctamente.
+	 * En este caso la fecha de nacimiento no es correcta y debe retornar
+	 * un código COD004
+	 */
+	@Test
+	public void testVerificarIdentidadDatosIncorrectos() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String nif = "10000949C";
+		String nombre = "Olga";
+		String apellido1 = "San Miguel";
+		String apellido2 = "Chao";
+		Date fechaNacimiento = dateFormat.parse("2011-11-25");
+		CodigoEstadoSCSP respuesta = this.getClienteServicio().verificarIdentidad(nif, nombre, apellido1, apellido2, fechaNacimiento);
+		
+		// Comprobamos la respuesta
+		assertNotNull(respuesta);
+		assertEquals("COD004", respuesta.getCodigo());
+		assertEquals("La identidad del usuario es incorrecta - Titular no identificado", respuesta.getDescripcion());
+	}
+
+	public ClienteSCSPService getClienteServicio() {
+		return clienteServicio;
+	}
+
+	public void setClienteServicio(ClienteSCSPService proxy) {
+		this.clienteServicio = proxy;
+	}
+
+}

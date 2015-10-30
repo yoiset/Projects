@@ -1,0 +1,133 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.entity.PeticionEntity;
+
+public class VerificacionDaoTestCase extends SpringTestCase {
+	
+	private VerificacionDao dao;
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		VerificacionDao daoBean = (VerificacionDao)this.getContext().getBean("VerificacionDao");
+		this.setDao(daoBean);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+	}
+	
+	@Test
+	public void testInit() throws Exception {
+		assertNotNull(this.getDao());
+	}
+
+	@Test
+	public void testGetOperadorByHashExistente() throws Exception {
+		OperadorEntity operador = this.getDao().getOperadorByHash("8Mtqm/8fyKc4AszApw1XaDKdRMg=");
+		assertNotNull(operador);
+		assertEquals("autoridad.com", operador.getEmail());
+		assertEquals("8Mtqm/8fyKc4AszApw1XaDKdRMg=", operador.getHashCertificado());
+		assertEquals("NO TIENE", operador.getCif());
+		assertEquals("mnemo-auditorseguridad", operador.getRazonSocial());
+	}
+
+	@Test
+	public void testGetOperadorByHashNoExistente() throws Exception {
+		OperadorEntity operador = this.getDao().getOperadorByHash("123456789");
+		assertNull(operador);
+	}
+
+	@Test
+	public void testGetPeticionByIdExistente() throws Exception {
+		PeticionEntity peticion = this.getDao().getPeticionesById(1853);
+		assertNotNull(peticion);
+		assertEquals(1853, peticion.getIdPeticion());
+		assertEquals(8, peticion.getIdOperador().intValue());
+		assertEquals("verificarJugador", peticion.getCodPeticion());
+	}
+
+	@Test
+	public void testGetPeticionByIdNoExistente() throws Exception {
+		PeticionEntity peticion = this.getDao().getPeticionesById(-15);
+		assertNull(peticion);
+	}
+
+	@Test
+	public void testAgregarPeticionCompleta() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fecha1 = dateFormat.parse("2011-11-18");
+		Date fecha2 = dateFormat.parse("2012-03-21");
+		
+		PeticionEntity peticion1 = new PeticionEntity();
+		peticion1.setCodPeticion("Prueba");
+		peticion1.setIdOperador(8L);
+		peticion1.setPeticion("petición SOAP XML");
+		peticion1.setFechaPeticion(fecha1);
+		peticion1.setRespuesta("respuesta SOAP XML");
+		peticion1.setFechaRespuesta(fecha2);
+		peticion1.setFault("fault SOAP XML");
+		
+		this.getDao().agregarPeticion(peticion1);
+		assertTrue(peticion1.getIdPeticion() > 0);
+		PeticionEntity peticion2 = this.getDao().getPeticionesById(peticion1.getIdPeticion());
+		assertNotNull(peticion2);
+		assertEquals(peticion1.getIdPeticion(), peticion2.getIdPeticion());
+		assertEquals(peticion1.getCodPeticion(), peticion2.getCodPeticion());
+		assertEquals(peticion1.getFault(), peticion2.getFault());
+		assertEquals(peticion1.getIdOperador(), peticion2.getIdOperador());
+		assertEquals(peticion1.getPeticion(), peticion2.getPeticion());
+		assertEquals(dateFormat.format(peticion1.getFechaPeticion()), dateFormat.format(peticion2.getFechaPeticion()));
+		assertEquals(peticion1.getRespuesta(), peticion2.getRespuesta());
+		assertEquals(dateFormat.format(peticion1.getFechaRespuesta()), dateFormat.format(peticion2.getFechaRespuesta()));
+	}
+
+	@Test
+	public void testAgregarPeticionSinOperador() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fecha1 = dateFormat.parse("2011-11-18");
+		Date fecha2 = dateFormat.parse("2012-03-21");
+		
+		PeticionEntity peticion1 = new PeticionEntity();
+		peticion1.setCodPeticion("Prueba");
+		peticion1.setIdOperador(null); // Sin operador!
+		peticion1.setPeticion("petición SOAP XML");
+		peticion1.setFechaPeticion(fecha1);
+		peticion1.setRespuesta("respuesta SOAP XML");
+		peticion1.setFechaRespuesta(fecha2);
+		peticion1.setFault("fault SOAP XML");
+		
+		this.getDao().agregarPeticion(peticion1);
+		assertTrue(peticion1.getIdPeticion() > 0);
+		PeticionEntity peticion2 = this.getDao().getPeticionesById(peticion1.getIdPeticion());
+		assertNotNull(peticion2);
+		assertEquals(peticion1.getIdPeticion(), peticion2.getIdPeticion());
+		assertEquals(peticion1.getCodPeticion(), peticion2.getCodPeticion());
+		assertEquals(peticion1.getFault(), peticion2.getFault());
+		assertEquals(null, peticion2.getIdOperador());
+		assertEquals(peticion1.getPeticion(), peticion2.getPeticion());
+		assertEquals(dateFormat.format(peticion1.getFechaPeticion()), dateFormat.format(peticion2.getFechaPeticion()));
+		assertEquals(peticion1.getRespuesta(), peticion2.getRespuesta());
+		assertEquals(dateFormat.format(peticion1.getFechaRespuesta()), dateFormat.format(peticion2.getFechaRespuesta()));
+	}
+
+	public VerificacionDao getDao() {
+		return dao;
+	}
+
+	public void setDao(VerificacionDao dao) {
+		this.dao = dao;
+	}
+
+}

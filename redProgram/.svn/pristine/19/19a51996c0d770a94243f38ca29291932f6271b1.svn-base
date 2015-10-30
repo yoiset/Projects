@@ -1,0 +1,83 @@
+/**
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %(c) Copyright 2007. GAMCO S.L.
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Proyecto: Red Program
+ * % Modulo: redProgram Web App
+ * % Autor/es: Yoiset Lopez<nombre>
+ * % Fecha: 05/08/2013
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Modificaciones (autor, fecha, modificaciones)
+ * % <Autor>, <fecha>, <modificaciones>
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %
+ * %  The persistent class module
+ * %
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+package es.gamco.redprogram.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the Categoria database table.
+ * 
+ */
+@Entity
+public class Categoria implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private int id;
+
+	private String tipo;
+
+	//bi-directional many-to-one association to Res_Agencia_Mes
+	@OneToMany(mappedBy="categoria")
+	private List<Res_Agencia_Mes> resAgenciaMes;
+
+	public Categoria() {
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTipo() {
+		return this.tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public List<Res_Agencia_Mes> getResAgenciaMes() {
+		return this.resAgenciaMes;
+	}
+
+	public void setResAgenciaMes(List<Res_Agencia_Mes> resAgenciaMes) {
+		this.resAgenciaMes = resAgenciaMes;
+	}
+
+	public Res_Agencia_Mes addResAgenciaMe(Res_Agencia_Mes resAgenciaMe) {
+		getResAgenciaMes().add(resAgenciaMe);
+		resAgenciaMe.setCategoria(this);
+
+		return resAgenciaMe;
+	}
+
+	public Res_Agencia_Mes removeResAgenciaMe(Res_Agencia_Mes resAgenciaMe) {
+		getResAgenciaMes().remove(resAgenciaMe);
+		resAgenciaMe.setCategoria(null);
+
+		return resAgenciaMe;
+	}
+
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/jdbc
+           http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd"
+        default-lazy-init="true">
+
+        <bean id="reportBusinessListDatasourceRunner" class="com.jeveris.core.reporting.ReportFactoryBean">
+			<property name="implementationClass" value="com.jeveris.reporting.jasper.ReportImpl"/>
+			<property name="reportCreator" ref="reportListDatasourceCreator"/>
+			<property name="reportControllerFactory" ref="&amp;reportBusinessController"/>
+			<property name="reportParametersFactory" ref="&amp;reportParameters"/>
+		</bean>
+		
+		<bean id="reportListDatasourceCreator" class="com.jeveris.reporting.jasper.ReportCreatorImpl">
+			<property name="reportFillManagerHelper" ref="reportListDatasourceFillManagerHelper"/>
+		</bean>
+		<bean id="reportListDatasourceFillManagerHelper" class="com.jeveris.reporting.jasper.JRDatasourceReportFillManagerHelper"/>
+		
+		<bean id="reportBusinessController" class="com.jeveris.core.reporting.ControllerFactoryBean">
+			<property name="implementationClass" value="com.jeveris.core.reporting.controllers.BusinessReportingControllerImpl"/>
+		</bean>
+		
+		<bean id="reportParameters" class="com.jeveris.core.reporting.ParametersFactoryBean">
+			<property name="implementationClass" value="com.jeveris.reporting.jasper.ParametersImpl"/>
+		</bean>
+
+</beans>

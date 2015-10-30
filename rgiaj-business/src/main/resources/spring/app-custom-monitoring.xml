@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		
+
+	<!-- MONITORIZACION DE COMPONENTES DE ARQUITECTURA DE SISTEMAS -->
+	<!-- Configuracion de todos los componentes posible a monitorizar. -->
+	<!-- Eliminar y dejar unicamente aquellos componentes que se utilicen en el proyecto -->
+	<!--  -->
+
+	<context:annotation-config />
+	<bean id="systemResourceMonitor" class="java.lang.String">
+		<constructor-arg value="nagios.ARCHITECTURE.SYSTEM" />
+	</bean>
+
+	<!-- Resource for check back-ends status (each back-end is an aspect) -->
+	<bean id="backendStatusResource"
+		class="com.jeveris.monitoring.nagios.jmx.resource.BackendStatusResource">
+		<constructor-arg index="0" ref="systemResourceMonitor" />
+		<constructor-arg index="1" value="BackendStatus" />
+		<property name="aspects">
+			<list value-type="com.jeveris.core.monitoring.jmx.IMonitoringAspectStatus">				
+				<ref bean="httpUrlAspectStatus"/>		
+				<ref bean="mySQLDBAspectStatus" />
+				<ref bean="wsSSOAspectStatus"/>
+				<ref bean="wsSeguridadAspectStatus"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get HTTP Url status -->
+	<bean id="httpUrlAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.HttpUrlAspectStatus">
+		<constructor-arg index="0" value="Aplicacion ${application.Id}" />
+		<property name="aspectConfiguration" ref="httpUrlAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for HTTP aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="httpUrlAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="url" value="${http.url}" />
+				<entry key="timeout" value="10" /> <!-- timeout in seconds -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get MySQL Database status.
+		 It uses GenericDBAspect because MySQL don't need especial check -->
+	<bean id="mySQLDBAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.GenericDBAspectStatus"
+		p:dataSource-ref="dataSource">
+		<constructor-arg index="0" value="Base de Datos" />
+		<property name="aspectConfiguration" ref="genericAspectConfiguration" />
+		<property name="checkQuery" value="${sql.query}"/>
+	</bean>
+	
+	<!-- Configuration for general aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="genericAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="clave1" value="value1" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get WS SSO status -->
+	<bean id="wsSSOAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.HttpUrlAspectStatus">
+		<constructor-arg index="0" value="Servicio Web de Single Sign On" />
+		<property name="aspectConfiguration" ref="wsSSOAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for WS SSO aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="wsSSOAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="url" value="${sso.url:#{null}}" />
+				<entry key="endpointKey" value="${sso.key:#{null}}" />
+				<entry key="timeout" value="10" /> <!-- timeout in seconds -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get WS Seguridad status -->
+	<bean id="wsSeguridadAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.HttpUrlAspectStatus">
+		<constructor-arg index="0" value="Servicio Web de Seguridad" />
+		<property name="aspectConfiguration" ref="wsSeguridadAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for WS Seguridad aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="wsSeguridadAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="url" value="${seguridad.url:#{null}}" />
+				<entry key="endpointKey" value="${seguridad.key:#{null}}" />
+				<entry key="timeout" value="10" /> <!-- timeout in seconds -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get WS afirma validate signature status -->
+	<bean id="aFirmaSignatureAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.HttpUrlAspectStatus">
+		<constructor-arg index="0" value="Servicio Web de @Firma: Validacion de firmas" />
+		<property name="aspectConfiguration" ref="aFirmaSignatureAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for WS afirma validate signature aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="aFirmaSignatureAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="url" value="${afirma.signature.url:#{null}}" />
+				<entry key="endpointKey" value="${afirma.signature.key:#{null}}" />
+				<entry key="timeout" value="10" /> <!-- timeout in seconds -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get WS afirma validate certificate status -->
+	<bean id="aFirmaCertificateAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.HttpUrlAspectStatus">
+		<constructor-arg index="0" value="Servicio Web de @Firma: Validacion de certificados" />
+		<property name="aspectConfiguration" ref="aFirmaCertificateAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for WS afirma validate certificate aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="aFirmaCertificateAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="url" value="${afirma.certificate.url:#{null}}" />
+				<entry key="endpointKey" value="${afirma.certificate.key:#{null}}" />
+				<entry key="timeout" value="10" /> <!-- timeout in seconds -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get DocManager -->
+	<bean id="docManagerAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.HttpUrlAspectStatus">
+		<constructor-arg index="0" value="Gestor documental" />
+		<property name="aspectConfiguration" ref="docManagerAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for WS DocManager aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="docManagerAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="url" value="${docmanager.url:#{null}}" />
+				<entry key="endpointKey" value="${docmanager.key:#{null}}" />
+				<entry key="timeout" value="10" /> <!-- timeout in seconds -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get Share Resource -->
+	<bean id="shareResourcerAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.ShareResourceAspectStatus">
+		<constructor-arg index="0" value="Recurso compartido NAS/NFS" />
+		<property name="aspectConfiguration" ref="shareResourceAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for Share Resource aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="shareResourceAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="path" value="${shareresource.path}" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get WS mail -->
+	<bean id="wsMailAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.HttpUrlAspectStatus">
+		<constructor-arg index="0" value="Servicio Web de envio de correos" />
+		<property name="aspectConfiguration" ref="wsMailAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for WS mail aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="wsMailAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="url" value="${wsmail.url:#{null}}" />
+				<entry key="endpointKey" value="${wsmail.key:#{null}}" />
+				<entry key="timeout" value="10" /> <!-- timeout in seconds -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get WS LDAP status -->
+	<bean id="wsLDAPAspectStatus"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.HttpUrlAspectStatus">
+		<constructor-arg index="0" value="Servicio Web del LDAP" />
+		<property name="aspectConfiguration" ref="wsLDAPAspectConfiguration" />						
+	</bean>
+	
+	<!-- Configuration for WS LDAP aspects. Use different configuration beans 
+		if it's needed -->
+	<bean id="wsLDAPAspectConfiguration"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+		<property name="propertyMap">
+			<map>
+				<entry key="url" value="${wsldap.url:#{null}}" />
+				<entry key="endpointKey" value="${wsldap.key:#{null}}" />
+				<entry key="timeout" value="10" /> <!-- timeout in seconds -->
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Status aspect to get Mail Server status -->
+    <bean id="smtpAspectStatus"
+	    class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.SMTPAspectStatus">
+	    <constructor-arg index="0" value="Servidor de correos" />
+	    <property name="aspectConfiguration" ref="smtpAspectConfiguration" />                                          
+    </bean>
+    
+    <!-- Configuration for smtp aspects. Use different configuration beans 
+               if it's needed -->
+    <bean id="smtpAspectConfiguration"
+	    class="com.jeveris.monitoring.nagios.jmx.aspect.NagiosMonitoringAspectConfiguration">
+	    <property name="propertyMap">
+	     <map>
+	         <entry key="mail.host" value="${mail.host}" />
+	         <entry key="mail.port" value="${mail.port}" />
+	     </map>
+	    </property>
+    </bean>
+    
+	<!-- Status aspect to get LDAP status -->
+	<bean id="ldapAspectStatus"
+	        class="com.jeveris.monitoring.nagios.jmx.aspect.arq.backend.LdapAspectStatus">
+	        <constructor-arg index="0" value="Servidor LDAP" />
+	        <property name="aspectConfiguration" ref="genericAspectConfiguration" />
+	        <property name="ldapTemplate" ref="ldapTemplate"></property>                                            
+	</bean>
+	
+	<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+        <constructor-arg ref="contextSource" />
+    </bean>
+    
+    <bean id="contextSource"
+        class="org.springframework.ldap.core.support.LdapContextSource">
+        <property name="url" value="${ldap.url}" />
+        <!-- make sure base property is not domain root, 
+        use more specific search base (an OU for example) -->
+        <property name="base" value="${ldap.base}" />
+    </bean>
+    
+	<!-- MONITORIZACION DE ARQUIETCTURA -->
+	
+	<bean id="architectureResourceMonitor" class="java.lang.String">
+		<constructor-arg value="nagios.ARCHITECTURE" />
+	</bean>
+	
+	<!-- User counter filter for monitoring.-->	
+	<!-- INICIO - COMENTAR ESTAS LINEAS SI EL MODULO BUSINESS SE UTILIZA EN UN PROYECTO DE SERVICIO WEB O APLICACIONES WEB DE INTERNET -->	
+<!-- 	<bean id="userCounterHelpingFilter" class="com.jeveris.core.monitoring.jmx.web.filter.UserCounterHelpingFilter"> -->
+<!-- 		<property name="userCounter" ref="userCounterAspect"/> -->
+<!-- 		<property name="authenticationManager" ref="authenticationManager" /> -->
+<!-- 		<property name="filterProcessesUrl" value="${app.login.url}"/> -->
+<!-- 		 <property name="authenticationFailureHandler"> -->
+<!-- 			<bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"> -->
+<!-- 				<property name="defaultFailureUrl" value="${app.login.url4errorfilter}" /> -->
+<!-- 			</bean> -->
+<!-- 		</property> -->
+<!-- 		<property name="authenticationSuccessHandler"> -->
+<!-- 			<bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler"> -->
+<!-- 				<property name="defaultTargetUrl" value="${app.default.index.page}" /> -->
+<!-- 			</bean> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	<!-- FIN - COMENTAR ESTAS LINEAS SI EL MODULO BUSINESS SE UTILIZA EN UN PROYECTO DE SERVICIO WEB O APLICACIONES WEB DE INTERNET  -->
+	
+	<!-- Application Presentation Layer Exception Counter Resource -->
+	<bean id="exceptionCounterResource"
+		class="com.jeveris.monitoring.nagios.jmx.resource.ExceptionCounterResource">
+		<description>
+			Application Presentation Layer Exception Counter MBean Resource
+		</description>
+		<constructor-arg index="0" ref="architectureResourceMonitor" />
+		<constructor-arg index="1" value="ExceptionCounterResource" />
+		<property name="aspect" ref="exceptionCounterAspect" />		
+	</bean>
+	
+	<!-- Status aspect to get number of presentation layer exceptions in application-->
+	<bean id="exceptionCounterAspect"
+		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.ExceptionCountAspect">
+		<constructor-arg index="0" value="Application Presentation Layer Exception Counter Aspect" />
+		<property name="aspectConfiguration" ref="genericAspectConfiguration" />								
+	</bean>
+	
+	<!-- Application User Counter Resource -->
+	<!-- INICIO - COMENTAR ESTAS LINEAS SI EL MODULO BUSINESS SE UTILIZA EN UN PROYECTO DE SERVICIO WEB O APLICACIONES WEB DE INTERNET  -->
+<!-- 	<bean id="userCounterResource" -->
+<!-- 		class="com.jeveris.monitoring.nagios.jmx.resource.UserCounterResource"> -->
+<!-- 		<description> -->
+<!-- 			Application User Counter MBean Resource -->
+<!-- 		</description> -->
+<!-- 		<constructor-arg index="0" ref="architectureResourceMonitor" /> -->
+<!-- 		<constructor-arg index="1" value="UserCounterResource" /> -->
+<!-- 		<property name="aspect" ref="userCounterAspect" />		 -->
+<!-- 	</bean> -->
+	
+<!-- 	<bean id="loginListener" class="com.jeveris.core.monitoring.jmx.web.listener.LoginListener"> -->
+<!-- 		<property name="userCounter" ref="userCounterAspect"/>		 -->
+<!-- 	</bean> -->
+	
+	<!-- Status aspect to get users logged in application-->
+<!-- 	<bean id="userCounterAspect" -->
+<!-- 		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.UserCountAspect"> -->
+<!-- 		<constructor-arg index="0" value="Application User Counter Aspect" /> -->
+<!-- 		<property name="aspectConfiguration" ref="genericAspectConfiguration" />								 -->
+<!-- 	</bean> -->
+	
+	<!-- Application HTTP Session Counter Resource -->
+<!-- 	<bean id="sessionCounterResource" -->
+<!-- 		class="com.jeveris.monitoring.nagios.jmx.resource.SessionCounterResource"> -->
+<!-- 		<description> -->
+<!-- 			Application HTTP Session Counter MBean Resource -->
+<!-- 		</description> -->
+<!-- 		<constructor-arg index="0" ref="architectureResourceMonitor" /> -->
+<!-- 		<constructor-arg index="1" value="SessionCounterResource" /> -->
+<!-- 		<property name="aspect" ref="sessionCounterAspect" />		 -->
+<!-- 	</bean> -->
+	
+<!-- 	<bean id="sessionListener" class="com.jeveris.core.monitoring.jmx.web.listener.SessionListener"> -->
+<!-- 		not used because SessionListener defined in web.xml creates no spring bean -->
+<!-- 		     and gets bean from Spring WebApplicationContextUtils. needs bean named sessionCounter -->
+<!-- 		<property name="sessionCounter" ref="sessionCounterAspect"/>				 -->
+<!-- 	</bean> -->
+	
+	<!-- Status aspect to get http sessions in application-->
+<!-- 	<bean id="sessionCounterAspect" -->
+<!-- 		class="com.jeveris.monitoring.nagios.jmx.aspect.arq.SessionCountAspect"> -->
+<!-- 		<constructor-arg index="0" value="Application HTTP Session Counter Aspect" /> -->
+<!-- 		<property name="aspectConfiguration" ref="genericAspectConfiguration" />								 -->
+<!-- 	</bean> -->
+	
+<!-- 	<alias name="sessionCounterAspect" alias="sessionCounter" /> -->
+<!-- 	<alias name="exceptionCounterAspect" alias="exceptionCounter" /> -->
+	<!-- FIN - COMENTAR ESTAS LINEAS SI EL MODULO BUSINESS SE UTILIZA EN UN PROYECTO DE SERVICIO WEB O APLICACIONES WEB DE INTERNET  -->
+	
+	<!-- MONITORIZACION DE LA PROPIA APLICACION -->
+	
+	<bean id="applicationResourceMonitor" class="java.lang.String">
+		<constructor-arg value="nagios.APPLICATION" />
+	</bean>
+	
+</beans>

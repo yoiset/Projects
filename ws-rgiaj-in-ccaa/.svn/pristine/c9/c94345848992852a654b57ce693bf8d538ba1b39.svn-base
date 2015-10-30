@@ -1,0 +1,120 @@
+
+package es.dgoj.rgiaj;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Clase Java para anonymous complex type.
+ * 
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * 
+ * <pre>
+ * &lt;complexType>
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="comunidad" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="formatoDescarga" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="tipoDescarga" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "comunidad",
+    "formatoDescarga",
+    "tipoDescarga"
+})
+@XmlRootElement(name = "prohibidosRequest")
+public class ProhibidosRequest {
+
+    @XmlElement(required = true)
+    protected String comunidad;
+    @XmlElement(required = true)
+    protected String formatoDescarga;
+    @XmlElement(required = true)
+    protected String tipoDescarga;
+
+    /**
+     * Obtiene el valor de la propiedad comunidad.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getComunidad() {
+        return comunidad;
+    }
+
+    /**
+     * Define el valor de la propiedad comunidad.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setComunidad(String value) {
+        this.comunidad = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad formatoDescarga.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFormatoDescarga() {
+        return formatoDescarga;
+    }
+
+    /**
+     * Define el valor de la propiedad formatoDescarga.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFormatoDescarga(String value) {
+        this.formatoDescarga = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad tipoDescarga.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTipoDescarga() {
+        return tipoDescarga;
+    }
+
+    /**
+     * Define el valor de la propiedad tipoDescarga.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTipoDescarga(String value) {
+        this.tipoDescarga = value;
+    }
+
+}

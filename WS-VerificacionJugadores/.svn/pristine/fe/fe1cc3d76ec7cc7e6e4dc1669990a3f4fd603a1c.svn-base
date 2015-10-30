@@ -1,0 +1,27 @@
+package es.gob.cnjuego.ws.verificacionjugadores.interceptor;
+
+import org.apache.cxf.binding.soap.SoapMessage;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+import org.apache.log4j.Logger;
+
+import es.gob.cnjuego.ws.verificacionjugadores.VerificacionDao;
+
+public class InterceptorSalidaRegistrarRespuesta extends WSS4JOutInterceptor {
+
+	private static Logger log = Logger.getLogger(InterceptorSalidaRegistrarRespuesta.class);
+	private VerificacionDao dao;
+
+	public void handleMessage(SoapMessage mensaje) throws Fault {
+	}
+
+	public VerificacionDao getDao() {
+		return dao;
+	}
+
+	public void setDao(VerificacionDao dao) {
+		this.dao = dao;
+	}
+
+
+}

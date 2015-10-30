@@ -1,0 +1,199 @@
+package es.gob.cnjuego.ws.verificacionjugadores.control.validacion;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+
+
+import es.gob.cnjuego.ws.dao.VerificacionDao;
+import es.gob.cnjuego.ws.util.Constantes;
+import es.gob.cnjuego.ws.util.FormatoDatosIdentificacion;
+import es.gob.cnjuego.ws.util.Propiedades;
+import es.gob.cnjuego.ws.util.validation.ValidadorNIF;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+import es.gob.cnjuego.ws.verificacionjugadores.Jugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoType;
+
+public class ValidadorJugador {
+
+	
+	/**
+	 * Método para validar un jugador: se valida restricciones de NIF y NIE, y se formatea fecha de nacimiento
+	 * @param jugador
+	 * @return codigo de error si existe o si no null
+	 */
+	
+	private static Logger log = Logger.getLogger(ValidadorJugador.class);
+	
+	private static VerificacionDao verificacionDao;
+
+	private static String acentosOrig;
+	private static String acentosTrad;
+	
+	public static ResultadoType validarJugador(Jugador jugador)
+	{
+		ResultadoType resultado = null;
+        String value=null;
+		formateaDatosJugador(jugador); 
+		
+		if (ValidadorNIF.isNifNie(jugador.getDni())){
+			// Valida que incluya Nombre y Apellido1
+			if (!FormatoDatosIdentificacion.validarCampo(jugador.getNombre())) 
+				return resultado = new ResultadoType(CodigosVerificacion.COD_FALTA_CAMPO,CodigosVerificacion.DESC_ERROR_NOMBRE_NULL);// CodigosVerificacion.COD_FORMATO_INCORRECTO;
+			if(!FormatoDatosIdentificacion.validarCampo(jugador.getApellido1()))
+				return resultado = new ResultadoType(CodigosVerificacion.COD_FALTA_CAMPO,CodigosVerificacion.DESC_ERROR_APELLIDO1_NULL);
+			
+			
+			if (ValidadorNIF.isNifOrNie(jugador.getDni())) {
+				//Si es un NIF además valida que Apellido2 no sea nulo
+				if(!FormatoDatosIdentificacion.validarCampo(jugador.getApellido2()))
+					return resultado = new ResultadoType(CodigosVerificacion.COD_FALTA_CAMPO, CodigosVerificacion.DESC_ERROR_Apellido2_NULL);//CodigosVerificacion.COD_FORMATO_INCORRECTO;
+				//Si es un NIF además valida que el Num de Soporte no venga				
+				if(FormatoDatosIdentificacion.validarCampo(jugador.getNumSoporte()))
+					return resultado = new ResultadoType(CodigosVerificacion.COD_NUM_SOPORTE_NIF , CodigosVerificacion.DESC_ERROR_NUM_SOPORTE_NIF);//CodigosVerificacion.COD_NUM_SOPORTE_NIF;
+			}else{
+				
+//				if(isNIEInvalidLength(jugador.getDni()))
+//					return resultado = new ResultadoType(CodigosVerificacion.COD_FORMATO_INCORRECTO, CodigosVerificacion.DESC_ERROR_DNI_INV); //CodigosVerificacion.COD_FORMATO_INCORRECTO;
+				
+				if(FormatoDatosIdentificacion.validarCampo(jugador.getNumSoporte())){
+					if(!isValidNumSoporte(jugador.getNumSoporte()))
+						return resultado = new ResultadoType(CodigosVerificacion.COD_NUM_SOPORTE , CodigosVerificacion.DESC_ERROR_NUM_SOPORTE);//CodigosVerificacion.COD_NUM_SOPORTE;
+				}
+			}
+				
+			
+		} else {
+			//El DNI es incorrecto (no es un NIF o un NIE)
+			return resultado = new ResultadoType(CodigosVerificacion.COD_FORMATO_INCORRECTO, CodigosVerificacion.DESC_ERROR_DNI_INV); //CodigosVerificacion.COD_FORMATO_INCORRECTO;
+		}
+		
+		//Comprobar que no se incluyan caracteres inválidos
+		value=validarCaracteresJugador(jugador);
+		if (value!=null){
+			resultado=new ResultadoType(CodigosVerificacion.COD_CARACTERES_INVALIDOS, value);
+			return resultado;//  CodigosVerificacion.COD_CARACTERES_INVALIDOS;
+		}
+		
+//		Fecha de nacimiento vacia
+		if(jugador.getFechaNacimiento()!=null){
+			if(isFechaInvalida(jugador.getFechaNacimiento()))
+				      return resultado=new ResultadoType(CodigosVerificacion.COD_FECHA_NACIMINENTO, CodigosVerificacion.DESC_ERROR_FECHA_ANTERIOR_1900);
+		}else return resultado=new ResultadoType(CodigosVerificacion.COD_FECHA_NACIMINENTO, CodigosVerificacion.DESC_ERROR_FECHA_NULL);
+			
+		
+		
+		return resultado;
+	}
+	
+
+
+	/**
+	 * Función para formatear los datos de un jugador para comprobaciones y almacenamiento en caché
+	 */
+	public static void formateaDatosJugador(Jugador jugador)
+	{
+		// Pendiente de terminar: se deben rellenar estos campos desde la tabla TRADUCCION_CARACTERES
+		acentosOrig = getVerificacionDao().getListaCaracteresOriginales();
+		acentosTrad = getVerificacionDao().getListaCaracteresTraducidos();
+		
+		// Dar formato al jugador
+		FormatoDatosIdentificacion.formateaFechaNacimiento(jugador.getFechaNacimiento());
+		jugador.setNombre(FormatoDatosIdentificacion.formateaAcentos(jugador.getNombre(), acentosOrig, acentosTrad));
+		jugador.setApellido1(FormatoDatosIdentificacion.formateaAcentos(jugador.getApellido1(), acentosOrig, acentosTrad));
+		jugador.setApellido2(FormatoDatosIdentificacion.formateaAcentos(jugador.getApellido2(), acentosOrig, acentosTrad));
+		jugador.setDni(jugador.getDni().toUpperCase());
+	}
+	
+	/* DGB */
+	public static String validarCaracteresJugador(Jugador jugador)
+	{
+		String res = null;
+
+		String invalidos = verificacionDao.getValorPropiedad("scsp.caracteresInvalidos");
+		if (jugador.getNombre() != null && !FormatoDatosIdentificacion.validarCaracteres(jugador.getNombre(),invalidos))
+			return CodigosVerificacion.DESC_ERROR_NOMBRE_CARACTERES_INV;
+		if (jugador.getApellido1() != null && !FormatoDatosIdentificacion.validarCaracteres(jugador.getApellido1(),invalidos))
+			return CodigosVerificacion.DESC_ERROR_Apellido1_CARACTERES_INV;
+		if (jugador.getApellido2()!=null && !FormatoDatosIdentificacion.validarCaracteres(jugador.getApellido2(),invalidos))
+			return CodigosVerificacion.DESC_ERROR_Apellido2_CARACTERES_INV;
+		
+		tratarApellido2(jugador);
+		return res;
+	}
+	
+	/** Detecta cuando el pellido2 venga vacio lo pone a Null
+	 * @param jugador
+	 */
+	private static void tratarApellido2(Jugador jugador) {
+		if(jugador.getApellido2()!=null){
+			String app2=jugador.getApellido2();
+			app2=app2.trim();
+			if(app2.isEmpty())
+				jugador.setApellido2(null);
+		}
+		
+	}
+
+	/* DGB */
+	public static boolean todosCaracteresAlfanumericos(Jugador jugador)
+	{
+		boolean res = true;
+		
+		String permitidos = verificacionDao.getValorPropiedad("scsp.caracteresPermitidos");
+		if (jugador.getNombre() != null && !FormatoDatosIdentificacion.todosCaracteresPermitidos(jugador.getNombre(),permitidos))
+			return false;
+		if (jugador.getApellido1() != null && !FormatoDatosIdentificacion.todosCaracteresPermitidos(jugador.getApellido1(),permitidos))
+			return false;
+		if (jugador.getApellido2() != null && !FormatoDatosIdentificacion.todosCaracteresPermitidos(jugador.getApellido2(),permitidos))
+			return false;
+		
+		return res;
+	
+	}
+	
+	/** Controla que la fecha que se pasa sea anterior a 1900
+	 * @param fechaNacimiento
+	 * @return
+	 */
+	public static boolean isFechaInvalida(Date fechaNacimiento) {
+		if(fechaNacimiento==null) return true;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date1900=null;
+		try {
+			date1900 = dateFormat.parse("01/01/1900");			
+		} catch (ParseException e) {
+			log.debug("Error de parsing fecha", e);
+			return true;
+		}		
+		if(fechaNacimiento.after(date1900)) return false;
+		
+		return true;
+	}
+
+	public static VerificacionDao getVerificacionDao() {
+		return verificacionDao;
+	}
+
+	public static void setVerificacionDao(VerificacionDao verificacionDao) {
+		ValidadorJugador.verificacionDao = verificacionDao;
+	}
+	
+	private static boolean isValidNumSoporte(String numSoporte){
+		numSoporte=numSoporte.trim();
+		if(numSoporte.length()!=9)
+			return false;
+		Character first=numSoporte.charAt(0);
+		if(!(first.equals('E') || first.equals('C') ||  first.equals('e') || first.equals('c')))
+			return false;
+		if(!ValidadorNIF.isNumeric(numSoporte.substring(1, numSoporte.length())))
+			return false;
+	  return true;
+	}
+	
+	
+	
+	
+}

@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Notas</title>
+<link href="documentacion/notas.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h2>INDICE</h2>
+<ul>
+<li><a href="#descripcion">Descripción</a></li>
+<li><a href="#deploy">Despliegue local</a></li>
+<li><a href="#deployPre">Despliegue en pre-producción</a></li>
+<li><a href="#db">Conexión a la base de datos</a></li>
+<li><a href="#seguridad">Gestión de la seguridad</a></li>
+<li><a href="#wsdl2java">Generar las clases de los servicios web</a></li>
+<li><a href="#monitor">Configuración y uso del TCP/IP Monitor</a></li>
+<li><a href="#testcases">Ejecución de las pruebas unitarias</a></li>
+<li><a href="#war">Generar el fichero de despliegue (.war)</a></li>
+</ul>
+
+<h2><a name="descripcion">Descripción</a></h2>
+<ul>
+<li>
+Esta aplicación es un servicio-web para que los operadores controlen el estado de los jugadores.</li>
+<li>Tecnologías: Spring 3.0.7, CXF 2.7.2, JPA</li>
+<li>La definición del servicio está en el fichero <a href="resources/wsdl/VerificacionJugadores.wsdl">VerificacionJugadores.wsdl</a>. Ese fichero se utiliza para generar
+las clases requeridas por CXF a partir de un script de Ant</li>
+<li>Internamente, el servicio que publicamos invoca a otro servicio que valida la identidad de los jugadores. 
+La definición de ese servicio está en <a href="resources/wsdl/SCSP.wsdl">SCSP.wsdl</a>. El servicio está desplegado en
+ <a href="http://aplicaciones-pre.ordenacionjuego.es/scsp-ws-3.2.2/service.wsdl">http://aplicaciones-pre.ordenacionjuego.es/scsp-ws-3.2.2/service.wsdl</a>. Usamos CXF para generar los stubs de la invocación.</li>
+<li>El servicio que publicamos, también invoca a otro servicio que comprueba los jugadores en el RGIAJ. 
+La definición de ese servicio está en <a href="resources/wsdl/juegoDni.wsdl">juegoDni.wsdl</a>. El servicio está desplegado en
+ <a href="http://aplicaciones-pre.ordenacionjuego.es/servicioDniWS/juegoDniService?wsdl">http://aplicaciones-pre.ordenacionjuego.es/servicioDniWS/juegoDniService?wsdl</a>. Usamos CXF para generar los stubs de la invocación.</li>
+<li>
+<b>Despliegue (local):</b> <a href="http://localhost:8080/VerificacionJugadores/VerificacionJugadores?wsdl">http://localhost:8080/VerificacionJugadores/VerificacionJugadores?wsdl</a>
+</li>
+<li>
+<b>Despliegue (PRE):</b> <a href="http://dgojwsse01pre:18080/VerificacionJugadores/VerificacionJugadores?wsdl">http://dgojwsse01pre:18080/VerificacionJugadores/VerificacionJugadores?wsdl</a>
+</li>
+</ul>
+<h2><a name="deploy">Despliegue local</a></h2>
+<p>
+<b>Paso 1:</b> Asociar el servidor Tomcat 7.x a Eclipse (usando el plugin de Eclipse)
+</p>
+<p>
+<b>Paso 2:</b> Asociar el proyecto al servidor (usando el plugin de Eclipse)
+</p>
+<p>
+<b>Paso 3:</b> Arrancar el servidor
+</p>
+<p>
+<b>Paso 4:</b> Abrir la siguiente dirección para comprobar que el servicio está desplegado:
+</p>
+<p>
+<a href="http://localhost:8080/VerificacionJugadores/VerificacionJugadores?wsdl">http://localhost:8080/VerificacionJugadores/VerificacionJugadores?wsdl</a>
+</p>
+<p>
+<b>Paso 5:</b> Ejecutar las <a href="#testcases">pruebas unitarias</a>
+</p>
+
+<h2><a name="deployPre">Despliegue en pre-producción</a></h2>
+Los despliegues en PRE se hacen desde la consola de Tomcat, a través del navegador.
+<p>
+<b>Paso 1:</b> Modificar la ruta del fichero de log para Linux. Abrir <b>log4j.properties</b>
+y descomentar la línea correspondiente.
+</p>
+<b>Paso 2:</b> Incrementar el número de versión en <b>build.properties</b>. Ese número se guarda en una clase
+generada (Version.java) y luego se muestra en la consola cuando la aplicación arranca.
+</p>
+<p>
+<b>Paso 3:</b> <a href="#war">Generar el fichero de despliegue (.war)</a> con el script de Ant
+</p>
+<p>
+<b>Paso 4:</b> Abrir la consola: <a href="http://dgojwsse01pre:18080/manager/html/">http://dgojwsse01pre:18080/manager/html/</a> (admin/admin)
+</p>
+<p>
+<b>Paso 5:</b> Seleccionar el fichero y desplegar. Normalmente, antes de desplegar conviene eliminar el despliegue anterior con la opción <b>Replegar</b>
+</p>
+<br>
+<img src="documentacion/image5.png"/><br>
+<br>
+<p>
+<b>Paso 6:</b> Verificar que el servicio está desplegado <a href="http://dgojwsse01pre:18080/VerificacionJugadores/VerificacionJugadores?wsdl">http://dgojwsse01pre:18080/VerificacionJugadores/VerificacionJugadores?wsdl</a>.
+También conectarse al servidor remoto y comprobar el log de la aplicación: <code>/documentospro/logs/wsoperadores/</code>
+</p>
+
+
+<h2><a name="db">Conexión a la base de datos</a></h2>
+<p>
+La aplicación se conecta a la base de datos a través de un datasource configurado en el servidor Tomcat.
+</p>
+<p>
+El datasource es recuperado por Spring a través de JNDI, de la siguiente manera:
+</p>
+<pre>
+&lt;bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"&gt;
+    &lt;property name="jndiName" value="java:comp/env/jdbc/VerificacionJugadoresDS"/&gt;
+&lt;/bean&gt;
+</pre>
+<p>
+El datasource se declara en el fichero <b>server.xml</b> de Tomcat. Nótese que el usuario y
+contraseña NO se incluyen en el datasource, sino que son insertados cuando la aplicación arranca desde
+Spring:
+</p>
+<pre>
+&lt;Resource 
+    name="jdbc/cnjwsds" 
+    abandonedConnectionTimeout="600" 
+    auth="Container" 
+    connectionFactoryClassName="oracle.jdbc.pool.OracleDataSource" 
+    connectionPoolName="UCPPool" 
+    description="UCP Pool in Tomcat" 
+    driverClassName="oracle.jdbc.pool.OracleDataSource" 
+    factory="oracle.ucp.jdbc.PoolDataSourceImpl" 
+    inactiveConnectionTimeout="120" 
+    maxConnectionReuseTime="600" 
+    maxPoolSize="100" 
+    maxStatements="10" 
+    minPoolSize="3" 
+    sqlForValidateConnection="select 1 from DUAL" 
+    timeoutCheckInterval="60" type="oracle.ucp.jdbc.PoolDataSource" 
+    url="jdbc:oracle:thin:@(DESCRIPTION=(FAILOVER=ON)(LOADBALANCE=OFF)(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.34.104.242)(PORT=1521))(ADDRESS=(PROTOCOL=TCP)(HOST=10.34.104.243)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=PRE-SERVICE.cnjuego.es)))" 
+    user="XXX" 
+    password="XXX" 
+    ConnectionOnBorrow="true"/&gt;
+</pre>
+<p>
+El datasource se publica con JNDI en el fichero <b>/WebContent/META-INF/context.xml</b> del proyecto:
+</p>
+<pre>
+&lt;ResourceLink name="jdbc/VerificacionJugadoresDS"
+    global="jdbc/cnjwsds"
+    type="javax.sql.DataSource"/&gt;
+</pre>
+
+<p>
+Para corregir un error del classloader cuando arranca la aplicación con los cambios anteriores, es necesario agregar
+la siguiente línea en el fichero <b>catalina.properties</b> de Tomcat:
+</p>
+<pre>
+org.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false
+</pre>
+
+<h2><a name="seguridad">Gestión de la seguridad</a></h2>
+<ul>
+<li>
+La seguridad del servicio web se gestiona en varios niveles: uso de comunicación HTTPS (solamente en el entorno de PRO), 
+validación de las IPs de conexión de los operadores y firma de los mensajes SOAP usando un certificado digital.
+</li>
+<li>
+La firma de las respuestas se configura con la política de seguridad definida en el WSDL del servicio. 
+Nótese que <b>la política va asociada solamente a los mensajes de salida</b>. La política es
+interpretada por CXF y éste pone las cabeceras correspondientes (token del certificado, firma, timestamp). 
+El WSDL no asocia ninguna política de seguridad para los mensajes de entrada.
+</li>
+<li>
+Para controlar la segurida de los mensajes de entrada, el servicio utiliza <a href="http://cxf.apache.org/docs/interceptors.html">interceptores</a>. 
+La función de los interceptores es controlar la firma digital del mensaje, la caducidad del timestamp, 
+recuperar los datos del operador a partir del certificado y guardar los mensajes 
+SOAP de entrada/salida en la base de datos (tabla PETICION_WS).
+</li>
+<li>
+Los interceptores se configuran en Spring (ver <b>applicationContext_ws_server.xml</b>).
+</li>
+</ul>
+
+<h2><a name="wsdl2java">Generar las clases de los servicios web</a></h2>
+
+<p>
+Las clases <i>skeleton</i> utilizadas por CXF para publicar el servicio y los <i>stubs</i> utilizados para acceder a los 2 servicios 
+web externos, son generadas por un script de Ant (<b>build.xml</b>).
+</p>
+<p>
+Esto significa que si cambia la definción de algún servicio es necesario volver a correr el script para regenerar las clases correspondientes.
+</p>
+<br>
+<img src="documentacion/image1.png"/><br>
+<br>
+
+<h3>Generar las clases para el servicio de Verificación de Jugadores</h3>
+<p>
+El servicio está definido en <a href="resources/wsdl/VerificacionJugadores.wsdl">VerificacionJugadores.wsdl</a>. Como las estructuras de datos definidas en el servicio contienen atributos de tipo <b>xsd:date</b>,
+debemos establecer un <i>mapping</i> para que las clases que genera CXF tengan atributos de tipo Date (por defecto se generan con tipo XMLGregorianCalendar).
+Más información en la <a href="http://cxf.apache.org/docs/wsdl-to-java.html">documentación de CXF sobre el tema</a>. El script de Ant incluye el <i>mapping</i> para para generar 
+todo correctamente.
+</p>
+<p>Para generar las clases (skeletons) con CXF, hacer lo siguiente:</p>
+<p>
+<b>Paso 1:</b> Arrastrar el fichero <a href="build.xml">build.xml</a> a la vista de Ant. Luego,
+ejecutar la tarea <b>&lt;WSDLToJava-VerificacionJugadores&gt;</b> del script. El script lanza el proceso de generación de clases con CXF. 
+Las clases son creadas en la carpeta <b>\generated</b> del proyecto.
+</p>
+<p>
+<b>Paso 2:</b> Refrescar el proyecto para que Eclipse cargue las clases generadas.
+</p>
+<p>
+<b>Paso 3:</b> Implementar los cambios del funcionamiento del servicio en la clase
+<b>es.gob.cnjuego.ws.verificacionjugadores.VerificacionJugadoresImpl</b>
+</p>
+
+<h3>Generar las clases para el servicio de SCSP (comprobación de identidad de jugadores)</h3>
+<p>
+El servicio está definido en <a href="resources/wsdl/SCSP.wsdl">SCSP.wsdl</a> pero las estructuras de datos están definidas en ficheros <b>*.xsd</b>. Como las estructuras de datos definidas en el servicio contienen atributos de tipo <b>xsd:date</b>,
+debemos establecer un <i>mapping</i> para que las clases que genera CXF tengan atributos de tipo Date (por defecto se generan con tipo XMLGregorianCalendar). El script de Ant incluye el <i>mapping</i> para para generar 
+todo correctamente.
+</p>
+<p>Para generar las clases (stubs) con CXF, hacer lo siguiente:</p>
+<p>
+<b>Paso 1:</b> Arrastrar el fichero <a href="build.xml">build.xml</a> a la vista de Ant. Luego,
+ejecutar la tarea <b>&lt;WSDLToJava-SCSP&gt;</b> del script. El script lanza el proceso de generación de clases con CXF. 
+Las clases son creadas en la carpeta <b>\generated</b> del proyecto.
+</p>
+<p>
+<b>Paso 2:</b> Refrescar el proyecto para que Eclipse cargue las clases generadas.
+</p>
+<p>
+<b>Paso 3:</b> Es necesario ajustar el <b>namespace</b> en algunas clases generadas. Debe quedar así:
+</p>
+<ul>
+<li>
+En la clase <b>es.redsara.intermediacion.scsp.esquemas.ws.respuesta.Transmisiones.TransmisionDatos</b>:
+<pre>
+@XmlElement(name = "DatosEspecificos", namespace="http://www.map.es/scsp/esquemas/datosespecificos")
+protected DatosEspecificosRespuestaType datosEspecificos;
+</pre>
+</li>
+<li>
+En la clase <b>es.redsara.intermediacion.scsp.esquemas.ws.respuesta.DatosEspecificosRespuestaType</b>:
+<pre>
+@XmlElement(name = "EstadoResultado", namespace="http://www.map.es/scsp/esquemas/datosespecificos")
+protected DatosEspecificosRespuestaType.EstadoResultado estadoResultado;
+</pre>
+</li>					        
+<li>
+En la clase <b>es.redsara.intermediacion.scsp.esquemas.ws.respuesta.DatosEspecificosRespuestaType.EstadoResultado</b>:
+<pre>
+@XmlElement(name = "CodigoEstado", namespace="http://www.map.es/scsp/esquemas/datosespecificos")
+protected String codigoEstado;
+@XmlElement(name = "LiteralError", namespace="http://www.map.es/scsp/esquemas/datosespecificos")
+protected String literalError;
+</pre>
+</li>
+</ul>
+<p>
+Es necesario realizar los cambios para que no ocurran errores en la serialización de los mensajes a XML.
+</p>
+<h3>Generar las clases para el servicio JuegoDNI (comprobación de jugadores en el RGIAJ)</h3>
+<p>
+El servicio está definido en <a href="resources/wsdl/juegoDni.wsdl">juegoDni.wsdl</a>. Este servicio es muy simple y 
+no tiene estructuras de datos.
+</p>
+<p>Para generar las clases (stubs) con CXF, hacer lo siguiente:</p>
+<p>
+<b>Paso 1:</b> Arrastrar el fichero <a href="build.xml">build.xml</a> a la vista de Ant. Luego,
+ejecutar la tarea <b>&lt;WSDLToJava-JuegoDNI&gt;</b> del script. El script lanza el proceso de generación de clases con CXF. 
+Las clases son creadas en la carpeta <b>\generated</b> del proyecto.
+</p>
+<p>
+<b>Paso 2:</b> Refrescar el proyecto para que Eclipse cargue las clases generadas.
+</p>
+
+
+<h2><a name="monitor">Configuración y uso del TCP/IP Monitor</a></h2>
+<p>
+El <b>TCP/IP monitor</b> es un plugin de Eclipse que permite inspeccionar los mensajes SOAP de las invocaciones de un web-service. El monitor intercepta las llamadas y muestra
+los mensajes de entrada y salida por una consola. Pasos para configurar TCP/IP Monitor:
+</p>
+<p>
+<b>Paso 1:</b> Abrir la vista del monitor desde el menú de Eclipse: <b>Window -> Show View -> Other...</b>
+</p>
+<p>
+<b>Paso 2:</b> En la vista del monitor abrir el menú con el botón derecho. Elegir la opción <b>Properties</b>. 
+Configurar los valores como se muestra a continuación. Nótese que estamos configurando el puerto <b>80</b> para interceptar las llamadas, así que las
+invocaciones del servicio deben enviarse a ese puerto para que el monitor las intercepte.
+</p>
+<br>
+<img src="documentacion/image2.png"/><br>
+<br>
+<p>
+<b>Paso 3:</b> Para arrancar el monitor, seleccionar la configuración y pinchar en <b>Start</b>
+</p>
+<br>
+<img src="documentacion/image3.png"/>
+<br>
+<p>
+<b>Paso 4:</b> Invocar el web-service al puerto <b>80</b>. El monitor mostrará los mensajes interceptados:
+</p>
+<br>
+<img src="documentacion/image4.png"/><br>
+<br>
+<br>
+<h2><a name="testcases">Ejecución de las pruebas unitarias</a></h2>
+<p>
+<b>Paso 1:</b> Comprobar que el servicio está desplegado en local.
+</p>
+<p>
+<b>Paso 2:</b> Desde Eclipse, ejecutar la clase <b>es.gob.cnjuego.ws.verificacionjugadores.AllTests</b> con <b>JUnit</b>.
+</p>
+<p>
+<b>Paso 3:</b> La línea de ejecución de las pruebas debería estar siempre verde!.
+</p>
+<br>
+<h2><a name="war">Generar el fichero de despliegue (.war)</a></h2>
+<p>
+El fichero de despliegue se genera con el script de Ant, haciendo lo siguiente:
+</p>
+<p>
+<b>Paso 1:</b> Modificar la ruta del fichero de log para Linux. Abrir <b>log4j.properties</b>
+y descomentar la línea correspondiente.
+</p>
+<b>Paso 2:</b> Incrementar el número de versión en <b>build.properties</b>. Ese número se guarda en una clase
+generada (Version.java) y luego se muestra en la consola cuando la aplicación arranca.
+</p>
+<p>
+<b>Paso 3:</b> Arrastrar el fichero <a href="build.xml">build.xml</a> a la vista de Ant. Luego,
+ejecutar la tarea <b>&lt;war&gt;</b> del script. El script lanza el proceso de compilación de las
+clases y luego empaqueta la aplicación y genera el fichero war de despliegue.<br>
+</p>
+<p>
+<b>Paso 4:</b> El fichero se genera en <b>/temp/war</b> (dentro del proyecto).
+</p>
+</body>
+</html>

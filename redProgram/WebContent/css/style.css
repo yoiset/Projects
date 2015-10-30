@@ -1,0 +1,1674 @@
+/* Created by Artisteer v4.0.0.58475 */
+
+#redmain
+{
+   background: #FAFAFA url('images/page.png') center center no-repeat fixed;
+   background: linear-gradient(top, rgba(175, 175, 175, 0.15) 0, rgba(255, 255, 255, 0.42) 1050px) no-repeat, url('../images/page.png') center center no-repeat, linear-gradient(top, #C9C9C9 0, #FFFFFF 1050px) no-repeat;
+   background: -webkit-linear-gradient(top, rgba(175, 175, 175, 0.15) 0, rgba(255, 255, 255, 0.42) 1050px) no-repeat, url('../images/page.png') center center no-repeat, -webkit-linear-gradient(top, #C9C9C9 0, #FFFFFF 1050px) no-repeat;
+   background: -moz-linear-gradient(top, rgba(175, 175, 175, 0.15) 0, rgba(255, 255, 255, 0.42) 1050px) no-repeat, url('../images/page.png') center center no-repeat, -moz-linear-gradient(top, #C9C9C9 0, #FFFFFF 1050px) no-repeat;
+   background: -o-linear-gradient(top, rgba(175, 175, 175, 0.15) 0, rgba(255, 255, 255, 0.42) 1050px) no-repeat, url('../images/page.png') center center no-repeat, -o-linear-gradient(top, #C9C9C9 0, #FFFFFF 1050px) no-repeat;
+   background: -ms-linear-gradient(top, rgba(175, 175, 175, 0.15) 0, rgba(255, 255, 255, 0.42) 1050px) no-repeat, url('../images/page.png') center center no-repeat, -ms-linear-gradient(top, #C9C9C9 0, #FFFFFF 1050px) no-repeat;
+   background: linear-gradient(top, rgba(175, 175, 175, 0.15) 0, rgba(255, 255, 255, 0.42) 1050px) no-repeat, url('../images/page.png') center center no-repeat, linear-gradient(top, #C9C9C9 0, #FFFFFF 1050px) no-repeat;
+   -svg-background: linear-gradient(top, rgba(175, 175, 175, 0.15) 0, rgba(255, 255, 255, 0.42) 1050px) no-repeat, url('../images/page.png') center center no-repeat, linear-gradient(top, #C9C9C9 0, #FFFFFF 1050px) no-repeat;
+   background-attachment: fixed, fixed, fixed !important;
+   margin:0 auto;
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 1px;
+   position: relative;
+   width: 100%;
+   min-height: 100%;
+   left: 0;
+   top: 0;
+   cursor:default;
+   overflow:hidden;
+}
+table, ul.redhmenu
+{
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 1px;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, ul, ol, li
+{
+   margin: 0;
+   padding: 0;
+}
+
+/* Reset buttons border. It's important for input and button tags. 
+ * border-collapse should be separate for shadow in IE. 
+ */
+.redbutton
+{
+   border-collapse: separate;
+   -webkit-background-origin: border !important;
+   -moz-background-origin: border !important;
+   background-origin: border-box !important;
+   background: #C7C7C7;
+   background: transparent;
+   border:1px solid #B5B5B5;
+   padding:0 5px;
+   margin:0 auto;
+   height:22px;
+}
+
+.redpostcontent,
+.redpostheadericons,
+.redpostfootericons,
+.redblockcontent,
+ul.redvmenu a 
+{
+   text-align: left;
+}
+
+.redpostcontent,
+.redpostcontent li,
+.redpostcontent table,
+.redpostcontent a,
+.redpostcontent a:link,
+.redpostcontent a:visited,
+.redpostcontent a.visited,
+.redpostcontent a:hover,
+.redpostcontent a.hovered
+{
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-align: center;
+}
+
+.redpostcontent p
+{
+   margin: 12px 0 12px 15px;
+   
+}
+
+.redpostcontent h1, .redpostcontent h1 a, .redpostcontent h1 a:link, .redpostcontent h1 a:visited, .redpostcontent h1 a:hover,
+.redpostcontent h2, .redpostcontent h2 a, .redpostcontent h2 a:link, .redpostcontent h2 a:visited, .redpostcontent h2 a:hover,
+.redpostcontent h3, .redpostcontent h3 a, .redpostcontent h3 a:link, .redpostcontent h3 a:visited, .redpostcontent h3 a:hover,
+.redpostcontent h4, .redpostcontent h4 a, .redpostcontent h4 a:link, .redpostcontent h4 a:visited, .redpostcontent h4 a:hover,
+.redpostcontent h5, .redpostcontent h5 a, .redpostcontent h5 a:link, .redpostcontent h5 a:visited, .redpostcontent h5 a:hover,
+.redpostcontent h6, .redpostcontent h6 a, .redpostcontent h6 a:link, .redpostcontent h6 a:visited, .redpostcontent h6 a:hover,
+.redblockheader .t, .redblockheader .t a, .redblockheader .t a:link, .redblockheader .t a:visited, .redblockheader .t a:hover,
+.redvmenublockheader .t, .redvmenublockheader .t a, .redvmenublockheader .t a:link, .redvmenublockheader .t a:visited, .redvmenublockheader .t a:hover,
+.redheadline, .redheadline a, .redheadline a:link, .redheadline a:visited, .redheadline a:hover,
+.redslogan, .redslogan a, .redslogan a:link, .redslogan a:visited, .redslogan a:hover,
+.redpostheader, .redpostheader a, .redpostheader a:link, .redpostheader a:visited, .redpostheader a:hover
+{
+   font-size: 31px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 2px;
+   line-height: 120%;
+}
+
+.redpostcontent a, .redpostcontent a:link
+{
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   color: #D6D6D6;
+}
+
+.redpostcontent a:visited, .redpostcontent a.visited
+{
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   color: #C2C2C2;
+}
+
+.redpostcontent  a:hover, .redpostcontent a.hover
+{
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: underline;
+   color: #C2C2C2;
+}
+
+.redpostcontent h1
+{
+   color: #C2C2C2;
+   margin: 10px 0 0;
+   font-size: 29px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redblockcontent h1
+{
+   margin: 10px 0 0;
+   font-size: 29px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h1 a, .redpostcontent h1 a:link, .redpostcontent h1 a:hover, .redpostcontent h1 a:visited, .redblockcontent h1 a, .redblockcontent h1 a:link, .redblockcontent h1 a:hover, .redblockcontent h1 a:visited 
+{
+   font-size: 29px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h2
+{
+   color: #D6D6D6;
+   margin: 10px 0 0;
+   font-size: 24px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redblockcontent h2
+{
+   margin: 10px 0 0;
+   font-size: 24px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h2 a, .redpostcontent h2 a:link, .redpostcontent h2 a:hover, .redpostcontent h2 a:visited, .redblockcontent h2 a, .redblockcontent h2 a:link, .redblockcontent h2 a:hover, .redblockcontent h2 a:visited 
+{
+   font-size: 24px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h3
+{
+   color: #D6D6D6;
+   margin: 10px 0 0;
+   font-size: 20px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redblockcontent h3
+{
+   margin: 10px 0 0;
+   font-size: 20px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h3 a, .redpostcontent h3 a:link, .redpostcontent h3 a:hover, .redpostcontent h3 a:visited, .redblockcontent h3 a, .redblockcontent h3 a:link, .redblockcontent h3 a:hover, .redblockcontent h3 a:visited 
+{
+   font-size: 20px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h4
+{
+   color: #F2F2F2;
+   margin: 10px 0 0;
+   font-size: 18px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redblockcontent h4
+{
+   margin: 10px 0 0;
+   font-size: 18px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h4 a, .redpostcontent h4 a:link, .redpostcontent h4 a:hover, .redpostcontent h4 a:visited, .redblockcontent h4 a, .redblockcontent h4 a:link, .redblockcontent h4 a:hover, .redblockcontent h4 a:visited 
+{
+   font-size: 18px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h5
+{
+   color: #F2F2F2;
+   margin: 10px 0 0;
+   font-size: 15px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redblockcontent h5
+{
+   margin: 10px 0 0;
+   font-size: 15px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h5 a, .redpostcontent h5 a:link, .redpostcontent h5 a:hover, .redpostcontent h5 a:visited, .redblockcontent h5 a, .redblockcontent h5 a:link, .redblockcontent h5 a:hover, .redblockcontent h5 a:visited 
+{
+   font-size: 15px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h6
+{
+   color: #EDEDED;
+   margin: 10px 0 0;
+   font-size: 14px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redblockcontent h6
+{
+   margin: 10px 0 0;
+   font-size: 14px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+.redpostcontent h6 a, .redpostcontent h6 a:link, .redpostcontent h6 a:hover, .redpostcontent h6 a:visited, .redblockcontent h6 a, .redblockcontent h6 a:link, .redblockcontent h6 a:hover, .redblockcontent h6 a:visited 
+{
+   font-size: 14px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 2px;
+}
+
+header, footer, article, nav, #redhmenu-bg, .redsheet, .redhmenu a, .redvmenu a, .redslidenavigator > a, .redcheckbox:before, .redradiobutton:before
+{
+   -webkit-background-origin: border !important;
+   -moz-background-origin: border !important;
+   background-origin: border-box !important;
+}
+
+header, footer, article, nav, #redhmenu-bg, .redsheet, .redslidenavigator > a, .redcheckbox:before, .redradiobutton:before
+{
+   display: block;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+ul
+{
+   list-style-type: none;
+}
+
+ol
+{
+   list-style-position: inside;
+}
+
+html, body
+{
+   height: 100%;
+}
+
+body
+{
+   padding: 0;
+   margin:0;
+   min-width: 200px;
+   color: #DEDEDE;
+}
+
+.clearfix:before, .clearfix:after {
+   content: "";
+   display: table;
+}
+
+.clearfix:after {
+   clear: both;
+}
+
+.cleared {
+   font: 0/0 serif;
+   clear: both;
+}
+
+form
+{
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+table.position
+{
+   position: relative;
+   width: 100%;
+   table-layout: fixed;
+}
+
+li h1, .redpostcontent li h1, .redblockcontent li h1 
+{
+   margin:1px;
+} 
+li h2, .redpostcontent li h2, .redblockcontent li h2 
+{
+   margin:1px;
+} 
+li h3, .redpostcontent li h3, .redblockcontent li h3 
+{
+   margin:1px;
+} 
+li h4, .redpostcontent li h4, .redblockcontent li h4 
+{
+   margin:1px;
+} 
+li h5, .redpostcontent li h5, .redblockcontent li h5 
+{
+   margin:1px;
+} 
+li h6, .redpostcontent li h6, .redblockcontent li h6 
+{
+   margin:1px;
+} 
+li p, .redpostcontent li p, .redblockcontent li p 
+{
+   margin:1px;
+}
+
+
+.redshapes
+{
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   overflow: hidden;
+   z-index: 0;
+}
+
+.redslider-inner {
+   position: relative;
+   overflow: hidden;
+   width: 100%;
+   height: 100%;
+}
+
+.redslidenavigator > a {
+   display: inline-block;
+   vertical-align: middle;
+   outline-style: none;
+   font-size: 1px;
+}
+
+.redslidenavigator > a:last-child {
+   margin-right: 0 !important;
+}
+
+
+
+
+
+
+
+.redsheet
+{
+   background: #0A0A0A;
+   background: rgba(10, 10, 10, 0.51);
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.11);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.11);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.11);
+   padding:3px;
+   margin:200px auto 0;
+   margin-left: 300px;
+   position:relative;
+   cursor:auto;
+   width: 200px;
+   z-index: auto !important;
+}
+
+.redlayout-wrapper
+{
+   position: relative;
+   margin: 0 auto 0 auto;
+   z-index: auto !important;
+}
+
+.redcontent-layout
+{
+   display: table;
+   width: 100%;
+   table-layout: fixed;
+   border-collapse: collapse;
+}
+
+.redcontent-layout-row 
+{
+   display: table-row;
+}
+
+.redlayout-cell
+{
+   display: table-cell;
+   vertical-align: top;
+}
+
+.redblock
+{
+   margin:10px;
+}
+div.redblock img
+{
+   border: 1px dashed #ABABAB;
+   margin: 10px;
+}
+
+.redblockheader
+{
+   background: #696969;
+   background: linear-gradient(top, #737373 0, #636363 40%, #636363 50%, #636363 60%, #737373 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #737373 0, #636363 40%, #636363 50%, #636363 60%, #737373 100%) no-repeat;
+   background: -moz-linear-gradient(top, #737373 0, #636363 40%, #636363 50%, #636363 60%, #737373 100%) no-repeat;
+   background: -o-linear-gradient(top, #737373 0, #636363 40%, #636363 50%, #636363 60%, #737373 100%) no-repeat;
+   background: -ms-linear-gradient(top, #737373 0, #636363 40%, #636363 50%, #636363 60%, #737373 100%) no-repeat;
+   background: linear-gradient(top, #737373 0, #636363 40%, #636363 50%, #636363 60%, #737373 100%) no-repeat;
+   -svg-background: linear-gradient(top, #737373 0, #636363 40%, #636363 50%, #636363 60%, #737373 100%) no-repeat;
+   border:1px solid #595959;
+   padding:10px 7px;
+   margin:0 auto 4px;
+}
+.redblockheader .t,
+.redblockheader .t a,
+.redblockheader .t a:link,
+.redblockheader .t a:visited, 
+.redblockheader .t a:hover
+{
+   color: #000000;
+   font-size: 15px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 1px;
+   margin: 0 10px;
+}
+
+.redblockheader .t:before
+{
+   content:url('images/blockheadericon.png');
+   margin-right:6px;
+   bottom: 2px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+}
+.opera .redblockheader .t:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redblockcontent
+{
+   padding:7px;
+   margin:0 auto;
+   color: #DEDEDE;
+   font-size: 13px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 1px;
+}
+.redblockcontent table,
+.redblockcontent li, 
+.redblockcontent a,
+.redblockcontent a:link,
+.redblockcontent a:visited,
+.redblockcontent a:hover
+{
+   color: #DEDEDE;
+   font-size: 13px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 1px;
+}
+
+.redblockcontent p
+{
+   margin: 0 5px;
+}
+
+.redblockcontent a, .redblockcontent a:link
+{
+   color: #C2C2C2;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.redblockcontent a:visited, .redblockcontent a.visited
+{
+   color: #EDEDED;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+}
+
+.redblockcontent a:hover, .redblockcontent a.hover
+{
+   color: #D6D6D6;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+}
+.redblock ul>li:before
+{
+   content:url('images/blockbullets.png');
+   margin-right:6px;
+   bottom: 2px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   margin-left: -17px;
+}
+.opera .redblock ul>li:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redblock li
+{
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   line-height: 125%;
+   color: #D1D1D1;
+   margin: 5px 0 0 10px;
+}
+
+.redblock ul>li, .redblock ol
+{
+   padding: 0;
+}
+
+.redblock ul>li
+{
+   padding-left: 17px;
+}
+
+.redbreadcrumbs
+{
+   margin:0 auto;
+}
+
+a.redbutton,
+a.redbutton:link,
+a:link.redbutton:link,
+body a.redbutton:link,
+a.redbutton:visited,
+body a.redbutton:visited,
+input.redbutton,
+button.redbutton
+{
+   text-decoration: none;
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 1px;
+   position:relative;
+   display: inline-block;
+   vertical-align: middle;
+   white-space: nowrap;
+   text-align: center;
+   color: #BDBDBD;
+   margin: 0 !important;
+   overflow: visible;
+   cursor: pointer;
+   text-indent: 0;
+   line-height: 22px;
+   -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+}
+
+.redbutton img
+{
+   margin: 0;
+   vertical-align: middle;
+}
+
+.firefox2 .redbutton
+{
+   display: block;
+   float: left;
+}
+
+input, select, textarea
+{
+   vertical-align: middle;
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 1px;
+}
+
+.redblock select 
+{
+   width:96%;
+}
+
+input.redbutton
+{
+   float: none !important;
+}
+
+.redbutton.active, .redbutton.active:hover
+{
+   background: #A6A6A6;
+   background: linear-gradient(top, #B0B0B0 0, #A3A3A3 40%, #A1A1A1 50%, #A3A3A3 60%, #B0B0B0 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #B0B0B0 0, #A3A3A3 40%, #A1A1A1 50%, #A3A3A3 60%, #B0B0B0 100%) no-repeat;
+   background: -moz-linear-gradient(top, #B0B0B0 0, #A3A3A3 40%, #A1A1A1 50%, #A3A3A3 60%, #B0B0B0 100%) no-repeat;
+   background: -o-linear-gradient(top, #B0B0B0 0, #A3A3A3 40%, #A1A1A1 50%, #A3A3A3 60%, #B0B0B0 100%) no-repeat;
+   background: -ms-linear-gradient(top, #B0B0B0 0, #A3A3A3 40%, #A1A1A1 50%, #A3A3A3 60%, #B0B0B0 100%) no-repeat;
+   background: linear-gradient(top, #B0B0B0 0, #A3A3A3 40%, #A1A1A1 50%, #A3A3A3 60%, #B0B0B0 100%) no-repeat;
+   -svg-background: linear-gradient(top, #B0B0B0 0, #A3A3A3 40%, #A1A1A1 50%, #A3A3A3 60%, #B0B0B0 100%) no-repeat;
+   border:1px solid #A6A6A6;
+   padding:0 5px;
+   margin:0 auto;
+}
+.redbutton.active, .redbutton.active:hover {
+   color: #1C1C1C !important;
+}
+
+.redbutton.hover, .redbutton:hover
+{
+   background: #B5B5B5;
+   background: transparent;
+   border:1px solid #949494;
+   padding:0 5px;
+   margin:0 auto;
+}
+.redbutton.hover, .redbutton:hover {
+   color: #DEDEDE !important;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
+{
+   background: #FAFAFA;
+   border:1px solid #272524;
+   margin:0 auto;
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
+{
+   width: 100%;
+   padding: 6px 0;
+   color: #ffffff !important;
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 1px;
+   margin-bottom:7px; 
+}
+input.rederror, textarea.rederror
+{
+   background: #FAFAFA;
+   background: linear-gradient(top, #CCCCCC 0, #E3E3E3 50%, #C7C7C7 50%, #DBDBDB 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #CCCCCC 0, #E3E3E3 50%, #C7C7C7 50%, #DBDBDB 100%) no-repeat;
+   background: -moz-linear-gradient(top, #CCCCCC 0, #E3E3E3 50%, #C7C7C7 50%, #DBDBDB 100%) no-repeat;
+   background: -o-linear-gradient(top, #CCCCCC 0, #E3E3E3 50%, #C7C7C7 50%, #DBDBDB 100%) no-repeat;
+   background: -ms-linear-gradient(top, #CCCCCC 0, #E3E3E3 50%, #C7C7C7 50%, #DBDBDB 100%) no-repeat;
+   background: linear-gradient(top, #CCCCCC 0, #E3E3E3 50%, #C7C7C7 50%, #DBDBDB 100%) no-repeat;
+   -svg-background: linear-gradient(top, #CCCCCC 0, #E3E3E3 50%, #C7C7C7 50%, #DBDBDB 100%) no-repeat;
+   border:1px solid #E2341D;
+   margin:0 auto;
+}
+input.rederror, textarea.rederror {
+   color: #3D3D3D !important;
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 1px;
+}
+form.redsearch input[type="text"]
+{
+   background: #FAFAFA;
+   border-radius: 0;
+   border:1px solid #8C8C8C;
+   margin:0 auto;
+   width: 100%;
+   padding: 6px 0;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   color: #3D3D3D !important;
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+}
+form.redsearch 
+{
+   background-image: none;
+   border: 0;
+   display:block;
+   position:relative;
+   top:0;
+   padding:0;
+   margin:5px;
+   left:0;
+   line-height: 0;
+}
+
+form.redsearch input
+{
+   top:0;
+   right:0;
+}
+
+form.redsearch>input {
+   bottom:0;
+   left:0;
+   vertical-align: middle;
+}
+ 
+form.redsearch input[type="submit"]
+{
+   margin:0 auto;
+   color: #000000 !important;
+   position:absolute;
+   display:block;
+   left: auto;
+   border:none;
+   background:url('images/searchicon.png') center center no-repeat;
+   width:24px;
+   height: 100%;
+   padding:0;
+}
+
+label.redcheckbox:before
+{
+   background: #FAFAFA;
+   background: linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: -moz-linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: -o-linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: -ms-linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   -svg-background: linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   -webkit-border-radius:1px;
+   -moz-border-radius:1px;
+   border-radius:1px;
+   -webkit-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   border:1px solid #6E6E6E;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+}
+label.redcheckbox
+{
+   cursor: pointer;
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   line-height: 16px;
+   display: inline-block;
+}
+
+.redcheckbox>input[type="checkbox"]
+{
+   margin: 0 5px 0 0;
+}
+
+label.redcheckbox.active:before
+{
+   background: #C7C7C7;
+   background: linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: -moz-linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: -o-linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: -ms-linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   -svg-background: linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   -webkit-border-radius:1px;
+   -moz-border-radius:1px;
+   border-radius:1px;
+   -webkit-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   border:1px solid #6E6E6E;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+   display: inline-block;
+}
+
+label.redcheckbox.hovered:before
+{
+   background: #E0E0E0;
+   background: linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: -moz-linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: -o-linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: -ms-linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   -svg-background: linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   -webkit-border-radius:1px;
+   -moz-border-radius:1px;
+   border-radius:1px;
+   -webkit-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   border:1px solid #6E6E6E;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+   display: inline-block;
+}
+
+label.redradiobutton:before
+{
+   background: #FAFAFA;
+   background: linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: -moz-linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: -o-linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: -ms-linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   background: linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   -svg-background: linear-gradient(top, #CCCCCC 0, #F0F0F0 40%, #F2F2F2 50%, #F0F0F0 60%, #CCCCCC 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   border:1px solid #6E6E6E;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+}
+label.redradiobutton
+{
+   cursor: pointer;
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   line-height: 16px;
+   display: inline-block;
+}
+
+.redradiobutton>input[type="radio"]
+{
+   vertical-align: baseline;
+   margin: 0 5px 0 0;
+}
+
+label.redradiobutton.active:before
+{
+   background: #C7C7C7;
+   background: linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: -moz-linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: -o-linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: -ms-linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   background: linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   -svg-background: linear-gradient(top, #B5B5B5 0, #D4D4D4 40%, #D6D6D6 50%, #D4D4D4 60%, #B5B5B5 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   border:1px solid #6E6E6E;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+   display: inline-block;
+}
+
+label.redradiobutton.hovered:before
+{
+   background: #E0E0E0;
+   background: linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: -moz-linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: -o-linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: -ms-linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   background: linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   -svg-background: linear-gradient(top, #CCCCCC 0, #EDEDED 40%, #F0F0F0 50%, #EDEDED 60%, #CCCCCC 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 2px 1px rgba(0, 0, 0, 0.2);
+   border:1px solid #6E6E6E;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+   display: inline-block;
+}
+
+.redpost
+{
+   background: #D4D4D4;
+   background: transparent;
+   -webkit-border-radius:2px;
+   -moz-border-radius:2px;
+   border-radius:2px;
+   padding:5px;
+   margin:10px;
+}
+a img
+{
+   border: 0;
+}
+
+.redarticle img, img.redarticle, .redblock img, .redfooter img
+{
+   border: 1px dotted #ABABAB;
+   margin: 7px 7px 7px 7px;
+}
+
+.redmetadata-icons img
+{
+   border: none;
+   vertical-align: middle;
+   margin: 2px;
+}
+
+.redarticle table, table.redarticle
+{
+   border-collapse: collapse;
+   margin: 1px;
+}
+
+.redpost .redcontent-layout-br
+{
+   height: 0;
+}
+
+.redarticle th, .redarticle td
+{
+   padding: 2px;
+   border: dotted 1px #595959;
+   vertical-align: top;
+   text-align: left;
+}
+
+.redarticle th
+{
+   text-align: center;
+   vertical-align: middle;
+   padding: 7px;
+}
+
+pre
+{
+   overflow: auto;
+   padding: 0.1em;
+}
+
+.preview-cms-logo
+{
+   border: 0;
+   margin: 1em 1em 0 0;
+   float: left;
+}
+
+.image-caption-wrapper
+{
+   padding: 7px 7px 7px 7px;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+.image-caption-wrapper img
+{
+   margin: 0 !important;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+.image-caption-wrapper div.redcollage
+{
+   margin: 0 !important;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+.image-caption-wrapper p
+{
+   font-size: 80%;
+   text-align: right;
+   margin: 0;
+}
+
+.redpostmetadataheader
+{
+   background: #B5B5B5;
+   background: rgba(181, 181, 181, 0.7);
+   border-bottom:1px solid #ABABAB;
+   margin:0 auto;
+   position:relative;
+   z-index:1;
+   padding: 1px;
+   margin-bottom: 5px;
+}
+
+.redpostheadericon:before
+{
+   content:url('images/postheadericon.png');
+   margin-right:6px;
+   bottom: 4px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+}
+.opera .redpostheadericon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redpostheader
+{
+   color: #1A1A1A;
+   margin: 10px 0;
+   font-size: 29px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 2px;
+}
+
+.redpostheader a, 
+.redpostheader a:link, 
+.redpostheader a:visited,
+.redpostheader a.visited,
+.redpostheader a:hover,
+.redpostheader a.hovered
+{
+   font-size: 29px;
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   letter-spacing: 2px;
+}
+
+.redpostheader a, .redpostheader a:link
+{
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   text-align: left;
+   color: #E3E3E3;
+}
+
+.redpostheader a:visited, .redpostheader a.visited
+{
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   color: #404040;
+}
+
+.redpostheader a:hover,  .redpostheader a.hovered
+{
+   font-family: Arvo, Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: underline;
+   color: #404040;
+}
+
+.redpostheadericons,
+.redpostheadericons a,
+.redpostheadericons a:link,
+.redpostheadericons a:visited,
+.redpostheadericons a:hover
+{
+   font-size: 12px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 1px;
+   color: #E8E8E8;
+}
+
+.redpostheadericons
+{
+   display:inline-block;
+   padding: 1px;
+}
+
+.redpostheadericons a, .redpostheadericons a:link
+{
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   letter-spacing: 1px;
+   color: #B5B5B5;
+}
+
+.redpostheadericons a:visited, .redpostheadericons a.visited
+{
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   letter-spacing: 1px;
+   color: #C9C9C9;
+}
+
+.redpostheadericons a:hover, .redpostheadericons a.hover
+{
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: underline;
+   letter-spacing: 1px;
+   color: #B5B5B5;
+}
+
+.redpostdateicon:before
+{
+   content:url('images/postdateicon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .redpostdateicon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redpostauthoricon:before
+{
+   content:url('images/postauthoricon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .redpostauthoricon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redpostpdficon:before
+{
+   content:url('images/postpdficon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .redpostpdficon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redpostediticon:before
+{
+   content:url('../images/postediticon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .redpostediticon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redpostcontent ul>li:before,  .redpost ul>li:before,  .redtextblock ul>li:before
+{
+   content:url('images/postbullets.png');
+   margin-right:6px;
+   bottom: 2px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+}
+.opera .redpostcontent ul>li:before, .opera   .redpost ul>li:before, .opera   .redtextblock ul>li:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redpostcontent li, .redpost li, .redtextblock li
+{
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   color: #C7C7C7;
+   margin: 5px 0 0 11px;
+}
+
+.redpostcontent ul>li, .redpost ul>li, .redtextblock ul>li, .redpostcontent ol, .redpost ol, .redtextblock ol
+{
+   padding: 0;
+}
+
+.redpostcontent ul>li, .redpost ul>li, .redtextblock ul>li
+{
+   padding-left: 12px;
+}
+
+.redpostcontent ul>li:before,  .redpost ul>li:before,  .redtextblock ul>li:before
+{
+   margin-left: -12px;
+}
+
+.redpostcontent ol, .redpost ol, .redtextblock ol, .redpostcontent ul, .redpost ul, .redtextblock ul
+{
+   margin: 1em 0 1em 11px;
+}
+
+.redpostcontent li ol, .redpost li ol, .redtextblock li ol, .redpostcontent li ul, .redpost li ul, .redtextblock li ul
+{
+   margin: 0.5em 0 0.5em 11px;
+}
+
+.redpostcontent li, .redpost li, .redtextblock li
+{
+   margin: 5px 0 0 0;
+}
+
+.redpostcontent ol>li, .redpost ol>li, .redtextblock ol>li
+{
+   /* overrides overflow for "ul li" and sets the default value */
+  overflow: visible;
+}
+
+.redpostcontent ul>li, .redpost ul>li, .redtextblock ul>li
+{
+   /* makes "ul li" not to align behind the image if they are in the same line */
+  overflow-x: visible;
+   overflow-y: hidden;
+}
+
+blockquote
+{
+   background: #CFCFCF url('../images/postquote.png') no-repeat scroll;
+   padding:15px 15px 15px 39px;
+   margin:0 0 0 20px;
+   color: #0D0D0D;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: italic;
+   /* makes block not to align behind the image if they are in the same line */
+  overflow: auto;
+   clear:both;
+}
+blockquote a, .redpostcontent blockquote a, .redblockcontent blockquote a, .redfooter blockquote a,
+blockquote a:link, .redpostcontent blockquote a:link, .redblockcontent blockquote a:link, .redfooter blockquote a:link,
+blockquote a:visited, .redpostcontent blockquote a:visited, .redblockcontent blockquote a:visited, .redfooter blockquote a:visited,
+blockquote a:hover, .redpostcontent blockquote a:hover, .redblockcontent blockquote a:hover, .redfooter blockquote a:hover
+{
+   color: #0D0D0D;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: italic;
+}
+
+/* Override native 'p' margins*/
+blockquote p,
+.redpostcontent blockquote p,
+.redblockcontent blockquote p,
+.redfooter blockquote p
+{
+   margin: 0;
+}
+
+.redfooter
+{
+   background: #ABABAB;
+   background: transparent;
+   padding:15px;
+   margin:10px auto 0;
+   position: relative;
+   color: #C7C7C7;
+   font-size: 12px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 1px;
+   text-align: center;
+}
+
+.redfooter a,
+.redfooter a:link,
+.redfooter a:visited,
+.redfooter a:hover,
+.redfooter td, 
+.redfooter th,
+.redfooter caption
+{
+   color: #C7C7C7;
+   font-size: 12px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 1px;
+}
+
+.redfooter p 
+{
+   padding:0;
+   text-align: center;
+}
+
+.redfooter a,
+.redfooter a:link
+{
+   color: #ADADAD;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   letter-spacing: 1px;
+}
+
+.redfooter a:visited
+{
+   color: #C2C2C2;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   letter-spacing: 1px;
+}
+
+.redfooter a:hover
+{
+   color: #969696;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: underline;
+   letter-spacing: 1px;
+}
+
+.redfooter img
+{
+   border: none;
+   margin: 10px;
+}
+
+.redrss-tag-icon
+{
+   background:  url('../images/footerrssicon.png') no-repeat scroll;
+   margin:0 auto;
+   min-height:16px;
+   min-width:16px;
+   display: inline-block;
+   text-indent: 19px;
+   background-position: left center;
+}
+
+.redrss-tag-icon:empty
+{
+   vertical-align: middle;
+}
+
+.redfooter ul>li:before
+{
+   content:url('images/footerbullets.png');
+   margin-right:6px;
+   bottom: 2px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   margin-left: -12px;
+}
+.opera .redfooter ul>li:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.redfooter li
+{
+   font-size: 14px;
+   font-family: 'PT Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   letter-spacing: 1px;
+   line-height: 125%;
+   color: #D1D1D1;
+   margin: 5px 0 0 13px;
+}
+
+.redfooter ul>li, .redfooter ol
+{
+   padding: 0;
+}
+
+.redfooter ul>li
+{
+   padding-left: 12px;
+}
+
+.redpage-footer, 
+.redpage-footer a,
+.redpage-footer a:link,
+.redpage-footer a:visited,
+.redpage-footer a:hover
+{
+   font-family: Arial;
+   font-size: 10px;
+   letter-spacing: normal;
+   word-spacing: normal;
+   font-style: normal;
+   font-weight: normal;
+   text-decoration: underline;
+   color: #575757;
+}
+
+.redpage-footer
+{
+   position: relative;
+   z-index: auto !important;
+   padding: 1em;
+   text-align: center !important;
+   text-decoration: none;
+   color: #575757;
+/*    margin-left: 100px; */
+}
+
+img.redlightbox
+{
+   cursor: pointer;
+}
+
+#redlightbox-bg *
+{
+   padding: 0;
+   margin: 0;
+}
+
+div#redlightbox-bg
+{
+   top: 0;
+   left: 0;
+   width: 100%;
+   position: absolute;
+   height: 100%;
+   background-color: #000;
+   opacity: 0.8;
+   filter: alpha(opacity=80);
+   z-index: 9999;
+}
+
+img.redlightbox-image
+{
+   -webkit-transition: opacity 350ms ease-in-out;
+   -moz-transition: opacity 350ms ease-in-out;
+   -o-transition: opacity 350ms ease-in-out;
+   -ms-transition: opacity 350ms ease-in-out;
+   transition: opacity 350ms ease-in-out;
+   cursor: pointer;
+   z-index: 10000;
+   position: fixed;
+   border: 6px solid #fff;
+   border-radius: 3px;
+   opacity: 0;
+   filter: alpha(opacity=0);
+}
+
+img.redlightbox-image.active
+{
+   opacity: 1;
+   filter: alpha(opacity=100);
+}
+
+.lightbox-error
+{
+   position: fixed;
+   background: #fff;
+   z-index: 100;
+   opacity: 0.95;
+   padding: 20px;
+   border: 1px solid #b4b4b4;
+   border-radius: 10px;
+   box-shadow: 0 2px 5px #333;
+   width: 300px;
+   height: 80px;
+}
+
+.loading
+{
+   position: fixed;
+   background: #fff url('images/preloader-01.gif') center center no-repeat;
+   width: 32px;
+   height: 32px;
+   z-index: 10100;
+   opacity: 0.5;
+   padding: 10px;
+   border: 1px solid #b4b4b4;
+   border-radius: 10px;
+   box-shadow: 0 2px 5px #333;
+}
+
+.arrow
+{
+   height: 100px;
+   width: 82px;
+   z-index: 10003;
+   position: fixed;
+   cursor: pointer;
+   opacity: 0.5;
+   filter: alpha(opacity=50);
+}
+
+.arrow.left
+{
+   left: 9px;
+}
+.arrow.right
+{
+   right: 9px;
+}
+
+.arrow:hover
+{
+   opacity: 1;
+   filter: alpha(opacity=100);
+}
+
+.arrow.disabled 
+{
+   display: none;
+}
+
+.arrow-t, .arrow-b
+{
+   height: 6px;
+   width: 30px;
+   left: 26px;
+   background-color: #fff;
+   position: relative;
+   border-radius: 3px;
+}
+
+.arrow-t
+{
+   top: 38px;
+}
+
+.arrow-b
+{
+   top: 50px;
+}
+
+.close
+{
+   width: 22px;
+   height: 22px;
+   position: fixed;
+   top: 30px;
+   right: 39px;
+   cursor: pointer;
+   opacity: 0.5;
+   filter: alpha(opacity=50);
+}
+
+.close:hover 
+{
+   opacity: 1;
+   filter: alpha(opacity=100);
+}
+
+.close .cw, .close .ccw
+{
+   position: absolute;
+   top: 8px;
+   left: -4px;
+   width: 30px;
+   height: 6px;
+   background-color: #fff;
+   border-radius: 3px;
+}
+
+.cw
+{
+   transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+   /* IE 9 */
+    -webkit-transform: rotate(45deg);
+   /* Safari and Chrome */
+    -o-transform: rotate(45deg);
+   /* Opera */
+    -moz-transform: rotate(45deg);
+/* Firefox */}
+
+.ccw
+{
+   transform: rotate(-45deg);
+   -ms-transform: rotate(-45deg);
+   /* IE 9 */
+    -webkit-transform: rotate(-45deg);
+   /* Safari and Chrome */
+    -o-transform: rotate(-45deg);
+   /* Opera */
+    -moz-transform: rotate(-45deg);
+/* Firefox */}
+
+.close-alt, .arrow-right-alt, .arrow-left-alt 
+{
+   display: none;
+   color: #fff;
+   font-size: 2.5em;
+}
+
+.ie8 .close-alt, .ie8 .arrow-right-alt, .ie8 .arrow-left-alt {
+   display: block;
+}
+.ie8 .cw, .ie8 .ccw {
+   display: none;
+}
+
+.redcontent-layout .redcontent
+{
+   margin:0 auto;
+}
+
+/* Begin Additional CSS Styles */
+
+/* End Additional CSS Styles */

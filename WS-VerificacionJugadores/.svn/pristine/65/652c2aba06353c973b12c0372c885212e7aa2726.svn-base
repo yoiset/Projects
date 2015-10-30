@@ -1,0 +1,28 @@
+package es.gob.cnjuego.ws.to;
+
+import java.io.Serializable;
+
+/**  TO Abstracto para transferir datos entre capas
+ * @author ylopezconnectis
+ *
+ */
+public abstract class TO implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	private String dni;
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+	
+	
+}

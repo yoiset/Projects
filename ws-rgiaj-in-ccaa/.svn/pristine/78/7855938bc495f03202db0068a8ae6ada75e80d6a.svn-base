@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+                  xmlns:tns="http://rgiaj.dgoj.es/" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                  name="juegoRGIAJ"
+                   targetNamespace="http://rgiaj.dgoj.es/">
+  <wsdl:types>
+  
+    <xsd:schema targetNamespace="http://rgiaj.dgoj.es/">
+     
+      <xsd:element name="prohibidosRequest"> 
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="comunidad" type="xsd:string" maxOccurs="1" nillable="false"/>
+            <xsd:element name="formatoDescarga" type="xsd:string"  maxOccurs="1" nillable="false"/>
+            <xsd:element name="tipoDescarga" type="xsd:string"  maxOccurs="1" nillable="false"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="prohibidosResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="resultado" type="xsd:base64Binary"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+           
+      <xsd:element name="confirmHistoricoDescargasRequest">
+      	<xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:element name="codigoComunidad" type="xsd:string" maxOccurs="1" nillable="false"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType> 
+      </xsd:element>
+      
+      
+  
+      <xsd:element name="hasPendingRequest" type="xsd:string">
+       <xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:element name="codigoComunidad" type="xsd:string" maxOccurs="1" nillable="false"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="hasPendingResponse" type="xsd:string">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="resultado" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+
+      <xsd:element name="ultimasDescargasConfirmadasRequest" type="xsd:string">
+      <xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:element name="codigoComunidad" type="xsd:string" maxOccurs="1" nillable="false" ></xsd:element>
+      			<xsd:element name="cantidad" type="xsd:int" maxOccurs="1" nillable="false"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ultimasDescargasConfirmadasResponse" type="xsd:string">
+        <xsd:complexType>
+      		<xsd:sequence>      			
+      			<xsd:element name="ultimasDescargas" type="tns:ultimasDescargas" maxOccurs="100"/>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      
+      <xsd:complexType name="ultimasDescargas">
+         <xsd:sequence>
+           <xsd:element name="fechaDescarga" type="xsd:date"></xsd:element>
+      	   <xsd:element name="ultimo" type="xsd:long"></xsd:element>
+         </xsd:sequence>
+      </xsd:complexType> 
+      
+      <xsd:element name="ComunidadRequest" type="xsd:string">
+      <xsd:complexType>
+        <xsd:sequence>
+         <xsd:element name="codigoComunidad" type="xsd:string" maxOccurs="1" nillable="false"> </xsd:element>
+         </xsd:sequence>
+         </xsd:complexType>
+        </xsd:element> 
+      
+      <xsd:element name="ComunidadResponse" type="xsd:string">
+       <xsd:complexType> 
+        <xsd:sequence>
+         <xsd:element name="codigo" type="xsd:string"></xsd:element>
+         <xsd:element name="descripcion" type="xsd:string"></xsd:element>
+         </xsd:sequence>
+         </xsd:complexType>
+      </xsd:element>
+      
+      
+      <xsd:element name="prohibidosFault" type="xsd:string">  </xsd:element>
+      
+      <xsd:element name="confirmHistoricoDescargasFault" type="xsd:string">
+      
+      </xsd:element>
+      <xsd:element name="hasPendingFault" type="xsd:string">
+      
+      </xsd:element>
+      <xsd:element name="confirmHistoricoDescargasPendienteFault" type="xsd:string">
+      
+      </xsd:element>
+      <xsd:element name="ultimasDescargasConfirmadasFault" type="xsd:string">
+      
+      </xsd:element>
+      <xsd:element name="getComunidadFault" type="xsd:string">
+      
+      </xsd:element>
+      <xsd:element name="ComunidadFault" type="xsd:string"></xsd:element>
+      
+      </xsd:schema>
+        
+  </wsdl:types>
+  
+  <wsdl:message name="prohibidosRequest">
+    <wsdl:part element="tns:prohibidosRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="prohibidosResponse">
+    <wsdl:part element="tns:prohibidosResponse" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="confirmHistoricoDescargasRequest">
+  	<wsdl:part name="parameters" element="tns:confirmHistoricoDescargasRequest"></wsdl:part>
+  </wsdl:message>  
+  
+  
+  <wsdl:message name="hasPendingRequest">
+  	<wsdl:part name="parameters" element="tns:hasPendingRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="hasPendingResponse">
+  	<wsdl:part name="parameters" element="tns:hasPendingResponse"></wsdl:part>
+  </wsdl:message>
+
+
+  <wsdl:message name="ultimasDescargasConfirmadasRequest">
+  	<wsdl:part name="parameters" element="tns:ultimasDescargasConfirmadasRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ultimasDescargasConfirmadasResponse">
+  	<wsdl:part name="parameters" element="tns:ultimasDescargasConfirmadasResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComunidadRequest">
+  	<wsdl:part name="parameters" element="tns:ComunidadRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComunidadResponse">
+  	<wsdl:part name="parameters" element="tns:ComunidadResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="prohibidosFault">
+  	<wsdl:part name="fault" element="tns:prohibidosFault"></wsdl:part>
+  </wsdl:message>
+  
+  <wsdl:message name="confirmHistoricoDescargasFault">
+  	<wsdl:part name="fault" element="tns:confirmHistoricoDescargasFault"></wsdl:part>
+  </wsdl:message>
+ 
+  <wsdl:message name="hasPendingFault">
+  	<wsdl:part name="fault" element="tns:hasPendingFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmHistoricoDescargasPendienteFault">
+  	<wsdl:part name="fault" element="tns:confirmHistoricoDescargasPendienteFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ultimasDescargasConfirmadasFault">
+  	<wsdl:part name="fault" element="tns:ultimasDescargasConfirmadasFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComunidadFault">
+  	<wsdl:part name="fault" element="tns:ComunidadFault"></wsdl:part>
+  </wsdl:message>
+  
+  
+  <wsdl:portType name="JuegoRGIAJ">
+    
+    <wsdl:operation name="prohibidosList">
+      <wsdl:input message="tns:prohibidosRequest"/>
+      <wsdl:output message="tns:prohibidosResponse"/>
+            <wsdl:fault name="fault" message="tns:prohibidosFault"></wsdl:fault>
+    </wsdl:operation>
+        
+    <wsdl:operation name="confirmHistoricoDescargas">
+    	<wsdl:input message="tns:confirmHistoricoDescargasRequest"></wsdl:input>
+            <wsdl:fault name="fault" message="tns:confirmHistoricoDescargasFault"></wsdl:fault>
+     </wsdl:operation>
+
+    <wsdl:operation name="hasPending">
+    	<wsdl:input message="tns:hasPendingRequest"></wsdl:input>
+    	<wsdl:output message="tns:hasPendingResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:hasPendingFault"></wsdl:fault>
+     </wsdl:operation>
+     
+
+                
+    <wsdl:operation name="ultimasDescargasConfirmadas">
+    	<wsdl:input message="tns:ultimasDescargasConfirmadasRequest"></wsdl:input>
+    	<wsdl:output message="tns:ultimasDescargasConfirmadasResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:ultimasDescargasConfirmadasFault"></wsdl:fault>
+        </wsdl:operation>
+        
+    <wsdl:operation name="getComunidad">
+    	<wsdl:input message="tns:getComunidadRequest"></wsdl:input>
+    	<wsdl:output message="tns:getComunidadResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:getComunidadFault"></wsdl:fault>
+    </wsdl:operation>
+
+  </wsdl:portType>
+  <wsdl:binding name="juegoRGIAJSOAP" type="tns:JuegoRGIAJ">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="prohibidosList">
+      <soap:operation soapAction="http://rgiaj.dgoj.es/prohibidosList"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="JuegoRGIAJ">
+    <wsdl:port binding="tns:juegoRGIAJSOAP" name="juegoRGIAJSOAP">
+      <soap:address location="http://ws-pre.cnjuego.gob.es/JuegoRGIAJ/JuegoRGIAJ/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

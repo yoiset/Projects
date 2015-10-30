@@ -1,0 +1,6 @@
+package com.dgoj.juegoExterno.business.bean.type;
+
+public enum TipoDescargaProhibidos {
+	Incremental,
+	Completa
+}

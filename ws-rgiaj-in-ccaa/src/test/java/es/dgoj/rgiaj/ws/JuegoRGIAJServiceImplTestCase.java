@@ -1,0 +1,87 @@
+//package es.dgoj.rgiaj.ws;
+//
+//import static org.junit.Assert.assertNotNull;
+//
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.springframework.test.context.ContextConfiguration;
+//import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//
+//import es.dgoj.rgiaj.juegorgiaj.JuegoRGIAJ;
+//import es.dgoj.rgiaj.juegorgiaj.JugProhibicionQueryRequest;
+//import es.dgoj.rgiaj.juegorgiaj.ProhibidosResponse;
+//
+//
+//
+///**
+// * Esta clase implementa las pruebas unitarias del servicio web. 
+// * Heredamos de AbstractJUnit4SpringContextTests para poder acceder al contexto de Spring y luego al stub
+// * de CXF directamente.
+// * -Too complicated?
+// */
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"classpath:/spring/app-test-ws.xml"})
+//public class JuegoRGIAJServiceImplTestCase extends AbstractJUnit4SpringContextTests {
+//
+//	private JuegoRGIAJ serviceStub;
+//	
+//	/**
+//	 * Recuperamos el stub de CXF del contexto de Spring.
+//	 * Nótese que en este caso no podemos usar el mecanismo de inyección automática
+//	 * de dependencias de Spring (autowire).
+//	 * -This is sad :(
+//	 */
+//	@Before
+//	public void setUp() throws Exception {
+//		JuegoRGIAJ stub = (JuegoRGIAJ)this.applicationContext.getBean("JuegoRGIAJServiceStub");
+//		this.setServiceStub(stub);
+////		stub = (RGIAJComunidadesService)this.applicationContext.getBean("RGIAJComunidadesServiceStubOperadorInvalido");
+////		this.setServiceStubOperadorInvalido(stub);
+//	}
+//
+//	@After
+//	public void tearDown() throws Exception {
+//	}
+//	
+//	/**
+//	 * En este caso, las peticiones se firman con el certificado de una comunidad válida.
+//	 * La configuración de la firma se hace desde Spring.
+//	 */
+//	@Test
+//	public void testDescargarProhibidos() throws Exception {
+//		JugProhibicionQueryRequest request= new JugProhibicionQueryRequest();
+//		request.setCodComunidad("NAC");
+//		request.setFormatoDescarga("XML");
+//		request.setTipoDescarga("Completa");
+//		ProhibidosResponse resultado = this.getServiceStub().prohibidosList(request);
+//		assertNotNull(resultado);
+////		assertEquals("mnemo-auditorseguridad", resultado.getMensaje());
+//	}
+//
+//	
+//
+//	/**
+//	 * Guarda el contenido binario en un fichero, en la ruta indicada.
+//	 */
+//	private void writeBinaryFile(String fileName, byte[] data) throws IOException {
+//		FileOutputStream fos = new FileOutputStream(fileName);
+//		fos.write(data);
+//		fos.close();
+//	}
+//
+//	private JuegoRGIAJ getServiceStub() {
+//		return serviceStub;
+//	}
+//
+//	private void setServiceStub(JuegoRGIAJ serviceStub) {
+//		this.serviceStub = serviceStub;
+//	}
+//
+//	
+//}

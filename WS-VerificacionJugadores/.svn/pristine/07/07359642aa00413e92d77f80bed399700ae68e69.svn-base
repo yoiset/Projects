@@ -1,0 +1,97 @@
+
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * Resultado de una verificación de identidad:
+ * 						dni:
+ * 						Documento Nacional de Identidad correspondiente.
+ * 						resultadoIdentidad: de tipo ResultadoType. Resultado de la
+ * 						verificación de identidad
+ * 					
+ * 
+ * <p>Clase Java para ResultadoIdentidad complex type.
+ * 
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * 
+ * <pre>
+ * &lt;complexType name="ResultadoIdentidad">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="dni" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="resultadoIdentidad" type="{http://ws.cnjuego.gob.es/VerificacionJugadores/}ResultadoType"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "ResultadoIdentidad", propOrder = {
+    "dni",
+    "resultadoIdentidad"
+})
+public class ResultadoIdentidad {
+
+    @XmlElement(required = true)
+    protected String dni;
+    @XmlElement(required = true)
+    protected ResultadoType resultadoIdentidad;
+
+    /**
+     * Obtiene el valor de la propiedad dni.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDni() {
+        return dni;
+    }
+
+    /**
+     * Define el valor de la propiedad dni.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDni(String value) {
+        this.dni = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad resultadoIdentidad.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ResultadoType }
+     *     
+     */
+    public ResultadoType getResultadoIdentidad() {
+        return resultadoIdentidad;
+    }
+
+    /**
+     * Define el valor de la propiedad resultadoIdentidad.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ResultadoType }
+     *     
+     */
+    public void setResultadoIdentidad(ResultadoType value) {
+        this.resultadoIdentidad = value;
+    }
+
+}

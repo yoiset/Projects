@@ -1,0 +1,66 @@
+package es.gob.cnjuego.ws.verificacionjugadores.interceptor;
+
+import java.io.OutputStream;
+import java.util.Date;
+
+import org.apache.cxf.binding.soap.SoapMessage;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.io.CachedOutputStream;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
+import org.apache.log4j.Logger;
+
+import es.gob.cnjuego.ws.dao.VerificacionDao;
+import es.gob.cnjuego.ws.entity.PeticionEntity;
+
+/**
+ * Este interceptor participa solamente cuando se produce un fault.
+ * Se encarga de actualizar la petición con el mensaje SOAP del fault de salida y 
+ * luego actualiza el registro en la base de datos.
+ */
+public class InterceptorSalidaRegistrarFault extends AbstractPhaseInterceptor<Message> {
+
+	private static Logger log = Logger.getLogger(InterceptorSalidaRegistrarFault.class);
+	private VerificacionDao dao;
+
+     public InterceptorSalidaRegistrarFault() {
+        super(Phase.PREPARE_SEND_ENDING);
+    }    
+
+ 	public void handleMessage(Message message) throws Fault {
+		this.handleMessage((SoapMessage)message);
+	}
+   
+    public void handleMessage(SoapMessage mensaje) throws Fault {
+		try {
+			PeticionEntity peticion = (PeticionEntity)mensaje.getExchange().getInMessage().get(InterceptorEntradaRegistrarInvocacion.PETICION);
+			this.completarPeticion(peticion, mensaje);
+			this.getDao().actualizarPeticion(peticion);
+		} catch (Exception e) {
+			log.error("Error actualizando la petici\u00F3n", e);
+		}
+    }
+
+	/**
+	 * Agrega a la petición el mensaje SOAP del fault serializado y 
+	 * la fecha/hora actual.
+	 */
+	private void completarPeticion(PeticionEntity peticion, SoapMessage mensaje) throws Exception {
+		CachedOutputStream output = (CachedOutputStream)mensaje.getContent(OutputStream.class);
+		StringBuilder builder = new StringBuilder();
+		output.writeCacheTo(builder);
+		String soapString = builder.toString();
+		peticion.setFault(soapString);
+		peticion.setFechaRespuesta(new Date());
+	}
+	
+	public VerificacionDao getDao() {
+		return dao;
+	}
+
+	public void setDao(VerificacionDao dao) {
+		this.dao = dao;
+	}
+
+}

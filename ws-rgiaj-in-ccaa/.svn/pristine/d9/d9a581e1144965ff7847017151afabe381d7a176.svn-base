@@ -1,0 +1,119 @@
+package es.dgoj.rgiaj.business.repository;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Property;
+import org.hibernate.jdbc.Work;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import es.dgoj.rgiaj.business.model.ConfiguracionEntity;
+import es.dgoj.rgiaj.business.model.OperadorEntity;
+
+@Repository
+public class OperadoresRepository {
+
+	private static Logger log = Logger.getLogger(OperadoresRepository.class);
+	@Autowired
+	private SessionFactory sessionFactory;
+	private Map<String, String> cacheConfiguraciones;
+	
+	public Session getSession(){
+		return sessionFactory.getCurrentSession();
+	}
+
+	/**
+	 * Retorna el operador cuyo certificado tiene un hash igual al del parámetro. 
+	 */
+	public OperadorEntity getOperadorByHash(String hash) {
+		Criteria criteria = getSession().createCriteria(OperadorEntity.class);
+		criteria.add(Property.forName("hashCertificado").eq(hash));
+		List<OperadorEntity> operadores = criteria.list();
+		if (operadores.size() > 0) {
+			OperadorEntity operador = operadores.get(0);
+			return operador;
+		}
+		return null;
+	}
+
+	/**
+	 * Lee los valores de la tabla de configuraciones y los almacena en una caché
+	 * en memoria. La aplicación puede invocar este método para recargar la caché.
+	 * Se mandan los valores asignados al log, para poder monitorizar las actualizaciones.
+	 */
+	public void reloadCacheConfiguraciones() {
+		Criteria criteria = getSession().createCriteria(ConfiguracionEntity.class);
+		List<ConfiguracionEntity> lista = criteria.list();
+		Map<String, String> cache = new HashMap<String, String>();
+		for (ConfiguracionEntity configuracion : lista) {
+			cache.put(configuracion.getClave(), configuracion.getValor());
+		}
+		this.setCacheConfiguraciones(cache);
+		log.debug(this.toString(cache));
+	}
+
+	/**
+	 * Retorna los parámetros de configuración de la aplicación.
+	 * Los parámetros se guardan en la base de datos, pero se gestionan en
+	 * una caché para acelerar el acceso. 
+	 */
+	public Map<String, String> getConfiguraciones() {
+		if (this.getCacheConfiguraciones() == null) {
+			this.reloadCacheConfiguraciones();
+		}
+		return this.getCacheConfiguraciones();
+	}
+
+	public String getValorPropiedad(String propiedad){
+		return this.getConfiguraciones().get(propiedad);
+	}
+	
+	/**
+	 * Invoca un procedimiento PL/SQL que guarda los datos la conexión
+	 * HTTP del operador (dirección IP, puerto)
+	 */
+	public void guardarInfoInvocacionHttp(String datos) {
+	}
+
+	/**
+	 * Genera un string con las claves y valores de la tabla ordenados alfabéticamente
+	 * por claves.
+	 */
+	public String toString(Map<String, String> tabla) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n****\n");
+		builder.append("* ACTUALIZANDO CONFIGURACION. NUEVOS VALORES:\n");
+		builder.append("*\n");
+		ArrayList<String> claves = new ArrayList<String>(tabla.keySet());
+		Collections.sort(claves);
+		for (String clave : claves) {
+			builder.append("* ").append(clave).append(" = ").append(tabla.get(clave)).append("\n");
+		}
+		builder.append("****\n");
+		return builder.toString();
+	}
+	
+	private Map<String, String> getCacheConfiguraciones() {
+		return cacheConfiguraciones;
+	}
+
+	private void setCacheConfiguraciones(Map<String, String> cacheConfiguraciones) {
+		this.cacheConfiguraciones = cacheConfiguraciones;
+	}	
+	
+}

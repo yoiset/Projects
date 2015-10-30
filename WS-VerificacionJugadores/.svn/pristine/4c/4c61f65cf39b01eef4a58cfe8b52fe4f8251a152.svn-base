@@ -1,0 +1,157 @@
+package es.gob.cnjuego.ws.util;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import es.gob.cnjuego.ws.entity.Configuracion;
+import es.gob.cnjuego.ws.entity.TraduccionCaracteres;
+import es.gob.cnjuego.ws.service.ServicioConfiguracion;
+import es.gob.cnjuego.ws.service.ServicioTraduccionCaracteres;
+
+/** Singlento para controlar listas como TRaduccion de Caracteres, Configuracion etc
+ * @author ylopezconnectis
+ *
+ */
+public class UtilSupport {
+	
+	private static UtilSupport _instance;
+	
+	private static HashMap<String, String> mapTraduccion;
+	private static HashMap<String, String> mapConfiguracion;
+	private static List<String> dniPrueba;
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	private UtilSupport() {
+		super();
+		this.mapTraduccion = new HashMap<>();
+		this.mapConfiguracion=new HashMap<>();
+		this.dniPrueba=new ArrayList<>();
+		initTraduccionCaracteres();
+		initConfiguracion();
+	}
+
+	/**
+	 * @return
+	 */
+	public static UtilSupport getIntance(){
+		if(_instance==null) _instance=new UtilSupport();
+		return _instance;
+	}
+	
+	/**
+	 * Metodo que inicializa el hashmap con la traduccion de caracteres
+	 */
+	private void initTraduccionCaracteres(){
+		List<TraduccionCaracteres> list= getTraduccionCaracteres();
+		String original = "";
+		String traduccion="";
+		//String original = "ÃƒÂ¡ÃƒÂ ÃƒÂ¤ÃƒÂ¢Ãƒï¿½Ãƒâ‚¬Ãƒâ€žÃƒâ€šÃƒÂ©ÃƒÂ¨ÃƒÂ«ÃƒÂªÃƒâ€°ÃƒË†Ãƒâ€¹ÃƒÅ ÃƒÂ­ÃƒÂ¬ÃƒÂ¯ÃƒÂ®Ãƒï¿½ÃƒÅ’ÃƒÅ½Ãƒï¿½ÃƒÂ³ÃƒÂ²ÃƒÂ¶ÃƒÂ´Ãƒâ€œÃƒâ€™Ãƒâ€“Ãƒâ€�ÃƒÂºÃƒÂ¹ÃƒÂ»ÃƒÅ¡Ãƒâ„¢Ãƒâ€º";
+		//String traduccion="aaaaaaaaeeeeeeeeiiiiiiiioooooooouuuuuu";
+
+		int i=0;
+		for (TraduccionCaracteres trad: list ){
+			original = original + trad.getOriginal();
+			traduccion = traduccion + trad.getTraduccion();
+			i++;
+		}
+		mapTraduccion.put(Constantes.CACHE_KEY_CARACTERES_ORIGINAL, original);
+		mapTraduccion.put(Constantes.CACHE_KEY_CARACTERES_TRADUCCION, traduccion);
+	}
+	
+	
+	/**
+	 * 
+	 */
+	private void initConfiguracion(){
+		List<Configuracion> list= getListaConfiguracion();
+		for (Configuracion conf : list) {
+			mapConfiguracion.put(conf.getClave(), conf.getValor());
+		}
+		
+	}
+	
+	/**
+	 * @return
+	 */
+	private static List<TraduccionCaracteres> getTraduccionCaracteres(){
+		ServicioTraduccionCaracteres srvTraduccion= ServiceCN.getServicioTraduccionCaracteres();
+		if(srvTraduccion==null) return null;
+		return srvTraduccion.leerTraduccion();
+	}
+	
+	private static List<Configuracion> getListaConfiguracion(){
+		ServicioConfiguracion servicio=ServiceCN.getServicioConfiguracion();
+		if(servicio==null) return null;
+		return servicio.leer();
+	}
+	
+	
+	
+	/**
+	 * @param tipoCaracteres
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getCaracteresCache(String tipoCaracteres)throws Exception
+	{
+		return getIntance().mapTraduccion.get(tipoCaracteres);
+	}
+	
+	
+	/** Obtiene el valor de configuración establecido en BD
+	 * @param conf
+	 * @return
+	 */
+	public static String getConfiguracion(String conf){
+		return getIntance().mapConfiguracion.get(conf);
+	}
+	
+	
+	/**
+	 * @param key
+	 * @return
+	 */
+	public static List<String> getListDniPrueba(){
+		return dniPrueba;
+	}
+
+	/**
+	 * Carga la lista de DNI de Pruebas en la Cache
+	 */
+	public static void initDebugIdentidad() {
+		
+		
+		List<String> list=ServiceCN.getDNIDebugIdentidadDAO().obtenerListaDni();
+		for (String string : list) {
+			dniPrueba.add(string);
+		}
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static HashMap<String, String> getMapTraduccion() {
+		return mapTraduccion;
+	}
+
+	public static void setMapTraduccion(HashMap<String, String> mapTraduccion) {
+		UtilSupport.mapTraduccion = mapTraduccion;
+	}
+
+	public static HashMap<String, String> getMapConfiguracion() {
+		return mapConfiguracion;
+	}
+
+	public static void setMapConfiguracion(HashMap<String, String> mapConfiguracion) {
+		UtilSupport.mapConfiguracion = mapConfiguracion;
+	}
+
+
+	
+
+}

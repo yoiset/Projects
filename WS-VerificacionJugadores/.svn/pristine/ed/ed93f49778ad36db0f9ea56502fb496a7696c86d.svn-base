@@ -1,0 +1,4 @@
+org.apache.ws.security.crypto.provider=org.apache.ws.security.components.crypto.Merlin
+org.apache.ws.security.crypto.merlin.keystore.type=PKCS12
+org.apache.ws.security.crypto.merlin.keystore.password=dgojuego
+org.apache.ws.security.crypto.merlin.file=aplicaciones.dgojuego.gob.es.p12

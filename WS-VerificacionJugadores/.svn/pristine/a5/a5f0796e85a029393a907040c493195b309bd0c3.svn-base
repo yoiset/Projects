@@ -1,0 +1,176 @@
+
+package com.atos.mir.gcr.model.webservices.tramitacion.aexternas;
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+
+/**
+ * <p>Java class for InfoGenerarCertificado complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="InfoGenerarCertificado">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="certificado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="csv" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="fechaValidez" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="resultado" type="{http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com}InfoResultado" minOccurs="0"/>
+ *         &lt;element name="nombreCertificado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "InfoGenerarCertificado", propOrder = {
+    "certificado",
+    "csv",
+    "fechaValidez",
+    "resultado",
+    "nombreCertificado"
+})
+public class InfoGenerarCertificado {
+
+    @XmlElementRef(name = "certificado", namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", type = JAXBElement.class, required = false)
+    protected JAXBElement<String> certificado;
+    @XmlElementRef(name = "csv", namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", type = JAXBElement.class, required = false)
+    protected JAXBElement<String> csv;
+    @XmlElementRef(name = "fechaValidez", namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", type = JAXBElement.class, required = false)
+    protected JAXBElement<XMLGregorianCalendar> fechaValidez;
+    @XmlElementRef(name = "resultado", namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", type = JAXBElement.class, required = false)
+    protected JAXBElement<InfoResultado> resultado;
+    @XmlElementRef(name = "nombreCertificado", namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", type = JAXBElement.class, required = false)
+    protected JAXBElement<String> nombreCertificado;
+
+    /**
+     * Gets the value of the certificado property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getCertificado() {
+        return certificado;
+    }
+
+    /**
+     * Sets the value of the certificado property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setCertificado(JAXBElement<String> value) {
+        this.certificado = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the csv property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getCsv() {
+        return csv;
+    }
+
+    /**
+     * Sets the value of the csv property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setCsv(JAXBElement<String> value) {
+        this.csv = ((JAXBElement<String> ) value);
+    }
+
+    /**
+     * Gets the value of the fechaValidez property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public JAXBElement<XMLGregorianCalendar> getFechaValidez() {
+        return fechaValidez;
+    }
+
+    /**
+     * Sets the value of the fechaValidez property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}
+     *     
+     */
+    public void setFechaValidez(JAXBElement<XMLGregorianCalendar> value) {
+        this.fechaValidez = ((JAXBElement<XMLGregorianCalendar> ) value);
+    }
+
+    /**
+     * Gets the value of the resultado property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link InfoResultado }{@code >}
+     *     
+     */
+    public JAXBElement<InfoResultado> getResultado() {
+        return resultado;
+    }
+
+    /**
+     * Sets the value of the resultado property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link InfoResultado }{@code >}
+     *     
+     */
+    public void setResultado(JAXBElement<InfoResultado> value) {
+        this.resultado = ((JAXBElement<InfoResultado> ) value);
+    }
+
+    /**
+     * Gets the value of the nombreCertificado property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public JAXBElement<String> getNombreCertificado() {
+        return nombreCertificado;
+    }
+
+    /**
+     * Sets the value of the nombreCertificado property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     
+     */
+    public void setNombreCertificado(JAXBElement<String> value) {
+        this.nombreCertificado = ((JAXBElement<String> ) value);
+    }
+
+}

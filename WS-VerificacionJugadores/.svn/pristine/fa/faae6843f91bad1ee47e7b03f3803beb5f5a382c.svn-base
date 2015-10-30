@@ -1,0 +1,71 @@
+package es.gob.cnjuego.ws.util;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import es.gob.cnjuego.ws.dao.DNIDebugIdentidadDAO;
+import es.gob.cnjuego.ws.service.ServicioConfiguracion;
+import es.gob.cnjuego.ws.service.ServicioGestionCertificados;
+import es.gob.cnjuego.ws.service.ServicioGestionJugadores;
+import es.gob.cnjuego.ws.service.ServicioGestionRGIAJ;
+import es.gob.cnjuego.ws.service.ServicioIdentidad;
+import es.gob.cnjuego.ws.service.ServicioJugadoresTestWS;
+import es.gob.cnjuego.ws.service.ServicioTraduccionCaracteres;
+
+/** Clase Singlenton para pedir los Beans manejados por Spring y que fueron migrados desde EJB
+ * @author ylopezconnectis
+ *
+ */
+public class ServiceCN {
+	
+	static ApplicationContext context;
+	
+	private static void init(){
+		context = new ClassPathXmlApplicationContext(
+				//new String[] { "/applicationContext.xml", "/tests/applicationContext_ws_client.xml" });
+				new String[] { "/applicationContext_db.xml", "/tests/applicationContext_ws_client.xml" });
+//		context=new ClassPathXmlApplicationContext();
+	}
+	
+	public static ServicioGestionJugadores getServicioGestionJugadores(){
+		if(context==null) init();
+		return (ServicioGestionJugadores) context.getBean("servicioGestionJugadores");
+	}
+	
+	public static ServicioGestionRGIAJ getServicioGestionRGIAJ(){
+		if(context==null) init();
+		return (ServicioGestionRGIAJ) context.getBean("servicioGestionRGIAJ");
+	}
+	
+	public static ServicioIdentidad getServicioIdentidad(){
+		if(context==null) init();
+		return (ServicioIdentidad) context.getBean("servicioIdentidad");
+	}
+	
+	public static ServicioGestionCertificados getServicioGestionCertificados(){
+			if(context==null) init();
+			return (ServicioGestionCertificados) context.getBean("servicioGestionCertificados");
+	}
+		
+		
+	public static ServicioJugadoresTestWS getServicioJugadoresTestWS(){
+		if(context==null) init();
+		return (ServicioJugadoresTestWS) context.getBean("servicioJugadoresTestWS");
+    }
+	
+	public static ServicioTraduccionCaracteres getServicioTraduccionCaracteres(){
+		if(context==null) init();
+		return (ServicioTraduccionCaracteres) context.getBean("servicioTraduccionCaracteres");
+	}
+	
+	public static ServicioConfiguracion getServicioConfiguracion(){
+		if(context==null) init();
+		return (ServicioConfiguracion) context.getBean("servicioConfiguracion");
+	}
+	
+	public static DNIDebugIdentidadDAO getDNIDebugIdentidadDAO(){
+		if(context==null) init();
+		return (DNIDebugIdentidadDAO) context.getBean("dNIDebugIdentidadDAO");
+	}
+
+}

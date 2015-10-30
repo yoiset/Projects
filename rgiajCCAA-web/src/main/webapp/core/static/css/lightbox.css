@@ -1,0 +1,29 @@
+/*
+Estilos para la DGOJ
+
+© Copyright 2013
+Todos los derechos reservados.
+*/
+
+#lightbox {display:none; position: absolute; top:5em; left:0; z-index:9999; width: 100%; border:0; padding: 0; margin:0 0 0 0; text-align:left; }
+* html #lightbox {display:none; position: absolute; top:5em; left:0; z-index:9999; width: 99%; padding: 0; margin:0; border:0px; text-align:left;}
+#lightbox[id]{position:fixed;}
+
+#overlay {display:none; position:absolute; top:0; left:0; width:100%; height:100%; z-index:5000; background-color:#000; -moz-opacity: 0.8; opacity:.70; filter: alpha(opacity=70);}
+#overlay[id] {position:fixed;}
+#lightbox.done #lbLoadMessage {position:absolute; top:0; left:0; width:100%; padding-top: 0.4em}
+/*#lightbox.done #lbLoadMessage p {width: 35em; height: 8em; text-align: center; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; margin: 0.6em auto 0 auto; color: #F3F3F3; background: #F3F3F3 url('../images/loading.gif') center center no-repeat; padding-top: 0.4em; padding-bottom: 1.1em;}*/
+
+#lightbox.done #lbContent {display:block; width: 61em; overflow-y:scroll; overflow-x:hidden; height: 30em; margin: 0 auto; padding-right: 1em; background: #fff}
+#lightbox.loading #lbContent {display:none;}
+#lightbox.loading #lbLoadMessage {display:block;}
+#lightbox.done images {width:100%; height:100%;}
+.lbAction a:hover {color: #cc0000}
+#lightbox #contenido #interior {height: 30em; border: 0; margin: 0; padding-right: 1em; padding-top: 1m; background:#fff url('../images/fondo-intranet-2.jpg') top center no-repeat;}
+#lightbox #contenido #interior #central {background: none; border: 0; margin: 0; }
+#lightbox #contenido #interior #central #opciones {text-align:right; margin:1.8em 0em 0.2em 0em; padding: 0.8em 0 0.2em 0; display:block; clear: both;}
+#lightbox #contenido #interior #central #opciones a {float: right; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 1em; color: #cc0000; background:url("../images/ico-cerrar-ventana.gif") top left no-repeat; border: 0; padding: 0.2em 0 0.2em 2em; margin-top:0.2em; text-decoration: none; }
+#lightbox #contenido #interior #central #opciones a:hover {color: #cc0000; font-weight: normal; text-decoration: underline; font-weight: bold;}
+
+#contenedor-mensaje-espera {font-size: 1.2em; color: #666666; text-align: center; display: block; clear: both; font-weight: bold; background: url('../images/loading.gif') top center no-repeat; padding-top: 2.5em; height: 3em}
+

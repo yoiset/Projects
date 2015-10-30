@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd		
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean id="passwordCallback" class="es.gob.cnjuego.ws.verificacionjugadores.interceptor.ServerPasswordCallback"/>
+
+	<!--
+		Define y publica el servicio web. Nótese que se definen varios interceptores que son invocados
+		antes de que la petición llegue al servicio web. 
+	 -->
+	<bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+	<bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+
+	<bean id="VerificacionJugadoresImpl" class="es.gob.cnjuego.ws.verificacionjugadores.VerificacionJugadoresImpl">
+		<property name="verificacionDao" ref="VerificacionDao"/>
+		<property name="clienteJuegoDniService" ref="ClienteJuegoDniService"/>
+		<property name="clienteSCSPService" ref="ClienteSCSPService"/>
+		<property name="gestionJugadoresService" ref="GestionJugadoresService"/>
+		<property name="jugadoresTestService" ref="JugadoresTestService"/>
+	</bean>
+	
+	<!--
+	    Definición del proxy que consume el web service de SCSP, desplegado en la intranet
+		Nótese que la URL del servicio se reasigna en tiempo de ejecución con
+		el valor asociado a la clave "endpoint.juegodniservice" de la tabla 
+		CONFIGURACION de la base de datos. 
+	 -->
+	<jaxws:client
+  		id="SCSPService"
+		address="http://12345"
+		serviceClass="es.redsara.intermediacion.scsp.esquemas.ws.Scspws">
+	</jaxws:client>
+	
+	<!--
+	    Definición del proxy que consume el web service de JuegoDNI, desplegado en la intranet
+		Nótese que la URL del servicio se reasigna en tiempo de ejecución con
+		el valor asociado a la clave "endpoint.juegodniservice" de la tabla 
+		CONFIGURACION de la base de datos. 
+	 -->
+	<jaxws:client
+  		id="JuegoDniService"
+		address="http://12345"
+		serviceClass="es.mir.juego.component.ws.service.JuegoDni">
+	</jaxws:client>
+	
+	<bean id="ClienteJuegoDniService" class="es.gob.cnjuego.ws.verificacionjugadores.ClienteJuegoDniService">
+		<property name="clienteJuegoDni" ref="JuegoDniService" />	
+		<property name="verificacionDao" ref="VerificacionDao"/>
+	</bean>
+		
+	<bean id="ClienteSCSPService" class="es.gob.cnjuego.ws.verificacionjugadores.ClienteSCSPService">
+		<property name="clienteSCSP" ref="SCSPService" />	
+		<property name="verificacionDao" ref="VerificacionDao"/>
+	</bean>	
+	
+	<bean id="GestionJugadoresService" class="es.gob.cnjuego.ws.service.GestionJugadoresService">
+		<property name="jugadoresOperadorDAO" ref="JugadoresOperadorDAO"/>	
+		<property name="dniDebugIdentidadDAO" ref="DNIDebugIdentidadDAO"/>
+	</bean>
+
+	<bean id="JugadoresTestService" class="es.gob.cnjuego.ws.service.JugadoresTestService">
+		<property name="jugadoresTestDAO" ref="JugadoresTestDAO"/>	
+		<property name="verificacionDao" ref="VerificacionDao"/>
+		<property name="gestionJugadoresService" ref="GestionJugadoresService"/>
+	</bean>
+
+	<jaxws:endpoint xmlns:s="http://ws.cnjuego.gob.es/VerificacionJugadores/"
+		 id="VerificacionJugadoresEndpoint"
+		 address="/VerificacionJugadores"
+		 serviceName="s:VerificacionJugadores"
+		 wsdlLocation="classpath:wsdl/VerificacionJugadores.wsdl"
+		 implementor="#VerificacionJugadoresImpl">
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+		<jaxws:inInterceptors>
+			<bean class="es.gob.cnjuego.ws.verificacionjugadores.interceptor.InterceptorEntradaProcesarCertificado">
+				<property name="dao" ref="VerificacionDao"/>
+			</bean>
+			<bean class="es.gob.cnjuego.ws.verificacionjugadores.interceptor.InterceptorEntradaRegistrarInvocacion">
+				<property name="dao" ref="VerificacionDao"/>
+			</bean>
+			<bean class="es.gob.cnjuego.ws.verificacionjugadores.interceptor.InterceptorEntradaControlarSeguridad">
+				<property name="dao" ref="VerificacionDao"/>
+			</bean>
+		</jaxws:inInterceptors>
+		<jaxws:outInterceptors>
+			<bean class="es.gob.cnjuego.ws.verificacionjugadores.interceptor.InterceptorSalidaRegistrarRespuesta">
+				<property name="dao" ref="VerificacionDao"/>
+			</bean>
+		</jaxws:outInterceptors>
+		<jaxws:outFaultInterceptors>
+			<bean class="es.gob.cnjuego.ws.verificacionjugadores.interceptor.InterceptorSalidaRegistrarFault">
+				<property name="dao" ref="VerificacionDao"/>
+			</bean>
+		</jaxws:outFaultInterceptors>
+		
+		<jaxws:properties>
+			<entry key="ws-security.callback-handler" value="es.gob.cnjuego.ws.verificacionjugadores.interceptor.ServerPasswordCallback"/>
+			<entry key="ws-security.signature.username" value="24a1408645874e2749389480c8997989_e8d884b6-6e09-4e13-9e19-1e882c865018"/> 
+			<entry key="ws-security.signature.properties" value="server_sign.properties"/> 
+ 			<entry key="schema-validation-enabled" value="true" />
+ 		</jaxws:properties> 
+	</jaxws:endpoint>
+  
+</beans>

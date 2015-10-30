@@ -1,0 +1,42 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
+
+import es.gob.cnjuego.ws.entity.JugadorTestWS;
+
+
+@Repository(value="jugadoresTestWSDAO")
+public class JugadoresTestWSDAOImpl implements JugadoresTestWSDAO {
+
+	private Logger log = Logger.getLogger(JugadoresTestWSDAOImpl.class);
+
+	@PersistenceContext///(unitName="JohanJPA",type=PersistenceContextType.TRANSACTION)
+	EntityManager manager;
+	
+		
+	@Override
+	public JugadorTestWS obtenerJugadorPrueba(String dni){
+		JugadorTestWS jugadorPrueba = null;
+		Query query = manager.createQuery("SELECT c FROM JugadorTestWS c where c.dni=:dni");
+		query.setParameter("dni", dni);
+		List<JugadorTestWS> res = query.getResultList();
+		if (res != null && !res.isEmpty())
+			{
+			jugadorPrueba = (JugadorTestWS)res.iterator().next();
+			}
+		
+		return jugadorPrueba;
+	}
+	
+	
+	
+		
+}

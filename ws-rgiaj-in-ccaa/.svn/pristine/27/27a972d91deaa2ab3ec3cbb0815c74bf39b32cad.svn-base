@@ -1,0 +1,20 @@
+package com.dgoj.juegoExterno.business.service;
+
+import com.dgoj.juegoExterno.business.bean.JugHistoricoQueryBean;
+import com.dgoj.juegoExterno.business.bean.JugHistoricoSearchResult;
+
+/**
+ * @author ylopezconnectis
+ *
+ */
+public interface IJugHistoricoDescargaService {
+	
+	
+	
+	/**
+	 * @param query
+	 * @return
+	 */
+	public JugHistoricoSearchResult getHistorico(JugHistoricoQueryBean query);
+
+}

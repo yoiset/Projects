@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<context:annotation-config />
+
+	<!-- Descomentar en caso de lectura de properties externos a la aplicacion. -->
+	<bean id="externalFilesystemPropertyPlaceholderConfigurer"
+      class="com.jeveris.core.properties.impl.CustomPropertyPlaceholderConfigurerImpl"
+      depends-on="propertyPlaceholderConfigurer"  destroy-method="destroy">
+       	<description>
+              PlaceHolder of properties not included in application folder structure
+              Uses external location from file system defined path                                            
+		</description>
+       	<property name="locations" ref="externalFilesystemPropertiesLocations" />
+       	<property name="ignoreUnresolvablePlaceholders" value="false" />
+       	<property name="hostDependentPropertiesPlaceHolder" value="false"/>
+	</bean>
+       
+	<!-- file system external locations -->
+	<bean id="externalFilesystemPropertiesLocations" class="com.jeveris.core.properties.PropertiesLocationsFactoryBean">
+		<property name="systemPropertyDir" value="properties.path"/>
+		<property name="externalDir" value="rgiajccaa" />
+		<property name="locations">
+			<list>
+	            <value>jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- FIN - Descomentar en caso de lectura de properties externos a la aplicacion. -->
+
+ 	<bean id="enumMessageSource" class="com.dgoj.sprmvc.context.EnumMessageSource">
+    	<property name="messageSource" ref="messageSource" />
+	</bean>
+	
+	<bean id="viewTimeout" class="java.lang.Long">
+	    <constructor-arg type="java.lang.String" value="${viewTimeout}" />
+    </bean>
+    
+    <bean id="application.name" class="java.lang.String">
+	    <constructor-arg type="java.lang.String" value="${application.name}" />
+    </bean>
+    
+    <bean id="application.responseTime" class="java.lang.String">
+	    <constructor-arg type="java.lang.String" value="${application.responseTime}" />
+    </bean>
+    
+    <bean id="application.version" class="java.lang.String">
+	    <constructor-arg type="java.lang.String" value="${application.version}" />
+    </bean>
+    
+	<!-- Bean requerido para la subida de ficheros adjunto -->
+    <bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    </bean>
+	  
+	<bean id="situacionTipos" class="java.lang.String">
+	    <constructor-arg type="java.lang.String" value="${situacionTipos}" />
+    </bean>	 	 
+	 
+	<bean id="situacionValores" class="java.lang.String">
+	    <constructor-arg type="java.lang.String" value="${situacionValores}" />
+    </bean>	 	
+</beans>

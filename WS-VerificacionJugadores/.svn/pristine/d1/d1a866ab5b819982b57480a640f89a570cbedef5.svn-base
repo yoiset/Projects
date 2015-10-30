@@ -1,0 +1,123 @@
+package es.gob.cnjuego.ws.util;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import es.gob.cnjuego.ws.entity.ConfiguracionEntity;
+import es.gob.cnjuego.ws.entity.TraduccionCaracteres;
+import es.gob.cnjuego.ws.service.ServicioConfiguracion;
+
+/** Singlento para controlar listas como TRaduccion de Caracteres, Configuracion etc
+ * @author ylopezconnectis
+ *
+ */
+public class UtilSupport {
+	
+	private static UtilSupport _instance;
+	
+	private static HashMap<String, String> mapTraduccion;
+	private static HashMap<String, String> mapConfiguracion;
+	private static List<String> dniPrueba;
+	
+	/**
+	 * 
+	 */
+	private UtilSupport() {
+		super();
+		this.mapTraduccion = new HashMap<String, String>();
+		this.mapConfiguracion=new HashMap<String, String>();
+		init();
+	}
+	
+	private void init(){
+		initConfiguracion();
+		initDebugIdentidad();
+	}
+
+	/**
+	 * @return
+	 */
+	public static UtilSupport getIntance(){
+		if(_instance==null) _instance=new UtilSupport();
+		return _instance;
+	}
+	
+	
+	/**
+	 * 
+	 */
+	private void initConfiguracion(){
+		List<ConfiguracionEntity> list= getListaConfiguracion();
+		for (ConfiguracionEntity conf : list) {
+			mapConfiguracion.put(conf.getClave(), conf.getValor());
+		}
+		
+	}
+	
+	/**
+	 * @return
+	 */
+	private static List<ConfiguracionEntity> getListaConfiguracion(){
+		ServicioConfiguracion servicio=ServiceCN.getServicioConfiguracion();
+		if(servicio==null) return null;
+		return servicio.leer();
+	}
+	
+	/**
+	 * Carga la lista de DNI de Pruebas en la Cache
+	 */
+	private static void initDebugIdentidad() {
+	  dniPrueba=ServiceCN.getDNIDebugIdentidadDAO().getListaDebugIdentidades();
+	  if(dniPrueba==null) dniPrueba=new ArrayList<String>();		
+	}	
+	
+	/**
+	 * @param tipoCaracteres
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getCaracteresCache(String tipoCaracteres)throws Exception
+	{
+		return getIntance().mapTraduccion.get(tipoCaracteres);
+	}
+	
+	
+	/** Obtiene el valor de configuración establecido en BD
+	 * @param conf
+	 * @return
+	 */
+	public static String getConfiguracion(String conf){
+		return getIntance().mapConfiguracion.get(conf);
+	}
+	
+	
+	/**
+	 * @param key
+	 * @return
+	 */
+	public static List<String> getListDniPrueba(){
+		return getIntance().dniPrueba;
+	}
+	
+	/**
+	 * @return
+	 */
+	public static HashMap<String, String> getMapTraduccion() {
+		return getIntance().mapTraduccion;
+	}
+
+	
+	/**
+	 * @return
+	 */
+	public static HashMap<String, String> getMapConfiguracion() {
+		return getIntance().mapConfiguracion;
+	}
+
+	
+
+
+	
+
+}

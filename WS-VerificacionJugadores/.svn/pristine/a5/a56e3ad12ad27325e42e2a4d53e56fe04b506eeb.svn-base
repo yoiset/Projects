@@ -1,0 +1,345 @@
+
+package es.redsara.intermediacion.scsp.esquemas.ws.respuesta;
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
+import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
+
+
+/**
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the es.redsara.intermediacion.scsp.esquemas.ws.respuesta package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
+ * provided in this class.
+ * 
+ */
+@XmlRegistry
+public class ObjectFactory {
+
+    private final static QName _NombreSolicitante_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "NombreSolicitante");
+    private final static QName _TipoDocumentacion_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "TipoDocumentacion");
+    private final static QName _UnidadTramitadora_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "UnidadTramitadora");
+    private final static QName _IdentificadorSolicitante_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "IdentificadorSolicitante");
+    private final static QName _IdPeticion_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "IdPeticion");
+    private final static QName _Consentimiento_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "Consentimiento");
+    private final static QName _IdExpediente_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "IdExpediente");
+    private final static QName _TimeStamp_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "TimeStamp");
+    private final static QName _Finalidad_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "Finalidad");
+    private final static QName _NumElementos_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "NumElementos");
+    private final static QName _CodigoCertificado_QNAME = new QName("http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", "CodigoCertificado");
+
+    /**
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: es.redsara.intermediacion.scsp.esquemas.ws.respuesta
+     * 
+     */
+    public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link Transmisiones }
+     * 
+     */
+    public Transmisiones createTransmisiones() {
+        return new Transmisiones();
+    }
+
+    /**
+     * Create an instance of {@link SolicitudRespuesta }
+     * 
+     */
+    public SolicitudRespuesta createSolicitudRespuesta() {
+        return new SolicitudRespuesta();
+    }
+
+    /**
+     * Create an instance of {@link ConfirmacionPeticion }
+     * 
+     */
+    public ConfirmacionPeticion createConfirmacionPeticion() {
+        return new ConfirmacionPeticion();
+    }
+
+    /**
+     * Create an instance of {@link SolicitudTransmision }
+     * 
+     */
+    public SolicitudTransmision createSolicitudTransmision() {
+        return new SolicitudTransmision();
+    }
+
+    /**
+     * Create an instance of {@link Respuesta }
+     * 
+     */
+    public Respuesta createRespuesta() {
+        return new Respuesta();
+    }
+
+    /**
+     * Create an instance of {@link DatosEspecificosRespuestaType }
+     * 
+     */
+    public DatosEspecificosRespuestaType createDatosEspecificosRespuestaType() {
+        return new DatosEspecificosRespuestaType();
+    }
+
+    /**
+     * Create an instance of {@link Transmisiones.TransmisionDatos }
+     * 
+     */
+    public Transmisiones.TransmisionDatos createTransmisionesTransmisionDatos() {
+        return new Transmisiones.TransmisionDatos();
+    }
+
+    /**
+     * Create an instance of {@link Titular }
+     * 
+     */
+    public Titular createTitular() {
+        return new Titular();
+    }
+
+    /**
+     * Create an instance of {@link SolicitudRespuesta.Atributos }
+     * 
+     */
+    public SolicitudRespuesta.Atributos createSolicitudRespuestaAtributos() {
+        return new SolicitudRespuesta.Atributos();
+    }
+
+    /**
+     * Create an instance of {@link RespuestaPdf }
+     * 
+     */
+    public RespuestaPdf createRespuestaPdf() {
+        return new RespuestaPdf();
+    }
+
+    /**
+     * Create an instance of {@link ConfirmacionPeticion.Atributos }
+     * 
+     */
+    public ConfirmacionPeticion.Atributos createConfirmacionPeticionAtributos() {
+        return new ConfirmacionPeticion.Atributos();
+    }
+
+    /**
+     * Create an instance of {@link SolicitudTransmision.DatosGenericos }
+     * 
+     */
+    public SolicitudTransmision.DatosGenericos createSolicitudTransmisionDatosGenericos() {
+        return new SolicitudTransmision.DatosGenericos();
+    }
+
+    /**
+     * Create an instance of {@link PeticionSincrona }
+     * 
+     */
+    public PeticionSincrona createPeticionSincrona() {
+        return new PeticionSincrona();
+    }
+
+    /**
+     * Create an instance of {@link es.redsara.intermediacion.scsp.esquemas.ws.respuesta.Atributos }
+     * 
+     */
+    public es.redsara.intermediacion.scsp.esquemas.ws.respuesta.Atributos createAtributos() {
+        return new es.redsara.intermediacion.scsp.esquemas.ws.respuesta.Atributos();
+    }
+
+    /**
+     * Create an instance of {@link Solicitudes }
+     * 
+     */
+    public Solicitudes createSolicitudes() {
+        return new Solicitudes();
+    }
+
+    /**
+     * Create an instance of {@link Emisor }
+     * 
+     */
+    public Emisor createEmisor() {
+        return new Emisor();
+    }
+
+    /**
+     * Create an instance of {@link Procedimiento }
+     * 
+     */
+    public Procedimiento createProcedimiento() {
+        return new Procedimiento();
+    }
+
+    /**
+     * Create an instance of {@link Estado }
+     * 
+     */
+    public Estado createEstado() {
+        return new Estado();
+    }
+
+    /**
+     * Create an instance of {@link Respuesta.Atributos }
+     * 
+     */
+    public Respuesta.Atributos createRespuestaAtributos() {
+        return new Respuesta.Atributos();
+    }
+
+    /**
+     * Create an instance of {@link Funcionario }
+     * 
+     */
+    public Funcionario createFuncionario() {
+        return new Funcionario();
+    }
+
+    /**
+     * Create an instance of {@link Solicitante }
+     * 
+     */
+    public Solicitante createSolicitante() {
+        return new Solicitante();
+    }
+
+    /**
+     * Create an instance of {@link Transmision }
+     * 
+     */
+    public Transmision createTransmision() {
+        return new Transmision();
+    }
+
+    /**
+     * Create an instance of {@link PeticionAsincrona }
+     * 
+     */
+    public PeticionAsincrona createPeticionAsincrona() {
+        return new PeticionAsincrona();
+    }
+
+    /**
+     * Create an instance of {@link DatosEspecificosRespuestaType.EstadoResultado }
+     * 
+     */
+    public DatosEspecificosRespuestaType.EstadoResultado createDatosEspecificosRespuestaTypeEstadoResultado() {
+        return new DatosEspecificosRespuestaType.EstadoResultado();
+    }
+
+    /**
+     * Create an instance of {@link Transmisiones.TransmisionDatos.DatosGenericos }
+     * 
+     */
+    public Transmisiones.TransmisionDatos.DatosGenericos createTransmisionesTransmisionDatosDatosGenericos() {
+        return new Transmisiones.TransmisionDatos.DatosGenericos();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "NombreSolicitante")
+    public JAXBElement<String> createNombreSolicitante(String value) {
+        return new JAXBElement<String>(_NombreSolicitante_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "TipoDocumentacion")
+    public JAXBElement<String> createTipoDocumentacion(String value) {
+        return new JAXBElement<String>(_TipoDocumentacion_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "UnidadTramitadora")
+    public JAXBElement<String> createUnidadTramitadora(String value) {
+        return new JAXBElement<String>(_UnidadTramitadora_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "IdentificadorSolicitante")
+    public JAXBElement<String> createIdentificadorSolicitante(String value) {
+        return new JAXBElement<String>(_IdentificadorSolicitante_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "IdPeticion")
+    public JAXBElement<String> createIdPeticion(String value) {
+        return new JAXBElement<String>(_IdPeticion_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "Consentimiento")
+    public JAXBElement<String> createConsentimiento(String value) {
+        return new JAXBElement<String>(_Consentimiento_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "IdExpediente")
+    public JAXBElement<String> createIdExpediente(String value) {
+        return new JAXBElement<String>(_IdExpediente_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "TimeStamp")
+    public JAXBElement<String> createTimeStamp(String value) {
+        return new JAXBElement<String>(_TimeStamp_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "Finalidad")
+    public JAXBElement<String> createFinalidad(String value) {
+        return new JAXBElement<String>(_Finalidad_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Integer }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "NumElementos")
+    public JAXBElement<Integer> createNumElementos(Integer value) {
+        return new JAXBElement<Integer>(_NumElementos_QNAME, Integer.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://intermediacion.redsara.es/scsp/esquemas/ws/respuesta", name = "CodigoCertificado")
+    public JAXBElement<String> createCodigoCertificado(String value) {
+        return new JAXBElement<String>(_CodigoCertificado_QNAME, String.class, null, value);
+    }
+
+}

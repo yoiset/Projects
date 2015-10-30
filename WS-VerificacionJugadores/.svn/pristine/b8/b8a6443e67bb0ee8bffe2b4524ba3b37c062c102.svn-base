@@ -1,0 +1,137 @@
+package es.gob.cnjuego.ws.util;
+
+public class Constantes {
+	public static final String CFG_MODIFICACION = "modificacion";
+	public static final String CFG_INTERVALO_ACTUALIZACION_PROPIEDADES = "intervaloActualizacionPropiedades";
+	public static final String CFG_DATO_PRUEBA_PROPIEDADES = "datoPruebaPropiedades";
+	public static final String CFG_DATO_PRUEBA_PROPIEDADES_FICHERO = "datoPruebaPropiedadesFichero";
+	
+	public static final String CFG_ENDPOINT_VALIDAR_FIRMA = "endpoint.validarFirma";
+	public static final String CFG_ENDPOINT_VALIDAR_FIRMA_DSS = "endpoint.validarFirmaDSS";
+	public static final String CFG_ENDPOINT_VALIDAR_CERTIFICADO = "endpoint.validarCertificado";
+	public static final String CFG_ENDPOINT_FIRMA_PDF = "endpoint.FirmaPdf";
+	public static final String CFG_ENDPOINT_SCSP = "endpoint.scsp";
+	public static final String CFG_ENDPOINT_JUEGO_DNI = "endpoint.juegodniservice";
+	public static final String CFG_AFIRMA_DUMMY = "firmaDummy";
+	public static final String CFG_TIMESTAMP_OPCIONAL = "verificarJugadores.timestamp.opcional";
+	
+	public static final String CACHE_KEY_PAISES = "listaPaises";
+	public static final String CACHE_KEY_PROVINCIAS = "listaProvincias";
+	public static final String CACHE_KEY_MUNICIPIOS_COMUNIDAD = "listaMunicipiosComunidad";
+	public static final String CACHE_KEY_MUNICIPIOS = "listaMunicipios";
+	public static final String CACHE_KEY_COMUNIDADES = "listaComunidades";
+	public static final String CACHE_KEY_MODALIDADES_JUEGO = "listaModalidadesJuego";
+	public static final String CACHE_KEY_PERMISOS_FICHEROS = "permisosFicheros";
+	public static final String CACHE_KEY_TRANSICIONES = "transiciones";
+	public static final String CACHE_KEY_TRANSICIONES_ESTADO = "transicionesEstado";
+	public static final String CACHE_KEY_DNI_PRUEBA="dniPrueba";
+	public static final String CACHE_KEY_ESTADOS = "estados";
+	public static final String CACHE_KEY_CARACTERES_ORIGINAL="caracteresOriginal";
+	public static final String CACHE_KEY_CARACTERES_TRADUCCION="caracteresTraduccion";
+	
+	
+	//Vigencia en años
+	public static final int VIGENCIA_LICENCIA_GENERAL = 5;
+	public static final int CODIGO_PROCEDIMIENTO = 1;
+	
+	public static final String AFIRMA_CADENA_FIRMA_OK = "Firma Digital correcta";
+	public static final String AFIRMA_ID_APLICACION = "meh.sgtic.sededgoj001";
+	
+	//Constantes relacionadas con el Registro de interdictos
+	public static final String TRAMITACION_RIAJ_OK = "RIAJ_OK";
+	public static final String TRAMITACION_RIAJ_ERROR = "RIAJ_ERROR";
+	public static final String TRAMITACION_ALTA = "1";
+	public static final String TRAMITACION_BAJA="2";
+	public static final String TRAMITACION_MOD="4";
+	public static final String TRANSMISION_ERROR="9999";
+	public static final String TRANSMISION_OK="0000";
+	
+	public static final String CODIGO_PAIS_ESPANA = "109";
+	
+	//Constantes relacionadas con el registro de vinculados
+	
+	public static final String VINCULADOS_TIPO_NIF = "NIF";
+	public static final String VINCULADOS_TIPO_NIE = "NIE";
+	public static final String VINCULADOS_TIPO_ENVIO_NIF = "D";
+	public static final String VINCULADOS_TIPO_ENVIO_NIE = "E";
+	public static final String VINCULADOS_SITUACION_BAJA= "BD";
+	public static final String VINCULADOS_SITUACION_ALTA= "AC";
+	//formatosFecha
+	public static final String FECHAHORA_MM_dd_yyyy_hh_mm_ss = "MM-dd-yyyy hh:mm:ss";
+	public static final String FECHAHORA_dd_MM_yyyy_HH_mm_ss = "dd-MM-yyyy HH:mm:ss";
+
+	
+	
+	// Constantes relacionadas con las propiedades de Audit
+	public static final String OP_INICIAL = "INICIO";
+	public static final String LOGIN_BEAN_GETUSER = "LOGIN_BEAN_GETUSER";
+	public static final String LICENCIAS_BEAN_ConsultarLicencias = "LICENCIAS_BEAN_ConsultarLicencias";
+	
+	public static final int TIPO_DOC_CERTIFICADO_OPERADOR = 28; 
+	public static final int TIPO_DOC_DOCUMENTACION_ADICIONAL = 26; 
+	public static final int TIPO_DOC_INDICE_TECNICO = 27; 
+	public static final int TIPO_DOC_INDICE_ECONOMICO = 29;
+	
+	
+	//tipos de documento ocasionales
+	
+	public static final int TIPO_DOC_DNI = 126; 
+	public static final int TIPO_DOC_ESTATUTO = 127; 
+	public static final int TIPO_DOC_REGLAMENTO = 128; 
+	public static final int TIPO_DOC_JREPRESENTACION = 131;
+	public static final int TIPO_DOC_BASES = 132; 
+	public static final int TIPO_DOC_MSOPORTE = 133; 
+	public static final int TIPO_DOC_FACTURA = 134; 
+	public static final int TIPO_DOC_DISPONIBILIDAD = 135;
+	public static final int TIPO_DOC_COMPROMISOENTREGA = 136; 
+	public static final int TIPO_DOC_LPREMIOS = 137; 
+	public static final int TIPO_DOC_CINMUEBLES = 138; 
+	public static final int TIPO_DOC_MMPUBLICITARIAS = 139;
+	public static final int TIPO_DOC_RVENDEDORES = 140; 
+	public static final int TIPO_DOC_PPIMPUESTOS = 141;
+	public static final int TIPO_DOC_IAE = 142; 
+	public static final int TIPO_DOC_POHABILITADO = 144;
+	
+	//Timeouts clientes WS
+	public static final String CFG_JUEGODNI_CONNECT_TIMEOUT="juegoDni.connectTimeout";
+	public static final String CFG_JUEGODNI_RESPONSE_TIMEOUT="juegoDni.responseTimeout";
+	public static final String CFG_SCSP_CONNECT_TIMEOUT="scsp.connectTimeout";
+	public static final String CFG_SCSP_RESPONSE_TIMEOUT="scsp.responseTimeout";
+	
+	//Acciones del servicio de verificacion
+	public static final String VERIFICAR_JUGADOR="VerificarJugador";
+	public static final String VERIFICAR_RGIAJ="VerificarRGIAJ";
+	public static final String VERIFICAR_IDENTIDAD="VerificarIdentidad";
+	public static final String VERIFICAR_CAMBIOS_RGIAJ="VerificarCambiosRGIAJ";
+	
+	
+	//Modos de ejecuci�n de operadores de Juego
+	public static final int OP_DESHABILITADO=0;
+	public static final int OP_HABILITADO_PRU=1;
+	public static final int OP_HABILITADO_PRO=2;
+	public static final int OP_HABILITADO_PRU_PRO=3;
+	
+	
+	//Tipos de caché de identidad
+	public static final int CACHE_IDENTIDAD_CONCACHE = 1;
+	public static final int CACHE_IDENTIDAD_NOCACHE_VALIDACION=2;
+	public static final int CACHE_IDENTIDAD_NOCACHE_TEST=4;
+	
+	
+	public static final String PREFIJO_ESPANOLA = "españ";
+	
+	public static final boolean VALIDAR_FIRMA=true;
+	
+	
+	//
+	public static final String PROP_MODO_DEBUG_IDENTIDAD="identidad.modoDebug";
+	public static final String CLAVE_DNI_DEBUG_IDENTIDAD="DNI_PRUEBA";
+	
+	public static final String PROP_CERT_VERIFICACION="scsp.certificadoVerificacion";
+	public static final String PROP_FINALIDAD="scsp.finalidad";
+	public static final String PROP_NOMBRE_SOLICITANTE="scsp.nombreSolicitante";
+	public static final String PROP_IDENTIFICADOR_SOLICITANTE="scsp.identificadorSolicitante";
+	
+	public static String DNI_CHEQUEO_RECARGA_CONF="XXXXXXXXX";
+	
+}

@@ -1,0 +1,5 @@
+package es.gamco.redprogram.dao;
+
+public class AgenteServiceDAO {
+
+}

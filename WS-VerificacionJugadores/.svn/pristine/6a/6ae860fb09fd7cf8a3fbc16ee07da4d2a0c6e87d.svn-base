@@ -1,0 +1,137 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
+
+import org.apache.cxf.binding.soap.SoapFault;
+import org.apache.cxf.binding.soap.SoapMessage;
+import org.apache.cxf.binding.soap.saaj.SAAJInInterceptor;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+import org.apache.log4j.Logger;
+import org.apache.ws.security.components.crypto.Merlin;
+import org.w3c.dom.Document;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
+import org.xml.sax.InputSource;
+
+import es.gob.cnjuego.ws.verificacionjugadores.interceptor.DgojWSSecurityEngine;
+
+/**
+ * Este interceptor verifica la validez de la firma digital del mensaje SOAP y además
+ * que el timestamp no haya expirado.
+ * La verificación de la firma en nuestro caso consiste en tomar el certificado que viaja en
+ * el mensaje (elemento <BinarySecurityToken>) y usarlo para verificar la firma del cuerpo y el
+ * timestamp. Para ello hemos reimplementado un par de clases de WSS4J, para
+ * desactivar algunas fases (validación usando un almacén de certificados).
+ * Por lo demás, la validación de la firma y timestamp se realizan de forma estándar.
+ */
+public class InterceptorEntradaControlarSeguridadCliente extends WSS4JInInterceptor {
+
+	private static Logger log = Logger.getLogger(InterceptorEntradaControlarSeguridadCliente.class);
+
+	/**
+	 * Procesa las cabeceras de seguridad. Si la firma o el timestamp del mensaje
+	 * no son válidos, se produce una excepción.
+	 * 
+	 * Nota: para manipular el mensaje de respuesta y simular una firma inválida, 
+	 * alcanza con comentar la línea indicada en el método. Esto se usa como parte
+	 * de las pruebas de que la firma del servidor es correcta.
+	 */
+	public void handleMessage(SoapMessage mensaje) throws Fault {
+		try {
+			Document documentoXML = this.toDocument(mensaje);
+			DgojWSSecurityEngine securityEngine = new DgojWSSecurityEngine();
+			// Quitar el comentario de la siguiente línea si queremos invalidar
+			// la firma digital del mensaje enviado por el servidor.
+			//documentoXML = this.alterarDocumento(documentoXML);
+			securityEngine.processSecurityHeader(documentoXML, null, null, new Merlin());
+			if (!this.comprobarPresenciaTimestamp(mensaje)) {
+				throw new RuntimeException("Required timestamp not present.");
+			} else {
+				mensaje.put(SECURITY_PROCESSED, Boolean.TRUE);
+			}
+		} catch (Exception e) {
+			log.error("Error de seguridad", e);
+			throw new SoapFault("Security error: " + e.getMessage(), e, mensaje.getVersion().getSender());
+		}
+	}
+	
+	/**
+	 * Retorna un documento XML para el mensaje SOAP recibido.
+	 */
+    private Document toDocument(SoapMessage mensaje) throws TransformerConfigurationException, TransformerException, SOAPException, IOException {
+        SAAJInInterceptor.INSTANCE.handleMessage(mensaje);
+        SOAPMessage soapMsg = mensaje.getContent(SOAPMessage.class);
+		Source src = soapMsg.getSOAPPart().getContent();  
+		TransformerFactory tf = TransformerFactory.newInstance();  
+		Transformer transformer = tf.newTransformer();  
+		DOMResult result = new DOMResult();  
+		transformer.transform(src, result);  
+		return (Document)result.getNode();  
+	}  
+	
+    /**
+     * Comprueba si el mensaje incluye el timestamp. 
+     * Nota: la *caducidad* del timestamp es validada por CXF cuando comprueba
+     * la firma digital. Pero CXF lo hace solamente si el timestamp viene en el mensaje.
+     * Por esa razón, aquí simplemente comprobamos la presencia del elemento en el XML.
+     */
+    private boolean comprobarPresenciaTimestamp(SoapMessage mensaje) throws Exception {
+		SAAJInInterceptor.INSTANCE.handleMessage(mensaje);
+		SOAPMessage doc = mensaje.getContent(SOAPMessage.class);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		doc.writeTo(baos);
+		String soapString = new String(baos.toByteArray());
+		return soapString.toLowerCase().indexOf("timestamp") > -1;
+    }
+    
+    /**
+     * Retorna una copia del documento, con modificaciones.
+     * Esto se usa para alterar el documento y así invalidar la firma digital.
+     */
+    private Document alterarDocumento(Document doc) throws Exception {
+    	String documentoSerializado = this.toString(doc);
+		System.out.println("######### Documento original #########");
+		System.out.println(documentoSerializado);
+		
+		// Modificamos el XML del documento, insertando caracteres en la firma:
+		int i = documentoSerializado.indexOf("<ds:SignatureValue>") + 19;
+		documentoSerializado = documentoSerializado.substring(0, i) + 
+				"XXXXX" + documentoSerializado.substring(i);
+		
+		// Generamos un nuevo objeto DOM con las modificaciones
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        InputSource source = new InputSource(new StringReader(documentoSerializado));
+        Document result = factory.newDocumentBuilder().parse(source);
+        result.getDocumentElement().normalize();
+        
+        documentoSerializado = this.toString(result);        
+		System.out.println("######### Documento alterado #########");
+		System.out.println(documentoSerializado);
+		return result;
+    }
+    
+    /**
+     * Retorna un string que contiene el XML del documento
+     */
+    private String toString(Document doc) throws Exception {
+		DOMImplementationLS domImplLS = (DOMImplementationLS) doc.getImplementation();
+		LSSerializer serializer = domImplLS.createLSSerializer();
+		String documentoSerializado = serializer.writeToString(doc);
+		return documentoSerializado;    	
+    }
+    
+}

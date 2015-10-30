@@ -1,0 +1,179 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import es.gob.cnjuego.ws.entity.ConfiguracionEntity;
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJEntity;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.entity.PeticionEntity;
+import es.gob.cnjuego.ws.entity.TraduccionCaracteres;
+
+@Transactional
+public class VerificacionDao {
+	
+	private EntityManager entityManager;
+	private Map<String, String> cacheConfiguraciones;
+	private String listaCaracteresOriginales = null;
+	private String listaCaracteresTraducidos = null;
+	
+	@PersistenceContext
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	private EntityManager getEntityManager() {
+		return this.entityManager;
+	}
+	
+	/**
+	 * Retorna el operador cuyo certificado tiene un hash igual al del parámetro. 
+	 */
+	public OperadorEntity getOperadorByHash(String hash) {
+		Query query = this.getEntityManager().createQuery("SELECT o FROM OperadorEntity o WHERE hashCertificado = :hashCertificado and o.modeEnabled<>0");
+		query.setParameter("hashCertificado", hash);
+		List<OperadorEntity> lista = query.getResultList();
+		if (lista.size() > 0){
+			OperadorEntity operador = lista.get(0);
+			return operador;
+		}
+		return null;
+	}
+
+	/**
+	 * Retorna la petición con el ID del parámetro
+	 */
+	public PeticionEntity getPeticionesById(int id) {
+		PeticionEntity peticion = this.getEntityManager().find(PeticionEntity.class, id);;
+		return peticion;
+	}
+
+	/**
+	 * Guarda la petición en la base de datos.
+	 * Nótese que el ID es asignado por la base de datos. 
+	 */
+	@Transactional
+	public PeticionEntity agregarPeticion(PeticionEntity peticion) {
+		this.getEntityManager().persist(peticion);
+		return peticion;
+	}
+
+	/**
+	 * Guarda la petición en la base de datos.
+	 * Nótese que el ID es asignado por la base de datos. 
+	 */
+	@Transactional
+	public PeticionEntity actualizarPeticion(PeticionEntity peticion) {
+		this.getEntityManager().merge(peticion);
+		return peticion;
+	}
+
+	/**
+	 * Retorna la cantidad de registros de la tabla de peticiones.
+	 * Se usa para las pruebas unitarias
+	 */
+	public long getCantidadPeticiones() {
+		Query query = this.getEntityManager().createQuery("select count(p) from PeticionEntity p");
+		Long cantidad = (Long) query.getSingleResult();
+		return cantidad.longValue();
+	}
+	
+	/**
+	 * Retorna todos los cambios registrados en el estado de los jugadores de un operador dado.
+	 */
+	public List<JugadoresCambioRGIAJEntity> getCambiosJugadores(long idOperador) {
+		Query query = this.getEntityManager().createQuery("SELECT c FROM JugadoresCambioRGIAJEntity c WHERE idOperador = :idOperador");
+		query.setParameter("idOperador", idOperador);
+		List<JugadoresCambioRGIAJEntity> lista = query.getResultList();
+		return lista;
+	}
+
+	/**
+	 * Lee los valores de la tabla de configuraciones y los almacena en una caché
+	 * en memoria. La aplicación puede invocar este método para recargar la caché.
+	 */
+	public List<ConfiguracionEntity> reloadCacheConfiguraciones() {
+		Query query = this.getEntityManager().createQuery("SELECT c FROM ConfiguracionEntity c");
+		List<ConfiguracionEntity> lista = query.getResultList();
+		Map<String, String> cache = new HashMap<String, String>();
+		for (ConfiguracionEntity configuracion : lista) {
+			cache.put(configuracion.getClave(), configuracion.getValor());
+		}
+		this.setCacheConfiguraciones(cache);
+		return lista;
+	}
+
+	/**
+	 * Retorna los parámetros de configuración de la aplicación.
+	 * Los parámetros se guardan en la base de datos, pero se gestionan en
+	 * una caché para acelerar el acceso. 
+	 */
+	public Map<String, String> getConfiguraciones() {
+		if (this.getCacheConfiguraciones() == null) {
+			this.reloadCacheConfiguraciones();
+		}
+		return this.getCacheConfiguraciones();
+	}
+
+	public String getValorPropiedad (String propiedad){
+		return this.getConfiguraciones().get(propiedad);
+	}
+	
+	/**
+	 * Invoca un procedimiento PL/SQL que guarda los datos la conexión
+	 * HTTP del operador (dirección IP, puerto)
+	 */
+	public void guardarInfoInvocacionHttp(String datos) {
+		String sql = "begin dbms_application_info.set_client_info(client_info => '" + datos + "' ); end;";
+		Query query = this.getEntityManager().createNativeQuery(sql);
+		query.executeUpdate();		
+	}
+
+	private Map<String, String> getCacheConfiguraciones() {
+		return cacheConfiguraciones;
+	}
+
+	private void setCacheConfiguraciones(Map<String, String> cacheConfiguraciones) {
+		this.cacheConfiguraciones = cacheConfiguraciones;
+	}
+	
+	/* Operaciones para recuperar las listas de traducción de caracteres */
+	@SuppressWarnings("unchecked")
+	public List<TraduccionCaracteres> leerTraduccionCaracteres() {
+		Query query = this.getEntityManager().createQuery("SELECT c FROM TraduccionCaracteres c");
+		List<TraduccionCaracteres> lista = query.getResultList();
+	
+		return lista;
+	}
+
+	public String getListaCaracteresOriginales() {
+		if (listaCaracteresOriginales == null){
+			List<TraduccionCaracteres> lista  = leerTraduccionCaracteres();
+			listaCaracteresOriginales = new String();
+			for (TraduccionCaracteres caracter : lista){
+				listaCaracteresOriginales += caracter.getOriginal();
+			}
+		} 
+		
+		return listaCaracteresOriginales;		
+	}
+	public String getListaCaracteresTraducidos() {
+		if (listaCaracteresTraducidos == null){
+			List<TraduccionCaracteres> lista  = leerTraduccionCaracteres();
+			listaCaracteresTraducidos = new String();
+			for (TraduccionCaracteres caracter : lista){
+				listaCaracteresTraducidos += caracter.getTraduccion();
+			}		
+		}
+		
+		return listaCaracteresTraducidos;
+	}
+
+}

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--
+ Definición del datasource utilizado por la aplicación. El datasource es declarado
+ en Tomcat y se accede por JNDI desde Spring. 
+ -->
+<Context>
+
+	<ResourceLink name="jdbc/VerificacionJugadoresDS"
+	    global="jdbc/cnjwsds"
+	    type="javax.sql.DataSource"/>
+
+</Context>

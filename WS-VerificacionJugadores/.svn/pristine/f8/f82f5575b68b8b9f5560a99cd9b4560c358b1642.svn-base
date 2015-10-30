@@ -1,0 +1,125 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.sql.BatchUpdateException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
+import org.springframework.stereotype.Repository;
+
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+
+@Repository(value="operadorDAO")
+public class OperadorDAOImpl implements OperadorDAO {
+	
+	private Logger log = Logger.getLogger(OperadorDAOImpl.class);
+
+	@PersistenceContext//(unitName="JohanJPA",type=PersistenceContextType.TRANSACTION)
+	EntityManager manager;
+	
+	@Override
+	public Collection<OperadorEntity> obtenerOperadores() {
+		Query query = manager.createQuery("SELECT o FROM Operador o");
+		List<OperadorEntity> lista = query.getResultList();
+		return lista;
+	}
+	
+	@Override
+	public void altaOperador(OperadorEntity operador) throws BatchUpdateException{
+		manager.persist(operador);
+	}
+	
+	@Override
+	public OperadorEntity obtenerOperador(String cif) {
+		Query query = manager.createQuery("SELECT o FROM Operador o LEFT JOIN FETCH o.licenciasGenerales WHERE o.cif = :cif");
+		query.setParameter("cif", cif);
+		List<OperadorEntity> lista = query.getResultList();
+		OperadorEntity operador = null;
+		if (lista.size()>0){
+			operador = lista.get(0);
+//	TODO Comentado		Collection<LicenciaGeneral> licenciasGenerales = operador.getLicenciasGenerales();
+//			if (licenciasGenerales!=null){
+//				for (LicenciaGeneral licencia : licenciasGenerales){
+//					Hibernate.initialize(licencia.getLicenciasSingulares());
+//				}
+//			}
+		}
+		return operador;
+	}
+
+	@Override
+	public void modificarOperador(OperadorEntity operador) throws BatchUpdateException{
+		manager.merge(operador);
+	}
+
+	@Override
+	public Collection<OperadorEntity> busquedaOperadores(CriterioBusquedaOperador criterio) {
+		StringBuilder t = new StringBuilder("SELECT o FROM Operador o"); 
+		StringBuilder w = new StringBuilder(); 
+		if (criterio.getRazonSocial()!=null){
+			w.append(" o.razonSocial LIKE :razonSocial");
+		}
+		if (criterio.getIdModalidad()!=null){
+			t.append(" LEFT JOIN o.licenciasGenerales l");
+			if (w.length()>0)
+				w.append(" AND ");
+			w.append(" l.modalidadJuego.idModalidadJuego = :idModalidad");
+		}
+		
+		if (w.length()>0)
+			t.append(" WHERE " + w.toString());
+		
+		Query query = manager.createQuery(t.toString());
+		
+		if (criterio.getRazonSocial()!=null){
+			query.setParameter("razonSocial", "%" + criterio.getRazonSocial() + "%");
+		}
+		if (criterio.getIdModalidad()!=null){
+			query.setParameter("idModalidad", criterio.getIdModalidad());
+		}
+		
+		List<OperadorEntity> lista = query.getResultList();
+		List<OperadorEntity> result= new ArrayList<OperadorEntity>();
+		for(OperadorEntity o: lista)
+		{
+// TODO descomentar			if(o.getLicenciasGenerales()!=null)
+//	TODO descomentar			if(!(o.getLicenciasGenerales().isEmpty()))
+					result.add(o);
+		}	
+		return result;
+	}
+	
+	
+	@Override
+	public OperadorEntity obtenerOperadorPorHashCertificado(String hashCertificado) {
+		Query query = manager.createQuery("SELECT o FROM Operador o WHERE hashCertificado = :hashCertificado and o.modeEnabled<>0");
+		query.setParameter("hashCertificado", hashCertificado);
+		List<OperadorEntity> lista = query.getResultList();
+		OperadorEntity operador = null;
+		if (lista.size()>0){
+			operador = lista.get(0);
+		}
+		return operador;
+	}
+	@Override
+	public OperadorEntity obtenerOperadorPorHashCertificadoAll(String hashCertificado) {
+		Query query = manager.createQuery("SELECT o FROM Operador o WHERE hashCertificado = :hashCertificado ");
+		query.setParameter("hashCertificado", hashCertificado);
+		List<OperadorEntity> lista = query.getResultList();
+		OperadorEntity operador = null;
+		if (lista.size()>0){
+			operador = lista.get(0);
+		}
+		return operador;
+	}
+
+	
+	
+}

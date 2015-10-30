@@ -1,0 +1,22 @@
+package es.gob.cnjuego.ws.verificacionjugadores.interceptor;
+
+import java.io.IOException;
+import javax.security.auth.callback.Callback;
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.callback.UnsupportedCallbackException;
+import org.apache.ws.security.WSPasswordCallback;
+
+/**
+ * Esta clase retorna la clave del certificado que se usa para firmar el mensaje
+ * de respuesta del servidor. El certificado está está almacenado en el almacén 
+ * llamado 'aplicaciones.dgojuego.gob.es.p12'.
+ * Nótese que esta clave NO es la clave para acceder al almacén
+ */
+public class ServerPasswordCallback implements CallbackHandler {
+
+    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
+        WSPasswordCallback pc = (WSPasswordCallback) callbacks[0];
+        pc.setPassword("dgojuego");
+    }
+
+}

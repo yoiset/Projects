@@ -1,0 +1,199 @@
+/**
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %(c) Copyright 2007. GAMCO S.L.
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Proyecto: Red Program
+ * % Modulo: redProgram Web App
+ * % Autor/es: Yoiset Lopez<nombre>
+ * % Fecha: 05/08/2013
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Modificaciones (autor, fecha, modificaciones)
+ * % <Autor>, <fecha>, <modificaciones>
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %
+ * %  The persistent class module
+ * %
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+package es.gamco.redprogram.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the Res_Agencia_Mes database table.
+ * 
+ */
+@Entity
+public class Res_Agencia_Mes implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private Res_Agencia_MesPK id;
+
+	@Column(name="Calidad")
+	private short calidad;
+
+	@Column(name="Convergencia")
+	private short convergencia;
+
+	@Column(name="Ojetivo_Alcanzado_Q1")
+	private byte ojetivo_Alcanzado_Q1;
+
+	@Column(name="Ptos_Carrera")
+	private byte ptos_Carrera;
+
+	@Column(name="Ptos_Clasificacion")
+	private byte ptos_Clasificacion;
+
+	@Column(name="Ptos_resultado")
+	private byte ptos_resultado;
+
+	@Column(name="Revelacion")
+	private byte revelacion;
+
+	//bi-directional many-to-many association to Clasi_Q
+	@ManyToMany(mappedBy="resAgenciaMes1")
+	private List<Clasi_Q> clasiQs1;
+
+	//bi-directional many-to-many association to Clasi_Q
+	@ManyToMany(mappedBy="resAgenciaMes2")
+	private List<Clasi_Q> clasiQs2;
+
+	//bi-directional many-to-many association to Clasi_Q
+	@ManyToMany(mappedBy="resAgenciaMes3")
+	private List<Clasi_Q> clasiQs3;
+
+	//bi-directional many-to-one association to Agencia
+	@ManyToOne
+	@JoinColumn(name="Agencias_id")
+	private Agencia agencia;
+
+	//bi-directional many-to-one association to Categoria
+	@ManyToOne
+	@JoinColumn(name="Categoria_id")
+	private Categoria categoria;
+
+	//bi-directional many-to-one association to Ej_Fiscal
+	@ManyToOne
+	@JoinColumn(name="Ej_Fiscal_id")
+	private Ej_Fiscal ejFiscal;
+
+	public Res_Agencia_Mes() {
+	}
+
+	public Res_Agencia_MesPK getId() {
+		return this.id;
+	}
+
+	public void setId(Res_Agencia_MesPK id) {
+		this.id = id;
+	}
+
+	public short getCalidad() {
+		return this.calidad;
+	}
+
+	public void setCalidad(short calidad) {
+		this.calidad = calidad;
+	}
+
+	public short getConvergencia() {
+		return this.convergencia;
+	}
+
+	public void setConvergencia(short convergencia) {
+		this.convergencia = convergencia;
+	}
+
+	public byte getOjetivo_Alcanzado_Q1() {
+		return this.ojetivo_Alcanzado_Q1;
+	}
+
+	public void setOjetivo_Alcanzado_Q1(byte ojetivo_Alcanzado_Q1) {
+		this.ojetivo_Alcanzado_Q1 = ojetivo_Alcanzado_Q1;
+	}
+
+	public byte getPtos_Carrera() {
+		return this.ptos_Carrera;
+	}
+
+	public void setPtos_Carrera(byte ptos_Carrera) {
+		this.ptos_Carrera = ptos_Carrera;
+	}
+
+	public byte getPtos_Clasificacion() {
+		return this.ptos_Clasificacion;
+	}
+
+	public void setPtos_Clasificacion(byte ptos_Clasificacion) {
+		this.ptos_Clasificacion = ptos_Clasificacion;
+	}
+
+	public byte getPtos_resultado() {
+		return this.ptos_resultado;
+	}
+
+	public void setPtos_resultado(byte ptos_resultado) {
+		this.ptos_resultado = ptos_resultado;
+	}
+
+	public byte getRevelacion() {
+		return this.revelacion;
+	}
+
+	public void setRevelacion(byte revelacion) {
+		this.revelacion = revelacion;
+	}
+
+	public List<Clasi_Q> getClasiQs1() {
+		return this.clasiQs1;
+	}
+
+	public void setClasiQs1(List<Clasi_Q> clasiQs1) {
+		this.clasiQs1 = clasiQs1;
+	}
+
+	public List<Clasi_Q> getClasiQs2() {
+		return this.clasiQs2;
+	}
+
+	public void setClasiQs2(List<Clasi_Q> clasiQs2) {
+		this.clasiQs2 = clasiQs2;
+	}
+
+	public List<Clasi_Q> getClasiQs3() {
+		return this.clasiQs3;
+	}
+
+	public void setClasiQs3(List<Clasi_Q> clasiQs3) {
+		this.clasiQs3 = clasiQs3;
+	}
+
+	public Agencia getAgencia() {
+		return this.agencia;
+	}
+
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
+
+	public Categoria getCategoria() {
+		return this.categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public Ej_Fiscal getEjFiscal() {
+		return this.ejFiscal;
+	}
+
+	public void setEjFiscal(Ej_Fiscal ejFiscal) {
+		this.ejFiscal = ejFiscal;
+	}
+
+}

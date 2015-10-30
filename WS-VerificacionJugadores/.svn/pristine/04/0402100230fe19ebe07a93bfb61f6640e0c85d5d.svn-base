@@ -1,0 +1,577 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class VerificacionRGIAJTest extends SpringTestCase {
+	
+
+
+	
+	private VerificacionDao dao;
+	private VerificacionJugadores proxy;
+	
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		this.setDao((VerificacionDao)this.getContext().getBean("VerificacionDao"));
+		this.setProxy((VerificacionJugadores)this.getContext().getBean("VerificacionJugadoresService"));
+	}
+
+	/**
+	 * Verificamos que la configuración de los ficheros es correcta.
+	 */
+	@Test
+	public void testInit() throws Exception {
+		assertNotNull(this.getProxy());
+	}
+	
+	
+	/******************************************************************************************************************************/
+	/*                          CASOS PRUEBA OPERACION verificarRGIAJ                                                           */
+	/******************************************************************************************************************************/
+	
+	
+	/**1) identidad.modoDebug=true
+	 * 2)  En la tabla DNI_DEBUG_IDENTIDAD el  Dni '10000949C'
+	 * 3) MODE_ENABLED=2 de JUG_OPERADOR_JUEGO
+	 * 4) Registros ya existentes  de ese DNI con COD003 y CACHE_IDENTIDAD=0en JUGADORES_OPERADOR
+	 */
+	@Test
+	public void testverificarRGIAJ01_3() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("10000949C");
+		jugador.setNombre("OLGA");
+		jugador.setApellido1("SAN MIGUEL");
+		jugador.setApellido2("CHAO");
+		jugador.setFechaNacimiento(dateFormat.parse("02/06/1940"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("10000949C", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	
+	
+	/**
+	 * 1) MODE_ENABLED=3 de JUG_OPERADOR_JUEGO
+	 * 2) Existe un registro  en JUGADORES_OPERADOR para ese DNI con COD003 y CACHE_IDENTIDAD=0
+	 */
+	@Test
+	public void testverificarRGIAJ02_2() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("10000320N");
+		jugador.setNombre("MARIA ENCINA");
+		jugador.setApellido1("FELIZ");
+		jugador.setApellido2("VARELA");
+		jugador.setFechaNacimiento(dateFormat.parse("18/05/1944"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("10000320N", resultado.getDni());
+		assertEquals("COD001", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	/**
+	 * 1) MODE_ENABLED=3 de JUG_OPERADOR_JUEGO
+	 * 2) Existe registro en JUGADORES_OPERADOR para ese DNI con COD003 y CACHE_IDENTIDAD=0
+	 */
+	@Test
+	public void testverificarRGIAJ03_2() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("Y0336380L");
+		jugador.setNombre("GUSTAVO KAUA");
+		jugador.setApellido1("GÂRCIA");
+		jugador.setApellido2("");
+		jugador.setFechaNacimiento(dateFormat.parse("25/09/2003"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("Y0336380L", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	/**
+	 * 1) MODE_ENABLED=3 de JUG_OPERADOR_JUEGO
+	 * 2) Existe registro en JUGADORES_OPERADOR para ese DNI con COD003 y CACHE_IDENTIDAD=0, pero con los datos correctos
+	 */
+	@Test
+	public void testverificarRGIAJ03_3() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("Y0336380L");
+		jugador.setNombre("GUSTAVO KAUA");
+		jugador.setApellido1("GAR´CIA");
+		jugador.setApellido2("");
+		jugador.setFechaNacimiento(dateFormat.parse("25/09/2003"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("Y0336380L", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	/**
+	 * 1) MODE_ENABLED=3 de JUG_OPERADOR_JUEGO
+	 * 2) Existe registro en JUGADORES_OPERADOR para ese DNI pero solo de COD004 y CACHE_IDENTIDAD=0)
+	 */
+	@Test
+	public void testverificarRGIAJ04() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("94180565G");
+		jugador.setNombre("FRANCISO JAVIER");
+		jugador.setApellido1("GARCIA");
+		jugador.setApellido2("REYES");
+		jugador.setFechaNacimiento(dateFormat.parse("21/12/1945"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("94180565G", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	
+	/**
+	 * 1) MODE_ENABLED=3 de JUG_OPERADOR_JUEGO
+	 * 2) Existe registro en JUGADORES_OPERADOR para ese DNI con COD003 y CACHE_IDENTIDAD=0, pero con datos distintos)
+	 */
+	@Test
+	public void testverificarRGIAJ05() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("94180565G");
+		jugador.setNombre("FRANCISO");
+		jugador.setApellido1("GARCIA");
+		jugador.setApellido2("REYES");
+		jugador.setFechaNacimiento(dateFormat.parse("21/12/1945"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("94180565G", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	/**
+	 * 1) MODE_ENABLED=3 de JUG_OPERADOR_JUEGO
+	 * 2)No  existe registro en JUGADORES_OPERADOR para ese DNI
+	 */
+	@Test
+	public void testverificarRGIAJ06() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("00000002R");
+		jugador.setNombre("LUIS");
+		jugador.setApellido1("LOPEZ");
+		jugador.setApellido2("REYES");
+		jugador.setFechaNacimiento(dateFormat.parse("21/12/1945"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("00000002R", resultado.getDni());
+		assertEquals("COD901", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	/**
+	 *1) 1) MODE_ENABLED=3 de JUG_OPERADOR_JUEGO
+	 *2)No  existe registro en JUGADORES_OPERADOR para ese DNI
+	 **/
+	@Test
+	public void testverificarRGIAJ06_2() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("000000002W");
+		jugador.setNombre("LUIS");
+		jugador.setApellido1("LOPEZ");
+		jugador.setApellido2("REYES");
+		jugador.setFechaNacimiento(dateFormat.parse("21/12/1945"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("000000002W", resultado.getDni());
+		assertEquals("COD901", resultado.getResultadoRGIAJ().getCodigo());
+	}	
+	
+	
+	/**
+	 * 1) MODE_ENABLED=3 de JUG_OPERADOR_JUEGO
+	 * 2)Existen registros en JUGADORES_OPERADOR para ese DNI
+	 */
+	@Test
+	public void testverificarRGIAJ07() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("30000067V");
+		jugador.setNombre("JUAN");
+		jugador.setApellido1("GARCIA");
+		jugador.setApellido2("");
+		jugador.setFechaNacimiento(dateFormat.parse("14/06/1945"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("30000067V", resultado.getDni());
+		assertEquals("COD903", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	
+	/**
+	 * 1) MODE_ENABLED=2 de JUG_OPERADOR_JUEGO
+	 * 2)Existe registro en JUGADORES_OPERADOR para ese DNI
+	 */
+	@Test
+	public void testverificarRGIAJ08() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("30000067V");
+		jugador.setNombre("JUAN");
+		jugador.setApellido1("GARCIA");
+		jugador.setApellido2("LOSADA");
+		jugador.setFechaNacimiento(dateFormat.parse("14/06/1845"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("30000067V", resultado.getDni());
+		assertEquals("COD904", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	
+	/**
+	 * 1) MODE_ENABLED=2 de JUG_OPERADOR_JUEGO
+	 * 2)Existe registro en JUGADORES_OPERADOR para ese DNI
+	 */
+	@Test
+	public void testverificarRGIAJ09() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("30000067V");
+		jugador.setNombre("JUAN@123");
+		jugador.setApellido1("GARCIA");
+		jugador.setApellido2("LOSADA");
+		jugador.setFechaNacimiento(dateFormat.parse("14/06/1945"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("30000067V", resultado.getDni());
+		assertEquals("COD902", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	/**
+	 * Caso de prueba: 
+	 * - Caracteres que se formatean
+	 * - MODE_ENABLED=2 de JUG_OPERADOR_JUEGO
+	 * - Existe registro en JUGADORES_OPERADOR para ese DNI
+	 * 
+	 * Comprobaciones manuales luego del test:
+	 * - Comprobamos que ha ido al SVDI,pero que ahí ha dado error el SW (mirar en la base de datos de
+	 * requirente)
+	 * - Comprobamos que esta bien grabada la petición 
+	 */
+	@Test
+	public void testverificarRGIAJ10() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("65000010D");
+		jugador.setNombre("ÑÉBÌMA");
+		jugador.setApellido1("L·ÜÇÄR");
+		jugador.setApellido2("ÇÖBËRÏÀ");
+		jugador.setFechaNacimiento(dateFormat.parse("31/08/1969"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("65000010D", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	/**
+	 * 1) MODE_ENABLED=2 de JUG_OPERADOR_JUEGO
+	 * 2)Existe registro en JUGADORES_OPERADOR para ese DNI
+	 */
+	@Test
+	public void testverificarRGIAJ11() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador jugador = new Jugador();
+		jugador.setDni("10000320N");
+		jugador.setNombre("MARIAª ENCINA");
+		jugador.setApellido1("FELIZ");
+		jugador.setApellido2("VARELA");
+		jugador.setFechaNacimiento(dateFormat.parse("18/05/1944"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(jugador);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		ResultadoRGIAJ resultado = respuesta.get(0);
+		assertEquals("10000320N", resultado.getDni());
+		assertEquals("COD001", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	/**
+	 * Caso de prueba: 
+	 * - Peticion de varios registros
+	 * - MODE_ENABLED=2 de JUG_OPERADOR_JUEGO
+	 * - Existen registros en JUGADORES_OPERADOR para ese DNI 
+	 * 
+	 * Comprobaciones manuales luego del test: 
+	 * - Comprobamos que ha ido al SVDI con los DNI que corresponde
+	 * - Comprobamos que esta bien grabada la petición
+	 */
+	@Test
+	public void testverificarRGIAJ12() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Jugador j1 = new Jugador();
+		j1.setDni("30000067V");
+		j1.setNombre("JUAN");
+		j1.setApellido1("GARCIA");
+		j1.setApellido2("LOSADA");
+		j1.setFechaNacimiento(dateFormat.parse("14/06/1945"));
+		Jugador j2 = new Jugador();
+		j2.setDni("10000949C");
+		j2.setNombre("OLGA");
+		j2.setApellido1("SAN MIGUEL");
+		j2.setApellido2("CHAO");
+		j2.setFechaNacimiento(dateFormat.parse("02/06/1940"));
+		Jugador j3 = new Jugador();
+		j3.setDni("10000320N");
+		j3.setNombre("MARIAª ENCINA");
+		j3.setApellido1("FELIZ");
+		j3.setApellido2("VARELA");
+		j3.setFechaNacimiento(dateFormat.parse("18/05/1944"));
+		Jugador j4 = new Jugador();
+		j4.setDni("00000060Z");
+		j4.setNombre("SANTIAGO");
+		j4.setApellido1("MARTIN");
+		j4.setApellido2("GÜEL");
+		j4.setFechaNacimiento(dateFormat.parse("23/02/1982"));
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(j1);
+		jugadores.add(j2);
+		jugadores.add(j3);
+		jugadores.add(j4);
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		List<ResultadoRGIAJ> respuesta = this.getProxy().verificarRGIAJ(jugadores);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		assertEquals(4, respuesta.size());
+
+		ResultadoRGIAJ resultado = this.getResultadoRGIAJByDni("30000067V", respuesta);
+		assertEquals("30000067V", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+
+		resultado = this.getResultadoRGIAJByDni("10000949C", respuesta);
+		assertEquals("10000949C", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+
+		resultado = this.getResultadoRGIAJByDni("10000320N", respuesta);
+		assertEquals("10000320N", resultado.getDni());
+		assertEquals("COD001", resultado.getResultadoRGIAJ().getCodigo());
+
+		resultado = this.getResultadoRGIAJByDni("00000060Z", respuesta);
+		assertEquals("00000060Z", resultado.getDni());
+		assertEquals("COD002", resultado.getResultadoRGIAJ().getCodigo());
+	}
+	
+	
+	/**
+	 * Para facilitar las pruebas unitarias
+	 */
+	private ResultadoRGIAJ getResultadoRGIAJByDni(String dni, List<ResultadoRGIAJ> lista) {
+		for (ResultadoRGIAJ resultado : lista) {
+			if (resultado.getDni().equals(dni)) {
+				return resultado;
+			}
+		}
+		return null;
+	}
+	
+	
+
+	public VerificacionDao getDao() {
+		return dao;
+	}
+
+	public void setDao(VerificacionDao dao) {
+		this.dao = dao;
+	}
+
+	public VerificacionJugadores getProxy() {
+		return proxy;
+	}
+
+	public void setProxy(VerificacionJugadores proxy) {
+		this.proxy = proxy;
+	}	
+
+
+}

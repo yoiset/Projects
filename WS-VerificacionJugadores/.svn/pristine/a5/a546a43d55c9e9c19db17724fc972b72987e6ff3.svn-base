@@ -1,0 +1,109 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import static org.junit.Assert.*;
+
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.Service;
+
+import org.apache.cxf.Bus;
+import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.frontend.ClientProxy;
+import org.apache.cxf.headers.Header;
+import org.apache.cxf.jaxb.JAXBDataBinding;
+import org.apache.cxf.ws.security.SecurityConstants;
+import org.junit.Test;
+
+public class VerificacionJugadoresWebServiceTestCase extends SpringTestCase {
+
+    private static final String NAMESPACE = "http://ws.cnjuego.gob.es/VerificacionJugadores/";
+    private static final QName SERVICE_QNAME = new QName(NAMESPACE, "VerificacionJugadores");
+
+	/**
+	 * Verificamos que la configuración de los ficheros es correcta.
+	 */
+	//@Test
+	public void testInit() throws Exception {
+		VerificacionJugadores proxy = (VerificacionJugadores)this.getContext().getBean("VerificacionJugadoresService");
+		assertNotNull(proxy);
+	}
+	
+	@Test
+	public void testVerificarJugador1() throws Exception {
+		URL fileUrl = this.getClass().getResource("/tests/client-truststore.jks");
+		String filePath = fileUrl.getFile();
+		//System.setProperty("javax.net.ssl.trustStore", filePath);
+		//System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+		//SSLUtilities.trustAllHostnames();
+		//SSLUtilities.trustAllHttpsCertificates();
+		VerificacionJugadores proxy = (VerificacionJugadores)this.getContext().getBean("VerificacionJugadoresService");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date fecha1 = dateFormat.parse("15/01/1890"); 
+		Date fecha2 = dateFormat.parse("20/07/1950"); 
+		Jugador j1 = new Jugador();
+		j1.setNombre("Billy");
+		j1.setApellido1("Gates");
+		j1.setApellido2("Mortaleda");
+		j1.setDni("12345678Z");
+		j1.setFechaNacimiento(fecha1);
+		Jugador j2 = new Jugador();
+		j2.setNombre("Juanita");
+		j2.setApellido1("López");
+		j2.setApellido2(null);
+		j2.setDni("12345678Z");
+		j2.setFechaNacimiento(fecha2);
+		List<Jugador> jugadores = new ArrayList<>();
+		jugadores.add(j1);
+		//jugadores.add(j2);
+		proxy.verificarJugador(jugadores);
+	}
+	
+    //@org.junit.Test
+    public void testKeyIdentifier() throws Exception {
+        SpringBusFactory bf = new SpringBusFactory();
+        URL busFile = VerificacionJugadoresWebServiceTestCase.class.getResource("/tests/applicationContext_junit1.xml");
+
+        Bus bus = bf.createBus(busFile.toString());
+        SpringBusFactory.setDefaultBus(bus);
+        SpringBusFactory.setThreadDefaultBus(bus);
+        
+        URL wsdl = VerificacionJugadoresWebServiceTestCase.class.getResource("/tests/VerificacionJugadores.wsdl");
+        Service service = Service.create(wsdl, SERVICE_QNAME);
+        QName portQName = new QName(NAMESPACE, "DoubleItKeyIdentifierPort");
+        VerificacionJugadores port = service.getPort(portQName, VerificacionJugadores.class);
+        
+        //updateAddressPort(port, PORT);
+        
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date fecha1 = dateFormat.parse("15/01/1890"); 
+		Date fecha2 = dateFormat.parse("20/07/1950"); 
+		Jugador j1 = new Jugador();
+		j1.setNombre("Billy");
+		j1.setApellido1("Gates");
+		j1.setApellido2("Mortaleda");
+		j1.setDni("12345678Z");
+		j1.setFechaNacimiento(fecha1);
+		Jugador j2 = new Jugador();
+		j2.setNombre("Juanita");
+		j2.setApellido1("López");
+		j2.setApellido2(null);
+		j2.setDni("12345678Z");
+		j2.setFechaNacimiento(fecha2);
+		List<Jugador> jugadores = new ArrayList<>();
+		jugadores.add(j1);
+		jugadores.add(j2);
+        
+        port.verificarJugador(jugadores);
+        
+        ((java.io.Closeable)port).close();
+        bus.shutdown(true);
+    }	
+	
+}

@@ -1,0 +1,190 @@
+/**
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %(c) Copyright 2007. GAMCO S.L.
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Proyecto: Red Program
+ * % Modulo: redProgram Web App
+ * % Autor/es: Yoiset Lopez<nombre>
+ * % Fecha: 05/08/2013
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Modificaciones (autor, fecha, modificaciones)
+ * % <Autor>, <fecha>, <modificaciones>
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %
+ * %  The persistent class module
+ * %
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+package es.gamco.redprogram.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the Parametros database table.
+ * 
+ */
+@Entity
+@Table(name="Parametros")
+public class Parametro implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private int id;
+
+	@Column(name="Calidad_mes_lim")
+	private byte calidad_mes_lim;
+
+	@Column(name="Calidad_mes_ventas_min")
+	private byte calidad_mes_ventas_min;
+
+	@Column(name="Calidad_P_lim")
+	private byte calidad_P_lim;
+
+	@Column(name="Calidad_P_ventas_min")
+	private byte calidad_P_ventas_min;
+
+	@Column(name="Convergencia_mes_lim")
+	private byte convergencia_mes_lim;
+
+	@Column(name="Convergencia_mes_ventas_min")
+	private byte convergencia_mes_ventas_min;
+
+	@Column(name="Convergencia_P_ventas_min")
+	private byte convergencia_P_ventas_min;
+
+	@Column(name="Q1_inf")
+	private byte q1_inf;
+
+	@Column(name="Q1_sup")
+	private byte q1_sup;
+
+	@Column(name="Q2_inf")
+	private byte q2_inf;
+
+	@Column(name="Q2_sup")
+	private byte q2_sup;
+
+	@Column(name="Q3_inf")
+	private byte q3_inf;
+
+	@Column(name="Q3_sup")
+	private byte q3_sup;
+
+	public Parametro() {
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public byte getCalidad_mes_lim() {
+		return this.calidad_mes_lim;
+	}
+
+	public void setCalidad_mes_lim(byte calidad_mes_lim) {
+		this.calidad_mes_lim = calidad_mes_lim;
+	}
+
+	public byte getCalidad_mes_ventas_min() {
+		return this.calidad_mes_ventas_min;
+	}
+
+	public void setCalidad_mes_ventas_min(byte calidad_mes_ventas_min) {
+		this.calidad_mes_ventas_min = calidad_mes_ventas_min;
+	}
+
+	public byte getCalidad_P_lim() {
+		return this.calidad_P_lim;
+	}
+
+	public void setCalidad_P_lim(byte calidad_P_lim) {
+		this.calidad_P_lim = calidad_P_lim;
+	}
+
+	public byte getCalidad_P_ventas_min() {
+		return this.calidad_P_ventas_min;
+	}
+
+	public void setCalidad_P_ventas_min(byte calidad_P_ventas_min) {
+		this.calidad_P_ventas_min = calidad_P_ventas_min;
+	}
+
+	public byte getConvergencia_mes_lim() {
+		return this.convergencia_mes_lim;
+	}
+
+	public void setConvergencia_mes_lim(byte convergencia_mes_lim) {
+		this.convergencia_mes_lim = convergencia_mes_lim;
+	}
+
+	public byte getConvergencia_mes_ventas_min() {
+		return this.convergencia_mes_ventas_min;
+	}
+
+	public void setConvergencia_mes_ventas_min(byte convergencia_mes_ventas_min) {
+		this.convergencia_mes_ventas_min = convergencia_mes_ventas_min;
+	}
+
+	public byte getConvergencia_P_ventas_min() {
+		return this.convergencia_P_ventas_min;
+	}
+
+	public void setConvergencia_P_ventas_min(byte convergencia_P_ventas_min) {
+		this.convergencia_P_ventas_min = convergencia_P_ventas_min;
+	}
+
+	public byte getQ1_inf() {
+		return this.q1_inf;
+	}
+
+	public void setQ1_inf(byte q1_inf) {
+		this.q1_inf = q1_inf;
+	}
+
+	public byte getQ1_sup() {
+		return this.q1_sup;
+	}
+
+	public void setQ1_sup(byte q1_sup) {
+		this.q1_sup = q1_sup;
+	}
+
+	public byte getQ2_inf() {
+		return this.q2_inf;
+	}
+
+	public void setQ2_inf(byte q2_inf) {
+		this.q2_inf = q2_inf;
+	}
+
+	public byte getQ2_sup() {
+		return this.q2_sup;
+	}
+
+	public void setQ2_sup(byte q2_sup) {
+		this.q2_sup = q2_sup;
+	}
+
+	public byte getQ3_inf() {
+		return this.q3_inf;
+	}
+
+	public void setQ3_inf(byte q3_inf) {
+		this.q3_inf = q3_inf;
+	}
+
+	public byte getQ3_sup() {
+		return this.q3_sup;
+	}
+
+	public void setQ3_sup(byte q3_sup) {
+		this.q3_sup = q3_sup;
+	}
+
+}

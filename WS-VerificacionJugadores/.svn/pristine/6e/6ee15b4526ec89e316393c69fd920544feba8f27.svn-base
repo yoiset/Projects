@@ -1,0 +1,122 @@
+
+package com.atos.mir.gcr.model.webservices.tramitacion.aexternas;
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
+import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
+
+
+/**
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the com.atos.mir.gcr.model.webservices.tramitacion.aexternas package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
+ * provided in this class.
+ * 
+ */
+@XmlRegistry
+public class ObjectFactory {
+
+    private final static QName _InfoGenerarCertificadoCertificado_QNAME = new QName("http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", "certificado");
+    private final static QName _InfoGenerarCertificadoCsv_QNAME = new QName("http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", "csv");
+    private final static QName _InfoGenerarCertificadoNombreCertificado_QNAME = new QName("http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", "nombreCertificado");
+    private final static QName _InfoGenerarCertificadoResultado_QNAME = new QName("http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", "resultado");
+    private final static QName _InfoGenerarCertificadoFechaValidez_QNAME = new QName("http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", "fechaValidez");
+    private final static QName _InfoResultadoDescripcion_QNAME = new QName("http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", "descripcion");
+    private final static QName _InfoResultadoCodigo_QNAME = new QName("http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", "codigo");
+
+    /**
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.atos.mir.gcr.model.webservices.tramitacion.aexternas
+     * 
+     */
+    public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link InfoGenerarCertificado }
+     * 
+     */
+    public InfoGenerarCertificado createInfoGenerarCertificado() {
+        return new InfoGenerarCertificado();
+    }
+
+    /**
+     * Create an instance of {@link InfoResultado }
+     * 
+     */
+    public InfoResultado createInfoResultado() {
+        return new InfoResultado();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", name = "certificado", scope = InfoGenerarCertificado.class)
+    public JAXBElement<String> createInfoGenerarCertificadoCertificado(String value) {
+        return new JAXBElement<String>(_InfoGenerarCertificadoCertificado_QNAME, String.class, InfoGenerarCertificado.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", name = "csv", scope = InfoGenerarCertificado.class)
+    public JAXBElement<String> createInfoGenerarCertificadoCsv(String value) {
+        return new JAXBElement<String>(_InfoGenerarCertificadoCsv_QNAME, String.class, InfoGenerarCertificado.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", name = "nombreCertificado", scope = InfoGenerarCertificado.class)
+    public JAXBElement<String> createInfoGenerarCertificadoNombreCertificado(String value) {
+        return new JAXBElement<String>(_InfoGenerarCertificadoNombreCertificado_QNAME, String.class, InfoGenerarCertificado.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InfoResultado }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", name = "resultado", scope = InfoGenerarCertificado.class)
+    public JAXBElement<InfoResultado> createInfoGenerarCertificadoResultado(InfoResultado value) {
+        return new JAXBElement<InfoResultado>(_InfoGenerarCertificadoResultado_QNAME, InfoResultado.class, InfoGenerarCertificado.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link XMLGregorianCalendar }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", name = "fechaValidez", scope = InfoGenerarCertificado.class)
+    public JAXBElement<XMLGregorianCalendar> createInfoGenerarCertificadoFechaValidez(XMLGregorianCalendar value) {
+        return new JAXBElement<XMLGregorianCalendar>(_InfoGenerarCertificadoFechaValidez_QNAME, XMLGregorianCalendar.class, InfoGenerarCertificado.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", name = "descripcion", scope = InfoResultado.class)
+    public JAXBElement<String> createInfoResultadoDescripcion(String value) {
+        return new JAXBElement<String>(_InfoResultadoDescripcion_QNAME, String.class, InfoResultado.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://aexternas.tramitacion.webservices.model.gcr.mir.atos.com", name = "codigo", scope = InfoResultado.class)
+    public JAXBElement<String> createInfoResultadoCodigo(String value) {
+        return new JAXBElement<String>(_InfoResultadoCodigo_QNAME, String.class, InfoResultado.class, value);
+    }
+
+}

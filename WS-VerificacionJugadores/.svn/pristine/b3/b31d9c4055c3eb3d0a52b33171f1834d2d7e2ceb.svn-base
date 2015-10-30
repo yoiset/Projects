@@ -1,0 +1,72 @@
+package es.gob.cnjuego.ws.verificacionjugadores.control;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.util.Constantes;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+import es.gob.cnjuego.ws.verificacionjugadores.Jugador;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarIdentidadFault;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarIdentidadFault_Exception;
+import es.gob.cnjuego.ws.verificacionjugadores.control.validacion.ValidadorJugador;
+
+public class VerificacionJugadoresController {
+	
+	private Logger log=Logger.getLogger(VerificacionJugadoresController.class);
+	
+	/** Chequea el estado del Operador. Que no esté deshabilitado
+	 *  @ 0: Operador deshabilitado 
+	 *  @ 1: Operador con peticiones de jugador para prueba
+	 *  @ 2: Operador con peticiones de jugador reales
+	 *  @ 3: Operador con ambos tipos de peticiones, reales y prueba 
+	 * @param operador
+	 * @throws VerificarIdentidadFault_Exception
+	 */
+	public void checkDesabilitado(OperadorEntity operador)throws VerificarIdentidadFault_Exception {
+		if(operador.getModeEnabled()==0){
+			VerificarIdentidadFault fault2 = new VerificarIdentidadFault();
+			fault2.setVerificarIdentidadFault(CodigosVerificacion.ERROR_OPERADOR_INCORRECTO);
+			throw new VerificarIdentidadFault_Exception(CodigosVerificacion.DESC_ERROR_OPERADOR_INCORRECTO, fault2);
+		}
+	}
+	
+	/** Chequea la existencia de jugadores repetidos en la lista
+	 * @param listJugadores
+	 * @throws VerificarIdentidadFault_Exception
+	 */
+	public void checkJugadoresRepetidos(List<Jugador> listJugadores)throws VerificarIdentidadFault_Exception {
+		List<String> dniList=new ArrayList<>(); 
+		for (Jugador jugador : listJugadores) {
+			if(dniList.contains(jugador.getDni().toUpperCase())){
+			  VerificarIdentidadFault fault = new VerificarIdentidadFault();
+			  fault.setVerificarIdentidadFault(CodigosVerificacion.ERROR_JUGADORES_DUPLICADOS);
+			  log.error("checkJugadoresRepetidos: Se han encontrado identificadores de jugador repetidos, la peticion no es valida");
+			  throw new VerificarIdentidadFault_Exception(CodigosVerificacion.DESC_ERROR_JUGADORES_DUPLICADOS, fault);
+			}
+			dniList.add(jugador.getDni().toUpperCase());
+		}
+	}
+	
+	public void check_DNI_NIE(List<Jugador> listJugadores){
+	    	
+		String original = getCaracteres(Constantes.CACHE_KEY_CARACTERES_ORIGINAL);
+		String traduccion = getCaracteres(Constantes.CACHE_KEY_CARACTERES_TRADUCCION);
+		for (Jugador jugador : listJugadores) {
+			// Formatear Datos
+			ValidadorJugador.formateaDatosJugador(jugador, original, traduccion);
+			
+			// validar DNI y NIE
+			ValidadorJugador.validarJugador(jugador);
+		}
+			
+	}
+
+	private String getCaracteres(String TiposCaracters) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

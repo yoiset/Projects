@@ -1,0 +1,116 @@
+package es.gob.cnjuego.ws.verificacionjugadores.interceptor;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.soap.SOAPMessage;
+
+import org.apache.cxf.binding.soap.SoapMessage;
+import org.apache.cxf.binding.soap.interceptor.SoapActionInInterceptor;
+import org.apache.cxf.binding.soap.saaj.SAAJInInterceptor;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.transport.http.AbstractHTTPDestination;
+import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+import org.apache.log4j.Logger;
+
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.entity.PeticionEntity;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificacionDao;
+
+/**
+ * Este interceptor crea una petición para guardar el mensaje SOAP entrante (serializado)
+ * en la base de datos, junto con el ID del operador y el nombre de la operación que se invoca.
+ * El mensaje se guarda por cuestiones legales y para poder hacer consultas sobre las peticiones
+ * recibidas.
+ * Por otro lado, también se guardan algunos datos de la petición HTTP: dirección IP, nombre del servidor
+ * y puerto desde donde sale la invocación. 
+ */
+public class InterceptorEntradaRegistrarInvocacion extends WSS4JInInterceptor {
+
+	public static String PETICION = "PETICION";
+	private static Logger log = Logger.getLogger(InterceptorEntradaRegistrarInvocacion.class);
+	private VerificacionDao dao;
+
+	public void handleMessage(SoapMessage mensaje) throws Fault {
+		try {
+			PeticionEntity peticion = this.crearPeticion(mensaje);
+			String httpInfo = this.getHttpInfo(mensaje);
+			this.getDao().agregarPeticion(peticion);
+			log.info("\n"+ "********** Operador: "+ peticion.getIdOperador()+ " con ID Peticion: " + peticion.getIdPeticion() + " **********" + "\n");
+			this.getDao().guardarInfoInvocacionHttp(httpInfo);
+			mensaje.getExchange().getInMessage().put(PETICION, peticion);
+		} catch (Exception e) {
+			log.error("Error guardando la peticion", e);
+		}
+	}
+
+	/**
+	 * Retorna un objeto para guardar toda la información de la invocación. Contiene:
+	 * - El mensaje SOAP serializado
+	 * - Fecha/hora actual
+	 * - Nombre de la operación (SOAPAction de la cabecera HTTP)
+	 * - ID del operador correspondiente al certificado extraído de las cabeceras.
+	 * Podría ocurrir que el operador no esté presente, pero aún así debemos guardar la petición.
+	 */
+	private PeticionEntity crearPeticion(SoapMessage mensaje) throws Exception {
+        SAAJInInterceptor.INSTANCE.handleMessage(mensaje);
+		SOAPMessage doc = mensaje.getContent(SOAPMessage.class);
+		// Serializamos el mensaje SOAP
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		doc.writeTo(baos);
+		String soapString = new String(baos.toByteArray());
+		// Recuperamos el operador que fue inyectado por otro interceptor
+		OperadorEntity operador = (OperadorEntity)mensaje.getExchange().getInMessage().get(InterceptorEntradaProcesarCertificado.OPERADOR);
+		// Obtenemos el nombre de la operación que se invoca
+		String nombreOperacion = this.getNombreOperacion(mensaje);
+		PeticionEntity peticion = new PeticionEntity();
+		peticion.setPeticion(soapString);
+		peticion.setFechaPeticion(new Date());
+		peticion.setCodPeticion(nombreOperacion);
+		if (operador.isNullOperador()) {
+			peticion.setIdOperador(null);
+		} else {
+			peticion.setIdOperador(operador.getIdOperador());
+		}
+		return peticion;
+	}
+	
+	/**
+	 * Extraemos del contexto del mensaje la información de la petición HTTP: dirección IP,
+	 * nombre del servidor y puerto.
+	 */
+	private String getHttpInfo(SoapMessage message) throws Fault {
+		HttpServletRequest request = (HttpServletRequest) message.get(AbstractHTTPDestination.HTTP_REQUEST);
+		if (null != request) {
+			String info = request.getRemoteAddr() + " " + request.getServerName() + " " + request.getServerPort();
+			return info;
+		} else {
+			return "Error info HTTP";
+		}
+	}
+
+	/**
+	 * Retorna el valor de la cabecera SOAPAction que viaja en el mensaje HTTP.
+	 * Ej: "https://ws.cnjuego.gob.es/VerificacionJugadores/verificarCambiosRGIAJ"
+	 * La implementación del método se basa en SoapActionInInterceptor.getSoapAction(Message)
+	 */
+    private String getNombreOperacion(SoapMessage mensaje) {
+    	String soapAction = SoapActionInInterceptor.getSoapAction(mensaje);
+    	if (soapAction == null) {
+			return null;
+		}
+    	int i = soapAction.lastIndexOf("/");
+    	String nombreOperacion = soapAction.substring(i + 1);
+    	return nombreOperacion;
+    }
+
+	public VerificacionDao getDao() {
+		return dao;
+	}
+
+	public void setDao(VerificacionDao dao) {
+		this.dao = dao;
+	}
+	
+}

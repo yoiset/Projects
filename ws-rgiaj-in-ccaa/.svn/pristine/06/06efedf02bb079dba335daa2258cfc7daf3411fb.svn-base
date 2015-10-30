@@ -1,0 +1,57 @@
+package com.dgoj.juegoExterno.business.repository.impl;
+
+import java.util.List;
+
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
+
+import com.dgoj.juegoExterno.business.bean.ComunidadQueryBean;
+import com.dgoj.juegoExterno.business.bean.UsuarioQueryBean;
+import com.dgoj.juegoExterno.business.model.JugUsuariocomunidad;
+import com.dgoj.juegoExterno.business.repository.IUsuarioComunidadRepository;
+import com.jeveris.persistence.hibernate.repository.impl.HibernateBaseRepositoryImpl;
+import com.mysema.query.SearchResults;
+
+/**
+ * @author ylopezconnectis
+ *
+ */
+@Repository("usuarioComunidadRepository")
+public class UsuarioComunidadRepositoryImpl extends  HibernateBaseRepositoryImpl<JugUsuariocomunidad, Long> implements IUsuarioComunidadRepository<JugUsuariocomunidad, Long> {
+
+	/** Devuelve los usuarios asociados a la query
+	 * @see com.dgoj.juegoExterno.business.repository.IUsuarioComunidadRepository#getListaUsuarios(com.dgoj.juegoExterno.business.bean.UsuarioQueryBean)
+	 */
+	@Override
+	public SearchResults<JugUsuariocomunidad> getListaUsuarios(	ComunidadQueryBean query) {
+		// TODO Auto-generated method stub
+		
+		String hql="select u from JugUsuariocomunidad u where u.jugComunidad.id=:id order by u.usuario asc";
+		Query myQuery=getSession().createQuery(hql).setParameter("id", query.getIdComunidad());
+		
+		List<JugUsuariocomunidad> list = myQuery.list();
+		
+		SearchResults<JugUsuariocomunidad> results = new SearchResults<JugUsuariocomunidad>(list, new Long(query.getMaxResults().intValue()), 
+				new Long(query.getFirstResult().intValue() ), list.size());
+		
+		return results;
+		
+	}
+	
+	
+	/**
+	 * @param query
+	 * @return
+	 */
+	public JugUsuariocomunidad getUsuarioComunidad(UsuarioQueryBean query){
+		
+		String hql="select u from JugUsuariocomunidad u where u.jugComunidad.id=:id and u.usuario=:user";
+		Query myQuery=getSession().createQuery(hql).setParameter("id", query.getIdComunidad()).setParameter("user", query.getUsuario()).setMaxResults(1);
+		return (JugUsuariocomunidad) myQuery.uniqueResult();
+		
+	}
+	
+	
+
+	
+}

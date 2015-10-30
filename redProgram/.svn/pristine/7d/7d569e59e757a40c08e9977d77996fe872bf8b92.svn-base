@@ -1,0 +1,27 @@
+package es.gamco.redprogram.dao;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+
+
+@Repository("teleDAO")
+public class TeleDAO {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	
+
+	public List<String> getTele(){
+		return null;
+	}
+	
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+
+}

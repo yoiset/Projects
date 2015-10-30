@@ -1,0 +1,64 @@
+package es.gob.cnjuego.ws.util;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import es.gob.cnjuego.ws.verificacionjugadores.SpringTestCase;
+
+public class UtilSupportTest extends SpringTestCase {
+	
+	
+
+	@Before
+	public void setUp() throws Exception{
+		super.setUp();
+	}
+	
+	
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+	}
+	
+	@Test
+	public void testInit() throws Exception {
+		assertNotNull(UtilSupport.getMapConfiguracion());
+		assertNotNull(UtilSupport.getListDniPrueba());
+		assertNotNull(UtilSupport.getMapTraduccion());
+	}
+	
+	@Test
+	public void testListas() throws Exception{
+		
+		String conf= UtilSupport.getConfiguracion("endpoint.scspJuego");
+		assertEquals("http://aplicaciones-pre.ordenacionjuego.es/scsp-ws-3.2.2/ws", conf);
+		conf= UtilSupport.getConfiguracion("endpoint.validarFirmaDSS");
+		assertEquals("http://des-afirma.redsara.es/afirmaws/services/DSSAfirmaVerify?wsdl", conf);
+		conf= UtilSupport.getConfiguracion("scsp.finalidad");
+		assertEquals("Verificación Identidad Jugadores", conf);
+		
+		String original=UtilSupport.getCaracteresCache(Constantes.CACHE_KEY_CARACTERES_ORIGINAL);		
+		String traducción=UtilSupport.getCaracteresCache(Constantes.CACHE_KEY_CARACTERES_TRADUCCION);
+		assertNotNull(original);
+		assertNotNull(traducción);
+		
+		System.out.println("Original:   " + original);
+		System.out.println("Traducción: " + traducción);
+		
+		List<String> list= UtilSupport.getListDniPrueba();
+		assertEquals(1, list.size());
+		
+		for (String string : list) {
+			assertEquals("10000949C", string);
+			System.out.println("DNI Prueba: " + string);
+		}
+		
+	}
+	
+}

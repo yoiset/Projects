@@ -1,0 +1,12 @@
+###########################################################
+#
+# Web Services Security client configuration file:
+# -------------------------------------------
+############################################################
+*.ws.ldap.default.invokeTimeout=10000
+
+#local.ldap.WebServiceURL=http://aplicaciones-pre.ordenacionjuego.es/wsldap/ldap
+#des.ldap.WebServiceURL=http://aplicaciones-pre.ordenacionjuego.es/wsldap/ldap
+#pre.ldap.WebServiceURL=http://aplicaciones-pre.ordenacionjuego.es/wsldap/ldap
+#pro.ldap.WebServiceURL=http://aplicaciones-int.ordenacionjuego.es/wsldap/ldap
+*.ldap.WebServiceKEY=ws.ldap

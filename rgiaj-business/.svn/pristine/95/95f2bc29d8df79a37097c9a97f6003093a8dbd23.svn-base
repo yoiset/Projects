@@ -1,0 +1,21 @@
+<!-- 
+  Este fichero contiene los mappings para la generación de las clases 
+  con CXF. Aquí se establece que los atributos de "xsd:date" y "xsd:dateTime" 
+  del esquema deben convertirse a tipo "java.util.Date" en las clases generadas. 
+  Si no definimos este mapeo, CXF genera las clases con atributos XMLGregorianCalendar :(
+-->
+<jaxws:bindings wsdlLocation="JuegoRGIAJ_client.wsdl"
+	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<jaxws:bindings node="wsdl:definitions/wsdl:types/xs:schema">
+		<jxb:globalBindings xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<jxb:javaType name="java.util.Date" xmlType="xs:dateTime"
+				parseMethod="es.dgoj.rgiaj.util.DataTypeAdapter.parseDateTime"
+				printMethod="es.dgoj.rgiaj.util.DataTypeAdapter.printDateTime" />
+			<jxb:javaType name="java.util.Date" xmlType="xs:date"
+				parseMethod="es.dgoj.rgiaj.util.DataTypeAdapter.parseDate"
+				printMethod="es.dgoj.rgiaj.util.DataTypeAdapter.printDate" />
+		</jxb:globalBindings>
+	</jaxws:bindings> 
+</jaxws:bindings>

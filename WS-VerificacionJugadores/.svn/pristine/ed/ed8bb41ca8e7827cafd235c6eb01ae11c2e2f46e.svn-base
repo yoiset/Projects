@@ -1,0 +1,32 @@
+package es.gob.cnjuego.ws.to;
+
+import java.io.Serializable;
+
+public class ResultadoJugadorTO extends TO implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	 protected ResultadoTO resultadoRGIAJ;
+	 protected ResultadoTO resultadoIdentidad;
+	
+	 
+	 
+	 public ResultadoTO getResultadoRGIAJ() {
+		return resultadoRGIAJ;
+	}
+	public void setResultadoRGIAJ(ResultadoTO resultadoRGIAJ) {
+		this.resultadoRGIAJ = resultadoRGIAJ;
+	}
+	public ResultadoTO getResultadoIdentidad() {
+		return resultadoIdentidad;
+	}
+	public void setResultadoIdentidad(ResultadoTO resultadoIdentidad) {
+		this.resultadoIdentidad = resultadoIdentidad;
+	}
+	
+
+}

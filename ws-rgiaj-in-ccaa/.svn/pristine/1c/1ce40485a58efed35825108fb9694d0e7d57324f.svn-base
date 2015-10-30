@@ -1,0 +1,236 @@
+package com.dgoj.rgiaj.ws;
+
+import javax.jws.Oneway;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+
+import es.dgoj.rgiaj.ComunidadBeanResponse;
+import es.dgoj.rgiaj.ComunidadCertificadoBeanResponse;
+import es.dgoj.rgiaj.ComunidadQueryRequest;
+import es.dgoj.rgiaj.ComunidadSearchResponse;
+import es.dgoj.rgiaj.Fault;
+import es.dgoj.rgiaj.JuegoRGIAJ;
+import es.dgoj.rgiaj.JugHistoricoQueryRequest;
+import es.dgoj.rgiaj.JugHistoricoSearchResponse;
+import es.dgoj.rgiaj.JugProhibicionBean;
+import es.dgoj.rgiaj.JugProhibicionQueryRequest;
+import es.dgoj.rgiaj.ProhibidosResponse;
+import es.dgoj.rgiaj.UltimasDescargasConfirmadasResponse;
+
+public class JuegoRGIAJImpl implements JuegoRGIAJ {
+	
+	 private JuegoRGIAJController controller;
+
+	@Override
+	@WebResult(name = "Boolean", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public boolean hayPendiente(
+			@WebParam(partName = "parameters", name = "JugProhibicionQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") JugProhibicionQueryRequest parameters)
+			throws Fault {
+		return controller.hayPendiente(parameters);
+	}
+
+	@Override
+	@Oneway
+	@WebMethod
+	public void confirmHistoricoDescargasPendientes(
+			@WebParam(partName = "parameters", name = "JugProhibicionQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") JugProhibicionQueryRequest parameters)
+			throws Fault {
+		controller.confirmHistoricoDescargasPendiente(parameters);
+		
+	}
+
+	@Override
+	@WebMethod
+	public void updateCertificadoComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	@Oneway
+	@WebMethod
+	public void editUsuario(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	@WebResult(name = "Boolean", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public boolean existCertificadoActivoOtraComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	@WebResult(name = "ultimasDescargasConfirmadasResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public UltimasDescargasConfirmadasResponse ultimasDescargasConfirmadas(
+			@WebParam(partName = "parameters", name = "JugProhibicionQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") JugProhibicionQueryRequest parameters)
+			throws Fault {
+		return controller.ultimaDescargaConfirmada(parameters);
+	}
+
+	@Override
+	@Oneway
+	@WebMethod
+	public void confirmHistoricoDescargas(
+			@WebParam(partName = "parameters", name = "JugProhibicionQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") JugProhibicionQueryRequest parameters)
+			throws Fault {
+		controller.confirmarUltimaDescarga(parameters);
+		
+	}
+
+	@Override
+	@WebResult(name = "Boolean", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public boolean existCertificadoComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	@WebResult(name = "Boolean", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public boolean isCertificadoActivo(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		
+		return false;
+	}
+
+	@Override
+	@WebResult(name = "ComunidadBeanResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public ComunidadBeanResponse getComunidadList() throws Fault {
+		return controller.getComunidadList();
+	}
+
+	@Override
+	@Oneway
+	@WebMethod
+	public void addCertificadoComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+            controller.addCertificadoComunidad(parameters)	;	
+	}
+
+	@Override
+	@Oneway
+	@WebMethod
+	public void addUsuario(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		    controller.addUsuario(parameters);
+	}
+
+	@Override
+	@WebResult(name = "Boolean", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public boolean existOtroCertificadoActivoComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		return controller.existOtrotCertificadoActivoComunidad(parameters);
+	}
+
+	@Override
+	@WebResult(name = "ComunidadSearchResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public ComunidadSearchResponse getUsuarioComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		return controller.getUsuarioComunidad(parameters);
+	}
+
+	@Override
+	@WebResult(name = "Boolean", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public boolean existUsuario(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		return controller.existUsuario(parameters);
+	}
+
+	@Override
+	@WebResult(name = "JugHistoricoBeanRequest", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public JugProhibicionBean getComunidad(
+			@WebParam(partName = "user", name = "user", targetNamespace = "") String user)
+			throws Fault {
+		return controller.getComunidadByUser(user);
+	}
+
+	@Override
+	@WebResult(name = "ComunidadSearchResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public ComunidadSearchResponse getCertificadoComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		return controller.getCertificadoComunidad(parameters);
+	}
+
+	@Override
+	@WebMethod
+	public void removeCertificadoComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+           
+		controller.removeCertificadoComunidad(parameters);
+	}
+
+	@Override
+	@WebResult(name = "prohibidosResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod(action = "http://rgiaj.dgoj.es/prohibidosList")
+	public ProhibidosResponse prohibidosList(
+			@WebParam(partName = "parameters", name = "JugProhibicionQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") JugProhibicionQueryRequest parameters)
+			throws Fault {
+		return controller.getProhibidos(parameters);
+	}
+
+	@Override
+	@WebResult(name = "ComunidadCertificadoBeanResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public ComunidadCertificadoBeanResponse getCertificadoActivoComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		return controller.getCertificadoActivoComunidad(parameters);
+	}
+
+	@Override
+	@WebResult(name = "JugHistoricoSearchResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public JugHistoricoSearchResponse getHistorico(
+			@WebParam(partName = "parameters", name = "JugHistoricoQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") JugHistoricoQueryRequest parameters)
+			throws Fault {
+		return controller.getHistorico(parameters);
+	}
+
+	@Override
+	@Oneway
+	@WebMethod
+	public void removeUsuario(
+			@WebParam(partName = "parameters", name = "ComunidadQueryRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadQueryRequest parameters)
+			throws Fault {
+		controller.removeUsuario(parameters);
+		
+	}
+	
+
+	
+	public void setController(JuegoRGIAJController controller) {
+		this.controller = controller;
+	}
+
+
+
+}

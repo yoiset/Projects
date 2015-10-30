@@ -1,0 +1,9 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.util.List;
+
+public interface DNIDebugIdentidadDAO {
+
+	List<String> obtenerListaDni();
+
+}

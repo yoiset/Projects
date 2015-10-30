@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+  <definition name="app/errorPage" extends="baseLayout">
+    <put-attribute name="main" value="/WEB-INF/views/ErrorGenerico.jsp" />
+  </definition>
+
+  <definition name="tiles/tipoProhibicion" extends="baseLayout">
+    <put-attribute name="main" value="/WEB-INF/views/tipoProhibicion/tipoProhibicion.jsp" />
+  </definition>
+
+  <definition name="tiles/startNewTipoProhibicion" extends="baseLayout">
+    <put-attribute name="main" value="/WEB-INF/views/tipoProhibicion/newTipoProhibicion.jsp" />
+  </definition>
+  
+  <definition name="tiles/startEditTipoProhibicion" extends="baseLayout">
+    <put-attribute name="main" value="/WEB-INF/views/tipoProhibicion/editTipoProhibicion.jsp" />
+  </definition>
+  
+</tiles-definitions>

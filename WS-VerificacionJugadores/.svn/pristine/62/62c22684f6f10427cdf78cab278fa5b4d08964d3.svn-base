@@ -1,0 +1,14 @@
+package es.gob.cnjuego.ws.service;
+
+import es.gob.cnjuego.ws.verificacionjugadores.Jugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoIdentidad;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoJugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoRGIAJ;
+
+public interface ServicioJugadoresTestWS {
+
+//	public ResultadoJugador obtenerResultadoJugadorTestWS(int modo, Jugador jugador);
+	public ResultadoRGIAJ obtenerResultadoRGIAJTestWS(int modo, Jugador jugador);
+	public ResultadoIdentidad obtenerResultadoIdentidadTestWS(Jugador jugador);
+	
+}

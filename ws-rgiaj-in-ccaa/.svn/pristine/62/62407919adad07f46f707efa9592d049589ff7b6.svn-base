@@ -1,0 +1,42 @@
+package com.dgoj.juegoExterno.business.service;
+
+import com.dgoj.juegoExterno.business.bean.ComunidadQueryBean;
+import com.dgoj.juegoExterno.business.bean.ComunidadSearchResult;
+
+public interface IComunidadUsuarioService {
+	
+	/**
+	 * @param query
+	 * @return
+	 */
+	public boolean existUsuario(ComunidadQueryBean query);
+	
+	
+	
+	/**
+	 * @param query
+	 * @return
+	 */
+	public void addUsuario(ComunidadQueryBean query);
+	
+	
+	/**
+	 * @param query
+	 * @return
+	 */
+	public void editUsuario(ComunidadQueryBean query);
+	
+	
+	/**
+	 * @param query
+	 * @return
+	 */
+	public void removeUsuario(ComunidadQueryBean query);
+	
+	/**
+	 * @param query
+	 * @return
+	 */
+	public ComunidadSearchResult getUsuarioComunidad(ComunidadQueryBean query);
+
+}

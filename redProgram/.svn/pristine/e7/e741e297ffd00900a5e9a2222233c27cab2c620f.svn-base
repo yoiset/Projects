@@ -1,0 +1,125 @@
+/**
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %(c) Copyright 2007. GAMCO S.L.
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Proyecto: Red Program
+ * % Modulo: redProgram Web App
+ * % Autor/es: Yoiset Lopez<nombre>
+ * % Fecha: 05/08/2013
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Modificaciones (autor, fecha, modificaciones)
+ * % <Autor>, <fecha>, <modificaciones>
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %
+ * %  The persistence class module
+ * %
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+package es.gamco.redprogram.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Res_Agente_Semana")
+public class Res_Agente_Semana implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@EmbeddedId
+	private Res_Agente_SemanaPK id;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="Agentes_id", nullable=false, insertable=false)
+	private Agente agente;	
+	
+	@ManyToOne
+	@JoinColumn(name="Ej_Fiscal_id", nullable=false, insertable=false)
+	private Ej_Fiscal ejFiscal;
+	
+	@Column(name="Ventas_netas")
+	private int ventas_netas;
+	
+	@Column(name="Horas")
+	private int horas;
+	
+	@Column(name="Ventas_netas_h")
+	private float ventas_netas_h;
+	
+	@Column(name="Ptos")
+	private int puntos;
+
+	public Res_Agente_SemanaPK getId() {
+		return id;
+	}
+
+	public void setId(Res_Agente_SemanaPK id) {
+		this.id = id;
+	}
+
+	public Agente getAgente() {
+		return agente;
+	}
+
+	public void setAgente(Agente agente) {
+		this.agente = agente;
+	}
+
+	public Ej_Fiscal getEjFiscal() {
+		return ejFiscal;
+	}
+
+	public void setEjFiscal(Ej_Fiscal ejFiscal) {
+		this.ejFiscal = ejFiscal;
+	}
+
+	public int getVentas_netas() {
+		return ventas_netas;
+	}
+
+	public void setVentas_netas(int ventas_netas) {
+		this.ventas_netas = ventas_netas;
+	}
+
+	public int getHoras() {
+		return horas;
+	}
+
+	public void setHoras(int horas) {
+		this.horas = horas;
+	}
+
+	public float getVentas_netas_h() {
+		return ventas_netas_h;
+	}
+
+	public void setVentas_netas_h(float ventas_netas_h) {
+		this.ventas_netas_h = ventas_netas_h;
+	}
+
+	public int getPuntos() {
+		return puntos;
+	}
+
+	public void setPuntos(int puntos) {
+		this.puntos = puntos;
+	}
+	
+	/**
+	 * Este metodo calcula los campos calculables de esta entidad
+	 */
+	public void autoCalcular(){
+		
+	}
+
+}

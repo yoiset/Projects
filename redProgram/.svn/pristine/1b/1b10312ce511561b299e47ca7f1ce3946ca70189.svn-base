@@ -1,0 +1,189 @@
+/**
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %(c) Copyright 2013. GAMCO S.L.
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Proyecto: Red Program
+ * % Modulo: Calculos
+ * % Autor/es: Fernando Pavón
+ * % Fecha: 07/08/2013
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Modificaciones (autor, fecha, modificaciones)
+ * % <Autor>, <fecha>, <modificaciones>
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %
+ * %  Clase que llevará la lógica de cálculo de aquellos campos
+ * %	calculables de los Agentes.
+ * %	El módulo Service le proveerá de interconexión con la bbdd.
+ * %	Dentro de esta clase o de cualquier otra de este paquete no 
+ * %	existirá una comunicación directa con la bbdd.
+ * %
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+
+package es.gamco.redprogram.service.calculos;
+
+import java.util.List;
+
+import es.gamco.redprogram.dao.ResAgenteDAO;
+import es.gamco.redprogram.entity.Agencia;
+import es.gamco.redprogram.entity.Res_Agente_Mes;
+import es.gamco.redprogram.entity.Res_Agente_Semana;
+import es.gamco.redprogram.service.AgenteService;
+import es.gamco.redprogram.utilities.Periodo;
+import es.gamco.redprogram.utilities.PeriodoCalculo;
+
+/**
+ * @author fpavon
+ * 
+ */
+public class CalculaAgentes
+{
+		
+	private Periodo actual; //Guarda el instante actual.
+	private PeriodoCalculo periodoCalculo; 
+	private List<Agencia> agencias;
+	private AgenteService service;
+	private ResAgenteDAO agentesRepo; // Repositorio de los agentes
+	
+	public CalculaAgentes (Periodo actual, PeriodoCalculo pCal, 
+								List<Agencia> agencias,AgenteService service)
+	{
+		this.setActual(actual);		
+		this.setAgencias(agencias);
+		this.setService(service);
+		this.setPeriodoCalculo(pCal);
+	}
+
+	public Periodo getActual()
+	{
+		return actual;
+	}
+
+	private void setActual(Periodo actual)
+	{
+		this.actual = actual;
+	}
+	
+	private void setAgencias(List<Agencia> agencias)
+	{
+		this.agencias = agencias;
+	}
+	
+	private void setService(AgenteService service)
+	{
+		this.service = service;
+		this.agentesRepo = service.getAgentes();
+	}
+	
+	private void setPeriodoCalculo(PeriodoCalculo pCal)
+	{
+		this.periodoCalculo = pCal;
+	}
+	
+	/**
+	 * Realiza los calculos para una semana, mes o p, dependiendo del valor
+	 * usado en el constructor para periodoCalculo.
+	 * @param instante Es el instante para el que se harán los cálculos: Semana, Mes
+	 * o P. Los calcullos anuales (mundial de pilotos) se realizará junto con los de P.
+	 */
+	public void setCalculos (int instante) throws Exception
+	{
+		try
+		{
+			switch (periodoCalculo)
+			{
+			case SEMANA:
+				calculaAgentesSemana (instante);
+				break;
+			case MES:
+				calculaAgentesMes (instante);
+				break;
+			case P:
+				//calculaAgentesP (instante);
+				break;
+			}
+		}
+		catch (Exception e)
+		{
+			throw new Exception ("No se pudieron realizar los cálculos de los agentes.\n" + e);
+		}
+	}
+	
+	
+	/**
+	 * Rellena los campos calculables de la tabla "Res_Agente_Semana"
+	 * Se la pasa la semana para darle la posibilidad de volver a calcular otra
+	 * semana diferente de la actual
+	 * @param semana Semana entre 1 y 53. 
+	 * Se considera que un año tiene 53 semanas, sino tenemos un problema cuando la 
+	 * 1ª semana del año n+1 tiene días del año n.
+	 * Esto sucede en diciembre del 2013, donde el 31 y 31 son lunes y martes de la
+	 * primera semana del 2014.
+	 */
+	private void calculaAgentesSemana (int semana) throws Exception
+	{
+		CalculaAgenteSemana calculo = new CalculaAgenteSemana();		
+		List<Res_Agente_Semana> agentes;
+		
+		int iAgencia;
+		int idAgencia;
+		
+		if (semana<1 || semana>53)
+		{
+			Exception e = new Exception ("Semana incorrecta: " + semana);
+			throw e;
+		}
+		
+		// Recorro todas las agencias
+		for (iAgencia = 1;iAgencia <= agencias.size(); iAgencia++)
+		{
+			idAgencia = (agencias.get(iAgencia)).getId();
+			// Lista de todos los agentes de una agencia por semana ordenados por ventasNetas/h
+			agentes = agentesRepo.getListAgenteSemana(actual.getEjFiscal(),actual.getMes(), semana, idAgencia);
+			// Llamar al calcula puntos de CalculaAgenteSemana con la lista ordenada de agentes
+			calculo.calculaPtos (agentes);
+			// Guardo en la bbdd
+			service.updateAgentes(agentes);
+		}		
+	}
+	
+	/**
+	 * Rellena los campos calculables de la tabla "Res_Agente_Mes"
+	 * Se la pasa el mes para darle la posibilidad de volver a calcular otro
+	 * mes diferente del actual
+	 * @param mes
+	 */
+	private void calculaAgentesMes (int mes) throws Exception
+	{
+		CalculaAgenteMes calculo = new CalculaAgenteMes();
+		List<Res_Agente_Mes> agentes;
+		
+		int iAgencia;
+		int idAgencia;
+		
+		if (mes<1 || mes>12)
+		{
+			Exception e = new Exception ("Mes incorrecto: " + mes);
+			throw e;
+		}
+		
+		// Recorro todas las agencias
+		for (iAgencia = 1;iAgencia <= agencias.size(); iAgencia++)
+		{
+			idAgencia = (agencias.get(iAgencia)).getId();
+			// Lista de todos los agentes de una agencia por semana ordenados por ventasNetas/h
+			agentes = agentesRepo.getListAgenteMes(actual.getEjFiscal(), mes, idAgencia);
+			// Llamar al calcula puntos de CalculaAgenteSemana con la lista ordenada de agentes
+			//******/ calculo.calculaPtos (agentes);
+			// Guardo en la bbdd
+			//******/ service.updateAgentesMes(agentes);
+		}		
+	}
+
+	public List<Agencia> getAgencias()
+	{
+		return agencias;
+	}
+
+	
+}

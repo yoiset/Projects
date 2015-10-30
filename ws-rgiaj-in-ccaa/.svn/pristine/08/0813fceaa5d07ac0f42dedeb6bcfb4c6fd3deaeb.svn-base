@@ -1,0 +1,120 @@
+
+package es.dgoj.rgiaj;
+
+import javax.xml.bind.annotation.XmlRegistry;
+
+
+/**
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the es.dgoj.rgiaj package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
+ * provided in this class.
+ * 
+ */
+@XmlRegistry
+public class ObjectFactory {
+
+
+    /**
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: es.dgoj.rgiaj
+     * 
+     */
+    public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link ProhibidosRequest }
+     * 
+     */
+    public ProhibidosRequest createProhibidosRequest() {
+        return new ProhibidosRequest();
+    }
+
+    /**
+     * Create an instance of {@link FaultError }
+     * 
+     */
+    public FaultError createFaultError() {
+        return new FaultError();
+    }
+
+    /**
+     * Create an instance of {@link HayPendienteResponse }
+     * 
+     */
+    public HayPendienteResponse createHayPendienteResponse() {
+        return new HayPendienteResponse();
+    }
+
+    /**
+     * Create an instance of {@link HayPendienteRequest }
+     * 
+     */
+    public HayPendienteRequest createHayPendienteRequest() {
+        return new HayPendienteRequest();
+    }
+
+    /**
+     * Create an instance of {@link ProhibidosResponse }
+     * 
+     */
+    public ProhibidosResponse createProhibidosResponse() {
+        return new ProhibidosResponse();
+    }
+
+    /**
+     * Create an instance of {@link ComunidadResponse }
+     * 
+     */
+    public ComunidadResponse createComunidadResponse() {
+        return new ComunidadResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConfirmHistoricoDescargasRequest }
+     * 
+     */
+    public ConfirmHistoricoDescargasRequest createConfirmHistoricoDescargasRequest() {
+        return new ConfirmHistoricoDescargasRequest();
+    }
+
+    /**
+     * Create an instance of {@link UltimasDescargasConfirmadasRequest }
+     * 
+     */
+    public UltimasDescargasConfirmadasRequest createUltimasDescargasConfirmadasRequest() {
+        return new UltimasDescargasConfirmadasRequest();
+    }
+
+    /**
+     * Create an instance of {@link UltimasDescargasConfirmadasResponse }
+     * 
+     */
+    public UltimasDescargasConfirmadasResponse createUltimasDescargasConfirmadasResponse() {
+        return new UltimasDescargasConfirmadasResponse();
+    }
+
+    /**
+     * Create an instance of {@link UltimasDescargas }
+     * 
+     */
+    public UltimasDescargas createUltimasDescargas() {
+        return new UltimasDescargas();
+    }
+
+    /**
+     * Create an instance of {@link ComunidadRequest }
+     * 
+     */
+    public ComunidadRequest createComunidadRequest() {
+        return new ComunidadRequest();
+    }
+
+}

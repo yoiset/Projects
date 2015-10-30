@@ -1,0 +1,1322 @@
+/*
+Estilos para la DGOJ
+
+© Copyright 2013
+Todos los derechos reservados.
+*/
+
+/*----------------- RESET ----------------------------------------------------------*/
+
+html, body, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, strong, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, input, legend, table, caption, tbody, tfoot, thead, tr, th, td, div { margin: 0; padding: 0; border: none; font-weight: normal; font-style: normal; font-size: 100%; font-family: inherit; vertical-align: baseline; text-decoration: none;}
+
+input[readonly="readonly"] { background-color: #EEEEEE }
+
+ul, ol, dl { list-style: none; }
+
+body { 
+	font-size: 100%;
+	background: #FFFFFF;
+}
+
+/* Estilos body */
+body {background:#fff url('../images/fondo-intratet-mo.jpg') top center no-repeat; color:#000; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; text-align:left; font-size:100%;}
+/* Entorno PRE */
+body.pre {background:#fff url('../images/fondo-intratet-mo-pre.jpg') top center no-repeat; color:#000; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; text-align:left; font-size:100%;}
+/* Entorno DESA */
+body.des {background:#fff url('../images/fondo-intratet-mo-desa.jpg') top center no-repeat; color:#000; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; text-align:left; font-size:100%;}
+/* Entorno local*/
+body.local {background:#fff url('../images/fondo-intratet-mo-local.jpg') top center no-repeat; color:#000; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; text-align:left; font-size:100%;}
+/* ------------------------------------------------ */
+
+/* Genericos Campos formularios */
+input{font-family: Arial, Helvetica, sans-serif;}
+select {font-family: Arial, Helvetica, sans-serif;}
+textarea {font-family: Arial, Helvetica, sans-serif;}
+
+/* Estilos CABECERA */
+#contenido {width:60em; margin:0 auto; padding:0;}
+#contenido .escudo {border:0; margin:0.5em 0 1em 0; padding:0; float:left;}
+
+#contenido h1 {float:left; vertical-align:bottom; margin:0 0 0 0.5em; padding:0.2em 0 0 0; color:#999; height:2em; font-size:1.4em; line-height:1.2em; text-align:right; width:29.8em; font-weight:bold;}
+/*#contenido h1 {float:left; vertical-align:bottom; margin:0 0 0 1em; padding:0.2em 0 0 0; color:#999; height:2em; font-size:1.4em; line-height:1.2em; text-align:right; width:29.8em; font-weight:bold;}*/
+#contenido h1 em{color:#96BB35; font-style: normal;}
+
+/* Estilos interior */
+#contenido #interior {clear:both; width: 100%; margin:0; padding:0; border:1px solid #96BB35; border-bottom:0.2em solid #96BB35; border-top:0; background: url('../images/fondo-pie-juego.jpg') no-repeat bottom right;}
+/* Entorno PRE */
+#contenido #interior.pre {clear:both; width: 100%; margin:0; padding:0; border:1px solid rgb(255, 110, 3); border-bottom:0.2em solid rgb(255, 110, 3); border-top:0; background: url('../images/fondo-pie-juego.jpg') no-repeat bottom right;}
+/* Entorno DESA */
+#contenido #interior.des {clear:both; width: 100%; margin:0; padding:0; border:1px solid rgb(0, 20, 255); border-bottom:0.2em solid rgb(0, 20, 255); border-top:0; background: url('../images/fondo-pie-juego.jpg') no-repeat bottom right;}
+/* Entorno local*/
+#contenido #interior.local {clear:both; width: 100%; margin:0; padding:0; border:1px solid rgb(0, 0, 0); border-bottom:0.2em solid rgb(0, 0, 0); border-top:0; background: url('../images/fondo-pie-juego.jpg') no-repeat bottom right;}
+/*------------------------------------------------- */
+
+/* Estilos Central */
+#contenido #interior #central {display: block; min-height:32em; height:auto !important; height:32em; margin:0.5em 0 0 0; padding:0.5em 0.9em 2em 1.3em;}
+#contenido #interior #central h2 {color:#708C28; font-size:0.9em; font-weight:bold; margin:0.3em 0 0.5em 0; }
+#contenido #interior #central h3 {color:#000000; font-size:0.8em; font-weight:bold; margin:0; padding:0.5em 0.5em 0.2em 0.2em; }
+#contenido #interior #central h4 {color:#444444; font-size:0.75em; font-weight:bold; margin:0; padding:0.5em 0.5em 0.2em 0.2em; }
+
+#contenido #interior #central p {color:#000; margin:0.5em 2em 0.5em 1em; padding:0; font-size:0.75em;}
+#contenido #interior #central a {font-weight:normal; text-decoration:none; }
+#contenido #interior #central a:hover {font-weight:normal; border-bottom:1px dotted #999999; color:#5D7320;}
+#contenido #interior #central em {color:#5D7320; font-weight:bold; font-style: normal;}
+
+#contenido #interior #central ul.menu {list-style-type:none; margin:0 0 0 1em; padding:0.1em 0 0.1em 0; }
+#contenido #interior #central ul.menu li {line-height: 1.4em; list-style-type:none; margin:0.1em 0 0.1em 2em; padding:0.1em 0 0.1em 1.4em; font-size:0.75em; background:url("../images/icono-flecha-listado.gif") top left no-repeat;}
+
+#contenido #interior #central .obligatorio {clear:both; margin:0 0 0 0; padding: 0; color: #000; font-size:0.7em;}
+
+#contenido #interior #central .ficha {width: 54.2em;}
+#contenido #interior #central .ficha ul {list-style-type:none; margin:0 0 0 1em; padding:0.1em 0 0.1em 0; }
+#contenido #interior #central .ficha ul li {line-height: 1.4em; list-style-type:none; margin:0.1em 0 0.1em 2em; padding:0.1em 0 0.1em 1.4em; font-size:0.75em; background:url("../images/icono-flecha-listado.gif") top left no-repeat;}
+
+#contenido #interior #central .opcion {float:right; font-size:0.8em; margin:-2.5em 1em 0 0; width:auto;}
+#contenido #interior #central .opcion a {font-weight:normal;}
+#contenido #interior #central .opcion a.bottop {font-weight:normal; margin:0 0 0 0.5em;}
+
+#contenido #interior #central #opciones {text-align:right; margin:0; padding:0; /*display:inline; clear:both;*/}
+#contenido #interior #central #opciones form {padding:0; margin:0;}
+#contenido #interior #central #opciones form fieldset {margin:0; padding:0; border:0;}
+#contenido #interior #central #opciones form input {cursor:pointer; font-weight:bold; float:right; font-size:0.75em; color:#54691E; background: url("../images/icono-flecha-listado.gif") 1.5px 1px no-repeat; border:0; padding:0.25em 0 0 1.1em; margin:0 0.5em 0 0; text-align:left;}
+#contenido #interior #central #opciones input {cursor:pointer; font-weight:bold; float:right; font-size:0.75em; color:#54691E; background: url("../images/icono-flecha-listado.gif") 1.5px 1px no-repeat; border:0; padding:0.25em 0 0 1.1em; margin:0 0.5em 0 0; text-align:left;}
+
+#contenido #interior #central #opciones-izquierda {text-align:right; margin:0; padding:0; /*display:inline; clear:both;*/}
+#contenido #interior #central #opciones-izquierda form {padding:0; margin:0;}
+#contenido #interior #central #opciones-izquierda form fieldset {margin:0; padding:0; border:0;}
+#contenido #interior #central #opciones-izquierda form input {cursor:pointer; font-weight:bold; float:left; font-size:0.75em; color:#54691E; background: url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.25em 0 0 1.2em; margin:0 0 0.4em 0; text-align:left;}
+#contenido #interior #central #opciones-izquierda input {cursor:pointer; font-weight:bold; float:right; font-size:0.75em; color:#54691E; background: url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.25em 0 0 1em; margin:0; text-align:left;}
+
+#contenido #interior #central #opciones a {float:right; font-weight: bold; font-size: 0.75em; color:#54691E; background:url("../images/icono-flecha-listado.gif") left no-repeat; border: 0; padding: 0.3em 0.5em 0 1.3em; margin:0; text-decoration:none;}
+#contenido #interior #central #opciones a:hover {color: #54691E; font-weight: normal; text-decoration: none; font-weight: bold;}
+
+#contenido #interior #central .listado-convocatorias #opciones {margin:0; padding:0; }
+#contenido #interior #central .listado-convocatorias #opciones form {float:right; margin:-1.8em 0 0 0; padding:0; width:100%;}
+#contenido #interior #central .listado-convocatorias #opciones input.boton {cursor: pointer; width:auto; font-weight: bold; color:#000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border:1px solid #737373; margin:0; text-align: center; padding: 0.25em 0.6em 0.25em 0.6em;}
+
+#contenido #interior #central .listado #opciones {margin:0; padding:0; }
+#contenido #interior #central .listado #opciones form {float:right; margin:-1.3em 0 0 0; padding:0;/*width:100%;*/}
+*+html #contenido #interior #central .listado #opciones form {margin:-1.2em 0 0 0; padding:0; width: 8em;}
+*+html #contenido #interior #central .listado #opciones form {margin:-1.4em 0 0 0; padding:0; width: 9em;}
+
+#contenido #interior #central div.listado #opciones input.boton {cursor: pointer; width:auto; font-weight: bold; color:#000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border:1px solid #737373; margin:0.2em 0.3em 0 0; text-align: center; padding:0.25em 0.6em 0.25em 0.6em;}
+*+html #contenido #interior #central .listado #opciones input.boton {cursor: pointer; width:auto; font-weight: bold; color:#000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border:1px solid #737373; margin:0.3em 0.3em 0 0; text-align: center; padding: 0.25em 0.8em 0.25em 0.8em;}
+
+
+
+/* Usuario */
+#contenido #interior #central .opciones-datos {clear:both; margin:0; padding:0.3em 0 0 0; font-family: Arial, Helvetica, sans-serif;float:right;}
+#contenido #interior #central .opciones-datos h3.usuario { font-size:0.75em; color: #000; font-weight: normal; padding:0em 0 0 1.5em; margin:0.2em 1em 0.5em 0; background:url("../images/icon-user.gif") left top no-repeat;} 
+*+html #contenido #interior #central .opciones-datos h3.usuario { font-size:0.75em; color: #000; font-weight: normal; padding:0 0 0 1.5em; margin:0 1em 0 0; background:url("../images/icon-user.gif") left top no-repeat;}
+#contenido #interior #central .opciones-datos span.perfil {font-weight: bold; color: #AC0404; padding: 0.1em 0 0 1.3em; background: url("../images/ico-link.gif") top left no-repeat; margin-left: 0.5em}
+#contenido #interior .opciones-datos {clear:both; margin:0; padding:0.3em 0 0 0; font-family: Arial, Helvetica, sans-serif;float:right;}
+#contenido #interior .opciones-datos h3.usuario { font-size:0.75em; color: #000; font-weight: normal; padding:0em 0 0 1.5em; margin:0.2em 1em 0.5em 0; background:url("../images/icon-user.gif") left top no-repeat;} 
+*+html #contenido #interior .opciones-datos h3.usuario { font-size:0.75em; color: #000; font-weight: normal; padding:0 0 0 1.5em; margin:0 1em 0 0; background:url("../images/icon-user.gif") left top no-repeat;}
+#contenido #interior .opciones-datos span.perfil {font-weight: bold; color: #AC0404; padding: 0.1em 0 0 1.3em; background: url("../images/ico-link.gif") top left no-repeat; margin-left: 0.5em}
+#contenido #interior .salir a {display: inline; cursor: pointer; font-weight: bold; font-size: 1em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 1em 0 1.3em; margin:0.1em 1em 0 0.1em;}
+#contenido #interior .salir a:hover {display: inline; cursor: pointer; font-weight: bold;  font-size: 1em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 1em 0 1.3em; margin:0.1em 1em 0 0.1em;}
+
+#contenido #interior #central .opciones {margin: 0; padding: 0; text-align: right}
+#contenido #interior #central .opciones ul {margin: 0 0.8em 0 0; padding: 0}
+#contenido #interior #central .opciones ul li {display: inline; font-family: Arial, helvetica, sans-serif; font-size: 0.8em; margin: 0 0em 0 0.4em; padding: 0.2em 0 0.6em 1.4em; background:url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .opciones ul li a {border-bottom:0.06em dotted #999999; font-weight: bold; color:#5D7320; }
+#contenido #interior #central .opciones ul li a:hover {border-bottom:0.06em dotted #000; font-weight: bold; color:#5D7320; }
+
+#contenido #interior .mensaje {width:27em; margin:0 auto; color:red; font-size:0.75em; font-weight:bold; text-align:center;}
+#contenido #interior #central .error {padding: 0.6em 0em 0.6em 0.9em; margin: 1.2em 1em 0.9em 0.4em; border-bottom: 1px dotted #ccc; border-top: 1px dotted #ccc; background: #F7F7F7;}
+#contenido #interior #central .error p {color:#9D0000; font-size: 0.75em; font-weight: bold; float: left; margin: 0; font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central .error ul {margin-top: 1.4em; margin-left: 0.5em; padding-left: 0.9em;}
+#contenido #interior #central .error ul li {text-align: left; list-style-type:none; list-style-image: url("../images/li-error.gif"); font-size: 0.75em; font-family: Arial, Helvetica, sans-serif; margin-top: 0.1em; padding: 0em 0 0.4em 0}
+#contenido #interior #central .errorMessage {padding:0 1em 0 0; margin:0em 2em 1em 0; display:block; clear:both;}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.error {color:red; margin-right: -110em; position: relative; padding-top: 1em; padding-left: 0; padding-right: 0; top: 1em; padding-bottom:1em; left:-11em; float:left; border:none; background:none;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.error-largo {color:red; margin-right: -110em; position: relative; padding-top: 1em; padding-left: 0; padding-right: 0; top: 1em; padding-bottom:1em; left:-32.2em; float:left; border:none; background:none;}
+/* #contenido #interior #central #formulcuad fieldset label.linea-medio span.error-summary {color:red; margin-right: -110em; position: relative; padding-top: 1em; padding-left: 0; padding-right: 0; top: 0em; padding-bottom:1em; left:34em; float:left; border:none; background:none;} */
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.error-summary { color: red; margin-left: 17.3em; padding-top: 0.5em; padding-left: 0; padding-right: 0; padding-bottom: 0em; float: left; border: none; background: none;}
+
+/* Filtrado por cabeceras de tabla */
+#contenido #interior #central #formulcuad #searchForm div.divInput {margin-top: 2px; padding-left: 6px; padding-right: 6px;}
+#contenido #interior #central #formulcuad #searchForm div.divSelect{padding-left: 6px; padding-right: 6px;}
+#contenido #interior #central #formulcuad #searchForm input.inputHead {width:100%; height: 17px; border: 1px solid #ccc;}
+#contenido #interior #central #formulcuad #searchForm select.selectHead {width:100%; border: 1px solid #ccc;}
+
+#contenido #interior #central #error-tecnico {width: 55.4em;padding: 0.6em 0em 0.1em 1.6em; margin:2em 0.8em 0.8em 0em; border:0.06em dotted #ccc; background: #F7F7F7;}
+#contenido #interior #central #error-tecnico p {color:#9D0000; font-size:0.95em; font-weight: bold; margin:0.6em 0 0.6em 0; padding:0; clear:both;}
+#contenido #interior #central #error-tecnico ul {margin-top: 0.8em; margin-right: 0.5em; padding-left: 1em; margin-left: 1em; clear: both}
+#contenido #interior #central #error-tecnico ul li {font-size: 0.75em; line-height: 1.4em; list-style-type:none; list-style-image: url("../images/li-error.gif");}
+#contenido #interior #central #error-tecnico ul li span a {font-size:100%; font-weight:bold; color: #126985;}
+#contenido #interior #central #error-tecnico span a {font-size:100%; font-weight:bold; color: #126985;}
+#contenido #interior #central #error-tecnico a {font-size:100%; font-weight:bold; color: #126985;}
+#contenido #interior #central #error-tecnico .cerrar {clear: both; float: right; padding:0em 2em 0.4em 0; background: url("../images/ico-cerrar.gif") top right no-repeat;}
+#contenido #interior #central #error-tecnico a.cerrar {color:#9D0000; text-decoration: none; font-size: 0.75em; }
+#contenido #interior #central #error-tecnico a.cerrar:hover {color:#000; text-decoration:none; border-bottom: 0}
+
+#contenido #interior #central #detalle-tecnico {padding:0.4em 0em 0.8em 0.8em; margin: 0.8em 0.8em 0.8em 0em; clear: both; float: right}
+#contenido #interior #central #detalle-tecnico .cerrar {padding: 0em 1.4em 0 0; background: url("../images/ico-link.gif") top right no-repeat;}
+#contenido #interior #central #detalle-tecnico a.cerrar {color:#9D0000; text-decoration: none; font-size: 0.75em; font-weight: bold;}
+#contenido #interior #central #detalle-tecnico a.cerrar:hover {color:#9D0000; text-decoration: underline; border-bottom: 0}
+
+
+#contenido #interior #central .bot-new {cursor:pointer; width:auto; font-weight: bold; font-size:0.75em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:-2em 0 0 0.4em; text-align: center; padding: 0em 0.4em 0.1em 0.4em; float:left;}
+#contenido #interior #central .botones {width:auto; margin:0.3em 1em 0 0em; clear:both; display:block; text-align:center;}
+#contenido #interior #central .botones .boton {cursor: pointer; width:auto; font-weight: bold; font-size:0.7em; color:#000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border:1px solid #737373; margin:0.4em; text-align: center; padding: 0.25em 0.9em 0.25em 0.9em;}
+
+#contenido #interior .botones {margin:0.6em auto 0 auto; clear:both; display:block; text-align:center;}
+#contenido #interior .botones .boton {cursor: pointer; width:auto; font-weight: bold; font-size:0.7em;  color:#000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border:1px solid #737373; margin:0.4em; text-align: center; padding: 0.25em 0.6em 0.25em 0.6em;}
+
+#contenido #interior .botramite {cursor:pointer; width:auto; font-weight:bold; font-size:0.75em; position:absolute; color:#000;background: url("../images/fondo-boton-refresh.jpg") bottom repeat-x; border:1px solid #737373; margin:0 0 0 0.7em; text-align: center; padding:0.25em 0.4em 0.25em 0.4em;}
+#contenido #interior dl{display:block; font-weight:normal; font-size:75%;  padding:0.4em 0.8em 0.55em 5em; margin:0 2.5em 0 0; color:#000; background: #E2E3E0 url("../images/fondo-dl.gif") left top no-repeat;}
+
+
+/* Login */
+#contenido #interior #login {height:6em; width:22em; margin:3em auto 0.5em auto; border:0; background-color:#E5EECC; padding:1em 1em 0 1em; background:url('../images/fon-login.jpg') top center no-repeat; }
+*+html #contenido #interior #login label {margin:0.2em 0.5em 0 2em;}
+* html #contenido #interior #login label {margin:0.2em 0.5em 0 2em;}
+#contenido #interior #login fieldset {border: 0;}
+#contenido #interior #login fieldset label {clear: both; display: block; margin: 0em 0 0.3em 2em; padding: 0.3em 0 0.3em 0;}
+#contenido #interior #login fieldset label span.label {clear: left; color: #000; width: 6em; float: left; text-align: left; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; font-weight: normal; padding: 0.2em 0.3em 0 0;}
+#contenido #interior #login fieldset label input {float: left; text-align: left; background-color: #fff; border: 1px #809F2D solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #login .botones-login {width:20em; margin:3em auto 0 auto; clear:both; display:block; text-align:right;}
+#contenido #interior #login .botones-login .boton {cursor: pointer; width:auto; font-weight: bold; font-size:0.7em;  color:#000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border:1px solid #737373; margin:0.4em; text-align: center; padding: 0.25em 0.6em 0.25em 0.6em;}
+
+
+/* Aviso Error */
+#contenido #interior #central #error {clear: both; padding: 0.6em 0em 0.1em 1.6em; margin:0; border-bottom: 1px dotted #ccc; border-top: 1px dotted #ccc; background: #F7F7F7; width:96%;}
+#contenido #interior #central #error p {color:#9D0000; font-size: 0.75em; font-weight: bold; margin: 0.1em 0 0 1.6em; font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central #error ul {margin-top: 0.6em;}
+#contenido #interior #central #error ul li {list-style-image: url("../images/li-error.gif"); font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; margin-top: 0.6em;}
+#contenido #interior #central #error .cerrar {float: right; padding:0.1em 2em 0 0; background: url("../images/ico-cerrar.gif") top right no-repeat;}
+#contenido #interior #central #error a.cerrar {color:#000; text-decoration: none; font-size: 0.7em; }
+#contenido #interior #central #error a.cerrar:hover {color:#C14646; text-decoration:none;}
+
+/* Mensajes de Error */
+#contenido #interior #central #mensajes {clear: both; padding: 0.6em 0em 0.1em 1.6em; margin:0; border-bottom:1px dotted #ccc; border-top: 1px dotted #ccc; background: #F7F7F7; width:96%;}
+#contenido #interior #central #mensajes p {color:#9D0000; font-size: 0.75em; font-weight: bold; margin: 0.1em 0 0 1.6em; font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central #mensajes ul {margin-top: 0.6em; }
+#contenido #interior #central #mensajes ul li {list-style-image: url("../images/li-error.gif"); font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; margin-top: 0.6em;}
+#contenido #interior #central #mensajes .cerrar {float: right; padding:0.1em 2em 0 0; background: url("../images/ico-cerrar.gif") top right no-repeat;}
+#contenido #interior #central #mensajes a.cerrar {color:#000; text-decoration: none; font-size: 0.7em;}
+#contenido #interior #central #mensajes a.cerrar:hover {color:#C14646; text-decoration:none;}
+#contenido #interior #central p.mensaje-inicio {color: #B90000; font-size: 0.7em; font-weight: bold; font-family: Arial, Helvetica, sans-serif; margin: 0.8em 0.63em 1em 0.65em; padding-left: 1.4em; background: url("../images/mensaje.gif") no-repeat left;}
+
+
+/* Estilos Formualrio cuadrado */
+#contenido #interior #central #formulcuad {width:98%; padding:0.1em 0 0.8em 0; margin:0.4em 0 3em 0;}
+#contenido #interior #central #formulcuad form {margin:0; padding:0; clear:both; width:auto;}
+#contenido #interior #central #formulcuad fieldset {clear:both; padding:0.4em; margin:0 1em 0.8em 0.6em;  border:1px solid #A2A79B; width:97%;font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central #formulcuad fieldset legend {clear:both;  font-size: 0.75em; font-weight: bold; color:#000; margin:0.8em 0 0.1em 0.2em; padding:0.2em;}
+#contenido #interior #central #formulcuad fieldset a.boton {float:left; text-align: left; margin: 0em 0 0.8em 2.8em; padding: 0 0 0 1.4em; color: #126985; background: #fff; border: 0; background: url("../images/ico-list-cont.gif") top left no-repeat; text-decoration: underline;}
+
+#contenido #interior #central #formulcuad fieldset p {font-family: Arial, Helvetica, sans-serif; color: #000; padding:0; margin:0.6em 0 1em 1em; line-height:2em;} 
+#contenido #interior #central #formulcuad fieldset h4 {color:#4B5E1A; font-size:0.85em; font-weight:bold; margin:0.15em 0 0.35em 0; padding:0; font-family:  Arial, Verdana, Tahoma, helvetica, sans-serif;background-color:transparent;}
+#contenido #interior #central #formulcuad fieldset br {clear:both; width:auto; margin:0 0.6em 0 0.6em;}
+
+/*#contenido #interior #central #formulcuad fieldset label {float:left; margin:0; padding:0; clear:both; width:97%;}*/
+#contenido #interior #central #formulcuad fieldset label {float:left; margin:0; padding:0; clear:both; width:auto;}
+#contenido #interior #central #formulcuad fieldset label span {float: left; display:block; font-size:0.75em; clear:both; margin:0; padding:1em;}
+#contenido #interior #central #formulcuad fieldset label span.right {float:left; text-align:right; display:block; font-size:0.75em; width:20em; clear:both; margin:0; padding:0.3em 1em 0 0; font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label span.right {float:left; text-align:right; display:block; font-size:0.75em; width:20em; clear:both; margin:0; padding:0.3em 1em 0 0; font-family: Arial, Helvetica, sans-serif;}
+
+#contenido #interior #central #formulcuad fieldset label span strong {font-weight: bold; display:block; color:#000; margin:0.8em 0 0.8em 0.9em; padding:0 0.6em 0em 0; background:#FFF; font-size:1.1em; clear:both; height:1.5em;}
+#contenido #interior #central #formulcuad fieldset label input {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding:0; margin:0.1em 0 0.1em 0; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+
+#contenido #interior #central #formulcuad fieldset select.medio{ width:45%;}
+#contenido #interior #central #formulcuad fieldset select.largo{ width:60%;}
+#contenido #interior #central #formulcuad fieldset select.largo-boton{ width:50%;}
+
+#contenido #interior #central #formulcuad fieldset textarea {clear:both; margin:0 0 1em 1.5em; padding:0; width:95%;}
+#contenido #interior #central #formulcuad fieldset .boton {cursor: pointer; width:auto; font-weight: bold; font-size:0.75em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:0 0 1em 1.5em; text-align: center; padding:0.2em 0.4em 0.2em 0.4em;}
+#contenido #interior #central #formulcuad form .alta-cabecera {width: 16em; text-align: left; cursor: pointer; font-weight: bold; font-size:0.75em; color:#000; background: url("../images/alta-cabecera-bt.gif") top left no-repeat; border:1px solid #B2B8C3; margin:0 0 1em 0em; text-align: center; padding:0.2em 0.4em 0.2em 2.4em;}
+
+#contenido #interior #central #formulario fieldset select.largo-boton{ width:30%;}
+#contenido #interior #central #formulario label .boton {cursor:pointer; width:auto; font-weight:bold; font-size:0.7em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:0 0 1em 1.5em; text-align: center; padding:0.25em 0.6em 0.25em 0.6em;}
+
+#contenido #interior #central #formulcuad .botones {margin:-2em 0em 2em -11em; display:block; width:auto; text-align:center;}
+*+html #contenido #interior #central #formulcuad .botones {margin:-2.3em 0em 2em -15em; display:block; width:auto; text-align:center;}
+#contenido #interior #central #formulcuad .botones .boton {background-color:transparent; width:auto; font-weight: bold; font-size:0.75em; font-family: Arial, helvetica, sans-serif; color: #fff; background: url("../images/boton.jpg") bottom repeat-x; border:0; text-align: center; padding: 0.15em 1.1em 0.15em 1.1em; margin-top: 0.5em; cursor:pointer;}
+
+#contenido #interior #central #formulcuad .bot-pantalla {clear:both; width:56.2em; margin:0.3em auto 0.1em 0.06em; height:2em; padding:0; border-bottom: 1px dotted #ccc; border-top: 1px dotted #ccc; background:#F7F7F7;}
+#contenido #interior #central #formulcuad .bot-pantalla span {font-size:0.75em; padding:0.6em 0.2em 0 0.6em; margin:0; display:inline; width:auto; float:left;}
+#contenido #interior #central #formulcuad .bot-pantalla label {margin:0; padding:0.4em 0.5em 0 0; display:block; width:auto; float:left;}
+#contenido #interior #central #formulcuad .bot-pantalla em {font-size:0.7em; padding:0.3em 0.8em 0 0.5em; font-weight: lighter; margin:0.2em 0 0 36em; display:block; color:#000;}
+#contenido #interior #central #formulcuad .bot-pantalla .boton {float:right; cursor:pointer; width:auto; background-color:#F7F7F7; margin: 0.5em 1em 0 0; cursor: pointer; width:auto; font-weight: bold; font-size: 0.7em; font-family: Arial, helvetica, sans-serif; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x;  border:1px solid #8F97A4;}
+#contenido #interior #central #formulcuad .bot-pantalla .bot-label {cursor: pointer; width:auto; font-weight: bold; font-size:0.7em; color:#274271; background: url("../images/fondo-boton-white.jpg") bottom repeat-x;  border:1px solid #8F97A4; margin:0.4em 0 0 0; text-align: center; padding: 0.15em 0.4em 0.15em 0.4em;}
+
+#contenido #interior #central #formulcuad fieldset legend {font-size: 0.75em; font-weight: bold; color:#000; margin:0.8em 0 0.1em 0.2em; padding:0.2em;}
+#contenido #interior #central #formulcuad fieldset div.raparalelo{margin:0; width:100%; padding:0; display:inline;}
+#contenido #interior #central #formulcuad fieldset div.raparalelo input {margin:0 0 0 5em; padding:0; float:left; clear:left; display:block; width:3%;} 
+#contenido #interior #central #formulcuad fieldset div.raparalelo label {margin:0; padding:0.2em 0 0 0; float:left; clear:none; color:#000; font-size:0.75em; width:70%; display:inline-block;}
+#contenido #interior #central #formulcuad input.botradio {cursor:pointer; width:auto; font-weight:bold; font-size:0.75em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:0.5em 0 0 0.7em; text-align:center; padding:0.1em 0.4em 0.1em 0.4em;}
+
+#contenido #interior #central #formulcuad .botones-submit {clear: both; text-align: center; margin: 0.5em 0em 0 0em; padding-top: 0.3em;}
+#contenido #interior #central #formulcuad .boton {cursor: pointer; width:auto; font-weight: bold; font-size:0.75em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:0.5em 0 0 0; text-align: center; padding: 0em 0.4em 0.1em 0.4em;}
+#contenido #interior #central #formulcuad .boton-blanco {cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #1B6E7E; background: #fff url("../images/boton-blanco.jpg") bottom repeat-x; border: 1px solid #ccc; margin: 0.4em; text-align: center; padding: 0.15em 1.1em 0.15em 1.1em; margin-top: 0.5em;}
+#contenido #interior #central #formulcuad .botones-submit-ast {clear: both; text-align: center; padding: 0.4em 0 0 20em; margin: 0em 0 0 0}
+*+html #contenido #interior #central #formulcuad .botones-submit-ast {clear: both; text-align: center; padding: 0em 0 0 20em; margin: 0em 0 0 0}
+#contenido #interior #central #formulcuad .botones-submit-ast .boton {float: left;cursor: pointer; width:auto; font-weight: bold; font-size:0.75em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; text-align: center; padding: 0em 0.4em 0.1em 0.4em; }
+#contenido #interior #central #formulcuad div.asterisco {font-size: 0.75em;float: left; margin: 0em 0 0 0.4em}
+
+/*
+#contenido #interior #central #formulcuad form fieldset.radio {margin:0 0 0 0.7em; width:95%; padding:0.6em; display:block; position:relative; overflow:hidden; border:1px solid #A2A79B;}
+#contenido #interior #central #formulcuad form fieldset.radio legend {font-size: 0.75em; font-weight: bold; color:#000; margin:0.8em 0 0.1em 0.2em; padding:0.2em;}
+#contenido #interior #central #formulcuad form fieldset.radio input {margin: 0 0.4em 0 8em; padding: 0; float: left; clear:none;}
+#contenido #interior #central #formulcuad form fieldset.radio label {float:left; color: #000; font-size:0.75em; clear:none; display:inline-block;}
+#contenido #interior #central #formulcuad form input.botradio {cursor:pointer; width:auto; font-weight:bold; font-size:0.75em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:0.5em 0 0 0.7em; text-align:center; padding:0.1em 0.4em 0.1em 0.4em;}
+*/
+
+/* Nuevos estilos */
+#contenido #interior #central #formulcuad .cuadrado {clear:both; margin:0 0 1em 0; padding:0; width:auto; background-color:#F2F7E6; border:1px solid #4B5E1A;}
+#contenido #interior #central #formulcuad .cuadrado h5 {color:#FFF; font-size:0.8em; font-weight:bold; margin:0; padding:0.3em; font-family: Arial, Verdana, Tahoma, helvetica, sans-serif; background-color:#4B5E1A;}
+#contenido #interior #central #formulcuad .cuadrado ul {margin:0 0 0.8em 2em; padding:0;  font-family:  Arial, Verdana, Tahoma, helvetica, sans-serif;}
+#contenido #interior #central #formulcuad .cuadrado ul li {list-style:none;display:inline-block; font-size:0.75em; margin:0.6em 0 0 0.4em; padding:0 0 0 1.4em; background:url("../images/ico-arrow-black.gif") top left no-repeat; font-weight:bold;}
+
+#contenido #interior #central #formulcuad .colum {clear:both; margin:0 0 1em 0; padding:0 0 1.3em 0; width:100%; background-color:#F2F7E6; display:inline-block;}
+#contenido #interior #central #formulcuad .colum h6 {color:#4B5E1A; font-size:0.8em; font-weight:bold; margin:0.5em 0 0.5em 1em; padding:0.3em; font-family: Arial, Verdana, Tahoma, helvetica, sans-serif; background-color:transparent;}
+#contenido #interior #central #formulcuad .colum label {margin:0.3em 0.5em 0.8em 2em; padding:0; width:15em; float:left; background-color:transparent; display:inline-block; clear:none; border-bottom:1px dotted #666;}
+
+#contenido #interior #central #formulcuad .colum label span {color:#000; width:auto; font-size:0.75em; font-family: Arial, helvetica, sans-serif; padding:0;}
+#contenido #interior #central #formulcuad .colum label input.chk {float:right; background-color: #fff; border: 0px; padding: 0em 0 0em 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; background-color:transparent;}
+
+
+#contenido #interior #central #formulcuad table.display {width:100%; margin:1em 0.2em 1em 0.2em; padding:0em; font-size:0.75em; border-collapse:collapse; border:1px solid #DDD;}
+#contenido #interior #central #formulcuad table.display th {background:url('../images/fon-barra-cabecera-superior.jpg') repeat-x right top; white-space:nowrap; font-size:0.8em; text-align:center; padding:0.8em; border-bottom:0.2em solid #54691E; border-right:0.2em solid #DDD;}
+#contenido #interior #central #formulcuad table.display tr {margin:0.06em; text-align:center;}
+#contenido #interior #central #formulcuad table.display td {margin:0.06em; border:1px solid #DDD; font-size:0.75em; line-height:2em;}
+#contenido #interior #central #formulcuad table.display td a {color:#000; font-weight: bold; text-decoration:none; padding:0.25em; vertical-align:middle; margin-bottom:1em;}
+#contenido #interior #central #formulcuad table.display td a:hover {color:#126985;}
+#contenido #interior #central #formulcuad table.display td images {border:0; margin:0; padding:0.5em 0.2em 0 0.2em;}
+
+
+#contenido #interior #central #formulario fieldset h3 .eliminar-reducido {cursor: pointer; width: 4.7em; font-weight: bold; font-size: 0.85em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: left; padding: 0 0.2em 0em 0.2em; margin: 0em 0 0 0.3em}
+#contenido #interior #central #formulario fieldset .eliminar-reducido {cursor: pointer; width: 4.7em; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: left; padding: 0 0.2em 0em 0.2em; margin: 0em 0 0 0.3em}
+
+/* Capa central botones */
+#contenido #interior #central #bot-acceso {clear:both; font-weight:bold; font-family: Arial, Helvetica, sans-serif; font-size:0.75em; width:15em; display:block; margin:0 0 0 1.6em;}
+#contenido #interior #central #bot-acceso a {color:#54691E; text-decoration:none; background: #fff url("../images/ico-arrow-intro.gif") left 0.7em no-repeat; padding:0.6em 0 0 1.3em; margin:0 0 0 0.5em; font-weight:bold;}
+#contenido #interior #central #bot-acceso a:hover{color:#000; background: url("../images/ico-arrow-black.gif") left 0.7em no-repeat;}
+
+#contenido #interior #central #bot-sol {clear:both; font-weight:bold; font-family: Arial, Helvetica, sans-serif; font-size:0.75em; width:15em; display:block; margin: -1.5em 0 1em 0;}
+#contenido #interior #central #bot-sol a {color:#D40606; text-decoration:none; background: #fff url("../images/ico-arrow-red.gif") left 0.7em no-repeat; padding:0.6em 0 0 1.3em; margin:0 0 0 0.5em;}
+#contenido #interior #central #bot-sol a:hover{color:#000; background: url("../images/ico-arrow-black.gif") left 0.7em no-repeat;}
+
+#contenido #interior #central #bot-nueva {float:left; font-weight:bold; font-family: Arial, Helvetica, sans-serif; font-size:0.75em; width:auto; display:block; margin:0 0em 0 0; padding:0;}
+#contenido #interior #central #bot-nueva a {color:#D40606; text-decoration:none; background: url("../images/ico-arrow-red.gif") left 0.7em no-repeat; padding:0.6em 0 0 1.3em; margin:0 0 0 0.5em;}
+#contenido #interior #central #bot-nueva a:hover {color:#000; background: url("../images/ico-arrow-black.gif") left 0.7em no-repeat;}
+#contenido #interior #central #bot-nueva input {clear:both; border:0; color:#D40606; text-decoration:none; background: url("../images/ico-arrow-red.gif") left 0.3em no-repeat; cursor:pointer; line-height:1.3em;  padding:0.1em 0.1em 0.1em 1.3em; margin:0 0 0 0.5em;}
+*+html #contenido #interior #central #bot-nueva input {clear:both; border:0; color:#D40606; text-decoration:none; background: url("../images/ico-arrow-red.gif") left 0.4em no-repeat; cursor:pointer; line-height:1.3em;  padding:0.1em; margin:0 0 0 0.5em;}
+
+#contenido #interior #central #bot-nueva form {display:block; float:left; margin:0; padding:0;}
+
+#contenido #interior #central .botones-submit {clear: both; text-align:center; margin: 0.5em 0 0 0; padding:0.3em 0.8em 0.3em 0.8em;}
+#contenido #interior #central .boton {cursor: pointer; width:auto; font-weight: bold; font-size:0.75em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:0.5em 0 0 0; text-align: center; padding: 0em 0.4em 0.1em 0.4em;}
+#contenido #interior #central .boton-blanco {cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #1B6E7E; background: #fff url("../images/boton-blanco.jpg") bottom repeat-x; border: 1px solid #ccc; margin: 0.4em; text-align: center; padding: 0.15em 1.1em 0.15em 1.1em; margin-top: 0.5em;}
+
+
+/* Listados convocatorias */
+#contenido #interior #central .listado-convocatorias {clear:both; margin:0.6em 0 0 0; padding-top:0.2em; padding-bottom:0.2em; font-size:0.8em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central .listado-convocatorias div.encabezado {margin:1em 0 0 0; padding: 0.2em 1em 0.3em 0.5em; background:#EFF4DF; border-bottom: 1px solid #BFD67A; height:2em;}
+#contenido #interior #central .listado-convocatorias div.encabezado span.label {padding:0 0 0 0.5em; margin:0; line-height:2em; float:left;}
+#contenido #interior #central .listado-convocatorias div.encabezado input {float:left;}
+
+#contenido #interior #central .listado-convocatorias h3 {font-size: 0.8em; margin: 0; padding: 0.45em 0 0.2em 2.2em; background: #E7F1F0 url("../images/ico-list-cont.gif") 1% no-repeat; border-bottom: 1px solid #CCCCCC;}
+#contenido #interior #central .listado-convocatorias h3 strong {color: #CC0000;}
+
+#contenido #interior #central .listado-convocatorias ul {width:auto; margin:0em 0 0 0.1em; padding:0.2em 0.6em 0em 1.8em; display:block;}
+#contenido #interior #central .listado-convocatorias ul li {width:34em; float:left; bottom right repeat-x; list-style-type:none; margin:0.2em 0 0.2em 0.2em; padding:0.1em; vertical-align:top; line-height: 1.2em}
+#contenido #interior #central .listado-convocatorias ul li.lineal {width:75em; clear: both; bottom right repeat-x; list-style-type:none; margin: 0.3em 0 0.3em 0.6em; padding:0.1em 0.4em 0 0em; vertical-align:top; line-height: 1.2em} 
+#contenido #interior #central .listado-convocatorias ul li.texto-largo {clear: both; display: block; width: 98%; margin-right: 0.6em; text-align: justify;}
+
+
+/*JPVD 16/07/2009 creamos unos estilos para un listado generico... son una copia exacta de los de convocatoria, solo cambia el nombre*/
+
+#contenido #interior #central span.peticion {font-size:0.8em; width:100%; display:inline-block; margin:0; padding:0 0 0 0.3em; color:#000;}
+
+/* Listado asignacion manual */
+#contenido #interior #central div.listado {clear:both; width:100%; margin:0.1em 0 0 0.2em; padding-top:0.6em; padding-bottom:0.2em; font-size:0.8em; font-family: Arial, helvetica, sans-serif;}
+
+#contenido #interior #central div.listado div.encabezado {width:97%; margin:0; padding:0.3em 0.8em 0.3em 0.8em; border-bottom:1px solid #BFD67A; display:inline-block; font-weight:bold; background:#EFF4DF;}
+#contenido #interior #central div.listado div.encabezado label {width:100%; margin:0; padding:0; display:inline-block;}
+#contenido #interior #central div.listado div.encabezado label input[type="checkbox"] {width:auto; margin:0.4em 0.5em 0 0; padding:0; float:left; display:inline-block;}
+
+#contenido #interior #central div.listado div.encabezado label span.label {font-weight:bold; margin:0; padding:0; width:auto; font-size:90%;}
+#contenido #interior #central div.listado div.encabezado label span.label span.nombre {width:auto; display: inline-block; font-weight: bold; margin:0.3em 0 0 0; float:left; }
+#contenido #interior #central div.listado div.encabezado label span.label span.documento {width:auto; display: inline-block; font-weight: bold; margin:0.3em 0 0 0; padding:0 0 0 1.5em; float:left; background: transparent url("../images/ico-line.gif") 5px 3px no-repeat;}
+#contenido #interior #central div.listado div.encabezado label span.label span.detalle-plaza {width:auto; display: inline-block; font-weight: bold; margin:0.3em 0 0 0; padding:0 0 0 1.5em;  float:left; background: transparent url("../images/ico-line.gif") 5px 3px no-repeat;}
+#contenido #interior #central div.listado div.encabezado label span.label span.estado {width:auto; display: inline-block; font-weight: bold; margin:0.3em 0 0 0; padding:0 0 0 1.5em;  float:left; background: transparent url("../images/ico-line.gif") 5px 3px no-repeat;}
+
+/* Div listitu a modo de tabla con registros en la parte inferior */
+#contenido #interior #central input[type="hidden"] {display:none; visibility:hidden;}
+
+#contenido #interior #central div.listado div.listitu {width:98.5%; margin:0; padding:0; border-bottom:1px solid #8A9B58; display:inline-block; line-height:1.5em;}
+#contenido #interior #central div.listado div.listitu input[type="checkbox"] {width:auto; margin:0 1.8em 0.3em 1.8em; padding:0; float:left;}
+#contenido #interior #central div.listado div.listitu span.asignar {width:4em; margin:0; padding:0.4em; border:1px solid #8A9B58; display:inline-block; float:left; text-align:center; background:transparent url("../images/fondo-tabla.jpg") top left repeat-x; border-bottom:0;}
+#contenido #interior #central div.listado div.listitu span.reserva {width:4em; margin:0; padding:0.4em; border:1px solid #8A9B58; display:inline-block; float:left; text-align:center; background:transparent url("../images/fondo-tabla.jpg") top left repeat-x;  border-bottom:0; border-left:0;}
+#contenido #interior #central div.listado div.listitu label {width:80%; margin:0 0 0 0.5em; padding:0; display:inline-block; float:left; line-height:1.5em; font-size:100%;}
+
+/* Fielset resaltando campos en asignacion manual */
+#contenido #interior #central #formulcuad form fieldset.resaltabox {clear:both; padding:0; margin:0; width:99%; display:inline-block; background:#EFF4DF; border:1px solid #8A9B58; }
+#contenido #interior #central #formulcuad form fieldset.resaltabox legend {font-size:0.8em; width:15%; font-weight:bold; color:#000; margin:0 0 0 1em; padding:0.2em 1em 0 1em; background:white url("../images/fondo-tabla.jpg") top left repeat-x; line-height:1.6em; border:1px solid #8A9B58; display:inline-block; text-align:center;}
+#contenido #interior #central #formulcuad form fieldset.resaltabox label {float:left; width:100%; margin:0.5em 2em 0.5em 1em; padding:0;}
+#contenido #interior #central #formulcuad form fieldset.resaltabox label span  {width:auto; margin:0; padding:0; float:left; font-size:0.75em; display:inline-block;}
+#contenido #interior #central #formulcuad form fieldset.resaltabox label input {width:20%; margin:0; padding:0; float:left; font-size:0.75em; display:inline-block; border:1px #5B5B5B solid;}
+#contenido #interior #central #formulcuad form fieldset.resaltabox label em {width:auto; margin:0 0 0 0.5em; padding:0; float:left; font-size:0.75em; color:#000; font-weight:lighter;}
+
+/* Listado de registros que se muestran en una pagina */
+#contenido #interior #central #formulario div.listado {clear:both; width:100%; margin:0.1em 0 0.1em 0.2em; padding:0; font-size:0.8em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario div.listado div.encabezado {width:96.5%; margin:0; padding:0.3em 0.8em 0.3em 0.8em; background:#EFF4DF; border-bottom:1px solid #BFD67A; display:inline-block; clear:both;}
+#contenido #interior #central #formulario div.listado div.encabezado label {width:100%; margin:0; padding:0; float:left; display:inline-block;}
+#contenido #interior #central #formulario div.listado div.encabezado span.label {font-weight:bold; margin:0.2em 0 0 0;}
+#contenido #interior #central #formulario div.listado div.encabezado span.nombre {width:45%; display: inline-block; font-weight: bold; margin:0.3em 0 0 0; float:left; height:1.8em;}
+#contenido #interior #central #formulario div.listado div.encabezado span.documento {width:18%; display: inline-block; font-weight: bold; margin:0; padding:0; height:1.8em; background-image:none;}
+#contenido #interior #central #formulario div.listado div.encabezado span.detalle-plaza {width:auto; display: inline-block; font-weight: bold; margin:0; padding:0; height:1.8em; background-image:none;}
+#contenido #interior #central #formulario div.listado div.encabezado span.estado {width:18%; display: inline-block; font-weight: bold; margin:0; padding:0; height:1.8em; background-image:none;}
+#contenido #interior #central #formulario div.listado div.encabezado span.solicitud {width:10%; display: inline-block; font-weight: bold; margin:0; padding:0; height:1.8em; background-image:none;}
+
+
+#contenido #interior #central div.listado div.encabezado a.botizqdo {float:right; cursor:pointer; width:auto; font-weight: bold; font-size:0.85em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:-1.9em 1.5em 0 0em; text-align:center; padding:0.2em 0.6em 0.2em 0.6em;}
+#contenido #interior #central div.listado h3 {font-size: 0.8em; margin: 0; padding: 0.45em 0 0.2em 2.2em; background: #E7F1F0 url("../images/ico-list-cont.gif") 1% no-repeat; border-bottom: 1px solid #CCCCCC;}
+#contenido #interior #central div.listado h3 strong {color: #CC0000;}
+#contenido #interior #central div.listado ul {width:auto; margin:0 0 0 0.1em; padding:0.2em 0.6em 0.2em 1.8em; display:block;}
+#contenido #interior #central div.listado ul li {width:34em; float:left; bottom right repeat-x; list-style-type:none; margin: 0.2em 0 0.2em 0.6em; padding:0; vertical-align:top; line-height:1.3em} 
+#contenido #interior #central div.listado ul li.lineal {width:75em; clear: both; bottom right repeat-x; list-style-type:none; margin: 0.3em 0 0.3em 0.6em; padding:0.1em 0.4em 0 0em; vertical-align:top; line-height: 1.2em} 
+#contenido #interior #central div.listado ul li.texto-largo {clear: both; display: block; width: 98%; margin-right: 0.6em; text-align: justify;}
+#contenido #interior #central div.listado div.encabezado input.mantener-cabecera {width: 14em; text-align: left; color: #000; font-weight: bold; border: 1px solid #B2B8C3; font-size: 0.9em; background: url("../images/mantener-cabecera-bt.gif") top left no-repeat; padding: 0.2em 0.4em 0.2em 2em; margin: 0 0.6em; cursor: pointer}
+#contenido #interior #central div.listado div.encabezado input.baja-cabecera {width: 15.6em; text-align: left; color: #000; font-weight: bold; border: 1px solid #B2B8C3; font-size: 0.9em; background: url("../images/baja-cabecera-bt.gif") top left no-repeat; padding: 0.2em 0.4em 0.2em 2em; margin: 0 0.6em; cursor: pointer}
+
+#contenido #interior #central .listado div.encabezado form.descargar {margin:0em 0.2em 0 0; padding:0em 0.5em 0 0; width: 4em; height: 0.8em; display: inline; float: right;}
+#contenido #interior #central .listado div.encabezado form.descargar input.descargar-doc2 {cursor: pointer; width: 2.6em; font-weight: bold; color:#000; background: url("../images/descarga.gif") top right no-repeat; border:0; margin: -3em 0 0 0.5em; text-align: center; padding:0 0.8em 0.2em 0.8em; height:16px;}
+
+*+html #contenido #interior #central .listado div.encabezado form.descargar {margin:0 0.5em 0 0; padding:0 0.2em 0 0; float: none; display: inline; width: 25em; text-align:right; height: 0.3em; }
+*+html #contenido #interior #central .listado div.encabezado form.descargar input.descargar-doc2 {float: right; cursor: pointer; width: 2.4em; font-weight: bold; color:#000; background: url("../images/descarga.gif") center no-repeat; border:0; margin: -1.5em 0 0 0.5em; text-align: right; padding: 0.1em 0.8em 0em 0.8em; }
+
+#contenido #interior #central div.listado ul.cabeceras-alternativas li {width: 67.1em; background: #fff; background: #fff url("../images/nocompartido.gif") center left no-repeat; border-bottom: 0px solid #ccc; list-style-type:none; margin: 0.1em 0 0.1em 0.6em; padding:0.4em 0.4em 0.4em 0.8em; line-height: 1.2em} 
+#contenido #interior #central div.listado ul li.compartido {font-weight: bold; width: 67.1em; background: #EFEFEF url("../images/nocompartido.gif") center left no-repeat; border-bottom: 1px solid #ccc; list-style-type:none; margin: 0.1em 0 0.1em 0.6em; padding:0.4em 0.4em 0.4em 0.8em; line-height: 1.2em} 
+#contenido #interior #central div.listado ul.cabeceras-alternativas li a {border-bottom: 1px dotted #000}
+
+#contenido #interior #central #formulcuad .listado1 {clear: both; margin:0.1em 0 0 2em; padding-top: 0.3em; padding-bottom:0.2em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulcuad .listado1 span a {font-size: 0.75em; border-bottom: 1px dotted #000}
+#contenido #interior #central #formulcuad .listado1 span {background: url("../images/ico-arrow-intro.gif") bottom left no-repeat; padding: 0 0 0 1.2em; margin: 0.1em 0 0 0; float: left;}
+#contenido #interior #central #formulcuad .listado1 input.boton {margin: 0 0 0 0.8em; padding: 0.1em}
+
+
+
+/*fin JPVD 16/07/2009 creamos unos estilos para un listado generico...*/
+
+
+/* Enlaces y botones inferiores al listado */
+#contenido #interior #central .listado-acciones {clear:both; margin:0.2em 0 0.1em 0em; padding:0.1em 0 0 0.9em; border:0; display:block; width:100%; font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central .listado-acciones form {margin:0; padding:0; display:inline;}
+*+html #contenido #interior #central .listado-acciones form {margin:0; padding:0; clear:left;}
+
+#contenido #interior #central .listado-acciones input {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background:#fff url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.2em 0 0 1.2em; margin:0; text-align:left;}
+*+html #contenido #interior #central .listado-acciones input {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background:#fff url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.3em 0 0 1.2em; margin:0; width:auto;}
+
+#contenido #interior #central .listado-acciones a {display: inline; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 2em 0 1.3em; margin:0.1em 0.2em 0 0.1em;}
+#contenido #interior #central .listado-acciones a:hover {display: inline; cursor: pointer; font-weight: bold;  font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 2em 0 1.3em; margin:0.1em 0.2em 0 0.1em;}
+
+#contenido #interior #central .listado-acciones form input.corto {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:8%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones form input.medio {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:16%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones form input.largo {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:19%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+
+#contenido #interior #central .listado-acciones a.corto {cursor:pointer; font-weight:bold; display:inline; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left top no-repeat; border:0;  padding:0.25em 0.5em 0 1.15em; margin:0; width:17%; text-align: left;}
+#contenido #interior #central .listado-acciones a.corto:hover {background: #fff url("../images/icono-flecha-listado.gif") left top no-repeat; text-decoration:none;}
+#contenido #interior #central .listado-acciones .boton-sf {cursor: pointer; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; color: #5D7320; background: #fff; border: 0em; padding: 0em 0.4em 0 0.4em; margin: 0em 0.4em 0 0.1em; text-align: left;}
+
+/* Enlaces y botones inferiores al listado, centrados */
+#contenido #interior #central .listado-acciones-centrado {text-align:center; clear:both; margin:0.2em 0 0.1em 0em; padding:0.1em 0 0 0.9em; border:0; display:block; width:100%; font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central .listado-acciones-centrado form {margin:0; padding:0; display:inline;}
+*+html #contenido #interior #central .listado-acciones-centrado form {margin:0; padding:0; clear:left;}
+
+#contenido #interior #central .listado-acciones-centrado input {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background:#fff url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.2em 0 0 1.2em; margin:0; text-align:left;}
+*+html #contenido #interior #central .listado-acciones-centrado input {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background:#fff url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.3em 0 0 1.2em; margin:0; width:auto;}
+
+#contenido #interior #central .listado-acciones-centrado a {display: inline; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 2em 0 1.3em; margin:0.1em 0.2em 0 0.1em;}
+#contenido #interior #central .listado-acciones-centrado a:hover {display: inline; cursor: pointer; font-weight: bold;  font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 2em 0 1.3em; margin:0.1em 0.2em 0 0.1em;}
+
+#contenido #interior #central .listado-acciones-centrado form input.corto {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:8%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones-centrado form input.medio {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:16%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones-centrado form input.largo {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:19%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+
+#contenido #interior #central .listado-acciones-centrado a.corto {cursor:pointer; font-weight:bold; display:inline; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left top no-repeat; border:0;  padding:0.25em 0.5em 0 1.15em; margin:0; width:17%; text-align: left;}
+#contenido #interior #central .listado-acciones-centrado a.corto:hover {background: #fff url("../images/icono-flecha-listado.gif") left top no-repeat; text-decoration:none;}
+#contenido #interior #central .listado-acciones-centrado .boton-sf {cursor: pointer; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; color: #5D7320; background: #fff; border: 0em; padding: 0em 0.4em 0 0.4em; margin: 0em 0.4em 0 0.1em; text-align: left;}
+
+/* Enlaces y botones inferiores al listado, derecha */
+#contenido #interior #central .listado-acciones-derecha {text-align:right; clear:both; margin:0.2em 1em 0.1em 0em; padding:0.1em 1em 0 0.9em; border:0; display:block; width:99%; font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central .listado-acciones-derecha.acciones-tab{text-align:right; clear:both; margin:0em 0em 0.1em 0em; padding:0em 0em 0 0.9em;
+	border:0; display:block; width:99%; font-family: Arial, Helvetica, sans-serif;
+	position:relative; float: right; height:0; top:-24px;}
+#contenido #interior #central .listado-acciones-derecha form {margin:0; padding:0; display:inline;}
+*+html #contenido #interior #central .listado-acciones-derecha form {margin:0; padding:0; clear:left;}
+
+#contenido #interior #central .listado-acciones-derecha input {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background:#fff url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.2em 0 0 1.2em; margin:0 1em 0 0; text-align:left;}
+*+html #contenido #interior #central .listado-acciones-derecha input {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background:#fff url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.3em 0 0 1.2em; margin:0 1em 0 0; width:auto;}
+
+#contenido #interior #central .listado-acciones-derecha a {display: inline; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 1em 0 1.3em; margin:0.1em 1em 0 0.1em;}
+#contenido #interior #central .listado-acciones-derecha a:hover {display: inline; cursor: pointer; font-weight: bold;  font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 1em 0 1.3em; margin:0.1em 1em 0 0.1em;}
+
+#contenido #interior #central .listado-acciones-derecha form input.corto {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:8%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones-derecha form input.medio {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:16%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones-derecha form input.largo {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:19%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+
+#contenido #interior #central .listado-acciones-derecha a.corto {cursor:pointer; font-weight:bold; display:inline; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left top no-repeat; border:0;  padding:0.25em 0.5em 0 1.15em; margin:0; width:17%; text-align: left;}
+#contenido #interior #central .listado-acciones-derecha a.corto:hover {background: #fff url("../images/icono-flecha-listado.gif") left top no-repeat; text-decoration:none;}
+#contenido #interior #central .listado-acciones-derecha .boton-sf {cursor: pointer; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; color: #5D7320; background: #fff; border: 0em; padding: 0em 0.4em 0 0.4em; margin: 0em 0.4em 0 0.1em; text-align: left;}
+
+/* Nuevo para el listado destacado */
+#contenido #interior #central .fondo-listado {clear: both; background: #F8F8F8;}
+#contenido #interior #central .listado-destacado {clear: both; margin:0em 0 0 0; padding-top: 0; padding-bottom:0.2em; font-size:0.9em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central .listado-destacado div.encabezado {margin:0; padding: 0.2em 1em 0.3em 0.8em; background:#EFEFEF; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; color: #000}
+#contenido #interior #central .listado-destacado div.encabezado span.label {padding-left: 0.2em; font-weight: bold;}
+#contenido #interior #central .listado-destacado div.encabezado a.botizqdo {float:right; cursor:pointer; width:auto; font-weight: bold; font-size:0.85em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:-1.9em 1.5em 0 0em; text-align:center; padding:0.2em 0.6em 0.2em 0.6em;}
+#contenido #interior #central .listado-destacado h3 {font-size: 0.8em; margin: 0; padding: 0.45em 0 0.2em 2.2em; background: #E7F1F0 url("../images/ico-list-cont.gif") 1% no-repeat; border-bottom: 1px solid #CCCCCC;}
+#contenido #interior #central .listado-destacado h3 strong {color: #CC0000;}
+#contenido #interior #central .listado-destacado ul {width:auto; margin:0.2em 0 0 0.1em; padding:0.2em 0.6em 0.2em 1.4em; display:block;}
+#contenido #interior #central .listado-destacado ul li {width:34em; font-size: 0.8em; float:left; bottom right repeat-x; list-style-type:none; margin: 0.2em 0 0.2em 0.6em; padding:0; vertical-align:top; line-height:1.3em} 
+#contenido #interior #central .listado-destacado ul li.lineal {width:75em; clear: both; bottom right repeat-x; list-style-type:none; margin: 0.3em 0 0.3em 0.6em; padding:0.1em 0.4em 0 0em; vertical-align:top; line-height: 1.2em} 
+#contenido #interior #central .listado-destacado ul li.texto-largo {clear: both; display: block; width: 98%; margin-right: 0.6em; text-align: justify;}
+
+
+#contenido #interior #central .listado-acciones-destacado {clear:both; margin:0em 0 0.8em 0em; padding:0.2em 0 0.4em 1.7em; border-bottom: 2px solid #ccc; display:block; width:96.8%; font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central .listado-acciones-destacado form {margin:0; padding:0; display:inline;}
+*+html #contenido #interior #central .listado-acciones-destacado form {margin:0; padding:0; clear:left;}
+#contenido #interior #central .listado-acciones-destacado input {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background: transparent url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.2em 0 0 1.2em; margin:0; text-align:left;}
+*+html #contenido #interior #central .listado-acciones input {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background: transparent url("../images/icono-flecha-listado.gif") top left no-repeat; border:0; padding:0.3em 0 0 1.2em; margin:0; width:auto;}
+#contenido #interior #central .listado-acciones-destacado a {display: inline; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 2em 0 1.3em; margin:0.1em 0.2em 0 0.1em;}
+#contenido #interior #central .listado-acciones-destacado a:hover {display: inline; cursor: pointer; font-weight: bold;  font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left 28% no-repeat; padding:0.3em 2em 0 1.3em; margin:0.1em 0.2em 0 0.1em;}
+#contenido #interior #central .listado-acciones-destacado form input.corto {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:8%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones-destacado form input.medio {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:16%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones-destacado form input.largo {cursor:pointer; text-align:left; font-weight: bold; font-size:0.75em; color:#5D7320; display:inline; border:0; padding:0.2em 0 0 1.1em; margin:0; width:19%; background: #fff url("../images/icono-flecha-listado.gif") top left no-repeat;}
+#contenido #interior #central .listado-acciones-destacado a.corto {cursor:pointer; font-weight:bold; display:inline; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; color: #5D7320; background: #fff url("../images/icono-flecha-listado.gif") left top no-repeat; border:0;  padding:0.25em 0.5em 0 1.15em; margin:0; width:17%; text-align: left;}
+#contenido #interior #central .listado-acciones-destacado a.corto:hover {background: #fff url("../images/icono-flecha-listado.gif") left top no-repeat; text-decoration:none;}
+#contenido #interior #central .listado-acciones-destacado .boton-sf {cursor: pointer; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; color: #5D7320; background: #fff; border: 0em; padding: 0em 0.4em 0 0.4em; margin: 0em 0.4em 0 0.1em; text-align: left;}
+
+
+/* --------------------------------- */
+/* Formulario */
+/* --------------------------------- */
+
+#contenido #interior #central #formulario {width:58em; padding:0.1em 0 0.8em 0em; margin:0.4em 0 3em 0;}
+#contenido #interior #central #formulario form {margin:0 0 1em 0; padding: 0}
+#contenido #interior #central #formulario fieldset {clear:both; padding: 0.1em 0em 0.6em 0em; margin: 0 0 0 1em; border: 0;}
+#contenido #interior #central #formulario fieldset legend {font-family: Arial, Helvetica, sans-serif; font-size: 0.9em; font-weight: bold; color: #708C28; margin: 0em 0 0.2em 0em; padding: 0.2em 0 0.2em 0;}
+
+#contenido #interior #central #formulario fieldset label.general {clear: both; display: block; margin: 0em 0 0em 0em; padding: 0.2em 0 0em 0;}
+#contenido #interior #central #formulario fieldset label.general span.label {clear: left; color: #000; width: 10em; float: left; text-align: left; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; font-weight: normal; padding: 0.2em 0.1em 0 1em;}
+#contenido #interior #central #formulario fieldset label.general input {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label.general select {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label.general images {padding: 0.1em 0 0 0.2em; text-decoration: none; float: left}
+
+#contenido #interior #central #formulario fieldset label.general-derecha {float: left; margin: 0em 0 0em 1em; padding: 0.2em 0 0em 1em;}
+#contenido #interior #central #formulario fieldset label.general-derecha span.label {clear: left; color: #000; width: 8em; float: left; text-align: left; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; font-weight: normal; padding: 0.2em 0.1em 0 1em;}
+#contenido #interior #central #formulario fieldset label.general-derecha input {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label.general-derecha select {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label.general-derecha images {padding: 0.1em 0 0 0.2em; text-decoration: none; float: left}
+
+#contenido #interior #central #formulario fieldset label.general-centrado {clear: both; display: block; margin: 0em 0 0em 14em; padding: 0.2em 0 0em 0;}
+#contenido #interior #central #formulario fieldset label.general-centrado span.label {clear: left; color: #000; width: 8em; float: left; text-align: left; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; font-weight: normal; padding: 0.2em 0.1em 0 1em;}
+#contenido #interior #central #formulario fieldset label.general-centrado input {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label.general-centrado select {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label.general-centrado images {padding: 0.1em 0 0 0.2em; text-decoration: none; float: left}
+
+
+#contenido #interior #central #formulario fieldset label.float {float:left; margin:0 0 0em 0.2em; padding: 0.5em 0 0em 0; display:inline-block;}
+#contenido #interior #central #formulario fieldset label.float span {width:auto; color:#000; text-align:right; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; font-weight: normal;}
+#contenido #interior #central #formulario fieldset label.float span.label {float: left; padding: 0.2em 0.1em 0 1em;}
+#contenido #interior #central #formulario fieldset label.float input {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding-left: 0.1em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label.float select {float: left; text-align: left; background-color: #fff; border: 1px #ccc solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset label.float images {padding: 0.1em 0 0 0.2em; text-decoration: none; float: left}
+
+#contenido #interior #central #formulario fieldset label.float em {float:left; font-size:0.75em; margin:-0.4em 0 0 0.5em; padding:0;  color:black; font-weight:normal; }
+#contenido #interior #central #formulario fieldset label.float span.tx {width:auto; float:left; color:#000; cursor:pointer; width:auto; font-weight:bold; background: #fff url("../images/fondo-boton.png") bottom repeat-x; border:1px solid #4F4F4F; text-align:center; padding:0.2em 1em 0.2em 1em; margin:-0.7em 0 0 0.5em; display:inline-block;}
+#contenido #interior #central #formulario fieldset label.float .chek {border:0; margin:-0.5em 0 0 0.5em;}
+
+#contenido #interior #central #formulario fieldset .botbusqueda {cursor:pointer; width:auto; font-weight: bold; font-size:0.7em; color:#000; background: #fff url("../images/fondo-boton-buscar.jpg") left top no-repeat; border:1px solid #737373; margin:0.4em 0.4em 0.4em 5em; text-align: center; padding: 0em 0.3em 0em 0.9em;}
+#contenido #interior #central #formulario fieldset .botagrega {float:left; cursor:pointer; width:auto; font-weight: bold; font-size:0.7em; color:#000; background: #fff url("../images/fondo-boton-mas.jpg") right top repeat-x; border:1px solid #737373; margin:0.5em 0.4em 0.4em 0.4em; text-align: center; padding: 0em 0.3em 0em 0.3em;}
+
+#contenido #interior #central #formulario .botones {width:auto; margin:0.1em auto 0 auto; clear:both; display:block; text-align:center;}
+#contenido #interior #central #formulario .botones .boton {cursor: pointer; width:auto; font-weight: bold; font-size:0.7em; color:#000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border:1px solid #737373; margin:0.4em; text-align: center; padding: 0.25em 0.9em 0.25em 0.9em;}
+
+#contenido #interior #central #formulario fieldset p {clear: both; font-family: Arial, Helvetica, sans-serif; font-size:0.75em; color: #000; padding:0; margin:1.3em 0 1em 1.6em; line-height:1.4em;} 
+#contenido #interior #central #formulario .ordenar {clear: both; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: normal; margin: 1.2em 0 0.4em 0.1em; padding: 0em 0 0 0;}
+#contenido #interior #central #formulario .ordenar label {padding: 0 0 0 0.7em; margin: 0;}
+#contenido #interior #central #formulario .ordenar label span {padding: 0 0 0.1em 0.3em; font-size: 0.7em;}
+#contenido #interior #central #formulario .ordenar select {font-size: 0.7em; margin: 0; padding: 0; font-family: Verdana, Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario .ordenar .boton-ordenar {cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Verdana, Arial, helvetica, sans-serif; color: #1B6E7E; background: #fff url("../images/boton-blanco.jpg") bottom repeat-x; border: 1px solid #ccc; text-align: center; padding: 0em 0.4em 0em 0.4em; margin: 0 0 0 0.4em}
+
+#contenido #interior #central #formulario .bot-pantalla {clear:both; width:57.5em; margin:0.2em 0 0.1em 0; height:2em; padding:0; border-bottom: 1px dotted #ccc; border-top: 1px dotted #ccc; background:#F7F7F7;}
+#contenido #interior #central #formulario .bot-pantalla span {font-size:0.75em; font-family: Arial, helvetica, sans-serif; padding:0.6em 2em 0 2em; margin:0; display:inline; width:auto; float:left;}
+#contenido #interior #central #formulario .bot-pantalla label {margin:0; padding:0.4em 0.5em 0 0; display:block; width:auto; float:left;}
+#contenido #interior #central #formulario .bot-pantalla em {font-size:0.75em; float:right; padding:0.6em 0.8em 0 0.6em; font-style: normal;}
+#contenido #interior #central #formulario .bot-pantalla label span {color: #000; text-align:right; padding:0.1em 0.1em 0 0.5em; font-size:0.75em;}
+#contenido #interior #central #formulario .bot-pantalla label select {border:1px #9EB6BA solid; padding:0; margin: 0 0 0 0.4em; font-size:0.8em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario .bot-pantalla .bot-label {cursor: pointer; width:auto; font-weight: bold; font-size:0.75em; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:0.5em 0 0 0; text-align: center; padding: 0em 0.4em 0.1em 0.4em;}
+
+#contenido #interior #central #formulario .bot-pantalla .bot-consu {font-family: Arial, helvetica, sans-serif; cursor: pointer; width:auto; font-weight: bold; font-size:0.75em; color:#737373; background: url("../images/bullet-green.gif") left no-repeat; border:0; margin:0.3em 1em 0 0; text-align:center; padding:0 0 0 1.2em; float:right;}
+*+html #contenido #interior #central #formulario .bot-pantalla .bot-consu {font-family: Arial, helvetica, sans-serif; cursor: pointer; font-weight: bold; font-size:0.75em; color:#737373; background: url("../images/bullet-green.gif") left no-repeat; border:0; margin:0.5em 0 0 0; text-align:center; padding:0 0 0 0.6em; width:15em; float:right;}
+
+
+/*Campos con label en linea MEDIO */
+#contenido #interior #central #formulario a.lateral { display:inline-block; padding:0.1em 0.5em 0.1em 0.5em; margin:1em 0 0 5em; font-size:0.75em; width:auto; border:1px solid #727A4D;  background:url("../images/fondo-boton-refresh.jpg") left repeat-x; }
+#contenido #interior #central #formulario a.lateral:hover {background:url("../images/fondo-boton-refresh-f2.jpg") left repeat-x; border:1px solid #444; color:#000;}
+
+#contenido #interior #central #formulario fieldset label.linea-medio {clear: both; display: block; margin: 0em 0 0em 1em; padding: 0.2em 0 0.2em 0;}
+#contenido #interior #central #formulario fieldset label.linea-medio span {color: #000; text-align:left; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+
+#contenido #interior #central #formulario fieldset label.linea-medio span.label {clear: left; width: 21em; float: left;  padding: 0.1em 0.3em 0 0.2em;}
+#contenido #interior #central #formulario fieldset label.linea-medio input {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-medio .file {width: 52em; display: block;}
+#contenido #interior #central #formulario fieldset label.linea-medio input.checkbox {float: left; text-align: left; background-color: #fff; border: 0px; padding: 0em 0 0em 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-medio select {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulario fieldset label.linea-medio textarea {width: 52em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-medio span.date {padding-left: 0.6em;}
+#contenido #interior #central #formulario fieldset label.linea-medio .disabled {float: left; text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-medio a.link {padding-left: 0.6em; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-medio .radio {border: 0;}
+
+#contenido #interior #central #formulario fieldset label.linea-dos {position: relative; clear: both; display: block; margin: 0em 0 0em 1em; padding: 0.2em 0 0.2em 0;}
+#contenido #interior #central #formulario fieldset label.linea-dos span {color: #000; text-align:left; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+
+#contenido #interior #central #formulario fieldset label.linea-dos span.label {clear: left; width: 21em; float: left;  padding: 0.1em 0.3em 0 0.2em;}
+#contenido #interior #central #formulario fieldset label.linea-dos input {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos .file {width: 52em; display: block;}
+#contenido #interior #central #formulario fieldset label.linea-dos input.checkbox {float: left; text-align: left; background-color: #fff; border: 0px; padding: 0em 0 0em 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos select {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulario fieldset label.linea-dos textarea {width: 52em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos span.date {padding-left: 0.6em;}
+#contenido #interior #central #formulario fieldset label.linea-dos .disabled {float: left; text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos a.link {padding-left: 0.6em; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos .radio {border: 0;} 
+
+#contenido #interior #central #formulario fieldset label.linea-corto {clear: both; display: block; margin: 0em 0 0em 1em; padding: 0.2em 0 0.2em 0;}
+#contenido #interior #central #formulario fieldset label.linea-corto span {color: #000; text-align:left; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-corto span.label {clear: left; width: 10em; float: left;  padding: 0.1em 0.3em 0 0.2em;}
+#contenido #interior #central #formulario fieldset label.linea-corto input {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-corto .file {width: 52em; display: block;}
+#contenido #interior #central #formulario fieldset label.linea-corto input.checkbox {float: left; text-align: left; background-color: #fff; border: 0px; padding: 0em 0 0em 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-corto select {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulario fieldset label.linea-corto textarea {width: 52em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-corto span.date {padding-left: 0.6em;}
+#contenido #interior #central #formulario fieldset label.linea-corto .disabled {float: left; text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-corto a.link {padding-left: 0.6em; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-corto .radio {border: 0;} 
+
+
+/* Campos de la pagina de Traducción */
+#contenido #interior #central .listado label.linea-medio textarea.txtrad {width:98%; height:6.5em; background-color: #fff; border:1px solid #666; padding:0.1em; margin:1em 0 0 0.4em; font-size:100%;}
+*+html #contenido #interior #central .listado label.linea-medio textarea.txtrad {margin:0;}
+#contenido #interior #central .listado label.linea-medio textarea.txtdisabled {width:98%; height:6.5em; background-color: #F2F2F2; border:1px solid #666;  padding:0.1em; margin:1em 0 0 0.4em; font-size:100%;}
+*+html #contenido #interior #central .listado label.linea-medio textarea.txtdisabled {margin:0;}
+
+#contenido #interior #central .listado .botxtrad {clear: both; text-align: center; width:auto; margin:0; padding:0; }
+#contenido #interior #central .listado .botxtrad input {width:auto; font-weight:bold; font-size:100%; color:#000; background: url("../images/fondo-boton-white.jpg") bottom repeat-x; border:1px solid #8F97A4; margin:0.5em 0 0 0; text-align: center; padding:0 0.4em 0 0.4em;}
+#contenido #interior #central .listado .botxtrad input.boton {cursor:pointer;}
+
+
+
+#contenido #interior #central #formulario fieldset .linea-medio-radio {clear: both; display: block; margin: 0em 0 0em 1.5em; padding: 0.4em 0 0.2em 0; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulario fieldset .linea-medio-radio span {width: 21em; display: block; float: left; padding: 0.1em 0em 0 0em}
+#contenido #interior #central #formulario fieldset .linea-medio-radio label {margin: 0 1em 0 0;}
+#contenido #interior #central #formulario fieldset .linea-medio-radio input {margin: 0 0.4em 0 0.6em;}
+#contenido #interior #central #formulario fieldset .linea-medio-radio em {margin:0; clear:none; display:inline-block; font-weight:normal; color:#000;}
+
+#contenido #interior #central #formulario fieldset span.fichero {display:inline-block; margin:-1.2em 0 0 1em; padding:0; width:auto; font-size:0.75em; float:left;}
+#contenido #interior #central #formulario fieldset span.fichero a {color:#000; font-size:100%; cursor:pointer; width:auto; font-weight:bold; background: #fff url("../images/fondo-boton.png") bottom repeat-x; border:1px solid #4F4F4F; text-align:center; padding:0.2em 1em 0.2em 1em; margin:1em 0 1em 0; display:inline-block;}
+#contenido #interior #central #formulario fieldset span.fichero a:hover {text-decoration:none;}
+
+#contenido #interior #central #formulario fieldset .line-tres {display:inline-block; margin:0.2em; padding:0.2em 0 0.2em 0; font-size: 0.75em; width:31%;}
+#contenido #interior #central #formulario fieldset .line-tres span {width:88%; float: left; padding:0; margin:0.1em 0 0 0.2em; clear:none;}
+#contenido #interior #central #formulario fieldset .line-tres input {width:auto; float: left; padding:0; margin:0 0.2em 0 0.5em; clear:none;}
+#contenido #interior #central #formulario fieldset .line-tres input[type="checkbox"] {border:0}
+
+
+#contenido #interior #central #formulcuad fieldset .line-tres {display:inline-block; margin:0.2em; padding:0.2em 0 0.2em 0;}
+#contenido #interior #central #formulcuad fieldset .line-tres span {width:88%; float: left; padding:0; margin:0.1em 0 0 0.2em; clear:none;}
+#contenido #interior #central #formulcuad fieldset .line-tres input {width:auto; float: left; padding:0; margin:0 0.2em 0 0.5em; clear:none;}
+#contenido #interior #central #formulcuad fieldset .line-tres input[type="checkbox"] {border:0}
+
+#contenido #interior #central #formulario fieldset select.largo {width: 42em;}
+
+/* Enlace a modo de boton con icono para traducir los campos de formulario */
+#contenido #interior #central #formulario fieldset label.linea-medio span.botra {margin:-1.6em 0 0 66.5em; padding:0; display:block; float:left;}
+*+html #contenido #interior #central #formulario fieldset label.linea-medio span.botra {margin:-1.2em 0 0 50em; padding:0; display:block; float:left;}
+#contenido #interior #central #formulario fieldset label.linea-medio span.botra a {color:#000; font-size:96%; cursor:pointer; width:auto; background: #fff url("../images/fondo-bot-traducir.png") left bottom no-repeat; border:0; text-align:center; padding:0.2em 0 0.1em 1.35em; margin:0; display:inline-block;}
+#contenido #interior #central #formulario fieldset label.linea-medio span.botra a:hover {color:#55773C; text-decoration:none;}
+#contenido #interior #central #formulario fieldset label.linea-medio span.lateral {margin:0 0 0 0.3em; padding:0; display:inline-block;}
+
+
+/*ATS: Buscador de solicitudes */
+/*     Se copia el estilo linea-media de la clase formulario para la clase formulcuad */
+#contenido #interior #central #formulcuad fieldset label.linea-medio.linea-dos {
+    float: left;
+    /*left: 20.4em;*/
+    position: relative;
+    /*top: -1.45em;*/
+	clear: none; display: block; margin:0em 0em 0em 0em; padding: 0.2em 0 0.2em 0;}
+	
+	#contenido #interior #central #formulcuad fieldset label.linea-medio.linea-dosExport { 
+    float: right;
+    /*left: 20.4em;*/
+    position: relative;
+    /*top: -1.45em;*/
+	clear: none; display: block; margin: 0.1em 1em 0 0em; padding: 0.2em 0 0.2em 0;}
+
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio {clear: both; display: block; margin: 0em 0 0em 1em; padding: 0.2em 0 0.2em 0;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span {color: #000; text-align: left; float: left; font-size: 0.75em;  font-family: Arial, Helvetica, sans-serif; clear:none;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.txtchk {margin:0 0 0 0.5em; padding:0; display:block; float:left; width:auto;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.labelright {clear:left;  width:21em;  float:left;  padding: 0.1em 0.3em 0 0.2em; text-align:right;}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label {clear: left;  width: 21em;  float: left;  padding: 0.1em 0.3em 0 0.2em; }
+#contenido #interior #central #formulcuad fieldset label.linea-medio input {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; width:13em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio input.checkbox {width:1em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio .file {width: 52em; display: block;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio input.checkbox {float: left; text-align: left; background-color: #fff; border: 0px; padding: 0em 0 0em 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio select {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulcuad fieldset label.linea-medio select.largo {width: 35em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulcuad fieldset label.linea-medio select.largo-disabled {width: 35em; float: left; text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label-corto {width: auto;  float: left;  padding: 0.1em 0.3em 0 0.2em; }
+#contenido #interior #central #formulcuad fieldset div.compartido-b {margin:0.6em; padding: 0.6em 0.6em 0.6em 1.4em; font-size: 0.75em; font-weight: bold; background: #EFEFEF url("../images/compartido.gif") left no-repeat; border-bottom: 1px solid #ccc}
+#contenido #interior #central #formulcuad fieldset .enlace {border-bottom: 1px dotted #000}
+
+#contenido #interior #central #formulcuad fieldset {display:table;}
+#contenido #interior #central #formulcuad fieldset label {display:table-row;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col1 {display:table-cell; clear: left;  width: 16em;  float: left;  padding: 0.1em 0.3em 0 0.2em; }
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col1.titulo {display:table-cell; clear: left;  width: 16em;  float: left;  padding: 0.1em 0.3em 0 0.2em;  font-weight: bold;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col2 {display:table-cell; float:left; width: 16em; padding: 0.1em 0.3em 0 6.2em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col22 {display:table-cell; float:left; width: 8em; padding: 0.1em 0.3em 0 6.2em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col23 {display:table-cell; float:left; width: 8em; padding: 0.1em 0.3em 0 18.5em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_nueva {display:table-cell; float:left; width: 60em; padding: 0.1em 0.3em 0 0.2em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio select.medio {width:11.4em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+/* #contenido #interior #central #formulcuad fieldset label.linea-medio textarea.areatexto {width:32.3em; height:6em; float: none; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;} */
+#contenido #interior #central #formulcuad fieldset label.linea-medio textarea.areatexto {
+width: 32.3em;
+height: 6em;
+clear: right;
+float: left;
+margin-right: 14em;
+text-align: left;
+background-color: #fff;
+border: 1px #9EB6BA solid;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 0.75em;
+}
+
+/* #contenido #interior #central #formulcuad fieldset label.linea-medio textarea.areatexto {width:32.3em; height:6em; float: none; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;} */
+#contenido #interior #central #formulcuad fieldset label.linea-medio textarea.areatextogrande {
+width: 53.3em;
+height: 10em;
+clear: right;
+float: left;
+margin-right: 0.4em;
+text-align: left;
+background-color: #fff;
+border: 1px #9EB6BA solid;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 0.75em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio input.mediano {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; width:32.3em; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio input.largo {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid;  width:40em; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+
+/*#contenido #interior #central #formulcuad fieldset label.linea-medio textarea {font-family: Verdana, Arial, Helvetica, sans-serif; width: 52em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}*/
+#contenido #interior #central #formulcuad fieldset label.linea-medio textarea {font-family: Verdana, Arial, Helvetica, sans-serif; width: 52em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio textarea.largo {font-family: Verdana, Arial, Helvetica, sans-serif; width: 68.5em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.date {font-size: 0.75em; padding-left: 0.6em; font-family: Arial, Helvetica, sans-serif; }
+#contenido #interior #central #formulcuad fieldset label.linea-medio .disabled {float: left; text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio a.link {padding-left: 0.6em; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio .radio {border: 0;} 
+
+/* Enlace a modo de boton con icono para traducir los campos de formulario */
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.botra {margin:-1.6em 0 0 66.5em; padding:0; display:block; float:left;}
+*+html #contenido #interior #central #formulcuad fieldset label.linea-medio span.botra {margin:-1.2em 0 0 50em; padding:0; display:block; float:left;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.botra a {color:#000; font-size:96%; cursor:pointer; width:auto; background: #fff url("../images/fondo-bot-traducir.png") left bottom no-repeat; border:0; text-align:center; padding:0.2em 0 0.1em 1.35em; margin:0; display:inline-block;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.botra a:hover {color:#55773C; text-decoration:none;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.lateral {margin:0 0 0 0.3em; padding:0; display:inline-block;}
+
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.botx {margin:0 0.5em 0 0; padding:0; width:auto; float:left;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.botx a {color:#000; font-size:100%; cursor:pointer; width:auto; font-weight:bold; background: #fff url("../images/fondo-boton.png") bottom repeat-x; border:1px solid #4F4F4F; text-align:center; padding:0.2em 1em 0.2em 1em; margin:0; display:inline-block;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.botx a:hover {text-decoration:none;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.tx {width:auto; float:left; color:#000; cursor:pointer; width:auto; font-weight:bold; background: #fff url("../images/fondo-boton.png") bottom repeat-x; border:1px solid #4F4F4F; text-align:center; padding:0.2em 1em 0.2em 1em; margin:0; display:inline-block;}
+
+#contenido #interior #central #formulcuad fieldset .linea-medio-radio {clear: both; display: block; margin: 0em 0 0em 1.5em; padding: 0.4em 0 0.2em 0; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulcuad fieldset .linea-medio-radio span {width: 21em; display: block; float: left; padding: 0.1em 0em 0 0em}
+#contenido #interior #central #formulcuad fieldset .linea-medio-radio label {margin: 0 1em 0 0;}
+#contenido #interior #central #formulcuad fieldset .linea-medio-radio input {margin: 0 0.4em 0 0.6em;}
+
+#contenido #interior #central #formulcuad .boton-alineado {float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Verdana, Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: center; padding: 0 0.2em 0em 1.2em; margin: -0.25em 0 0 0.2em}
+#contenido #interior #central #formulcuad fieldset label.linea-medio .boton-alineado {float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: center; padding: 0 0.2em 0em 0.2em; margin: 0em 0 0 0.3em}
+#contenido #interior #central #formulcuad fieldset label.linea-medio input.checkbox {float: left; text-align: left; background-color: #fff; border:0; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+
+#contenido #interior #central #formulcuad fieldset .label-radio {width: 6em; float: left; clear: none; margin: 0 0 0.4em 2em}
+#contenido #interior #central #formulcuad fieldset .label-radio span {margin: 0 0.4em 0 0; padding: 0}
+*+html #contenido #interior #central #formulcuad fieldset .label-radio span {margin: 0.1em 0.4em 0 0; padding: 0;}
+
+#contenido #interior #central #formulcuad fieldset .label-radio input {margin: 0.1em 0 0 0; padding: 0; border: 0;}
+*+html #contenido #interior #central #formulcuad fieldset .label-radio input {margin: 0em 0 0 0; padding: 0; border: 0;}
+
+
+#contenido #interior #central #formulcuad label.linea-medio {clear: both; display: block; margin: 0.6em 0 0.3em 1em; padding: 0.2em 0 0.2em 0;}
+#contenido #interior #central #formulcuad label.linea-medio span.label {clear: left; color: #000; width: 21em; text-align: left; float: left; font-size: 0.75em; padding: 0.1em 0.3em 0 0.2em;  font-family: Arial, Helvetica, sans-serif;}
+#contenido #interior #central #formulcuad label.linea-medio input {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad label.linea-medio .file {width: 52em; display: block;}
+#contenido #interior #central #formulcuad label.linea-medio input.checkbox {float: left; text-align: left; background-color: #fff; border: 0px; padding: 0em 0 0em 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad label.linea-medio select {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+/*#contenido #interior #central #formulcuad label.linea-medio textarea {font-family: Verdana, Arial, Helvetica, sans-serif; width: 52em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}*/
+#contenido #interior #central #formulcuad label.linea-medio textarea {font-family: Verdana, Arial, Helvetica, sans-serif; width: 52em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad label.linea-medio textarea.largo {font-family: Verdana, Arial, Helvetica, sans-serif; width: 68.5em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad label.linea-medio span.date {font-size: 0.75em; padding-left: 0.6em; font-family: Arial, Helvetica, sans-serif; }
+#contenido #interior #central #formulcuad label.linea-medio .disabled {float: left; text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad label.linea-medio a.link {padding-left: 0.6em; font-size: 0.75em;}
+#contenido #interior #central #formulcuad label.linea-medio .radio {border: 0;} 
+
+/* #contenido #interior #central #formulcuad fieldset {clear: both; display: block; margin: 0em 0 0em 1em; padding: 0.2em 0 0.2em 0;} 
+#contenido #interior #central #formulcuad fieldset textarea {width:98%; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+*/
+#contenido #interior #central #formulcuad fieldset textarea {width:98%;  float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+
+
+/*Campos con label arriba y input debajo */
+#contenido #interior #central #formulario fieldset label.abajo {clear: both; display: block; margin: 0em 0 0em 1.15em; padding: 0.3em 0 0.3em 0;}
+#contenido #interior #central #formulario fieldset label.abajo span.label {display: block; color: #000; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; padding: 0.2em 0.3em 0.2em 0em; margin: 0 0 0 0;}
+#contenido #interior #central #formulario fieldset label.abajo span.label-float {display: inline; float: right; width: 97%; color: #000; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; padding: 0.1em 0.3em 0.2em 0em; margin: 0 0 0 0;}
+*+html #contenido #interior #central #formulario fieldset label.abajo span.label-float {display: inline; float: right; width: 97%; color: #000; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; padding: 0.4em 0.3em 0.2em 0em; margin: 0 0 0 0;}
+
+#contenido #interior #central #formulario fieldset label.abajo input {float: left; text-align: center; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.1em 0 0.1em 0.1em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.abajo .file {width: 74em;}
+#contenido #interior #central #formulario fieldset label.abajo input.checkbox {text-align: left; background-color: #fff; border: 0px; padding-left: 0.2em; margin: 0.1em 0 0.1em 0em; font-family: Arial, Helvetica, sans-serif; font-size: 0.7em;}
+#contenido #interior #central #formulario fieldset label.abajo select {text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 0.7em; }
+#contenido #interior #central #formulario fieldset label.abajo textarea {width: 70.5em; height: 6em; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.abajo span.date {font-size: 0.7em; padding-left: 0.6em; padding-top: 0.3em; font-family: Verdana, Arial, Helvetica, sans-serif; }
+#contenido #interior #central #formulario fieldset label.abajo .disabled {text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.1em 0 0.1em 0em; font-family: Arial, Helvetica, sans-serif; font-size: 0.7em;}
+#contenido #interior #central #formulario fieldset label.abajo a.link {padding-left: 0.6em; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.abajo .multiple {width: 68em; margin: 0.2em 0 0 0.1em;}
+#contenido #interior #central #formulario fieldset label.abajo select.largo { width: 70.5em; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulario fieldset label.abajo input[type=checkbox] {border: 0; background: transparent}
+
+#contenido #interior #central #formulario .boton-alineado {float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Verdana, Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: center; padding: 0 0.2em 0em 1.2em; margin: -0.25em 0 0 0.2em}
+#contenido #interior #central #formulario fieldset label.linea-medio .boton-alineado {float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: center; padding: 0 0.2em 0em 0.2em; margin: 0em 0 0 0.3em}
+
+#contenido #interior #central #formulario .botones-pantallas {clear: both; text-align: center; width: 57.5em; margin:0.2em 0 0.1em 0; padding:0.3em 0 0.3em 0; border-bottom: 1px dotted #ccc; border-top: 1px dotted #ccc; background: #F7F7F7;}
+#contenido #interior #central #formulario .botones-pantallas input{cursor:pointer; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif;  color:#54691E; font-weight:bold;}
+#contenido #interior #central #formulario .botones-pantallas input.boton {background: url("../images/separador-botones.gif") left no-repeat; border:0; margin:0.1em 0 0.1em 0; text-align:center; padding:0 0 0 0.7em;}
+
+#contenido #interior #central #formulario .botones-pantallas input.boton-indice {width:11em; background:transparent; border:0; margin:0.1em 37em 0.1em 0; text-align:left; padding:0; left:0; }
+*+html #contenido #interior #central #formulario .botones-pantallas input.boton-indice {width:11em; background:transparent; border:0; margin:0.1em 30em 0.1em 0; text-align:left; padding:0; left:0; }
+
+#contenido #interior #central #formulario .botones-pantallas input.boton-primero {width: auto; color:#54691E; background: none; border: 0px; margin: 0.1em 0em 0.1em 0em; text-align:center; padding: 0em 0em 0em 0.2em;}
+#contenido #interior #central #formulario .botones-pantallas input.boton-siguiente {width: 6.5em; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #54691E; background: url("../images/ico-siguiente.gif") right no-repeat; border: 0px solid #156C7B; margin: 0.1em 0em 0.1em 0em; text-align: right; padding: 0em 1.4em 0em 0em;}
+#contenido #interior #central #formulario .botones-pantallas input.boton-anterior {width: 6em; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #54691E; background: url("../images/ico-anterior.gif") left no-repeat; border: 0px solid #156C7B; margin: 0.1em 0em 0.1em 0em; text-align: left; padding: 0em 0em 0em 1.4em;}
+#contenido #interior #central #formulario .botones-pantallas input.boton-seleccionado {width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #54691E; background: #F4F8E9; border: 1px solid #54691E; margin: 0em 0.2em 0em 0.3em; text-align: center; padding: 0.05em 0.3em 0em 0.35em;}
+#contenido #interior #central #formulario .botones-pantallas span {font-size: 0.75em; padding: 0em 0.2em 0 0.6em; margin: 0; vertical-align: middle;}
+
+#contenido #interior #central #formulario .botones-pantallas .opcion-ir {margin:0.5em 0 0 0;}
+#contenido #interior #central #formulario .botones-pantallas .opcion-ir input {padding: 0; font-size: 0.75em; margin: 0;}
+#contenido #interior #central #formulario .botones-pantallas .opcion-ir .boton-ir {cursor: pointer; color:#000; width: auto; font-weight: bold; font-size: 0.75em; font-family: Verdana, Arial, helvetica, sans-serif; background: #fff url("../images/boton-blanco.jpg") top repeat-x; border: 1px solid #ccc; text-align: center; padding: 0em 0.4em 0em 0.4em; margin: 0 0 0 0.4em}
+
+
+
+
+
+/*Tablas */
+#contenido #interior #central table.datos {clear: both; width: 57em; border: 1px solid #ccc; margin: 0.4em 0 0.2em 0; font-family: Arial, helvetica, sans-serif; background: #fff; }
+#contenido #interior #central table.datos thead {background: #F4F8E9; color: #000; font-size: 0.8em; text-align: left; padding: 1.8em}
+#contenido #interior #central table.datos th {padding: 0.4em 0.6em 0.2em 0.6em; text-align: left; border: 1px solid #ccc;}
+#contenido #interior #central table.datos td {font-size: 0.75em; padding: 0.2em 0.8em 0.1em 0.6em; border: 1px solid #BCD6D5; background: #fff; text-align: left}
+#contenido #interior #central table.datos input {padding: 0 0 0 0.2em; margin: 0; font-family: Arial, helvetica, sans-serif; font-size: 1em; border: 1px solid #BECED1;}
+#contenido #interior #central table.datos tfoot {color: #11515B; text-align: left; padding: 1.8em; font-weight: bold; }
+#contenido #interior #central table.datos a.consultar {color:#668024; font-size: 1em; font-weight: bold; background: #fff url("../images/consultar.gif") no-repeat; padding-left: 1.9em;}
+#contenido #interior #central table.datos a.consultar:hover {text-decoration: underline}
+#contenido #interior #central table.datos a.eliminar {color:#B90000; font-size: 1em; font-weight: bold; background: #fff url("../images/eliminar.gif") no-repeat; padding-left: 1.8em;}
+#contenido #interior #central table.datos a.eliminar:hover {text-decoration: underline}
+
+#contenido #interior #central table.campos {clear: both; width: 52em; margin: 0.5em auto 0.8em auto; border-top: 1px solid #7B9A2C; border-left: 1px solid #D1DFBF; border-right: 0; border-bottom: 1px solid #7B9A2C; border-collapse: collapse; background: #fff;}
+#contenido #interior #central table.campos th {border: 0; background: #E4ECD9; padding: 0.1em ; margin: 0; color: #5D7320; border-right: 1px solid #D1DFBF; border-left: 1px solid #D1DFBF; border-bottom: 1px solid #D1DFBF;}
+#contenido #interior #central table.campos thead th {font-size: 0.8em; border: 0; background: #E4ECD9; font-weight: bold; padding: 0.4em 0 0.4em 0.4em; margin: 0; color: #5D7320; border-right: 1px solid #D1DFBF; border-left: 0px; border-bottom: 1px solid #D1DFBF;}
+#contenido #interior #central table.campos th.descripcion {width: 22em;}
+#contenido #interior #central table.campos th.accion {width: 18em;}
+#contenido #interior #central table.campos tr {padding: 0; margin: 0;}
+#contenido #interior #central table.campos td {font-size: 0.75em; border-top: 1px solid #E6EEDC; border-bottom: 1px solid #D1DFBF; border-right: 1px solid #D1DFBF; border-left: 1px solid #D1DFBF; background: #fff; padding: 0.2em 0.3em 0.2em 0.4em; margin: 0;}
+#contenido #interior #central table.campos td input.accion {display: inline; cursor: pointer; font-size: 1em; font-weight: bold; font-family: Arial, helvetica, sans-serif; color:#54691E; background:#fff url("../images/icono-flecha-listado.gif") left no-repeat; border:0; padding:0.6em 0 0 1.2em; margin:0em 0 0 0.1em; text-align:left; width:auto;}
+#contenido #interior #central table.campos .botones-submit {display: inline;}
+
+
+
+/*Tablas */
+#contenido #interior #central table.relativa {clear: both; width:98%; border:1px solid #384614; margin: 0.8em 0 0.2em 0; font-family: Arial, helvetica, sans-serif; background: #fff; }
+#contenido #interior #central table.relativa thead {background: #F4F8E9; color: #000; font-size: 0.8em; text-align: left; padding: 1.8em}
+#contenido #interior #central table.relativa th {padding: 0.4em 0.6em 0.2em 0.6em; text-align: left; background-color:#CBDE9A; color:#000;}
+#contenido #interior #central table.relativa td {font-size: 0.75em; padding: 0.2em 0.8em 0.1em 0.6em; border: 1px solid #CBDE9A; background: #fff; text-align:center;}
+#contenido #interior #central table.relativa input {padding: 0 0 0 0.2em; margin: 0; font-family: Arial, helvetica, sans-serif; font-size:1em;}
+#contenido #interior #central table.relativa tfoot {color: #11515B; text-align: left; padding: 1.8em; font-weight: bold; }
+#contenido #interior #central table.relativa a.consultar {color:#668024; font-size: 1em; font-weight: bold; background: #fff url("../images/consultar.gif") no-repeat; padding-left: 1.9em;}
+#contenido #interior #central table.relativa a.consultar:hover {text-decoration: underline}
+#contenido #interior #central table.relativa a.eliminar {color:#B90000; font-size: 1em; font-weight: bold; background: #fff url("../images/eliminar.gif") no-repeat; padding-left: 1.8em;}
+#contenido #interior #central table.relativa a.eliminar:hover {text-decoration: underline}
+#contenido #interior #central table.relativa input.botborra {cursor:pointer; width:auto; font-weight:bold; font-size:0.9em; color:#000; background: #fff url("../images/fondo-boton-mas.jpg") right top repeat-x; border:1px solid #737373; margin:0.1em 0.1em 0.1em 0.1em; text-align: center; padding:0;}
+
+
+/* Pie de pagina */
+#contenido #inferior {clear:both; margin:0; padding:0; height:3.75em; width:100%;}
+#contenido #inferior #pie-izquierdo {float:left; margin:0.5em 0 0 0.2em; padding: 0; font-size:0.7em; width: 58em;}
+#contenido #inferior #pie-izquierdo a {color:#000; text-decoration:none;}
+#contenido #inferior #pie-izquierdo a:hover {color:#576C1E; text-decoration:underline;}
+
+#contenido #inferior #pie {float:right; text-align: right; margin:0.5em 0 0 0.7em; padding: 0; }
+#contenido #inferior #pie p {padding:0 0 0 0; margin: 0; font-size:0.65em; line-height:1.25em;}
+#contenido #inferior #pie p images {border:0;text-align:right;}
+#contenido #inferior #pie images {float:right;padding-left:0.2em;padding-right:0.5em;border:0;}
+#contenido #inferior #pie a {color:#047;font-size:0.9em;margin-top:0.2em;text-decoration:underline;}
+#contenido #inferior #pie a:hover {color:#800000;font-size:0.9em;text-decoration:underline;}
+
+
+/* Comunes */
+a {color:#000; font-weight: bold; text-decoration: none;}
+a:hover {color:#F10301; text-decoration:none;border:0;}
+images {border:0em;}
+
+
+/*Campos con label en linea LARGO */
+#contenido #interior #central #formulario fieldset label.linea-largo {clear: both; display:block; margin:0 0 0 1em; padding: 0.2em 0 0.2em 0;}
+#contenido #interior #central #formulario fieldset label.linea-largo span.label {clear: left; color: #000; width: 34em; text-align: left; font-family: Arial, Helvetica, sans-serif; float: left; font-size: 0.75em; padding: 0.1em 0.3em 0 0.2em;}
+#contenido #interior #central #formulario fieldset label.linea-largo input {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-largo input.file {width: 39em; display: block;}
+#contenido #interior #central #formulario fieldset label.linea-largo input.checkbox {float: left; text-align: left; background-color: #fff; border:0; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-largo select {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulario fieldset label.linea-largo textarea {width: 39em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-largo span.date {font-size: 0.75em; padding-left: 0.6em; font-family: Arial, Helvetica, sans-serif; }
+#contenido #interior #central #formulario fieldset label.linea-largo .disabled {float: left; text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-largo a.link {padding-left: 0.6em; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-largo input.boton-alineado {float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: center; padding: 0 0.2em 0em 0.2em; margin: 0em 0 0 0.3em}
+
+/* Lnea largo formulcuad */
+#contenido #interior #central #formulcuad fieldset label.linea-largo {clear: both; display:block; margin:0 0 0 1em; padding: 0.2em 0 0.2em 0;}
+#contenido #interior #central #formulcuad fieldset label.linea-largo span.label {clear: left; color: #000; width: 34em; text-align: left; font-family: Arial, Helvetica, sans-serif; float: left; font-size: 0.75em; padding: 0.1em 0.3em 0 0.2em;}
+#contenido #interior #central #formulcuad fieldset label.linea-largo input {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-largo input.file {width: 39em; display: block;}
+#contenido #interior #central #formulcuad fieldset label.linea-largo input.checkbox {float: left; text-align: left; background-color: #fff; border:0; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+
+
+/* Para el menu tipo arbol*/
+#contenido #interior #central #formulario #menu-arbol {clear: both; display: block; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; list-style-image: url("../images/doct.gif"); padding: 0em 0.5em 0.5em 2.5em; list-style: inside; margin: 0.4em 0 0 2em; }
+#contenido #interior #central #formulario #menu-arbol {list-style: outside;}
+#contenido #interior #central #formulario #menu-arbol ul li {margin: 0 0 0 1em; padding: 0 0 0 0.5em; text-decoration: none;}
+#contenido #interior #central #formulario #menu-arbol a {color: #000;}
+#contenido #interior #central #formulario #menu-arbol .cAbierta {list-style-type: none; list-style-image: url("../images/cap-abierta.gif"); padding: 0em 0 0.1em 0.1em; margin: 0;}
+#contenido #interior #central #formulario #menu-arbol .cCerrada {list-style-type: none; list-style-image: url("../images/cap-cerrada.gif"); padding: 0em 0 0.1em 0.1em; margin: 0;}
+#contenido #interior #central #formulario #menu-arbol .menuDoc {list-style-type: none; list-style-image: url("../images/menu-doc.gif");}
+#contenido #interior #central #formulario #menu-arbol ul li .tagApartado, a.tagApartado {cursor: pointer; font-weight: bold; text-decoration: none}
+#contenido #interior #central #formulario #menu-arbol .tagApartado, a.tagApartado {text-decoration: underline}
+#contenido #interior #central #formulario #menu-arbol form {display: inline;}
+#contenido #interior #central #formulario #menu-arbol form input {cursor: pointer; font-weight: bold; font-family: Arial, helvetica, sans-serif; color:#54691E; background:#fff url("../images/icono-flecha-listado.gif") left no-repeat; border:0; padding:0.4em 0 0 1em; margin:0em 0 0 0.4em; text-align:left; width:auto;}
+#contenido #interior #central #formulario #menu-arbol images {margin: 0; text-decoration: none}
+
+.lbAction {color: #cc0000}
+.lbAction a {color: #cc0000}
+.lbAction a:hover {color: #cc0000}
+
+
+/* radiobuttons */
+#contenido #interior #central #formulcuad .tradio { display:inline; margin:0; padding:0; color: #000; font-size:100%;}
+#contenido #interior #central #formulcuad .tradio input {margin:0; padding:0; float:left;}
+#contenido #interior #central #formulcuad .tradio label {margin:0; padding:0; float:left; margin:-1em 0 0.3em 2em; font-size:0.75em;  width:auto;}
+#contenido #interior #central #formulcuad .tradio br.clear {clear:both; height:1.5em; display:inline-block;}
+
+.clear {clear: both; margin: 0; padding: 0;}
+.clearDos {clear:both; margin:0; padding:0; line-height:3.2em;}
+
+#contenido #interior #central #formulario div.veryeliminar {float:left; width:11em; color:#000; text-align:left; padding:0em 0em 0em 0.5em; border:1px solid #DDD; margin:-0.1em 0.2em 0 0.2em; background: #F1F1F1}
+#contenido #interior #central #formulario div.veryeliminar span {float:left; margin: 0 0.4em 0 0; padding: 0}
+#contenido #interior #central #formulario div.veryeliminar span a {padding: 0; border: 0; margin: 0; background: none; font-size: 0.75em; font-weight: bold}
+#contenido #interior #central #formulario div.veryeliminar span a:hover {text-decoration: underline; color: #000;}
+#contenido #interior #central #formulario div.veryeliminar label {float:left; width: auto; margin: 0.3em 0 0 0.8em; padding: 0; font-size: 0.75em; border: 0}
+#contenido #interior #central #formulario div.veryeliminar label input {margin: 0 0 0 0em; padding: 0;}
+
+*+html #contenido #interior #central #formulario div.veryeliminar {float:left; width:11em; color:#000; text-align:left; padding:0 0 0 0.4em; border:1px solid #DDD; margin:-0.3em 0.2em 0 0.2em; background: #F1F1F1}
+*+html #contenido #interior #central #formulario div.veryeliminar span {float:left; margin: 0; padding: 0.25em 0 0 0}
+*+html #contenido #interior #central #formulario div.veryeliminar span a {border: 0; background: none; font-size: 0.75em; font-weight: bold}
+*+html #contenido #interior #central #formulario div.veryeliminar span a:hover {text-decoration: underline; color: #000; }
+*+html #contenido #interior #central #formulario div.veryeliminar label {float:left; width: auto; font-size: 0.75em; border: 0; cursor: default; margin: 0.1em 0 0 0.8em; padding: 0}
+*+html #contenido #interior #central #formulario div.veryeliminar label input {margin: 0em 0 0 0.2em; padding: 0;}
+
+* html #contenido #interior #central #formulario div.veryeliminar {float:left; width:11em; color:#000; text-align:left; padding:0 0 0 0.4em; border:1px solid #DDD; margin:-0.3em 0.2em 0 0.2em; background: #F1F1F1}
+* html #contenido #interior #central #formulario div.veryeliminar span {float:left; margin: 0; padding: 0.25em 0 0 0}
+* html #contenido #interior #central #formulario div.veryeliminar span a {border: 0; background: none; font-size: 0.75em; font-weight: bold}
+* html #contenido #interior #central #formulario div.veryeliminar span a:hover {text-decoration: underline; color: #000; }
+* html #contenido #interior #central #formulario div.veryeliminar label {float:left; width: auto; font-size: 0.75em; border: 0; cursor: default; margin: 0.1em 0 0 0.8em; padding: 0}
+* html #contenido #interior #central #formulario div.veryeliminar label input {margin: 0em 0 0 0.2em; padding: 0;}
+
+#contenido #interior #central #formulcuad .descargar-doc {cursor: pointer; width:4em; font-weight: bold; color:#000; background: #fff url("../images/descarga.gif") right no-repeat; border:0; margin: 0 0 0 2em; text-align: center; padding: 0.9em 2.6em 0.9em 0.6em;}
+
+
+
+/* Imagen de cargando o ejecutando archivos */
+#contenido #interior #central #ejecutandoAccionColectiva {width:99%; margin:1em 0 0.5em 0; padding:0; text-align:center; clear:both; display:block;}
+#contenido #interior #central #ejecutandoAccionColectiva images {margin:1em 0 0em 2em; clear:both; }
+#contenido #interior #central #ejecutandoAccionColectiva #infoEjecutado1 {display:block; background:#F2F2F2; border-bottom:1px solid #DDD; width:50%; padding:0.3em 0 0.2em 0; margin:0 auto; height:1.4em; text-align:center;}
+#contenido #interior #central #ejecutandoAccionColectiva #infoEjecutado1 small {float:left; display:block; font-size:0.9em; color:#54691E; font-weight:bold; margin:0 0 0 5em; padding:0;}
+#contenido #interior #central #ejecutandoAccionColectiva #infoEjecutado1 span {float:left; display:block; font-size:0.85em; color:#54691E; background: transparent url("../images/arrow-porcentaje.png") 0px 3px no-repeat; margin:0 0 0 1em; padding:0 0 0 1em; float:left;}
+
+#contenido #interior #central #formulario fieldset label.linea-medio input.boton-margen {text-indent: -38px; text-indent: -33px\9; direction: rtl; float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: left; padding: 0; margin: 0em 0 0 0.3em}
+*+ html #contenido #interior #central #formulario fieldset label.linea-medio input.boton-margen {overflow: visible; text-indent: -35px; direction: rtl; float: left; text-align: right; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; padding: 0; margin: 0em 0 0 0.3em}
+* html #contenido #interior #central #formulario fieldset label.linea-medio input.boton-margen {overflow: visible; text-indent: -35px; direction: rtl; float: left; text-align: right; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; padding: 0; margin: 0em 0 0 0.3em}
+
+#contenido #interior #central #formulario fieldset label.linea-largo input.boton-margen {text-indent: -38px; text-indent: -33px\9; direction: rtl; float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: left; padding: 0; margin: 0em 0 0 0.3em}
+*+ html #contenido #interior #central #formulario fieldset label.linea-largo input.boton-margen {overflow: visible; text-indent: -35px; direction: rtl; float: left; text-align: right; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; padding: 0; margin: 0em 0 0 0.3em}
+* html #contenido #interior #central #formulario fieldset label.linea-largo input.boton-margen {overflow: visible; text-indent: -35px; direction: rtl; float: left; text-align: right; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; padding: 0; margin: 0em 0 0 0.3em}
+
+#contenido #interior #central #formulario fieldset label.linea-corto input.boton-margen {text-indent: -38px; text-indent: -33px\9; direction: rtl; float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: left; padding: 0; margin: 0em 0 0 0.3em}
+*+ html #contenido #interior #central #formulario fieldset label.linea-corto input.boton-margen {overflow: visible; text-indent: -35px; direction: rtl; float: left; text-align: right; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; padding: 0; margin: 0em 0 0 0.3em}
+* html #contenido #interior #central #formulario fieldset label.linea-corto input.boton-margen {overflow: visible; text-indent: -35px; direction: rtl; float: left; text-align: right; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; padding: 0; margin: 0em 0 0 0.3em}
+
+#contenido #interior #central #formulario fieldset label.abajo input.boton-margen {text-indent: -38px; text-indent: -33px\9; direction: rtl; float: left; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; text-align: left; padding: 0; margin: 0em 0 0 0.3em}
+*+ html #contenido #interior #central #formulario fieldset label.abajo input.boton-margen {overflow: visible; text-indent: -35px; direction: rtl; float: left; text-align: right; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; padding: 0; margin: 0em 0 0 0.3em}
+* html #contenido #interior #central #formulario fieldset label.abajo input.boton-margen {overflow: visible; text-indent: -35px; direction: rtl; float: left; text-align: right; cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #000; background: #fff url("../images/fondo-boton.jpg") bottom repeat-x; border: 1px solid #000; padding: 0; margin: 0em 0 0 0.3em}
+
+
+/* Cabecera del listado */
+#contenido #interior #central div.listado div.suhead {margin:0; padding:0 0.5em 0 0.5em; border-bottom:1px solid #808C5C; width:98%; display:table; background: transparent url("../images/fondo-tabla.jpg") top left repeat-x; position:relative;}
+#contenido #interior #central div.listado div.suhead span {font-weight:bold; display:inline-block; width:auto; font-weight:bold; margin:0; padding:0.3em 0.2em 0 0.2em; height:1.6em; font-size:95%;}
+
+/* Tamaños */
+#contenido #interior #central div.listado div.suhead span.asig {width:4.5%; border-left:0; text-align:center;}
+#contenido #interior #central div.listado div.suhead span.rese {width:3%; border-left:1px solid #808C5C; text-align:center;}
+#contenido #interior #central div.listado div.suhead span.nombre {width:30%; border-left:1px solid #808C5C; position:relative; left:17px; text-align:center;}
+#contenido #interior #central div.listado div.suhead span.documento {width:10%; border-left:1px solid #808C5C; text-align:center;}
+#contenido #interior #central div.listado div.suhead span.detalle-plaza {width:25%; border-left:1px solid #808C5C; text-align:center;}
+#contenido #interior #central div.listado div.suhead span.solicitud {width:10%; border-left:1px solid #808C5C; text-align:center;}
+#contenido #interior #central div.listado div.suhead span.estado {width:10%; border-left:1px solid #808C5C; text-align:center;}
+
+/* Contenido de los span a modo de tabla */
+#contenido #interior #central div.listado div.sucont {margin:0; padding:0 0.5em 0 0.5em; border-bottom:1px solid #BFD67A; width:98%; display:table; background:#EFF4DF; }
+#contenido #interior #central div.listado div.sucont label {margin:0; padding:0; width:auto; position:relative;}
+#contenido #interior #central div.listado div.sucont label input[type="checkbox"] {margin:0 1.3em 0 1.3em; padding:0; width:auto;}
+#contenido #interior #central div.listado div.sucont label span {font-weight: bold; display:inline-block; font-weight:bold; width:auto; margin:0; padding:0.3em 0.3em 0 0.3em;}
+#contenido #interior #central div.listado div.sucont label span.label {width:auto; border-left:0;}
+#contenido #interior #central div.listado div.sucont label span.nombre {width:33%; position:relative; left:52px;}
+#contenido #interior #central div.listado div.sucont label span.documento {width:10%;}
+#contenido #interior #central div.listado div.sucont label span.detalle-plaza {width:25%; }
+#contenido #interior #central div.listado div.sucont label span.solicitud {width:10%;}
+#contenido #interior #central div.listado div.sucont label span.estado {width:10%;}
+
+
+
+/* Capa superior para ordenar campos */
+#contenido #interior #central #formulcuad div.ordenar {font-weight: normal; margin:0.8em 0 2.5em 0; padding:0.3em; display:inline-block;  background: transparent url("../images/fondo-ordenar.jpg") top left repeat-x; width:99.5%; border:1px solid #8F97A4;}
+#contenido #interior #central #formulcuad div.ordenar label {padding: 0 0 0 0.8em; margin: 0;}
+#contenido #interior #central #formulcuad div.ordenar label span {padding: 0 0 0.1em 0.3em; font-size: 0.75em;}
+#contenido #interior #central #formulcuad div.ordenar select {font-size: 0.75em; margin: 0; padding: 0; font-family: Arial, helvetica, sans-serif;}
+#contenido #interior #central #formulcuad div.ordenar .boton-ordenar {cursor: pointer; width: auto; font-weight: bold; font-size: 0.75em; font-family: Arial, helvetica, sans-serif; color: #1B6E7E; background: #fff url("../images/boton-blanco.jpg") bottom repeat-x; border: 1px solid #ccc; text-align: center; padding: 0em 0.4em 0em 0.4em; margin: 0 0 0 0.4em}
+
+
+
+/* Capas animadas de los formularios que las oculatan */
+#contenido #interior #central div.animarcapas {display:inline-block; width:100%; margin:0.1em 0 0 0; padding:0; background: #EBF7CF url("../images/fondo-layer-animada.jpg") top left repeat-x; border-bottom: 1px solid #8F97A4; border-left:1px solid #CCC; border-right:1px solid #CCC; border-top:1px solid #CCC; height:1.8em;}
+#contenido #interior #central div.animarcapas h3 {font-size: 0.8em; margin:0; padding:0.6em 0 0.2em 1em; width:85%; float:left;}
+#contenido #interior #central div.animarcapas a {float:left; font-size:70%; margin:0.2em 0 0.2em 0; padding:0.3em 0 0 0; height:18px; color:#000; text-decoration:none; border:0; display:inline-block; width:13%; text-align:center; font-weight:bold; background: yellow url("../images/fondo-capas-ocultas.jpg") top left repeat-x; border:1px solid #CCCCCC; border-bottom:1px solid #8F97A4;}
+#contenido #interior #central div.animarcapas a:hover {color:#C00000; text-decoration:none;}
+#contenido #interior #central div.animarcapas a images {border:0; margin:0; padding:0;}
+
+
+#contenido #interior #central #flota3, 
+#contenido #interior #central #flota4 {display:none; margin:0 0 0.8em 0; padding:0; width:auto;}
+#contenido #interior #central #flota5 {display:none; margin:0 0 0.8em 0; padding:0; width:auto;}
+#contenido #interior #central #flota6 {display:none; margin:0 0 0.8em 0; padding:0; width:auto;}
+
+#contenido #interior #central #flota3 fieldset,
+#contenido #interior #central #flota4 fieldset {background:#F3FBE9; margin:-1em 0 0 0; padding:1.3em 0 1em 0; width:99.9%; border-bottom:1px solid #545552; border-left:0; border-right:0;}
+#contenido #interior #central #flota5 fieldset {background:#F3FBE9; margin:-1em 0 0 0; padding:1.3em 0 1em 0; width:99.9%; border-bottom:1px solid #545552; border-left:0; border-right:0;}
+#contenido #interior #central #flota6 fieldset {background:#F3FBE9; margin:-1em 0 0 0; padding:1.3em 0 1em 0; width:99.9%; border-bottom:1px solid #545552; border-left:0; border-right:0;}
+
+#contenido #interior #central #flota3 fieldset legend {margin:0; padding:0; display:none;}
+#contenido #interior #central #flota4 fieldset legend {margin:0; padding:0; display:none;}
+#contenido #interior #central #flota5 fieldset legend {margin:0; padding:0; display:none;}
+#contenido #interior #central #flota6 fieldset legend {margin:0; padding:0; display:none;}
+
+
+
+/* Nuevos campos del formulario */
+#contenido #interior #central form.newform {display:block; width:100%; margin:0; padding:0; position:relative; font-size:100%;}
+#contenido #interior #central form.newform fieldset {margin:0; padding:0; width:auto;}
+#contenido #interior #central form.newform fieldset legend {font-size:90%; padding:0.4em; margin:0 0.6em 0 0.6em; display:inline-block; background:#E1E6D5; width:auto;}
+
+/* Capa botones */
+#contenido #interior #central form.newform div.bt {display:inline-block; width:100%; margin:0.6em 0 1em 0; padding:0; text-align:center; clear:both;  font-size:70%;}
+
+/* Capa contenedora */
+#contenido #interior #central form.newform div.container {display:inline-block; width:96.4%; margin:0.6em 0 1em 1.1em; padding:0.3em; clear:both; background: transparent url("../images/fondo-areas.png") top center repeat-x; border:1px solid #D8D8D8; border-bottom:1px solid #A0AA86;}
+
+#contenido #interior #central form.newform label {display:inline-block; margin:0.2em 0 0.2em 1em; padding:0.1em;  font-size:80%;}
+#contenido #interior #central form.newform span {margin:0 0.2em 0 0.2em; padding:0; width:auto;  font-size:100%;}
+#contenido #interior #central form.newform input[type="submit"] {width:auto; font-weight:bold; color:#000; background: transparent url("../images/fondo-bt.png") center bottom repeat-x; border:1px solid #B0B0B0; margin:0; text-align:center; padding:0.15em 1em 0.15em 1em; cursor:pointer;}
+#contenido #interior #central form.newform input[type="text"] {width:auto; color:#000; border:1px solid #969696; margin:0; padding:0.1em; font-size:90%;}
+#contenido #interior #central form.newform input[type="checkbox"] {width:auto; margin:0.1em 0 0 0.6em; padding:0;}
+#contenido #interior #central form.newform select {width:auto; color:#000; border:1px solid #969696; margin:0; padding:0.1em; font-size:90%;}
+
+#contenido #interior #central form.newform h2 {color:#708C28; font-size:90%; font-weight:bold; margin:0.6em 0 1.0em 1em; padding:0; display:inline-block; text-align:left; width:100%;}
+#contenido #interior #central form.newform h3 {color:#000000; font-size:85%; font-weight:bold; margin:0.8em 0 1.1em 1em; padding:0; display:inline-block; text-align:left; width:100%;}
+#contenido #interior #central form.newform h4 {color:#444444; font-size:80%; font-weight:bold; margin:1.0em 0 1.3em 1em; padding:0; display:inline-block; text-align:left; width:100%;}
+
+#contenido #interior #central h3.int {color:#000000; font-size:85%; font-weight:bold; margin:0 0 0 1em; padding:0; display:inline-block; text-align:left; width:auto;}
+#contenido #interior #central span.infoico {display:inline-block; width:50%; font-size:75%; float:right; padding:0.2em 0.3em 0.2em 0.7em; text-align:left; margin:0 1em 0.1em 0; background:#F8F8F8; border:1px solid #D8D8D8; border-bottom:1px solid #8A8A8A; color:#464646;}
+#contenido #interior #central span.infoico images {width:37px; height:16px; margin:0 0.3em 0 1em;}
+
+/*
+*+html #contenido #interior #central span.infoico {display:inline-block; width:50%; font-size:75%; float:right; padding:0.2em 0.3em 0.2em 0.7em; text-align:left; margin:0 1em 0 0; background:#F8F8F8; border:1px solid #D8D8D8; border-bottom:1px solid #8A8A8A; color:#464646;}
+*/
+
+/* Titulos dentro del formulario */
+#contenido #interior #central form.newform div.perfil {margin:1em 0 1em 1em; padding:0.1em; font-size:90%; display:inline-block; background:#F2F7E6; border:1px solid #D8D8D8; width:97%;}
+#contenido #interior #central form.newform div.perfil label {margin:0 0 0.6em 0.6em; padding:0.2em; border-bottom:1px dotted #708C28; width:48%; text-align:left;}
+#contenido #interior #central form.newform div.perfil label span {font-size:110%; margin:0; padding:0.2em 0.2em 0.1em 1.8em; background: transparent url("../images/ico-perfil.png") 2px 4px no-repeat; font-weight:bold; color:#455619; letter-spacing:0.1em;}
+
+/* Capa listado */
+#contenido #interior #central form.newform div.grupo {margin:1em 0 1em 1em; padding:0.1em; font-size:90%; display:inline-block;  width:98%;  background:#F2F7E6; border:1px solid #D8D8D8; width:97%;}
+#contenido #interior #central form.newform div.grupo label {width:42%; margin:0 1em 0.6em 2em; padding:0.2em; border-bottom:1px dotted #708C28; line-height:1.5em; display:inline-block;}
+#contenido #interior #central form.newform div.grupo label span {margin:0; padding:0.3em 0em 0.1em 3.3em;  background:transparent url("../images/ico-grupo.png") 5px -1px no-repeat; font-weight:bold;  line-height:1.8em; letter-spacing:0.1em; }
+#contenido #interior #central form.newform div.grupo input[type="checkbox"] {width:auto; margin:0; padding:0.2em 1em 0 0; float:right;}
+
+/* Listados */
+#contenido #interior #central form.newform div.list-usu {display:inline-block; width:96.4%; margin:0.1em 0 0.1em 1.1em; padding:0; clear:both; background: transparent url("../images/fieldset-resaltado.png") bottom center repeat-x; border:1px solid #D8D8D8; border-bottom:1px solid #A0AA86;}
+#contenido #interior #central form.newform div.list-usu label {display:inline-block; margin:0.1em 0 0.1em 0; padding:0.3em 0 0 0; font-size:75%; width:100%;}
+#contenido #interior #central form.newform div.list-usu span {margin:0; padding:0 0 0 1.5em; width:90%; color:#414141; font-size:100%; line-height:1.8em; font-weight:bold; background: transparent url("../images/ico-arrow.png") 5px 7px no-repeat; float:left;}
+#contenido #interior #central form.newform div.list-usu input[type="submit"] {width:auto; font-weight:bold; color:#000; background: transparent; border:0; margin:0; text-align:center; padding:0; cursor:pointer;}
+
+#contenido #interior #central form.newform div.list-usu input.inc {float:right; margin:0 0.2em 0 0; padding:0.3em 1em 0.1em 1em; width:4em; background: transparent url("../images/ico-fondo-inc.png") center bottom no-repeat; border:0;}
+#contenido #interior #central form.newform div.list-usu input.sac {float:right; margin:0 0.2em 0 0; padding:0.3em 1em 0.1em 1em; width:4em; background: transparent url("../images/ico-fondo-sac.png") center bottom no-repeat; border:0;}
+
+/*------------ CLASES GENÉRICAS ---------------------*/
+.hide { display: none;}
+
+/* BOTONERAS */
+.botonera {text-align: right; width: 95%; float: left; clear: both; margin: 1.4em 0 0.5em 0;}
+input.btnBuscGrande { background: transparent url("../images/botones/fnd_btn_verde.png") left center repeat-x; color: #fff; border: none; margin: 0 1em; height: 30px; padding: 0 1em; cursor: pointer; font-weight: bold; display: block; border-radius: 5px;}
+
+/* Botonera de acciones */
+.acciones {float: right; width: 28%; margin: 0 0 0.5em 0;}
+.acciones ul li {float: left; padding: 2%; border: 1px solid #fff;}
+.acciones ul li:hover {border: 1px solid #ccc;}
+.acciones ul li a {float: left; margin: 0 1%; padding: 0 0 0.3em 27px; font-size: 0.95em; color: #666666; width: 100%;}		
+.nueva {background: transparent url(../images/botones/nuevo.png) left top no-repeat;}
+.ver {background: transparent url(../images/botones/ver.png) left top no-repeat;}
+.delete {background: transparent url(../images/botones/delete.png) left top no-repeat;}
+.excel {background: transparent url(../images/botones/excel.png) left top no-repeat;}
+
+/*------------------------------ MOD-PESTANAS ------------------------*/
+#contenido #interior #central .mod-pestanas {width: 100%; position: relative; float:left; clear: both;  }
+#contenido #interior #central .mod-pestanas ul.pestanas {width: 70%; float:left;}
+#contenido #interior #central .mod-pestanas ul.pestanas li {float: left; background-color: #f2f2f2; padding: 0.7em 0 0.7em 20px; border-radius: 6px 6px 0 0; box-shadow: 0 0 2px 0 #B9B9B9;}
+#contenido #interior #central .mod-pestanas ul.pestanas li a {color: #333333; padding: 6px 20px 6px 0; font-size: 0.9em;}
+#contenido #interior #central .mod-pestanas ul.pestanas li a:hover {border-bottom: 0px;}
+#contenido #interior #central .mod-pestanas ul.pestanas li.seleccionado {background-color: #BFD67A; padding: 0.7em 0 0.7em 20px;}
+#contenido #interior #central .mod-pestanas ul.pestanas li.seleccionado a {color: #fff; padding: 6px 20px 6px 0; font-weight: bold;}
+#contenido #interior #central .mod-pestanas ul.pestanas li.seleccionado a:hover {border-bottom: 0px;}
+
+.tabs { margin: 0; float: left; width: 100%; padding: 0; }	
+.tabs .cabeceraPestania{width: 80%; float: left; font-weight:bold; color:#666666; font-size:0.9em }
+.tabs ul { position: relative; margin: 0; float: left; width: 100%; padding: 0; }
+.tabs ul li { margin: 0; float: left; width: 100%; padding: 0; }	
+.tabs .tab { display: none; float: left; width: 100%; padding: 0; margin: 0; }
+
+/* Botonera de acciones en tab */
+.tabacciones {float: right; margin: 0 0 0.5em 0; width: 60%}
+.tabacciones ul {float: left; }
+.tabacciones ul li {float: left;padding: 2%; border: 1px solid #fff; width: 20%}
+.tabacciones ul li:hover {border: 1px solid #ccc;}
+.tabacciones ul li a {float: left; margin: 0 1%; padding: 0 0 0.3em 27px; font-size: 0.95em; color: #666666;}		
+
+/* TABLAS CON INPUTS DE FORMULARIO */
+.tablaForm { clear: both; float: left; width: 100%;}
+.tablaForm .tabla { border-collapse: collapse; clear: both; float: left; text-align: center; vertical-align: middle; width: 100%; box-shadow: 1px 2px 2px 1px #B9B9B9; background-color: #fff;}
+.tablaForm .tabla th { color: #9AAE04; font-weight: bold;}
+.tablaForm .tabla td, .tablaForm .tabla th { border: 1px solid #E2E2E2; padding: 0.7em; vertical-align: middle; font-size: 0.9em;}
+.tablaForm tr.selected td {background-color: #9AAE04; color: #fff; font-weight: bold;}
+
+/* PAGINADOR */
+.mod_pagination {float: right; margin: 1em 0 0.6em 0.6em; width: 60%;}
+.mod_pagination ul {float: right; width:100%; margin-right:-6.6em;}
+.mod_pagination ul li { color: #3D6CAC; float: left; font-size: 0.9em; font-weight: bold; height: 25px; line-height: 25px; width: 7%;}
+.mod_pagination ul li .button_bl { background: url("../images/botones/button_grey_bl.png") no-repeat scroll left top transparent; padding-left: 6px; }
+.mod_pagination ul li .button_br { background: url("../images/botones/button_grey_br.png") no-repeat scroll right top transparent; padding-right: 6px; }
+.mod_pagination ul li .button_bk {background: url("../images/botones/button_grey_bk.png") repeat-x scroll right top transparent;}
+.mod_pagination ul li a, .mod_pagination ul li span { color: #333; display: block; height: 25px; padding: 0 0.1em;}
+.mod_pagination ul li a:hover, .mod_pagination ul li span:hover {color: #9AAE04; cursor: pointer;}
+.mod_pagination ul li span { color: #FFFFFF; }
+.mod_pagination ul li.activo .button_bl { background: url("../images/botones/button_selected_bl.png") no-repeat scroll left top transparent; padding-left: 7px; }
+.mod_pagination ul li.activo .button_br { background: url("../images/botones/button_selected_br.png") no-repeat scroll right top transparent; padding-right: 7px; }
+.mod_pagination ul li.activo a, .mod_pagination ul li.activo span { background: url("../images/botones/button_selected_bk.png") repeat-x scroll right top transparent; display: block; height: 25px; }
+.mod_pagination ul li.nav_page { margin-left: 1.3%;}
+.mod_pagination ul li.nav_page.separador {width: 5%;}
+.mod_pagination ul li.nav_page.separador a { background: url("../images/botones/pagination_sep.png") no-repeat scroll left top transparent; width: 17px; }
+.mod_pagination ul li.nav_first { width: 15%; margin-right: 1%;}
+.mod_pagination ul li.nav_first a { background: url("../images/botones/button_double_arrow_left.png") no-repeat scroll left 9px transparent; font-weight: normal; padding-left: 17px; }
+.mod_pagination ul li.nav_first a:hover {background: url("../images/botones/button_hover_double_arrow_left.png") no-repeat scroll left 9px transparent;}
+.mod_pagination ul li.nav_ant { width: 15%; margin-right: 1%;}
+.mod_pagination ul li.nav_ant a { background: url("../images/botones/button_arrow_left.png") no-repeat scroll left 9px transparent; font-weight: normal; padding-left: 12px; }
+.mod_pagination ul li.nav_ant a:hover {background: url("../images/botones/button_hover_arrow_left.png") no-repeat scroll left 9px transparent;}
+.mod_pagination ul li.nav_info { width: 18%;}
+.mod_pagination ul li.nav_info.separador {width: 5%;}
+.mod_pagination ul li.nav_info.separador a { background: url("../images/botones/pagination_sep.png") no-repeat scroll left top transparent; width: 17px; }
+.mod_pagination ul li.nav_sig { width: 15%; margin-left: 1%;}
+.mod_pagination ul li.nav_sig a { background: url("../images/botones/button_arrow_right.png") no-repeat scroll right 9px transparent; font-weight: normal; padding-right: 12px;}
+.mod_pagination ul li.nav_sig a:hover { background: url("../images/botones/button_hover_arrow_right.png") no-repeat scroll right 9px transparent;}
+.mod_pagination ul li.nav_last { width: 13%; margin-left: 1%;}
+.mod_pagination ul li.nav_last a { background: url("../images/botones/button_double_arrow_right.png") no-repeat scroll right 9px transparent; font-weight: normal; padding-right: 12px;}
+.mod_pagination ul li.nav_last a:hover { background: url("../images/botones/button_hover_double_arrow_right.png") no-repeat scroll right 9px transparent;}
+
+/* AUTOCOMPLETE */
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { background: #FFF ; padding: 2px 5px; white-space: nowrap; overflow: hidden; font-size: 0.9em }
+.autocomplete-selected { background: #EFEFEF; cursor: pointer; }
+.autocomplete-suggestions strong { font-weight: normal; color: #7489A6; }
+
+/* MENU PRINCIPAL */
+#menu ul, #menu li, #menu span, #menu a {margin: 0;padding: 0;position: relative;}
+#menu {height: 40px;border-radius: 5px 5px 0 0;-moz-border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;background: -moz-linear-gradient(left center , #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%) repeat scroll 0 0 transparent;background: -webkit-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%) repeat scroll 0 0 transparent;background: -webkit-gradient(linear, left, right , color-stop(0%, #AAAAAA), color-stop(60%, #BBBBBB), color-stop(75%, #FFFFFF));background: -o-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);background: -ms-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);background: linear-gradient(to rigth, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#AAAAAA', endColorstr='#FFFFFF',GradientType=1 );border-bottom: 2px solid #bfd67a;}
+/* Entorno PRE */
+#menu.pre {height: 40px;border-radius: 5px 5px 0 0;-moz-border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;background: -moz-linear-gradient(left center , #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%) repeat scroll 0 0 transparent;background: -webkit-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%) repeat scroll 0 0 transparent;background: -webkit-gradient(linear, left, right , color-stop(0%, #AAAAAA), color-stop(60%, #BBBBBB), color-stop(75%, #FFFFFF));background: -o-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);background: -ms-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);background: linear-gradient(to rigth, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#AAAAAA', endColorstr='#FFFFFF',GradientType=1 );border-bottom: 2px solid rgb(255, 110, 3);}
+/* Entorno DESA */
+#menu.des {height: 40px;border-radius: 5px 5px 0 0;-moz-border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;background: -moz-linear-gradient(left center , #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%) repeat scroll 0 0 transparent;background: -webkit-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%) repeat scroll 0 0 transparent;background: -webkit-gradient(linear, left, right , color-stop(0%, #AAAAAA), color-stop(60%, #BBBBBB), color-stop(75%, #FFFFFF));background: -o-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);background: -ms-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);background: linear-gradient(to rigth, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#AAAAAA', endColorstr='#FFFFFF',GradientType=1 );border-bottom: 2px solid rgb(0, 20, 255);}
+/* Entorno local */
+#menu.local {height: 40px;border-radius: 5px 5px 0 0;-moz-border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;background: -moz-linear-gradient(left center , #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%) repeat scroll 0 0 transparent;background: -webkit-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%) repeat scroll 0 0 transparent;background: -webkit-gradient(linear, left, right , color-stop(0%, #AAAAAA), color-stop(60%, #BBBBBB), color-stop(75%, #FFFFFF));background: -o-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);background: -ms-linear-gradient(left, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);background: linear-gradient(to rigth, #AAAAAA 0%, #BBBBBB 60%, #FFFFFF 75%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#AAAAAA', endColorstr='#FFFFFF',GradientType=1 );border-bottom: 2px solid rgb(0, 0, 0);}
+#menu:after, #menu ul:after {content: '';display: block;clear: both;}
+#menu a {background: transparent;color: #ffffff;display: inline-block;font-family: Helvetica, Arial, Verdana, sans-serif;font-weight: bold;font-size: 16px;line-height: 40px;padding: 0 20px;text-decoration: none;}
+#menu ul {list-style: none;}
+#menu > ul {float: left;}
+#menu > ul > li {float: left;}
+/* Triangulito debajo de la casilla seleccionada */
+#menu > ul > li:hover:after {content: '';display: block;width: 0;height: 0;position: absolute;left: 50%;bottom: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-bottom: 10px solid #EFF4DF;margin-left: -10px;}
+#menu > ul > li:first-child > a {border-radius: 5px 0 0 0;-moz-border-radius: 5px 0 0 0;-webkit-border-radius: 5px 0 0 0;}
+#menu > ul > li:last-child > a {border-radius: 0 5px 0 0;-moz-border-radius: 0 5px 0 0;-webkit-border-radius: 0 5px 0 0;}
+#menu > ul > li > a.active {box-shadow: inset 0 0 3px #000000;-moz-box-shadow: inset 0 0 3px #000000;-webkit-box-shadow: inset 0 0 3px #000000;background: -moz-linear-gradient(top, #cccccc 0%, #909090 100%);background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cccccc), color-stop(100%, #909090));background: -webkit-linear-gradient(top, #cccccc 0%, #909090 100%);background: -o-linear-gradient(top, #cccccc 0%, #909090 100%);background: -ms-linear-gradient(top, #cccccc 0%, #909090 100%);background: linear-gradient(to bottom, #cccccc 0%, #909090 100%);}
+/* Sombreado de celda cuando se pone raton encima -> es igual que el de arriba, para la casilla "activa" */
+#menu > ul > li:hover > a {box-shadow: inset 0 0 3px #000000;-moz-box-shadow: inset 0 0 3px #000000;-webkit-box-shadow: inset 0 0 3px #000000;background: -moz-linear-gradient(top, #cccccc 0%, #909090 100%);background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cccccc), color-stop(100%, #909090));filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#909090',GradientType=0 );background: -webkit-linear-gradient(top, #cccccc 0%, #909090 100%);background: -o-linear-gradient(top, #cccccc 0%, #909090 100%);background: -ms-linear-gradient(top, #cccccc 0%, #909090 100%);background: linear-gradient(to bottom, #cccccc 0%, #909090 100%);}
+#menu .has-sub {z-index: 1;}
+#menu .has-sub:hover > ul {display: block;}
+#menu .has-sub ul {display: none;position: absolute;width: 200px;top: 100%;left: 0;}
+#menu .has-sub ul li {*margin-bottom: -1px;}
+#menu .has-sub ul li a {background: #EFF4DF;border-bottom: 1px dotted #cccccc;filter: none;color: black;font-weight: bold;font-size: 12px;display: block;line-height: 120%;padding: 10px;}
+/* Cuando se pone el ratón sobre el primer-submenu */ 
+#menu .has-sub ul li:hover a {background: #BFD67A}
+#menu .has-sub .has-sub:hover > ul {display: block;}
+#menu .has-sub .has-sub ul {display: none;position: absolute;left: 100%;top: 0;}
+#menu .has-sub .has-sub ul li a {background: #e6edcc;border-bottom: 1px dotted #cccccc;}
+/* Cuando se pone el ratón sobre el ultimo-submenu */
+#menu .has-sub .has-sub ul li a:hover {background: #BFD67A;}
+
+/* Nombre de la aplicacion */
+#menu > p#NombreApp {float: right;width:350px;margin-top:1%;color: #BFD67A;display: inline-block;font-family: Helvetica, Arial, Verdana, sans-serif;font-weight: bold;font-style: italic;font-size: 25px;text-align: center;}
+/* Entorno PRE */
+#menu.pre > p#NombreApp {float: right;width:350px;margin-top:1%;color: rgb(255, 110, 3);display: inline-block;font-family: Helvetica, Arial, Verdana, sans-serif;font-weight: bold;font-style: italic;font-size: 25px;text-align: center;}
+/* Entorno DESA */
+#menu.des > p#NombreApp {float: right;width:350px;margin-top:1%;color: rgb(0, 20, 255);display: inline-block;font-family: Helvetica, Arial, Verdana, sans-serif;font-weight: bold;font-style: italic;font-size: 25px;text-align: center;}
+/* Entorno local */
+#menu.local > p#NombreApp {float: right;width:350px;margin-top:1%;color: rgb(0, 0, 0);display: inline-block;font-family: Helvetica, Arial, Verdana, sans-serif;font-weight: bold;font-style: italic;font-size: 25px;text-align: center;}
+/* ----------------------------------------------------------------------------------- */
+
+/* BREADCRUMB */
+.breadcrumb{position:relative; height:30px; width:97%;}
+.breadcrumb ul{position:relative; margin:0 5px 0 5px; padding:0; height:30px; background:url('../images/breadcrumbImage.png') 0px -30px repeat-x; }
+.breadcrumb ul li{padding:0; margin:0; list-style:none; float:left; height:30px display:inline;}
+.breadcrumb ul li a{font:12px Arial, Helvetica, sans-serif; color:rgb(0,0,0); text-decoration:none; line-height:30px; display:block; background:url('../images/breadcrumbImage.png') 100% -60px no-repeat; padding:0 17px 0 15px; outline:none;}
+.breadcrumb ul li a:hover {text-decoration:underline; color:rgb(168,191,134);}
+.breadcrumb ul li a.active{background:none; color:rgb(156,189,108);}
+.breadcrumb ul li a.active:hover {text-decoration:none;}
+.breadcrumb .left{position:absolute; top:0px; left:0px; width:10px; height:30px; display:block; z-index:0; background:url('../images/breadcrumbImage.png') 0% 0px no-repeat;}
+.breadcrumb .right{position:absolute; top:0px; right:0px; width:10px; height:30px; display:block; z-index:0; background:url('../images/breadcrumbImage.png') 100% -90px no-repeat; }
+
+/* Campos obligatorios */
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col1 span.obligatorio {color:#FF4500; padding:0; font-size: 1em; float:right;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col2 span.obligatorio {color:#FF4500; padding:0; font-size: 1em; float:right;}
+#contenido #interior #central #formulcuad fieldset label span.obligatorio {color:#FF4500; padding:0; font-size: 1em; float:right;}
+
+/* CARGA INFORMACION */
+#animacionCarga {background: url("../images/cargando.gif") no-repeat scroll 0 0 transparent; position: relative; float: left; display: block; width: 36px; height: 36px; left: 425px; bottom: -95px; margin-bottom: -36px;}
+#animacionGuardando {background: url("../images/guardando.gif") no-repeat scroll 0 0 transparent; position: relative; float: left; display: block; width: 128px; height: 15px; left: 360px; bottom: -70px; margin-bottom: -15px;}
+
+/* REAJUSTE DE COMBOS DHTMLX PARA IE */
+#contenido #interior #central #formulcuad fieldset textarea.dhx_combo_edit {
+	font-family: tahoma;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	padding: 1px 0px 1px 1px;
+	width: 150px;
+}
+
+/* SELECT PARA EXPORTAR */
+#contenido #interior #central .listado-acciones-derecha select.export {cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background:#fff url("../images/icono-flecha-listado.gif") top left no-repeat; -webkit-appearance: none; -moz-appearance: none; appearance: none; border:none; margin:0 1em 0 0; padding: 0.2em 0 0 1em;}
+#contenido #interior #central .listado-acciones-derecha select.export::-ms-expand {display: none; cursor:pointer; font-weight:bold; font-size:0.75em; color:#5D7320; background:#fff url("../images/icono-flecha-listado.gif") top left no-repeat; border:none; margin:0 1em 0 0; padding: 0.2em 0 0 1em;}
+
+.tabs .tab .tabVista fieldset{	margin-left: 0px !important; }
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio input.textoCodigo {	width: 3em;}
+
+#contenido #interior #central #formulcuad div.capaOperacionTab fieldset{	margin-left: 0;    margin-top: 0.4em;}
+
+#numRegistrosTotales{
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    left: 4px;
+    position: relative;
+    top: -35px;   
+    width: 400px; 
+}
+
+div.listado-acciones-derecha.exportar-operador {display:inline !important;}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox span{
+	float: left;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox ul{
+	float: left;
+	margin: 0em;
+	width: 15em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox ul li {
+	float: left;
+	margin: 0em;
+	width: 15em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox ul li input{
+	padding: 0em;
+	width:1em;
+	margin-left: 0.4em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox ul li span{
+	margin-left:1em;
+	margin-right: 3em;
+	padding: 0em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox input{
+	padding: 0em;
+	margin: 0em;
+	width:1em;
+}
+
+input.ficheroCertificado {
+	width:26em;
+	margin-left:0em !important;
+	margin-top:0.5em !important;
+}
+
+input.campoLargo{
+	width: 49.3em !important;
+}
+
+textarea.campoLargo{
+	float: none !important;;
+	width: 49.3em !important;
+}
+
+input.campoMedio{
+	width: 18em !important;
+}
+

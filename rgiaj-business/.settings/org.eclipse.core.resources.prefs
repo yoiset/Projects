@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//src/main/resources/config/properties/hibernate.properties=ISO-8859-1
+encoding//src/main/resources/config/properties/jdbc.properties=ISO-8859-1
+encoding//src/main/resources/config/properties/sql_stats.properties=ISO-8859-1
+encoding//src/main/resources/hibernate/mappings/hibernate.queries.hbm.xml=ISO-8859-1
+encoding//src/main/resources/spring/app-custom-monitoring.xml=ISO-8859-1
+encoding//src/main/resources/spring/app-custom-performance.xml=ISO-8859-1
+encoding//src/main/resources/spring/app-custom-persistence-hibernate.xml=ISO-8859-1

@@ -1,0 +1,9 @@
+###
+# Parámetros para crear el fichero de despliegue
+## 
+
+version.number=1.0
+project.dir=/home/ylopez/workspace/redProgram
+war.name=template-${version.number}.war
+tomcat.home=/home/ylopez/J2EE_Tools/apache-tomcat-7.0.42
+java.exec=/home/ylopez/J2EE_Tools/jdk1.7.0_25

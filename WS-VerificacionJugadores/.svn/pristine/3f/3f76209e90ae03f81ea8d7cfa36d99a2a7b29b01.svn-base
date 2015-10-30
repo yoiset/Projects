@@ -1,0 +1,88 @@
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+	<env:Header>
+		<wsse:Security xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+			xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+			xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+			env:mustUnderstand="1">
+			<wsu:Timestamp wsu:Id="timestamp">
+				<wsu:Created>2013-02-25T11:40:26.684Z</wsu:Created>
+				<wsu:Expires>2013-02-25T11:45:26.684Z</wsu:Expires>
+			</wsu:Timestamp>
+			<wsse:BinarySecurityToken
+				EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"
+				ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3"
+				wsu:Id="token-27770-1361792426688-1309316113">MIIECjCCA3OgAwIBAgIEPNSpvDANBgkqhkiG9w0BAQUFADA2MQswCQYDVQQGEwJFUzENMAsGA1UE
+				ChMERk5NVDEYMBYGA1UECxMPRk5NVCBDbGFzZSAyIENBMB4XDTExMTAxMDA3NDYzOFoXDTE1MTAx
+				MDA3NDYzOFowgdAxCzAJBgNVBAYTAkVTMQ0wCwYDVQQKEwRGTk1UMRgwFgYDVQQLEw9GTk1UIENs
+				YXNlIDIgQ0ExETAPBgNVBAsTCFB1YmxpY29zMRIwEAYDVQQLEwk1MDAwNzAwMTUxcTBvBgNVBAMU
+				aERFU0NSSVBDSU9OIEFQTElDQUNJT05FUy5ER09KVUVHTy5FUyAtIEVOVElEQUQgRElSRUNDSdNO
+				IEdFTkVSQUwgREUgT1JERU5BQ0nTTiBERUwgSlVFR08gLSBDSUYgUzI4MDExMDlGMIGfMA0GCSqG
+				SIb3DQEBAQUAA4GNADCBiQKBgQDMvvvxir2K7tgs0uxyiRWvtb5T3fAwAkOCJg00jx7JD6AuO0FO
+				T9Tz3F6e//9/vBhG9FWTeNLYPCUb0/clzMJCgnkYF+W9ROpADiW8twSer/sRqyy4WYTyHM/ImoyW
+				t+/JSpFmMXLNexM01FPJd7LK5Pw5s/tWvj/bDqEkYmEseQIDAQABo4IBiDCCAYQwgYwGA1UdEQSB
+				hDCBgaR/MH0xGDAWBgkrBgEEAaxmAQ8TCVMyODAxMTA5RjE4MDYGCSsGAQQBrGYBDhQpRElSRUND
+				SdNOIEdFTkVSQUwgREUgT1JERU5BQ0nTTiBERUwgSlVFR08xJzAlBgkrBgEEAaxmAQgTGEFQTElD
+				QUNJT05FUy5ER09KVUVHTy5FUzAJBgNVHRMEAjAAMCsGA1UdEAQkMCKADzIwMTExMDEwMDc0NjM4
+				WoEPMjAxNTEwMTAwNzQ2MzhaMAsGA1UdDwQEAwIFoDARBglghkgBhvhCAQEEBAMCBaAwHQYDVR0O
+				BBYEFHwW8SArg7lZdrlyOMM3CHFzhVDNMB8GA1UdIwQYMBaAFECadkSXdAfErBTLHo1POkV8MNdh
+				MFsGA1UdHwRUMFIwUKBOoEykSjBIMQswCQYDVQQGEwJFUzENMAsGA1UEChMERk5NVDEYMBYGA1UE
+				CxMPRk5NVCBDbGFzZSAyIENBMRAwDgYDVQQDEwdDUkw5MjAyMA0GCSqGSIb3DQEBBQUAA4GBAH1V
+				AyJCUwWVeqMc7DgMZRyqklfRD+4AHovTHc2/ZsIXRZUdWEuFO5+sSRxN+mRswgf4vOkat1FhQkv4
+				Wj5vkn9RTPgq9UBfjDZwt19c/tbfUq2Zxr+AvGpGVZa3KAB3oulQzT0fXfsXVfsZtybfFgt0MHT4
+				PzHg1rwipQjegLJl
+			</wsse:BinarySecurityToken>
+			<ds:Signature>
+				<ds:SignedInfo>
+					<ds:CanonicalizationMethod
+						Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+					<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+					<ds:Reference URI="#element-27769-1361792426685-475421754">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>wa1rFJP9fEHliV1/CxBxTBuaXz8=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#timestamp">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>hmjp7qv8FTrRIRtK5kV/C07y1jg=</ds:DigestValue>
+					</ds:Reference>
+				</ds:SignedInfo>
+				<ds:SignatureValue>
+					LwnA4k9ewtRnp410j/Mr89OHNu8utdwvbr+tQ0thWtFJNMfxDA5dcwSIlDC7b5On3QnDGFW4c2vo
+					h80OAfn5MQivJu9DSow174B1qAKfNcfzzpV6ip9IDXgzBaDed13BgRk71EZHOkwEiB5oZT9II/fI
+					iUSznsdbKFwqyRFY2yI=
+				</ds:SignatureValue>
+				<ds:KeyInfo>
+					<wsse:SecurityTokenReference
+						wsu:Id="reference-27771-1361792426688-410980382">
+						<wsse:Reference URI="#token-27770-1361792426688-1309316113"
+							ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" />
+					</wsse:SecurityTokenReference>
+				</ds:KeyInfo>
+			</ds:Signature>
+		</wsse:Security>
+	</env:Header>
+	<env:Body
+		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+		wsu:Id="element-27769-1361792426685-475421754">
+		<ns2:verificarJugadorResponse
+			xmlns:ns2="http://ws.cnjuego.gob.es/VerificacionJugadores/">
+			<resultadosJugador>
+				<dni>99999028L</dni>
+				<resultadoRGIAJ>
+					<codigo>COD002</codigo>
+					<descripcion>El usuario no está inscrito en el RGIAJ</descripcion>
+				</resultadoRGIAJ>
+				<resultadoIdentidad>
+					<codigo>COD004</codigo>
+					<descripcion>La identidad del usuario es incorrecta - Titular no
+						identificado</descripcion>
+				</resultadoIdentidad>
+			</resultadosJugador>
+		</ns2:verificarJugadorResponse>
+	</env:Body>
+</env:Envelope>

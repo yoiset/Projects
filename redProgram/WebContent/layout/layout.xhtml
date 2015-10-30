@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Vodafone Red Program</title>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ 
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <link rel="stylesheet" href="./css/template-style.css" media="screen"/>
+    <!--[if lte IE 7]><link rel="stylesheet" href="style.ie7.css" media="screen" /><![endif]-->
+    <link rel="stylesheet" href="./css/template-style.responsive.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Arvo|PT+Sans&amp;subset=latin"/>
+
+
+  <style>.art-content .art-postcontent-0 .layout-item-0 { border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#CCC7AD; padding-right: 10px;padding-left: 10px;  }
+     .ie7 .post .layout-cell {border:none !important; padding:0 !important; }
+     .ie6 .post .layout-cell {border:none !important; padding:0 !important; }
+  </style>
+  
+</head>
+ 
+ <h:body>
+ 
+ <div id="js">
+		<ui:insert name="js" >
+		  <ui:include src="js.xhtml" />
+		</ui:insert>
+    </div>
+   <div id="art-main">
+    <div class="art-sheet clearfix">
+   <div id="header">
+		<ui:insert name="header" >
+		  <ui:include src="header.xhtml" />
+		</ui:insert>
+    </div>
+ 
+	<div id="content">
+	  	<ui:insert name="content" >
+	 	  <ui:include src="content.xhtml" />
+	   	</ui:insert>
+	</div>
+	
+	<div id="right"> 
+	  	<ui:insert name="rightBar" >
+	 	  <ui:include src="rightBar.xhtml" />
+	   	</ui:insert>
+	</div>
+	
+ </div>
+ <div id="footer">
+	    	<ui:insert name="footer" >
+	    	  <ui:include src="footer.xhtml" />
+	    	</ui:insert>
+  </div>
+ 
+ 
+ </div>
+ </h:body>
+
+
+</html>

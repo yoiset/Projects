@@ -1,0 +1,29 @@
+package com.dgoj.juegoExterno.business.repository;
+
+import com.dgoj.juegoExterno.business.bean.ComunidadQueryBean;
+import com.dgoj.juegoExterno.business.bean.UsuarioQueryBean;
+import com.dgoj.juegoExterno.business.model.JugUsuariocomunidad;
+import com.jeveris.persistence.hibernate.repository.IHibernateBaseRepository;
+import com.mysema.query.SearchResults;
+
+/**
+ * @author ylopezconnectis
+ *
+ * @param <T>
+ * @param <ID>
+ */
+public interface IUsuarioComunidadRepository <T, ID> extends IHibernateBaseRepository<JugUsuariocomunidad,Long>{
+	
+
+	/** Devuelve los usuarios asociados a la query
+	 * @param query
+	 * @return
+	 */
+	public SearchResults<JugUsuariocomunidad> getListaUsuarios(ComunidadQueryBean query);
+	
+	/**
+	 * @param query
+	 * @return
+	 */
+	public JugUsuariocomunidad getUsuarioComunidad(UsuarioQueryBean query);
+}

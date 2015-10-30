@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		   http://www.springframework.org/schema/context 
+		   http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	       http://www.springframework.org/schema/security  
+	       http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<!-- Configure Spring Security -->
+
+	<!-- Enable security, let the dgojSSOAuthenticationEntryPoint handle all 
+		intercepted urls. The DGOJ_SSO_FILTER needs to be in the right position within 
+		the filter chain. -->
+		
+	<!-- Enable security anotations -->	
+	<security:global-method-security pre-post-annotations="enabled" />
+
+	<!-- 
+	Para descativar la seguridad:
+	1) Descomentar la línea 
+	  <security:http pattern="/**" security="none"/>
+	  
+	2) Comentar el bloque donde se definen las rutas controladas
+	   <security:http auto-config="true" access-dec...
+	   ...
+	   </security:http>
+	-->
+	 
+<security:http pattern="/**" security="none"/>
+	 
+	
+	<!-- BLOQUE para activar la seguridad. -->
+	
+ 	
+<!-- 	<security:http pattern="/app/monitor/**" security="none"/> -->
+<!-- 	<security:http pattern="/app/public/**" security="none"/> -->
+<!-- 	<security:http pattern="/app/services/**" security="none"/> -->
+<!-- 	<security:http pattern="/app/service/**" security="none"/> -->
+	
+<!-- 	<security:http auto-config="true" access-decision-manager-ref="accessDecisionManager"	entry-point-ref="dgojSSOAuthenticationEntryPoint"> -->
+<!-- 		<security:custom-filter position="CAS_FILTER" ref="dgojSSOAuthenticationFilter" /> -->
+<!-- 		<security:intercept-url pattern="/app/inicio/**" access="MANT_MENU, GEST-OPE_MENU, BUSQ-OPE_MENU, MANT-ALARMAS_MENU, CONS_MENU" /> -->
+		
+<!-- 		<security:intercept-url pattern="/app/operador/startOperadorCertificado" access="BUSQ-OPE_LISTADO" /> -->
+<!-- 		<security:intercept-url pattern="/app/operador/gestionarOperador" access="BUSQ-OPE_MODIFICAR" /> -->
+		
+<!-- 		<security:intercept-url pattern="/app/operador/startOperadorJuego" access="GEST-OPE_LISTADO" /> -->
+<!-- 		<security:intercept-url pattern="/app/operador/startNewOperadorJuego" access="GEST-OPE_NUEVA" /> -->
+<!-- 		<security:intercept-url pattern="/app/operador/startEditOperadorJuego" access="GEST-OPE_MODIFICAR" /> -->
+<!-- 		<security:intercept-url pattern="/app/operador/startViewOperadorJuego" access="GEST-OPE_CONSULTAR" /> -->
+<!-- 		<security:intercept-url pattern="/app/operador/exportOperadores" access="GEST-OPE_EXPORTAR" /> -->
+		
+<!-- 		<security:intercept-url pattern="/app/parametrosAlarma/startParametrosAlarma" access="MANT-ALARMAS_LISTADO" /> -->
+<!-- 		<security:intercept-url pattern="/app/parametrosAlarma/startNewParametroAlarma" access="MANT-ALARMAS_NUEVA" /> -->
+<!-- 		<security:intercept-url pattern="/app/parametrosAlarma/startModifyParametroAlarma" access="MANT-ALARMAS_MODIFICAR" /> -->
+<!-- 		<security:intercept-url pattern="/app/parametrosAlarma/exportParametros" access="MANT-ALARMAS_EXPORTAR" /> -->
+		
+<!-- 		<security:intercept-url pattern="/app/jugadorOperador/startJugadorOperador" access="CONS-JUG_LISTADO" /> -->
+<!-- 		<security:intercept-url pattern="/app/jugadorOperador/exportJugadorOperador" access="CONS-JUG_EXPORTAR" /> -->
+
+<!-- 		<security:intercept-url pattern="/app/peticionWS/startPeticionWS" access="CONS_LISTADO" /> -->
+<!-- 		<security:intercept-url pattern="/app/peticionWS/startViewPeticionWS" access="CONS_CONSULTAR" /> -->
+<!-- 		<security:intercept-url pattern="/app/peticionWS/exportPeticionWS" access="CONS_EXPORTAR" /> -->
+		
+<!-- 		<security:intercept-url pattern="/app/peticionCambioRGIAJ/startPeticionCambioRGIAJ" access="CONS_LISTADO" /> -->
+<!-- 		<security:intercept-url pattern="/app/peticionCambioRGIAJ/startViewPeticionCambioRGIAJ" access="CONS_CONSULTAR" /> -->
+<!-- 		<security:intercept-url pattern="/app/peticionCambioRGIAJ/exportPeticionCambioRGIAJ" access="CONS_EXPORTAR" /> -->
+		
+<!-- 		<security:custom-filter ref="dgojSSOAuthenticationFilter" before="FORM_LOGIN_FILTER" /> -->
+<!-- 		<security:logout logout-success-url="/Logout.jsp" logout-url="/app/logout" /> -->
+<!-- 		<security:access-denied-handler error-page="/LoginError.jsp" /> -->
+<!-- 	</security:http> -->
+	<!-- FIN BLOQUE para activar la seguridad. --> 
+
+</beans>

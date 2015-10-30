@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		   http://www.springframework.org/schema/context 
+		   http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	       http://www.springframework.org/schema/security  
+	       http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+
+	<!-- Configure Spring Security -->
+
+	<!-- Enable security, let the dgojSSOAuthenticationEntryPoint handle all 
+		intercepted urls. The DGOJ_SSO_FILTER needs to be in the right position within 
+		the filter chain. -->
+		
+	<!-- Enable security anotations -->	
+	<security:global-method-security pre-post-annotations="enabled" />
+
+	<!-- 
+	Para descativar la seguridad:
+	1) Descomentar la línea 
+	  <security:http pattern="/**" security="none"/>
+	  
+	2) Comentar el bloque donde se definen las rutas controladas
+	   <security:http auto-config="true" access-dec...
+	   ...
+	   </security:http>
+	-->
+	 
+<!-- <security:http pattern="/**" security="none"/> -->
+	 
+	
+	<!-- BLOQUE para activar la seguridad. -->
+	
+ 	
+	<security:http pattern="/app/monitor/**" security="none"/>
+	<security:http pattern="/app/public/**" security="none"/>
+	<security:http pattern="/app/services/**" security="none"/>
+	<security:http pattern="/app/service/**" security="none"/>
+	
+	<security:http auto-config="true" access-decision-manager-ref="accessDecisionManager"	entry-point-ref="dgojSSOAuthenticationEntryPoint">
+		<security:custom-filter position="CAS_FILTER" ref="dgojSSOAuthenticationFilter" />
+		
+ 		<security:intercept-url pattern="/app/inicio/*" access="NAC_CONSULTAR, COM_CONSULTAR, MANT-BAS_LISTADO, PERSONA_LISTADO" /> 
+ 		<security:intercept-url pattern="/app/security/*" access="NAC_CONSULTAR, COM_CONSULTAR, MANT-BAS_LISTADO, PERSONA_LISTADO" /> 
+
+        <security:intercept-url pattern="/app/comunidad/**" access="NAC_CONSULTAR, COM_CONSULTAR" />
+        <security:intercept-url pattern="/app/historico/**" access="NAC_CONSULTAR, COM_CONSULTAR" />
+        <security:intercept-url pattern="/app/prohibidos/**" access="NAC_CONSULTAR, COM_CONSULTAR" />
+
+		<security:intercept-url pattern="/app/persona/*" access="PERSONA_LISTADO" />
+		<security:intercept-url pattern="/app/persona/etiquetasPendientes" access="ETIQUETAS_LISTADO" />
+		        
+        <security:intercept-url pattern="/app/tipoProhibicion/startTipoProhibicion" access="MANT-BAS_LISTADO" />
+		<security:intercept-url pattern="/app/tipoProhibicion/startNewTipoProhibicion" access="MANT-BAS_NUEVA" />
+		<security:intercept-url pattern="/app/tipoProhibicion/startEditTipoProhibicion" access="MANT-BAS_MODIFICAR" />
+		
+		<security:intercept-url pattern="/app/cargo/startCargo" access="MANT-BAS_LISTADO" />
+		<security:intercept-url pattern="/app/cargo/startNewCargo" access="MANT-BAS_NUEVA" />
+		<security:intercept-url pattern="/app/cargo/startEditCargo" access="MANT-BAS_MODIFICAR" />
+
+		<security:intercept-url pattern="/app/causaProhibicion/startCausaProhibicion" access="MANT-BAS_LISTADO" />
+		<security:intercept-url pattern="/app/causaProhibicion/startNewCausaProhibicion" access="MANT-BAS_NUEVA" />
+		<security:intercept-url pattern="/app/causaProhibicion/startEditCausaProhibicion" access="MANT-BAS_MODIFICAR" />
+
+		<security:intercept-url pattern="/app/tipoFirma/startTipoFirma" access="MANT-BAS_LISTADO" />
+		<security:intercept-url pattern="/app/tipoFirma/startNewTipoFirma" access="MANT-BAS_NUEVA" />
+		<security:intercept-url pattern="/app/tipoFirma/startEditTipoFirma" access="MANT-BAS_MODIFICAR" />
+
+		<security:intercept-url pattern="/app/tipoDocIdentidad/startTipoDocIdentidad" access="MANT-BAS_LISTADO" />
+		<security:intercept-url pattern="/app/tipoDocIdentidad/startNewTipoDocIdentidad" access="MANT-BAS_NUEVA" />
+		<security:intercept-url pattern="/app/tipoDocIdentidad/startEditTipoDocIdentidad" access="MANT-BAS_MODIFICAR" />
+
+		<security:intercept-url pattern="/app/situacion/startSituacion" access="MANT-BAS_LISTADO" />
+		<security:intercept-url pattern="/app/situacion/startNewSituacion" access="MANT-BAS_NUEVA" />
+		<security:intercept-url pattern="/app/situacion/startEditSituacion" access="MANT-BAS_MODIFICAR" />
+		
+		<security:intercept-url pattern="/app/comunidadAutonoma/startComunidadAutonoma" access="MANT-BAS_LISTADO" />
+		<security:intercept-url pattern="/app/comunidadAutonoma/startNewComunidadAutonoma" access="MANT-BAS_NUEVA" />
+		<security:intercept-url pattern="/app/comunidadAutonoma/startEditComunidadAutonoma" access="MANT-BAS_MODIFICAR" />
+		
+		<security:intercept-url pattern="/app/carta/startCarta" access="MANT-BAS_LISTADO" />
+		<security:intercept-url pattern="/app/carta/startNewCarta" access="MANT-BAS_NUEVA" />
+		<security:intercept-url pattern="/app/carta/startEditCarta" access="MANT-BAS_MODIFICAR" />
+
+		<security:intercept-url pattern="/app/consultaSVDI/startConsultaSVDI" access="CONS-SVDI_LISTADO" />
+		
+		<security:custom-filter ref="dgojSSOAuthenticationFilter" before="FORM_LOGIN_FILTER" />
+		<security:logout logout-success-url="/Logout.jsp" logout-url="/app/logout" />
+		<security:access-denied-handler error-page="/LoginError.jsp" />
+	</security:http>
+	<!-- FIN BLOQUE para activar la seguridad. --> 
+
+</beans>

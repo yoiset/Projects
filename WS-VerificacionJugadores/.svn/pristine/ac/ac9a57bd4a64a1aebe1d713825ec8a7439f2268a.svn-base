@@ -1,0 +1,23 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import java.io.IOException;
+import javax.security.auth.callback.Callback;
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.callback.UnsupportedCallbackException;
+import org.apache.ws.security.WSPasswordCallback;
+
+public class ClientPasswordCallback implements CallbackHandler {
+
+	/**
+	 * Retorna la clave del certificado con alias 'operador01', que
+	 * está almacenado en el almacén 'cnj_keystore.jks'.
+	 * Nótese que esta clave NO es la clave para acceder al almacén
+	 */
+    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
+        WSPasswordCallback pc = (WSPasswordCallback) callbacks[0];
+        if (pc.getIdentifier().equals("operador01")) {
+            pc.setPassword("clavedgoj");
+        }
+    }
+
+}

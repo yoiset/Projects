@@ -1,0 +1,182 @@
+#contenido #interior #central #formulcuad fieldset label {width:auto;}
+
+#contenido #interior #central .listado-acciones-derecha.acciones-tab{
+    text-align:right; clear:both; margin:0em 0em 0.1em 0em; padding:0em 0em 0 0.9em;
+	border:0; display:block; width:99%; font-family: Arial, Helvetica, sans-serif;
+	position:relative; float: right; height:0; top:-24px;}
+
+#contenido #interior #central #formulario fieldset label.linea-dos {position: relative; clear: both; display: block; margin: 0em 0 0em 1em; padding: 0.2em 0 0.2em 0;}
+#contenido #interior #central #formulario fieldset label.linea-dos span {color: #000; text-align:left; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+
+#contenido #interior #central #formulario fieldset label.linea-dos span.label {clear: left; width: 21em; float: left;  padding: 0.1em 0.3em 0 0.2em;}
+#contenido #interior #central #formulario fieldset label.linea-dos input {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos .file {width: 52em; display: block;}
+#contenido #interior #central #formulario fieldset label.linea-dos input.checkbox {float: left; text-align: left; background-color: #fff; border: 0px; padding: 0em 0 0em 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos select {float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding: 0; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; }
+#contenido #interior #central #formulario fieldset label.linea-dos textarea {width: 52em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos span.date {padding-left: 0.6em;}
+#contenido #interior #central #formulario fieldset label.linea-dos .disabled {float: left; text-align: left; background-color: #eee; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos a.link {padding-left: 0.6em; font-size: 0.75em;}
+#contenido #interior #central #formulario fieldset label.linea-dos .radio {border: 0;} 
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.linea-dos {
+    float: left;
+    /*left: 20.4em;*/
+    position: relative;
+    /*top: -1.45em;*/
+	clear: none; display: block; margin: 0em 0em 0em 0em; padding: 0.2em 0 0.2em 0;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio input {width:18em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio input.checkbox {width:1em;}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col1.titulo {display:table-cell; clear: left;  width: 16em;  float: left;  padding: 0.1em 0.3em 0 0.2em;  font-weight: bold;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col2 {display:table-cell; float:left; width: 16em; padding: 0.1em 0.3em 0 1em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col1b {display:table-cell; float:left; width: 11em; padding: 0.1em 0.3em 0 1em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col2b {display:table-cell; float:left; width: 11em; padding: 0.1em 0.3em 0 4em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_nueva {display:table-cell; float:left; width: 60em; padding: 0.1em 0.3em 0 0.2em;}
+
+/* #contenido #interior #central #formulcuad fieldset label.linea-medio textarea.areatexto {width:32.3em; height:6em; float: none; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;} */
+#contenido #interior #central #formulcuad fieldset label.linea-medio textarea.areatextogrande {
+width: 54.1em;
+height: 5em;
+clear: right;
+float: left;
+margin-right: 0.4em;
+text-align: left;
+background-color: #fff;
+border: 1px #9EB6BA solid;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 0.75em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio textarea {font-family: Verdana, Arial, Helvetica, sans-serif; width: 52em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio textarea.largo {font-family: Verdana, Arial, Helvetica, sans-serif; width: 68.5em; height: 6em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em; clear:none}
+
+
+#contenido #interior #central #formulcuad label.linea-medio textarea {font-family: Verdana, Arial, Helvetica, sans-serif; width: 52em; float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0.2em 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+
+#contenido #interior #central #formulcuad fieldset textarea {width:98%;  float: left; text-align: left; background-color: #fff; border: 1px #9EB6BA solid; padding-left: 0.2em; margin: 0 0 0 0.4em; font-family: Arial, Helvetica, sans-serif; font-size: 0.75em;}
+.mod_pagination ul { float: right;  margin-right: -6.6em; width: 100%;}
+
+/* Campos obligatorios */
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col1 span.obligatorio {color:#FF4500; padding:0; font-size: 1em; float:right;}
+#contenido #interior #central #formulcuad fieldset label.linea-medio span.label_col2 span.obligatorio {color:#FF4500; padding:0; font-size: 1em; float:right;}
+#contenido #interior #central #formulcuad fieldset label span.obligatorio {color:#FF4500; padding:0; font-size: 1em; float:right;}
+
+.tabs .tab .tabVista fieldset{	margin-left: 0px !important; }
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio input.textoCodigo {	width: 3em;}
+
+#contenido #interior #central #formulcuad div.capaOperacionTab fieldset{	margin-left: 0;    margin-top: 0.4em;}
+
+#numRegistrosTotales{
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    left: 4px;
+    position: relative;
+    top: -35px;   
+    width: 400px; 
+}
+
+div.listado-acciones-derecha.exportar-persona {
+	display:inline !important;
+	float: right;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox span{
+	float: left;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox ul{
+	float: left;
+	margin: 0em;
+	width: 15em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox ul li {
+	float: left;
+	margin: 0em;
+	width: 15em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox ul li input{
+	padding: 0em;
+	width:1em;
+	margin-left: 0.4em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox ul li span{
+	margin-left:1em;
+	margin-right: 3em;
+	padding: 0em;
+}
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio.lista_checkbox input{
+	padding: 0em;
+	margin: 0em;
+	width:1em;
+}
+
+input.ficheroCertificado {
+	width:26em;
+	margin-left:27.5em !important;
+	margin-top:0.5em !important;
+}
+
+input.campoLargo{
+	width: 54.1em !important
+}
+
+input.campoMedio{
+	width: 32.3em !important;
+}
+
+
+#contenido #interior #central #formulcuad fieldset label.linea-medio select {
+    width: 18.3em;
+}
+
+#filtrosExtra{
+	display: block;
+}
+
+#filtrosExtra fieldset{
+	margin: 0px !important;	
+	padding: 0em 0em !important;
+    border: 0px none !important;
+    width: 100% !important;
+}
+
+
+#filtrosProhibicion{
+	display: block;
+}
+
+#filtrosProhibicion fieldset{
+	margin: 0px !important;	
+	padding: 0em 0em !important;
+    border: 0px none !important;
+    width: 100% !important;
+}
+
+hr{
+	color: #FFFFFF;
+}
+
+/* SELECT PARA EXPORTAR */
+#procedencia {
+    margin-left: 17.3em !important;
+}
+
+#procedenciaSelected{  
+	width: 5em !important; 
+}
+#breadCCAA{
+	top: 10px;
+}
+
+#contenido #interior #central #formulcuad fieldset textarea {
+	clear:  none;
+}

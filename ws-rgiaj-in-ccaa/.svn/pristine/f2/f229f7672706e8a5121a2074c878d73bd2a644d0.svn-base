@@ -1,0 +1,134 @@
+
+package es.dgoj.rgiaj;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Clase Java para AbstractQueryEntityRquest complex type.
+ * 
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * 
+ * <pre>
+ * &lt;complexType name="AbstractQueryEntityRquest">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="firstResult" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="maxResults" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="queryTimeout" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="calculateNumResults" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="fixDatetimes" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "AbstractQueryEntityRquest", propOrder = {
+    "firstResult",
+    "maxResults",
+    "queryTimeout",
+    "calculateNumResults",
+    "fixDatetimes"
+})
+@XmlSeeAlso({
+    ComunidadQueryRequest.class,
+    JugHistoricoQueryRequest.class,
+    JugProhibicionQueryRequest.class
+})
+public class AbstractQueryEntityRquest {
+
+    protected int firstResult;
+    protected int maxResults;
+    protected int queryTimeout;
+    protected int calculateNumResults;
+    protected boolean fixDatetimes;
+
+    /**
+     * Obtiene el valor de la propiedad firstResult.
+     * 
+     */
+    public int getFirstResult() {
+        return firstResult;
+    }
+
+    /**
+     * Define el valor de la propiedad firstResult.
+     * 
+     */
+    public void setFirstResult(int value) {
+        this.firstResult = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad maxResults.
+     * 
+     */
+    public int getMaxResults() {
+        return maxResults;
+    }
+
+    /**
+     * Define el valor de la propiedad maxResults.
+     * 
+     */
+    public void setMaxResults(int value) {
+        this.maxResults = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad queryTimeout.
+     * 
+     */
+    public int getQueryTimeout() {
+        return queryTimeout;
+    }
+
+    /**
+     * Define el valor de la propiedad queryTimeout.
+     * 
+     */
+    public void setQueryTimeout(int value) {
+        this.queryTimeout = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad calculateNumResults.
+     * 
+     */
+    public int getCalculateNumResults() {
+        return calculateNumResults;
+    }
+
+    /**
+     * Define el valor de la propiedad calculateNumResults.
+     * 
+     */
+    public void setCalculateNumResults(int value) {
+        this.calculateNumResults = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad fixDatetimes.
+     * 
+     */
+    public boolean isFixDatetimes() {
+        return fixDatetimes;
+    }
+
+    /**
+     * Define el valor de la propiedad fixDatetimes.
+     * 
+     */
+    public void setFixDatetimes(boolean value) {
+        this.fixDatetimes = value;
+    }
+
+}

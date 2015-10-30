@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<project name="template" default="init" basedir=".">   
+	
+
+	
+	<target name="init" depends="">
+		<property file="build.properties"/>
+		<property name="project.dir" value="${project.dir}"/>
+		<property name="temp.dir" value="${basedir}/instalacion"/>		
+		<echo message="* * * * * * PROPIEDADES DE CONFIGURACION: * * * * * * *"/>
+		<echo message="*"/>
+		<echo message="*              basedir = ${basedir}"/>
+		<echo message="*          project.dir = ${project.dir}"/>
+		<echo message="*             temp.dir = ${temp.dir}"/>
+		<echo message="*       version.number = ${version.number}"/>
+		<echo message="*          java.exec = ${java.exec}"/>
+		<echo message="*          tomcat.home = ${tomcat.home}"/>
+		<echo message="*"/>
+		<echo message="* * * * * * * * * * * * * * * * * * * * * * * * * * * *"/>
+		<path id="cxf.classpath">
+			<fileset dir="${project.dir}/WebContent/WEB-INF/lib">
+				<include name="*.jar"/>
+			</fileset>
+			<fileset dir="${project.dir}/extra-lib">
+				<include name="*.jar"/>
+			</fileset>
+		</path>
+	</target>  
+				
+    <!--
+      Generar el fichero de instalacion (war) para el servidor.
+      Asumimos que las clases ya han sido compiladas previamente por otra tarea!
+    -->
+	<target name="war" depends="init,compile">
+		<delete dir="${temp.dir}/war" />
+		<delete dir="${temp.dir}/warContent" />
+		<mkdir dir="${temp.dir}/war" />
+		<mkdir dir="${temp.dir}/warContent" />
+		<mkdir dir="${temp.dir}/warContent/WEB-INF/classes" />
+		<copy todir="${temp.dir}/warContent">
+			<fileset dir="${project.dir}/WebContent" excludes="**/classes/**" />
+		</copy>
+		<copy todir="${temp.dir}/warContent/WEB-INF/classes">
+			<fileset dir="${temp.dir}/classes" excludes="test/**" />
+		</copy>
+		<jar destfile="${temp.dir}/war/${war.name}" basedir="${temp.dir}/warContent" />
+		<echo message="* * * * * * * * * FICHERO GENERADO: * * * * * * * * *" />
+		<echo message="*" />
+		<echo message="*   ${temp.dir}/war/${war.name}" />
+		<echo message="*" />
+		<echo message="* * * * * * * * * * * * * * * * * * * * * * * * * * *" />
+	</target>
+	
+    <!--
+      Se compilan las clases Java
+    -->
+	<target name="compile" depends="version-class" >
+		<property name="classes.dir" value="${temp.dir}/classes"/>
+		<delete dir="${classes.dir}" />
+		<mkdir dir="${classes.dir}"/>
+		<javac target="1.7" compiler="modern" destdir="${classes.dir}" debug="on" fork="true" executable="${java.exec}/bin/javac" includeantruntime="false">
+		    <src path="${project.dir}/src"/>		    
+			<classpath>
+				<fileset dir="${project.dir}/WebContent/WEB-INF/lib">
+					<include name="*.jar"/>
+				</fileset>
+				<fileset dir="${tomcat.home}/lib">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<copy todir="${classes.dir}/">
+			<fileset dir="${project.dir}/resources/">
+				<include name="**/*.xml"/>
+				<include name="**/*.properties"/>
+				<include name="**/*.wsdl"/>
+				<include name="**/*.xsd"/>
+				<include name="**/*.p12"/>
+			</fileset>
+		</copy>
+	</target>
+
+    <!-- 
+      Crear una clase Java con el número de versión. Esta clase se genera a partir
+      de un template, reemplazando el package y el Id de la versión
+    -->
+	<target name="version-class" depends="init">
+		<property name="package.name" value="es.gamco.redprogram.version"/>
+		<tstamp>
+		    <format property="date" pattern="dd-MM-yyyy"/>
+		</tstamp>
+		<property name="src.dir" value="${project.dir}/src/es/gamco/redprogram/version"/>
+		<mkdir dir="${src.dir}"/>
+		<copy file="${project.dir}/resources/version.java.template" tofile="${src.dir}/Version.java" overwrite="true"/>
+		<replace file="${src.dir}/Version.java" token="PACKAGE_NAME" value="${package.name}"/>
+		<replace file="${src.dir}/Version.java" token="VERSION_NUMBER" value="${version.number}"/>
+		<replace file="${src.dir}/Version.java" token="DATE" value="${date}"/>
+	</target>	
+	
+</project>

@@ -1,0 +1,304 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
+
+import org.apache.cxf.jaxws.context.WrappedMessageContext;
+import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.Message;
+import org.apache.log4j.Logger;
+
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJEntity;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.entity.PeticionEntity;
+import es.gob.cnjuego.ws.service.GestionJugadoresService;
+import es.gob.cnjuego.ws.service.JugadoresTestService;
+import es.gob.cnjuego.ws.util.Constantes;
+import es.gob.cnjuego.ws.verificacionjugadores.control.VerificacionJugadoresController;
+import es.gob.cnjuego.ws.verificacionjugadores.interceptor.InterceptorEntradaProcesarCertificado;
+import es.gob.cnjuego.ws.verificacionjugadores.interceptor.InterceptorEntradaRegistrarInvocacion;
+
+/**
+ * Esta clase implementa las operaciones del servicio web.
+ * Nótese que antes de que se invoquen los métodos de esta clase, hay unos interceptores
+ * que intervienen en el procesamiento de las peticiones remotas.
+ * Esos interceptores se encargan de obtener el operador a aprtir de los datos de las cabceras
+ * del mensaje SOAP, crear una petición para persistir los mensajes y controlar la seguridad.
+ */
+public class VerificacionJugadoresImpl implements VerificacionJugadores {
+
+	@Resource
+	WebServiceContext webServiceContext;
+	private Logger log= Logger.getLogger(VerificacionJugadoresImpl.class);	
+	private VerificacionDao verificacionDao;
+	private ClienteJuegoDniService clienteJuegoDniService;
+	private ClienteSCSPService clienteSCSPService;
+	private GestionJugadoresService gestionJugadoresService;
+	private JugadoresTestService jugadoresTestService;
+	
+	/**
+	 * Retorna el operador que fue inyectado en el contexto por un interceptor.
+	 * El operador se recupera de la base de datos a partir del certificado que viene en la cabecera
+	 * de la petición del web service.
+	 */
+	private OperadorEntity getOperador() {
+	    MessageContext context = webServiceContext.getMessageContext();
+	    WrappedMessageContext wrappedContext = (WrappedMessageContext)context;
+	    Message mensaje = wrappedContext.getWrappedMessage();
+	    Exchange ex = mensaje.getExchange();
+	    OperadorEntity operador = (OperadorEntity)ex.getInMessage().get(InterceptorEntradaProcesarCertificado.OPERADOR);
+	    return operador;
+	}
+	
+	/**
+	 * Retorna la petición que fue inyectado en el contexto por un interceptor.
+	 */
+	private PeticionEntity getPeticion() {
+	    MessageContext context = webServiceContext.getMessageContext();
+	    WrappedMessageContext wrappedContext = (WrappedMessageContext)context;
+	    Message mensaje = wrappedContext.getWrappedMessage();
+	    Exchange ex = mensaje.getExchange();
+	    PeticionEntity peticion = (PeticionEntity)ex.getInMessage().get(InterceptorEntradaRegistrarInvocacion.PETICION);
+	    log.debug("IdPeticion-------->" + peticion.getIdPeticion());
+	    return peticion;
+	}
+
+	/**
+	 * Recibimos una lista de jugadores y comprobamos su identidad y el estado en el registro RGIAJ.
+	 * Este método es una combinacion de verificarIdentidad() y verificarRGIAJ()
+	 * Para cada jugador se retorna el resultado de la validación.
+	 * Para poder hacer la comprobación, es necesario:
+	 * - Que el operador hace la solicitud esté habilitado
+	 * - Que la lista no contenga jugadores repetidos 
+	 */
+	public List<ResultadoJugador> verificarJugador(List<Jugador> jugadores)	throws VerificarJugadorFault_Exception {
+		OperadorEntity operador = this.getOperador();
+	    if (operador.isNullOperador()) {
+			VerificarJugadorFault fault = new VerificarJugadorFault();
+			fault.setVerificarJugadorFault(CodigosVerificacion.ERROR_OPERADOR_INCORRECTO);
+			throw new VerificarJugadorFault_Exception(CodigosVerificacion.DESC_ERROR_OPERADOR_INCORRECTO, fault);
+		}
+		return this.verificarJugador(jugadores, operador, this.getPeticion().getIdPeticion());
+	}
+	
+	private List<ResultadoJugador> verificarJugador(List<Jugador> jugadores, OperadorEntity operador, int idPeticion) throws VerificarJugadorFault_Exception {
+		VerificacionJugadoresController controller=null;
+		List<ResultadoJugador> listaResultado=null;
+		
+		try {
+			// Crear controlador para el operador y la lista de operadores
+			controller=new VerificacionJugadoresController(operador, jugadores, 
+														   this.getGestionJugadoresService(), 
+														   this.getClienteSCSPService(), 
+														   this.getClienteJuegoDniService(),
+														   this.getJugadoresTestService(), 
+														   this.getVerificacionDao());
+			
+			// Comprobar si el operador está deshabilitado
+			controller.checkDesabilitado();
+
+			// Comprobar si hay jugadores repetidos en la lista de jugadores
+			controller.checkJugadoresRepetidos();
+
+			// Comprobar el estado en RGIAJ de la lista de jugadores
+			listaResultado = (ArrayList<ResultadoJugador>) controller.verificarJugador();
+
+			controller.almacenarJugadoresConsultaJugadores(idPeticion, listaResultado);
+		} catch (Exception e1) {
+			log.error("Error en el Servicio. Método verificarJugador",e1);
+			VerificarJugadorFault fault3 = new VerificarJugadorFault();
+			fault3.setVerificarJugadorFault(CodigosVerificacion.ERROR_INTERNO);
+			throw new VerificarJugadorFault_Exception(CodigosVerificacion.DESC_ERROR_INTERNO,
+					fault3);
+		}
+		return listaResultado;
+	}
+
+	/**
+	 * Recibimos una lista de jugadores y comprobamos si los datos de la identidad (según la Policía)
+	 * son correctos. Para cada jugador se retorna el resultado de la validación.
+	 * Para poder hacer la comprobación, es necesario:
+	 * - Que el operador hace la solicitud esté habilitado
+	 * - Que la lista no contenga jugadores repetidos 
+	 */
+	public List<ResultadoIdentidad> verificarIdentidad(List<Jugador> jugadores) throws VerificarIdentidadFault_Exception {
+		OperadorEntity operador = this.getOperador();
+	    if (operador.isNullOperador()) {
+			VerificarIdentidadFault fault = new VerificarIdentidadFault();
+			fault.setVerificarIdentidadFault(CodigosVerificacion.ERROR_OPERADOR_INCORRECTO);
+			throw new VerificarIdentidadFault_Exception(CodigosVerificacion.DESC_ERROR_OPERADOR_INCORRECTO, fault);
+		}
+		return this.verificarIdentidad(jugadores, operador, this.getPeticion().getIdPeticion());
+	}
+
+	private List<ResultadoIdentidad> verificarIdentidad(List<Jugador> jugadores, OperadorEntity operador, int idPeticion) throws VerificarIdentidadFault_Exception {
+		VerificacionJugadoresController controller=null;
+		List<ResultadoIdentidad> listaResultado=null;		
+		
+		try {
+			// Crear controlador para el operador y la lista de operadores
+			controller=new VerificacionJugadoresController(operador, jugadores, this.getGestionJugadoresService(), 
+														   this.getClienteSCSPService(), this.getClienteJuegoDniService(),
+														   this.getJugadoresTestService(), this.getVerificacionDao());
+			
+			// comprobar si es una peticion de recarga de la tabla de configuración. Esto es una peticion excepcional
+			listaResultado=controller.reloadConf();
+			if(listaResultado!=null) return listaResultado;
+
+			// Comprobar si el operador está deshabilitado
+			controller.checkDesabilitado();
+			
+			// Comprobar si hay jugadores repetidos en la lista de jugadores
+			controller.checkJugadoresRepetidos();
+			
+			// Comprobar el estado en RGIAJ de la lista de jugadores 
+			listaResultado = (ArrayList<ResultadoIdentidad>) controller.verificarIdentidad();
+			
+			controller.almacenarJugadoresConsultaIdentidad(idPeticion, listaResultado);
+		} catch (Exception e1) {
+			log.error("Error en el Servicio. Método verificarIdentidad",e1);
+			VerificarIdentidadFault fault3 = new VerificarIdentidadFault();
+			fault3.setVerificarIdentidadFault(CodigosVerificacion.ERROR_INTERNO);
+			throw new VerificarIdentidadFault_Exception(CodigosVerificacion.DESC_ERROR_INTERNO, fault3); 
+		}  
+		return listaResultado;
+	}
+	
+	/**
+	 * Recibimos una lista de jugadores y comprobamos el estado de cada uno en el registro RGIAJ.
+	 * Es decir, si los jugadores tiene prohibido jugar. Para cada jugador se retorna el resultado de la validación.
+	 * Para poder hacer la comprobación, es necesario:
+	 * - Que el operador hace la solicitud esté habilitado
+	 * - Que la lista no contenga jugadores repetidos 
+	 */
+	public List<ResultadoRGIAJ> verificarRGIAJ(List<Jugador> jugadores)	throws VerificarRGIAJFault_Exception {
+		OperadorEntity operador = this.getOperador();
+	    if (operador.isNullOperador()) {
+	    	VerificarRGIAJFault fault = new VerificarRGIAJFault();
+			fault.setVerificarRGIAJFault(CodigosVerificacion.ERROR_OPERADOR_INCORRECTO);
+			throw new VerificarRGIAJFault_Exception(CodigosVerificacion.DESC_ERROR_OPERADOR_INCORRECTO, fault);
+		}
+		return this.verificarRGIAJ(jugadores, operador, this.getPeticion().getIdPeticion());
+	}
+
+	/* Devuelve la lista de resultados de la consulta de existencia en RGIAJ para una lista de jugadores
+	 * dada, un operador y una petición
+	 */
+	private List<ResultadoRGIAJ> verificarRGIAJ(List<Jugador> jugadores, OperadorEntity operador, int idPeticion)	throws VerificarRGIAJFault_Exception {
+		VerificacionJugadoresController controller=null;
+		ArrayList<ResultadoRGIAJ> listaResultado;
+		
+		try {
+			// Crear controlador para el operador y la lista de operadores
+			controller=new VerificacionJugadoresController(operador, jugadores, this.getGestionJugadoresService(), 
+														   this.getClienteJuegoDniService(), this.getJugadoresTestService(), 
+														   this.getVerificacionDao());
+
+			// Comprobar si el operador está deshabilitado
+			controller.checkDesabilitado();
+			
+			// Comprobar si hay jugadores repetidos en la lista de jugadores
+			controller.checkJugadoresRepetidos();
+			
+			// Comprobar el estado en RGIAJ de la lista de jugadores 
+			listaResultado = (ArrayList<ResultadoRGIAJ>) controller.verificarRGIAJ();
+			
+			controller.almacenarJugadoresConsultaRGIAJ(idPeticion, listaResultado);
+		} catch (Exception e1) {
+			log.error("Error en el Servicio. Método verificarRGIAJ",e1);
+			VerificarRGIAJFault fault=new VerificarRGIAJFault();
+			fault.setVerificarRGIAJFault(CodigosVerificacion.ERROR_INTERNO);
+			throw new VerificarRGIAJFault_Exception(CodigosVerificacion.DESC_ERROR_INTERNO, fault);
+		} 		
+		return listaResultado;
+	}
+
+	/**
+	 * Retorna la lista de cambios registrados en los jugadores del operador.
+	 * Si el modo actual del operador es 0 (deshabilitado) o 1 (modo pruebas), lanzamos
+	 * un fault. 
+	 */
+	public List<CambioRGIAJ> verificarCambiosRGIAJ() throws VerificarCambiosRGIAJFault_Exception {
+		OperadorEntity operador = this.getOperador();
+	    if (operador.isNullOperador()) {
+			VerificarCambiosRGIAJFault fault = new VerificarCambiosRGIAJFault();
+			fault.setVerificarCambiosRGIAJFault(CodigosVerificacion.ERROR_OPERADOR_INCORRECTO);
+			throw new VerificarCambiosRGIAJFault_Exception(CodigosVerificacion.DESC_ERROR_OPERADOR_INCORRECTO, fault);
+		}
+	    if (operador.getModeEnabled() == Constantes.OP_DESHABILITADO || operador.getModeEnabled() == Constantes.OP_HABILITADO_PRU) {
+			VerificarCambiosRGIAJFault fault = new VerificarCambiosRGIAJFault();
+			fault.setVerificarCambiosRGIAJFault(CodigosVerificacion.ERROR_OPERADOR_DESHABILITADO_O_EN_PRUEBA);
+			throw new VerificarCambiosRGIAJFault_Exception(CodigosVerificacion.DESC_ERROR_OPERADOR_DESHABILITADO_O_EN_PRUEBA, fault);
+		}
+		return this.verificarCambiosRGIAJ(this.getOperador());
+	}
+
+	/**
+	 * Retorna una lista con los cambios registrados para los jugadores de un
+	 * operador recibido por parámetro.
+	 */
+	private List<CambioRGIAJ> verificarCambiosRGIAJ(OperadorEntity operador) throws VerificarCambiosRGIAJFault_Exception {
+		List<CambioRGIAJ> listaResultado = new ArrayList<CambioRGIAJ>();
+		List<JugadoresCambioRGIAJEntity> cambiosEntities = null;
+		
+		// Se consultan los cambios en RGIAJ
+		cambiosEntities = this.getVerificacionDao().getCambiosJugadores(operador.getIdOperador());
+		
+		// Para cada cambio se rellena el resultado a devolver en forma de lista
+		for (JugadoresCambioRGIAJEntity cambioEntity : cambiosEntities) {
+			
+			CambioRGIAJ cambio = new CambioRGIAJ();
+			cambio.setDNI(cambioEntity.getDni());
+			cambio.setMotivoCambio(cambioEntity.getEvento());
+			cambio.setFechaCambio(cambioEntity.getFechaValor());
+			
+			listaResultado.add(cambio);
+		}
+		return listaResultado;
+	}
+	
+	public VerificacionDao getVerificacionDao() {
+		return verificacionDao;
+	}
+
+	public void setVerificacionDao(VerificacionDao verificacionDao) {
+		this.verificacionDao = verificacionDao;
+	}
+
+	public ClienteJuegoDniService getClienteJuegoDniService() {
+		return clienteJuegoDniService;
+	}
+
+	public void setClienteJuegoDniService(ClienteJuegoDniService clienteJuegoDniService) {
+		this.clienteJuegoDniService = clienteJuegoDniService;
+	}
+
+	public GestionJugadoresService getGestionJugadoresService() {
+		return gestionJugadoresService;
+	}
+
+	public void setGestionJugadoresService(GestionJugadoresService gestionJugadoresService) {
+		this.gestionJugadoresService = gestionJugadoresService;
+	}
+
+	public JugadoresTestService getJugadoresTestService() {
+		return jugadoresTestService;
+	}
+
+	public void setJugadoresTestService(JugadoresTestService jugadoresTestService) {
+		this.jugadoresTestService = jugadoresTestService;
+	}
+	
+	public ClienteSCSPService getClienteSCSPService() {
+		return clienteSCSPService;
+	}
+
+	public void setClienteSCSPService(ClienteSCSPService clienteSCSPService) {
+		this.clienteSCSPService = clienteSCSPService;
+	}
+
+}

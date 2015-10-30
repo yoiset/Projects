@@ -1,0 +1,36 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import es.gob.cnjuego.ws.entity.DNIDebugIdentidad;
+
+
+@Repository(value="dNIDebugIdentidadDAO")
+public class DNIDebugIdentidadDAOImpl implements DNIDebugIdentidadDAO {
+
+	@PersistenceContext//(unitName="JohanJPA",type=PersistenceContextType.TRANSACTION)
+	EntityManager manager;
+	
+	@Override
+	public List<String> obtenerListaDni(){
+		List<String> res = null;
+		Query query = manager.createQuery("SELECT d FROM DNIDebugIdentidad d ORDER BY d.dni");
+		List<DNIDebugIdentidad> lista = query.getResultList();
+		if (lista != null && !lista.isEmpty()){
+			res = new ArrayList<String>();
+			for(Iterator<DNIDebugIdentidad> it = lista.iterator();it.hasNext();){
+				res.add(it.next().getDni());
+			}
+		}
+		return res;
+	}
+}

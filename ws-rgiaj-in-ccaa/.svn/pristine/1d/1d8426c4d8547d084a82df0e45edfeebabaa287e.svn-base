@@ -1,0 +1,87 @@
+
+package es.dgoj.rgiaj;
+
+import java.util.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.w3._2001.xmlschema.Adapter2;
+
+
+/**
+ * <p>Clase Java para ultimasDescargas complex type.
+ * 
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * 
+ * <pre>
+ * &lt;complexType name="ultimasDescargas">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="fechaDescarga" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="ultimo" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "ultimasDescargas", propOrder = {
+    "fechaDescarga",
+    "ultimo"
+})
+public class UltimasDescargas {
+
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlSchemaType(name = "date")
+    protected Date fechaDescarga;
+    protected long ultimo;
+
+    /**
+     * Obtiene el valor de la propiedad fechaDescarga.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public Date getFechaDescarga() {
+        return fechaDescarga;
+    }
+
+    /**
+     * Define el valor de la propiedad fechaDescarga.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFechaDescarga(Date value) {
+        this.fechaDescarga = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad ultimo.
+     * 
+     */
+    public long getUltimo() {
+        return ultimo;
+    }
+
+    /**
+     * Define el valor de la propiedad ultimo.
+     * 
+     */
+    public void setUltimo(long value) {
+        this.ultimo = value;
+    }
+
+}

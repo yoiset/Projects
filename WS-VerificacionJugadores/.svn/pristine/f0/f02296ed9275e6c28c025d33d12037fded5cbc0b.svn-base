@@ -1,0 +1,15 @@
+package es.gob.cnjuego.ws.service;
+
+import java.util.Date;
+
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.util.CodigoEstadoSCSP;
+import es.gob.cnjuego.ws.verificacionjugadores.Jugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoIdentidad;
+
+public interface ServicioIdentidad {
+	public CodigoEstadoSCSP consultarIdentidadUsuario(String nif, String nombre, String apellido1, String apellido2, Date fechaNacimiento) throws Exception;
+	public CodigoEstadoSCSP consultarIdentidadUsuarioConCache(String nif, String nombre, String apellido1, String apellido2, Date fechaNacimiento) throws Exception;
+	
+	public ResultadoIdentidad consultarIdentidadUsuario(OperadorEntity operador, Jugador jugador);
+}

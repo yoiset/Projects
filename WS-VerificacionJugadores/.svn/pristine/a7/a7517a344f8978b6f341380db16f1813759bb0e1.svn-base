@@ -1,0 +1,74 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.text.SimpleDateFormat;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import es.gob.cnjuego.ws.dao.VerificacionDao;
+
+public class BajaJugadorTestCase extends SpringTestCase{
+
+	
+	private VerificacionDao dao;
+	private VerificacionJugadores proxy;
+	
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		this.setDao((VerificacionDao)this.getContext().getBean("VerificacionDao"));
+		this.setProxy((VerificacionJugadores)this.getContext().getBean("VerificacionJugadoresService"));
+	}
+
+	/**
+	 * Verificamos que la configuración de los ficheros es correcta.
+	 */
+	@Test
+	public void testInit() throws Exception {
+		assertNotNull(this.getProxy());
+	}
+	
+	
+	@Test
+	public void bajaJugador01_1() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Baja baja=new Baja();
+		baja.setDni("Y0336380L"); /// COD010
+		baja.setCausa("A");
+		
+		// Obtenemos la cantidad de peticiones antes de hacer
+		// la invocación del servicio
+		long cantidadAntes = this.getDao().getCantidadPeticiones();
+		
+		ResultadoType respuesta = this.getProxy().bajaJugador(baja);
+		assertNotNull(respuesta);
+		long cantidadDespues = this.getDao().getCantidadPeticiones();
+		
+		// Comprobamos que el interceptor de CXF guardó la petición en la BD
+		// y los datos de la respuesta
+		assertEquals(cantidadAntes + 1, cantidadDespues);
+		assertEquals(CodigosVerificacion.COD_BAJA_DNI_BAJA, respuesta.getCodigo());
+		
+//		assertEquals("COD010", respuesta.getDescripcion());
+	}
+
+	public VerificacionDao getDao() {
+		return dao;
+	}
+
+	public void setDao(VerificacionDao dao) {
+		this.dao = dao;
+	}
+
+	public VerificacionJugadores getProxy() {
+		return proxy;
+	}
+
+	public void setProxy(VerificacionJugadores proxy) {
+		this.proxy = proxy;
+	}
+
+}

@@ -1,0 +1,9 @@
+package es.gob.cnjuego.ws.dao;
+
+import es.gob.cnjuego.ws.entity.JugadorTestWS;
+
+
+public interface JugadoresTestWSDAO {
+
+	public JugadorTestWS obtenerJugadorPrueba(String dni);	
+}

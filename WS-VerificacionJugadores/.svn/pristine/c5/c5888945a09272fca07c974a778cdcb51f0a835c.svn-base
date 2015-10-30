@@ -1,0 +1,7 @@
+###
+# Parámetros para crear el fichero de despliegue
+## 
+
+version.number=1.0
+war.name=ws-verificacionjugadores-${version.number}.war
+tomcat.home=C:/Herramientas/apache-tomcat-6.0.36

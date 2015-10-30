@@ -1,0 +1,162 @@
+
+package es.dgoj.rgiaj;
+
+import java.util.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.w3._2001.xmlschema.Adapter1;
+
+
+/**
+ * <p>Java class for JugProhibicionBeanWS complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="JugProhibicionBeanWS">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="idComunidad" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="codigo" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="fechaDescarga" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
+ *         &lt;element name="ultimo" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "JugProhibicionBeanWS", propOrder = {
+    "idComunidad",
+    "codigo",
+    "descripcion",
+    "fechaDescarga",
+    "ultimo"
+})
+public class JugProhibicionBeanWS {
+
+    protected long idComunidad;
+    @XmlElement(required = true)
+    protected String codigo;
+    @XmlElement(required = true)
+    protected String descripcion;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(Adapter1 .class)
+    @XmlSchemaType(name = "dateTime")
+    protected Date fechaDescarga;
+    protected long ultimo;
+
+    /**
+     * Gets the value of the idComunidad property.
+     * 
+     */
+    public long getIdComunidad() {
+        return idComunidad;
+    }
+
+    /**
+     * Sets the value of the idComunidad property.
+     * 
+     */
+    public void setIdComunidad(long value) {
+        this.idComunidad = value;
+    }
+
+    /**
+     * Gets the value of the codigo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * Sets the value of the codigo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCodigo(String value) {
+        this.codigo = value;
+    }
+
+    /**
+     * Gets the value of the descripcion property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * Sets the value of the descripcion property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDescripcion(String value) {
+        this.descripcion = value;
+    }
+
+    /**
+     * Gets the value of the fechaDescarga property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public Date getFechaDescarga() {
+        return fechaDescarga;
+    }
+
+    /**
+     * Sets the value of the fechaDescarga property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFechaDescarga(Date value) {
+        this.fechaDescarga = value;
+    }
+
+    /**
+     * Gets the value of the ultimo property.
+     * 
+     */
+    public long getUltimo() {
+        return ultimo;
+    }
+
+    /**
+     * Sets the value of the ultimo property.
+     * 
+     */
+    public void setUltimo(long value) {
+        this.ultimo = value;
+    }
+
+}

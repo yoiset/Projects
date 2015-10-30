@@ -1,0 +1,239 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
+
+import es.gob.cnjuego.ws.Version;
+import es.gob.cnjuego.ws.entity.ConfiguracionEntity;
+import es.gob.cnjuego.ws.entity.IJugadoresCambioRGIAJ;
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJEntity;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.entity.PeticionEntity;
+import es.gob.cnjuego.ws.entity.TraduccionCaracteres;
+
+@Transactional
+public class VerificacionDao {
+	
+	private static Logger log = Logger.getLogger(VerificacionDao.class);
+	private EntityManager entityManager;
+	private Map<String, String> cacheConfiguraciones;
+	private String listaCaracteresOriginales = null;
+	private String listaCaracteresTraducidos = null;
+	
+	@PersistenceContext
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	private EntityManager getEntityManager() {
+		return this.entityManager;
+	}
+	
+	/**
+	 * Retorna el operador cuyo certificado tiene un hash igual al del parámetro. 
+	 */
+	public OperadorEntity getOperadorByHash(String hash) {
+		Query query = this.getEntityManager().createQuery("SELECT o FROM OperadorEntity o WHERE hashCertificado = :hashCertificado and o.modeEnabled<>0");
+		query.setParameter("hashCertificado", hash);
+		List<OperadorEntity> lista = query.getResultList();
+		if (lista.size() > 0){
+			OperadorEntity operador = lista.get(0);
+			return operador;
+		}
+		return null;
+	}
+
+	/**
+	 * Retorna la petición con el ID del parámetro
+	 */
+	public PeticionEntity getPeticionesById(int id) {
+		PeticionEntity peticion = this.getEntityManager().find(PeticionEntity.class, id);;
+		return peticion;
+	}
+
+	/**
+	 * Guarda la petición en la base de datos.
+	 * Nótese que el ID es asignado por la base de datos. 
+	 */
+	@Transactional
+	public PeticionEntity agregarPeticion(PeticionEntity peticion) {
+		this.getEntityManager().persist(peticion);
+		return peticion;
+	}
+
+	/**
+	 * Guarda la petición en la base de datos.
+	 * Nótese que el ID es asignado por la base de datos. 
+	 */
+	@Transactional
+	public PeticionEntity actualizarPeticion(PeticionEntity peticion) {
+		this.getEntityManager().merge(peticion);
+		return peticion;
+	}
+
+	/**
+	 * Retorna la cantidad de registros de la tabla de peticiones.
+	 * Se usa para las pruebas unitarias
+	 */
+	public long getCantidadPeticiones() {
+		Query query = this.getEntityManager().createQuery("select count(p) from PeticionEntity p");
+		Long cantidad = (Long) query.getSingleResult();
+		return cantidad.longValue();
+	}
+	
+	/**
+	 * Retorna todos los cambios registrados en el estado de los jugadores de un operador dado.
+	 */
+	public List<IJugadoresCambioRGIAJ> getCambiosJugadores(long idOperador) {
+		Query query = this.getEntityManager().createQuery("SELECT c FROM JugadoresCambioRGIAJEntity c WHERE c.id.idOperador = :idOperador and (c.evento='A' or c.evento='B') and c.fechaValor <= sysdate");
+		query.setParameter("idOperador", idOperador);
+		List<IJugadoresCambioRGIAJ> lista = query.getResultList();
+		return lista;
+	}
+	
+	
+	/** Para los operadores de Prueba retorna todos los cambios registrados en el estado de los jugadores de un operador dado.
+	 */
+	public List<IJugadoresCambioRGIAJ> getCambiosJugadoresTest(long idOperador) {
+		Query query = this.getEntityManager().createQuery("SELECT c FROM JugadoresTestCambioRGIAJEntity c WHERE c.id.idOperador = :idOperador and (c.evento='A' or c.evento='B')");
+		query.setParameter("idOperador", idOperador);
+		List<IJugadoresCambioRGIAJ> lista = query.getResultList();
+		return lista;
+	}
+	
+	/** Retorna el cambio registrado en el estado de un jugador y un operador dado.
+	 * @param idOperador
+	 * @param dni
+	 * @return
+	 */
+	public JugadoresCambioRGIAJEntity getJugadorOperador(Long idOperador, String dni){
+		Query query = this.getEntityManager().createQuery("SELECT c FROM JugadoresCambioRGIAJEntity c WHERE c.id.idOperador = :idOperador and c.id.dni = :dni and (c.evento='A' or c.evento='B')", JugadoresCambioRGIAJEntity.class);
+		query.setParameter("idOperador", idOperador).setParameter("dni", dni);
+		List<JugadoresCambioRGIAJEntity> list= query.getResultList();
+		if(list!=null && list.size()>0)
+			return list.get(0);
+		return null;
+	}
+	
+	/**Actualiza el estado en RIAGJ
+	 * @param entity
+	 */
+	@Transactional
+	public void updateJugadorOperador(JugadoresCambioRGIAJEntity entity){
+		getEntityManager().merge(entity);
+	}
+	
+
+	/**
+	 * Lee los valores de la tabla de configuraciones y los almacena en una caché
+	 * en memoria. La aplicación puede invocar este método para recargar la caché.
+	 * Se mandan los valores asignados al log, para poder monitorizar las actualizaciones.
+	 */
+	public List<ConfiguracionEntity> reloadCacheConfiguraciones() {
+		Query query = this.getEntityManager().createQuery("SELECT c FROM ConfiguracionEntity c");
+		List<ConfiguracionEntity> lista = query.getResultList();
+		Map<String, String> cache = new HashMap<String, String>();
+		for (ConfiguracionEntity configuracion : lista) {
+			cache.put(configuracion.getClave(), configuracion.getValor());
+		}
+		this.setCacheConfiguraciones(cache);
+		log.debug(this.toString(cache));
+		return lista;
+	}
+
+	/**
+	 * Retorna los parámetros de configuración de la aplicación.
+	 * Los parámetros se guardan en la base de datos, pero se gestionan en
+	 * una caché para acelerar el acceso. 
+	 */
+	public Map<String, String> getConfiguraciones() {
+		if (this.getCacheConfiguraciones() == null) {
+			this.reloadCacheConfiguraciones();
+		}
+		return this.getCacheConfiguraciones();
+	}
+
+	public String getValorPropiedad (String propiedad){
+		return this.getConfiguraciones().get(propiedad);
+	}
+	
+	/**
+	 * Invoca un procedimiento PL/SQL que guarda los datos la conexión
+	 * HTTP del operador (dirección IP, puerto)
+	 */
+	public void guardarInfoInvocacionHttp(String datos) {
+		String sql = "begin dbms_application_info.set_client_info(client_info => '" + datos + "' ); end;";
+		Query query = this.getEntityManager().createNativeQuery(sql);
+		query.executeUpdate();		
+	}
+
+	/**
+	 * Genera un string con las claves y valores de la tabla ordenados alfabéticamente
+	 * por claves.
+	 */
+	public String toString(Map<String, String> tabla) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n****\n");
+		builder.append("* Servicio Verificacion Jugadores v").append(Version.id()).append(" \n");
+		builder.append("* ACTUALIZANDO CONFIGURACION. NUEVOS VALORES:\n");
+		builder.append("*\n");
+		ArrayList<String> claves = new ArrayList<String>(tabla.keySet());
+		Collections.sort(claves);
+		for (String clave : claves) {
+			builder.append("* ").append(clave).append(" = ").append(tabla.get(clave)).append("\n");
+		}
+		builder.append("****\n");
+		return builder.toString();
+	}
+	
+	private Map<String, String> getCacheConfiguraciones() {
+		return cacheConfiguraciones;
+	}
+
+	private void setCacheConfiguraciones(Map<String, String> cacheConfiguraciones) {
+		this.cacheConfiguraciones = cacheConfiguraciones;
+	}
+	
+	/* Operaciones para recuperar las listas de traducción de caracteres */
+	@SuppressWarnings("unchecked")
+	public List<TraduccionCaracteres> leerTraduccionCaracteres() {
+		Query query = this.getEntityManager().createQuery("SELECT c FROM TraduccionCaracteres c");
+		List<TraduccionCaracteres> lista = query.getResultList();
+	
+		return lista;
+	}
+
+	public String getListaCaracteresOriginales() {
+		if (listaCaracteresOriginales == null){
+			List<TraduccionCaracteres> lista  = leerTraduccionCaracteres();
+			listaCaracteresOriginales = new String();
+			for (TraduccionCaracteres caracter : lista){
+				listaCaracteresOriginales += caracter.getOriginal();
+			}
+		} 
+		
+		return listaCaracteresOriginales;		
+	}
+	public String getListaCaracteresTraducidos() {
+		if (listaCaracteresTraducidos == null){
+			List<TraduccionCaracteres> lista  = leerTraduccionCaracteres();
+			listaCaracteresTraducidos = new String();
+			for (TraduccionCaracteres caracter : lista){
+				listaCaracteresTraducidos += caracter.getTraduccion();
+			}		
+		}
+		
+		return listaCaracteresTraducidos;
+	}
+
+}

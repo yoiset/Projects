@@ -1,0 +1,16 @@
+package es.gob.cnjuego.ws.service;
+
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+import es.gob.cnjuego.ws.entity.Configuracion;
+
+
+public interface ServicioConfiguracion {
+	List<Configuracion> leer();
+	void actualizar(Collection<Configuracion> configuracion);
+	void eliminar(Long idConfiguracion);
+	Date obtenerFechaModificacion();
+}

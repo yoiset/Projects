@@ -1,0 +1,444 @@
+package com.dgoj.rgiaj.ws;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.dgoj.juegoExterno.business.bean.ComunidadBean;
+import com.dgoj.juegoExterno.business.bean.ComunidadCertificadoBean;
+import com.dgoj.juegoExterno.business.bean.ComunidadQueryBean;
+import com.dgoj.juegoExterno.business.bean.ComunidadSearchResult;
+import com.dgoj.juegoExterno.business.bean.JugHistoricoQueryBean;
+import com.dgoj.juegoExterno.business.bean.JugHistoricoSearchResult;
+import com.dgoj.juegoExterno.business.bean.JugProhibicionBean;
+import com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean;
+import com.dgoj.juegoExterno.business.bean.type.FormatoDescargaProhibidos;
+import com.dgoj.juegoExterno.business.bean.type.TipoDescargaProhibidos;
+import com.dgoj.juegoExterno.business.exceptions.JuegoExternoException;
+import com.dgoj.juegoExterno.business.service.IComunidadService;
+import com.dgoj.juegoExterno.business.service.IComunidadUsuarioService;
+import com.dgoj.juegoExterno.business.service.IJugHistoricoDescargaService;
+import com.dgoj.juegoExterno.business.service.IJugProhibicionService;
+import com.dgoj.juegoExterno.business.service.impl.JugProhibicionServiceImpl;
+
+import es.dgoj.rgiaj.ComunidadBeanResponse;
+import es.dgoj.rgiaj.ComunidadCertificadoBeanResponse;
+import es.dgoj.rgiaj.ComunidadQueryRequest;
+import es.dgoj.rgiaj.ComunidadSearchResponse;
+import es.dgoj.rgiaj.Fault;
+import es.dgoj.rgiaj.FaultError;
+import es.dgoj.rgiaj.JugHistoricoQueryRequest;
+import es.dgoj.rgiaj.JugHistoricoSearchResponse;
+import es.dgoj.rgiaj.JugProhibicionQueryRequest;
+import es.dgoj.rgiaj.ProhibidosResponse;
+import es.dgoj.rgiaj.UltimasDescargasConfirmadasResponse;
+
+
+public class JuegoRGIAJController {
+	
+	@Autowired
+	private IJugProhibicionService jugProhibicionService; 
+	
+	@Autowired
+	private IComunidadService comunidadService;
+	
+	@Autowired
+	private IJugHistoricoDescargaService jugHistoricoDescargaService;
+	
+	@Autowired
+	private IComunidadUsuarioService comunidadUsuarioService;
+	
+	private static final Logger log = LoggerFactory.getLogger(JuegoRGIAJController.class);  
+	
+	
+	
+	
+ /***************************************************************************************************
+  *      Operaciones de IJugProhibicionService
+  *    
+  ***************************************************************************************************/
+   
+	/**
+	 * @param request
+	 * @return
+	 * @throws Fault
+	 */
+	public ProhibidosResponse getProhibidos(JugProhibicionQueryRequest request) throws Fault{
+		
+		ProhibidosResponse response=new ProhibidosResponse();
+     	JugProhibicionQueryBean queryBean=new JugProhibicionQueryBean();
+		queryBean.setCodComunidad(getComunidad(request.getCodComunidad()).getCodigo());
+		queryBean.setFormatoDescargaProhibidos(getFormatoDescarga(request.getFormatoDescarga()));
+		queryBean.setTipoDescargaProhibidos(getTipoDescarga(request.getTipoDescarga()));
+		try {
+			byte[] flow= jugProhibicionService.getProhibidosList(queryBean);
+			response.setResultado(flow);
+			return response;
+		} catch (JuegoExternoException e) {
+			// TODO Auto-generated catch block
+			log.error(e.getMessage());
+			throw newFaul("", "", "") ;
+//			TODO Aqui hay que poner el mensaje de la excepcion con el codigo y la desc	  
+		}
+		
+	}
+	
+	
+	/**
+	 * @param request
+	 * @return
+	 * @throws Fault
+	 */
+	public boolean hayPendiente(JugProhibicionQueryRequest request)throws Fault{
+		
+		JugProhibicionQueryBean queryBean=new JugProhibicionQueryBean();
+		queryBean.setCodComunidad(getComunidad(request.getCodComunidad()).getCodigo());
+		boolean value= jugProhibicionService.hasPending(queryBean);
+		
+		return value;
+	}
+	
+	
+	/**
+	 * @param request
+	 * @return
+	 * @throws Fault
+	 */
+	public UltimasDescargasConfirmadasResponse ultimaDescargaConfirmada(JugProhibicionQueryRequest request)throws Fault{
+		JugProhibicionQueryBean queryBean= JugProhibicionQueryBean.toBean(request);
+		
+		List<JugProhibicionBean> list=null;
+		try {
+			list=jugProhibicionService.getUltimasDescargasConfirmadas(queryBean);
+		} catch (JuegoExternoException e) {
+			log.error(e.getMessage());
+			throw newFaul(e.getMessage(),e.getMessage(),  " ") ;
+		}
+		UltimasDescargasConfirmadasResponse response= new UltimasDescargasConfirmadasResponse();
+		if(list!=null){			
+			for (JugProhibicionBean bean : list) {
+				es.dgoj.rgiaj.JugProhibicionBean ultima=new es.dgoj.rgiaj.JugProhibicionBean();
+				ultima.setCodigo(bean.getCodComunidad());
+				ultima.setDescripcion(bean.getDescripcionComunidad());
+				
+				if(bean.getIdComunidad()!=null)
+				 ultima.setIdComunidad(bean.getIdComunidad());
+				
+				ultima.setFechaDescarga(bean.getFechaDescarga());
+				
+				if(bean.getUltimo()!=null)
+				 ultima.setUltimo(bean.getUltimo());
+				
+				
+				response.getUltimasDescargas().add(ultima);
+			}		
+			
+		}
+		
+		return response;
+		
+	}
+	
+	
+	/** 
+	 * @param request
+	 * @throws Fault
+	 */
+	public void confirmarUltimaDescarga(JugProhibicionQueryRequest request) throws Fault{
+		JugProhibicionQueryBean queryBean=new JugProhibicionQueryBean();
+		queryBean.setCodComunidad(getComunidad(request.getCodComunidad()).getCodigo());
+		try {
+			jugProhibicionService.confirmHistoricoDescargas(queryBean);
+		} catch (JuegoExternoException e) {
+			log.error(e.getMessage());
+			throw newFaul("", "", "") ;
+			
+		}
+		
+	}
+	
+	
+	
+	/** Retorna los datos de Comunidad dado el Usuario
+	 * @param user
+	 * @return
+	 */
+	public es.dgoj.rgiaj.JugProhibicionBean  getComunidadByUser(String user){
+		
+		es.dgoj.rgiaj.JugProhibicionBean result=new es.dgoj.rgiaj.JugProhibicionBean();
+		JugProhibicionBean bean=jugProhibicionService.getComunidad(user);
+		if(bean!=null){
+			result.setCodigo(bean.getCodComunidad());
+			result.setDescripcion(bean.getDescripcionComunidad());
+			result.setIdComunidad(bean.getIdComunidad());
+			
+			result.setFechaDescarga(bean.getFechaDescarga());
+			
+			if(bean.getUltimo()!=null)
+			 result.setUltimo(bean.getUltimo());
+		}
+		
+		
+		
+		return result;
+	}
+	
+	
+	public void confirmHistoricoDescargasPendiente(JugProhibicionQueryRequest request){
+		try {
+			jugProhibicionService.confirmHistoricoDescargasPendiente(JugProhibicionQueryBean.toBean(request));
+		} catch (JuegoExternoException e) {
+			// TODO Auto-generated catch block
+			log.error("Error intentenado confirmar Descarga Pendiente: " + e);
+		}
+	}
+		
+	
+	/**	 Devuelve la Comunidad Bea segun el código de la misma. Sino na la encuentra de devuelve un Fault.
+	 * Es una forma de validar la comunidad recibida como param	 
+	 * @param code
+	 * @return
+	 * @throws Fault
+	 */
+	private ComunidadBean getComunidad(String code) throws Fault{
+		List<ComunidadBean> list=  comunidadService.getComunidadList();
+		for (ComunidadBean bean : list) 
+			if(bean.getCodigo().equalsIgnoreCase(code))
+				return bean;
+		throw newFaul("", "", "") ;
+//		TODO Aqui hay que poner el mensaje de la excepcion con el codigo y la desc	  
+	}	
+	
+	
+ /***************************************************************************************************
+  *      Operaciones de IComunidadService
+  *    
+  ***************************************************************************************************/
+	
+	
+	/**
+	 * @param request
+	 * @return
+	 */
+	public ComunidadSearchResponse getCertificadoComunidad(ComunidadQueryRequest request){
+	
+		ComunidadSearchResponse result= new ComunidadSearchResponse();
+		ComunidadSearchResult bean= comunidadService.getCertificadoComunidad(ComunidadQueryBean.toBean(request));
+		result.setHasNext(bean.getHasNext());
+		result.setLapse(bean.getLapse());
+		result.setNumResults(bean.getNumResults());
+		
+		if(bean!=null){
+			List<ComunidadBean> list=   bean.getResults();
+			for (ComunidadBean c : list) {
+				es.dgoj.rgiaj.ComunidadBean response= new es.dgoj.rgiaj.ComunidadBean();
+				response.setCodigo(c.getCodigo());
+				response.setIdComunidad(c.getIdComunidad());
+				response.setDescripcion(c.getDescripcion());
+				result.getListaComunidad().add(response);
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	/**
+	 * @return
+	 */
+	public ComunidadBeanResponse  getComunidadList(){
+		ComunidadBeanResponse result= new ComunidadBeanResponse();
+		List<ComunidadBean> list= comunidadService.getComunidadList();
+		for (ComunidadBean c : list) {
+			es.dgoj.rgiaj.ComunidadBean response= new es.dgoj.rgiaj.ComunidadBean();
+			response.setCodigo(c.getCodigo());
+			response.setIdComunidad(c.getIdComunidad());
+			response.setDescripcion(c.getDescripcion());
+			result.getComunidadBean().add(response);
+		}
+		
+		
+		return result;
+	}
+	
+	
+	/**
+	 * @param request
+	 */
+	public void addCertificadoComunidad(ComunidadQueryRequest request){
+		
+		comunidadService.updateCertificadoComunidad(ComunidadQueryBean.toBean(request));
+	}
+	
+	
+	public boolean existOtrotCertificadoActivoComunidad(ComunidadQueryRequest request){
+		return comunidadService.existCertificadoActivoOtraComunidad(ComunidadQueryBean.toBean(request));
+	}
+	
+	
+	public ComunidadCertificadoBeanResponse getCertificadoActivoComunidad(ComunidadQueryRequest request){
+		ComunidadCertificadoBean bean=comunidadService.getCertificadoActivoComunidad(ComunidadQueryBean.toBean(request));
+		return ComunidadCertificadoBean.toResponseBean(bean);
+	}
+	
+	public void updateCertificadoComunidad(ComunidadQueryRequest request){
+		comunidadService.updateCertificadoComunidad(ComunidadQueryBean.toBean(request));
+	}
+	
+	public boolean isCertificadoActivo(ComunidadQueryRequest request){
+		return comunidadService.isCertificadoActivo(ComunidadQueryBean.toBean(request));
+	}
+	
+	public void removeCertificadoComunidad(ComunidadQueryRequest request){
+		comunidadService.removeCertificadoComunidad(ComunidadQueryBean.toBean(request));
+	}
+	
+	
+	public boolean existCertificadoComunidad(ComunidadQueryRequest request){
+		return comunidadService.existCertificadoComunidad(ComunidadQueryBean.toBean(request));
+	}
+	
+	public boolean existCertificadoActivoOtraComunidad(ComunidadQueryRequest request){
+		return comunidadService.existCertificadoActivoOtraComunidad(ComunidadQueryBean.toBean(request));
+	}
+	
+	
+	
+	
+	 /***************************************************************************************************
+	  *      Operaciones de IJugHistoricoDescargaService
+	  *    
+	  ***************************************************************************************************/
+		
+	
+	public JugHistoricoSearchResponse getHistorico(JugHistoricoQueryRequest request){
+		   JugHistoricoSearchResponse result=new JugHistoricoSearchResponse();
+		   JugHistoricoSearchResult value=   jugHistoricoDescargaService.getHistorico(JugHistoricoQueryBean.toBean(request));
+		   if(value!=null){
+			   
+			   if(value.getNumResults()!=null)
+			     result.setNumResults(value.getNumResults());
+			   
+			   if(value.getLapse()!=null)
+			     result.setLapse(value.getLapse());
+			  
+			   if(value.getHasNext()!=null)
+			    result.setHasNext(value.getHasNext());
+			   
+			    List<com.dgoj.juegoExterno.business.bean.JugHistoricoBean> list= value.getResults();
+			    if(list!=null && !list.isEmpty()){
+			    	for (com.dgoj.juegoExterno.business.bean.JugHistoricoBean bean : list) 
+			    		result.getListaHistorico().add(bean.toResponse());
+					
+			    }
+			    
+		   }
+		   
+		   return result;
+	}
+	
+	
+	
+
+	 /***************************************************************************************************
+	  *      Operaciones de IComunidadUsuarioService
+	  *    
+	  ***************************************************************************************************/
+	
+	public boolean existUsuario(ComunidadQueryRequest request){
+		
+		return comunidadUsuarioService.existUsuario(ComunidadQueryBean.toBean(request));
+		
+	}
+	
+    public void addUsuario(ComunidadQueryRequest request){
+		
+		comunidadUsuarioService.addUsuario(ComunidadQueryBean.toBean(request));
+		
+	} 
+    
+    public void editUsuario(ComunidadQueryRequest request){
+		
+  		comunidadUsuarioService.editUsuario(ComunidadQueryBean.toBean(request));
+  		
+  	}
+    
+    public void removeUsuario(ComunidadQueryRequest request){
+		
+  		comunidadUsuarioService.removeUsuario(ComunidadQueryBean.toBean(request));
+  		
+  	} 
+    
+     public ComunidadSearchResponse getUsuarioComunidad(ComunidadQueryRequest request){
+    	 
+    	  ComunidadSearchResponse result= new ComunidadSearchResponse();
+		
+  		  ComunidadSearchResult value= comunidadUsuarioService.getUsuarioComunidad(ComunidadQueryBean.toBean(request));
+  		  if(value!=null){
+  			  result.setNumResults(value.getNumResults());
+  			  result.setLapse(value.getLapse());
+  			  result.setHasNext(value.getHasNext());
+  			  for (ComunidadBean bean : value.getResults()) 
+  				result.getListaComunidad().add(bean.toResponse());
+			
+  		  }
+  		  
+  		  return result;
+  		
+  	} 
+	
+	
+	/** Devuelve el Formato de Descarga Enum segun el String que se pasa.
+	 * Sino corresponde con ninguno devuelve un Faul
+	 * Es una forma de validar el formato de descarga recibido	como param 
+	 * @param param
+	 * @return
+	 * @throws Fault
+	 */
+	private FormatoDescargaProhibidos getFormatoDescarga(String param) throws Fault{
+		if(FormatoDescargaProhibidos.XML.toString().equals(param))
+			return FormatoDescargaProhibidos.XML;
+		if(FormatoDescargaProhibidos.Texto.toString().equals(param))
+			return FormatoDescargaProhibidos.Texto;
+		if(FormatoDescargaProhibidos.Ambos.toString().equals(param))
+			return FormatoDescargaProhibidos.Ambos;
+		else throw newFaul("", "", "") ;	
+//		TODO Aqui hay que poner el mensaje de la excepcion con el codigo y la desc
+	}
+	
+	
+	/** Devuelve el Tipo de Descraga Enum segun el String que se pasa.
+	 * Sino corresponde con ninguno devuelve un Faul
+	 * Es una forma de validar el Tipo de Descarga revisida como param	 
+	 * @param tipo
+	 * @return
+	 * @throws Fault
+	 */
+	private TipoDescargaProhibidos getTipoDescarga(String tipo)throws Fault{
+		if(TipoDescargaProhibidos.Completa.toString().equals(tipo))
+		 return TipoDescargaProhibidos.Completa;
+		
+		if(TipoDescargaProhibidos.Incremental.toString().equals(tipo))
+		  return TipoDescargaProhibidos.Incremental;
+		else  throw newFaul("", "", "") ;	 
+//	TODO Aqui hay que poner el mensaje de la excepcion con el codigo y la desc	  
+		 
+	}
+	
+	
+	/** Método para generar Faults de este WebServices.
+	 * @param messege  Mensahe de la excepcion capturada
+	 * @param faultMessage   Descripcion del mensaje a enviar al cliente web service
+	 * @param codeMessage Codigo del mensaje a enviar al cliente web service
+	 * @return
+	 */
+	public Fault newFaul(String messege, String faultMessage, String codeMessage){		
+		FaultError error=new FaultError();
+		error.setCodigoError(codeMessage);
+		error.setDescError(faultMessage);
+		return new Fault(messege, error);
+	}
+
+}

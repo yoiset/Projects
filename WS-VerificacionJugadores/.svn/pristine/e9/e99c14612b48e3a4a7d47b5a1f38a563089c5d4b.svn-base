@@ -1,0 +1,31 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import javax.xml.soap.SOAPMessage;
+
+import org.apache.cxf.binding.soap.interceptor.SoapPreProtocolOutInterceptor;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
+import org.apache.log4j.Logger;
+
+/**
+ * Este handler firma los mensajes enviados al servidor.
+ * Se utiliza solamente en las invocaciones de las pruebas unitarias.
+ */
+public class FirmarMensajeClienteInterceptor extends AbstractPhaseInterceptor {
+
+	private static Logger log = Logger.getLogger(FirmarMensajeClienteInterceptor.class);
+
+	public FirmarMensajeClienteInterceptor() {
+		//super(Phase.POST_LOGICAL);
+        super(Phase.PRE_STREAM);
+        addBefore(SoapPreProtocolOutInterceptor.class.getName());
+	}
+
+	@Override
+	public void handleMessage(Message context) throws Fault {
+		System.out.println("Invocación de FirmarMensajeClienteInterceptor.handleMessage");
+	}
+
+}

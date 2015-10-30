@@ -1,0 +1,214 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+
+import javax.xml.ws.BindingProvider;
+
+import org.apache.cxf.message.Message;
+import org.apache.log4j.Logger;
+
+import es.gob.cnjuego.ws.dao.VerificacionDao;
+import es.gob.cnjuego.ws.util.CodigoEstadoSCSP;
+import es.gob.cnjuego.ws.util.Constantes;
+import es.gob.cnjuego.ws.util.validation.ValidadorNIF;
+import es.redsara.intermediacion.scsp.esquemas.ws.Scspws;
+import es.redsara.intermediacion.scsp.esquemas.ws.peticion.Atributos;
+import es.redsara.intermediacion.scsp.esquemas.ws.peticion.DatosEspecificosPeticionType;
+import es.redsara.intermediacion.scsp.esquemas.ws.peticion.PeticionSincrona;
+import es.redsara.intermediacion.scsp.esquemas.ws.peticion.Solicitante;
+import es.redsara.intermediacion.scsp.esquemas.ws.peticion.SolicitudTransmision;
+import es.redsara.intermediacion.scsp.esquemas.ws.peticion.Solicitudes;
+import es.redsara.intermediacion.scsp.esquemas.ws.peticion.Titular;
+import es.redsara.intermediacion.scsp.esquemas.ws.respuesta.Respuesta;
+import es.redsara.intermediacion.scsp.esquemas.ws.respuesta.Transmisiones;
+
+/**
+ * Esta clase actúa como intermediario para efectuar las consultas de verificación de identidad.
+ * Este cliente invoca al servicio SCSP que corre dentro de la DGOJ y que a su vez invoca
+ * al servicio SVDI remoto.
+ * Nótese que algunos datos de la invocación provienen de la tabla CONFIGURACION de la base datos.
+ */
+public class ClienteSCSPService {
+
+	private static final String SUPRIMIR_CADENA_0231 = "Si necesita aclaración, póngase en contacto con la Unidad de Documentación de Españoles y Archivo: udea.ws@policia.es";
+	static Logger log = Logger.getLogger(ClienteSCSPService.class);
+	private String certificadoVerificacion;
+	private String finalidad;
+	private String nombreSolicitante;
+	private String identificadorSolicitante;
+	private Scspws clienteSCSP;
+	private VerificacionDao verificacionDao;
+
+	/**
+	 * Inicializa el servicio con parámetros que residen en la base de datos. 
+	 * Como estos parámetros pueden cambiar en tiempo de ejecución, debemos 
+	 * re-asignarlos en cada invocación. 
+	 * Nótese que no es una gran penalización porque en realidad los parámetros residen
+	 * en una caché gestionada por el DAO (y se vuelven a leer desde la BD solamente 
+	 * en circunstancias especiales) 
+	 */
+	private void initServicio(){
+		String endpointAddress = this.getVerificacionDao().getValorPropiedad(Constantes.CFG_ENDPOINT_SCSP);
+		BindingProvider proxy = (BindingProvider)this.getClienteSCSP();
+		Map<String, Object> map = proxy.getRequestContext();
+		map.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointAddress);		
+		setClientTimeOut(map);
+		this.setCertificadoVerificacion(this.getVerificacionDao().getValorPropiedad(Constantes.PROP_CERT_VERIFICACION));
+		this.setFinalidad(this.getVerificacionDao().getValorPropiedad(Constantes.PROP_FINALIDAD));
+		this.setNombreSolicitante(this.getVerificacionDao().getValorPropiedad(Constantes.PROP_NOMBRE_SOLICITANTE));
+		this.setIdentificadorSolicitante(this.getVerificacionDao().getValorPropiedad(Constantes.PROP_IDENTIFICADOR_SOLICITANTE));
+	}
+	
+	private void setClientTimeOut(Map<String, Object> map) {
+		
+		map.put(Message.CONNECTION_TIMEOUT, this.getVerificacionDao().getValorPropiedad(Constantes.CFG_SCSP_CONNECT_TIMEOUT));
+		map.put(Message.RECEIVE_TIMEOUT, this.getVerificacionDao().getValorPropiedad(Constantes.CFG_SCSP_RESPONSE_TIMEOUT));
+		
+	}
+
+	public CodigoEstadoSCSP verificarIdentidad(String nif, String nombre, String apellido1, String apellido2, Date fechaNacimiento) throws Exception {
+		try {
+			initServicio();
+			PeticionSincrona peticion = this.newPeticionSincrona(nif, nombre, apellido1, apellido2,	fechaNacimiento);
+			Respuesta respuesta = this.getClienteSCSP().peticionSincrona(peticion);
+			CodigoEstadoSCSP estado = comprobarRespuesta(respuesta);
+			return estado;
+		} catch (Exception ex) {
+			log.error("ClienteSCSPService.verificarIdentidad():No se ha podido verificar la identidad del usuario",	ex);
+			throw ex;
+		}
+	}
+
+	/**
+	 * Instancia y retorna una petición para invocar una consulta de los datos de identidad 
+	 */
+	private PeticionSincrona newPeticionSincrona(String nif, String nombre, String apellido1, String apellido2, Date fechaNacimiento) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		PeticionSincrona peticion = new PeticionSincrona();
+		peticion.setAtributos(new Atributos());
+		peticion.getAtributos().setCodigoCertificado(this.getCertificadoVerificacion());
+
+		SolicitudTransmision.DatosGenericos genericos = new SolicitudTransmision.DatosGenericos();
+		genericos.setSolicitante(new Solicitante());
+		genericos.getSolicitante().setIdentificadorSolicitante(this.getIdentificadorSolicitante());
+		genericos.getSolicitante().setNombreSolicitante(this.getNombreSolicitante());
+		genericos.getSolicitante().setFinalidad(this.getFinalidad());
+		genericos.getSolicitante().setConsentimiento("Si");
+
+		Titular titular = new Titular();
+		if (ValidadorNIF.isNifOrNie(nif)) {
+			titular.setTipoDocumentacion("NIF");
+		} else {
+			titular.setTipoDocumentacion("NIE");
+		}
+		titular.setDocumentacion(nif);
+		titular.setNombre(nombre);
+		titular.setApellido1(apellido1);
+		titular.setApellido2(apellido2);
+		genericos.setTitular(titular);
+
+		DatosEspecificosPeticionType especificos = new DatosEspecificosPeticionType();
+		especificos.setSolicitanteDatos(new DatosEspecificosPeticionType.SolicitanteDatos());
+		especificos.getSolicitanteDatos().setTipo("app");
+		especificos.setSolicitud(new DatosEspecificosPeticionType.Solicitud());
+		especificos.getSolicitud().setDatosNacimiento(new DatosEspecificosPeticionType.Solicitud.DatosNacimiento());
+		especificos.getSolicitud().getDatosNacimiento().setFecha(dateFormat.format(fechaNacimiento));
+
+		SolicitudTransmision solicitud = new SolicitudTransmision();
+		solicitud.setDatosGenericos(genericos);
+		solicitud.setDatosEspecificos(especificos);
+
+		Solicitudes solicitudes = new Solicitudes();
+		solicitudes.getSolicitudTransmision().add(solicitud);
+		peticion.setSolicitudes(solicitudes);
+		return peticion;
+	}
+
+	/**
+	 * Se procesa la respuesta enviada por SCSP y se retorna un código.
+	 */
+	private CodigoEstadoSCSP comprobarRespuesta(Respuesta respuesta) {
+		CodigoEstadoSCSP resultado = null;
+		if (respuesta != null && respuesta.getTransmisiones() != null
+				&& respuesta.getTransmisiones().getTransmisionDatos() != null
+				&& !respuesta.getTransmisiones().getTransmisionDatos().isEmpty()) {
+			Transmisiones.TransmisionDatos trans = respuesta.getTransmisiones().getTransmisionDatos().get(0);
+			if (trans != null && trans.getDatosEspecificos() != null
+					&& trans.getDatosEspecificos().getEstadoResultado() != null) {
+				resultado = new CodigoEstadoSCSP();
+				resultado.setCodigo(trans.getDatosEspecificos().getEstadoResultado().getCodigoEstado());
+				if (resultado.getCodigo().equals(CodigoEstadoSCSP.SCSP_ESTADO_RES)) {
+					resultado.setCodigo(CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+					resultado.setDescripcion(CodigosVerificacion.DESC_IDENTIDAD_CORRECTA);
+				} else if (resultado.getCodigo().equals(CodigoEstadoSCSP.SCSP_ESTADO_ERROR_0233)
+						|| resultado.getCodigo().equals(CodigoEstadoSCSP.SCSP_ESTADO_ERROR_0231)
+						|| resultado.getCodigo().equals(CodigoEstadoSCSP.SCSP_ESTADO_ERROR_0232)) {
+					resultado.setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA);
+					resultado.setDescripcion(CodigosVerificacion.DESC_IDENTIDAD_INCORRECTA
+							+ " - "
+							+ trans.getDatosEspecificos().getEstadoResultado().getLiteralError().replace(SUPRIMIR_CADENA_0231, ""));
+				} else if (resultado.getCodigo().equals(CodigoEstadoSCSP.SCSP_ESTADO_ERROR_0226)) {
+					resultado.setCodigo(CodigosVerificacion.COD_FORMATO_INCORRECTO);
+					resultado.setDescripcion(CodigosVerificacion.DESC_FORMATO_INCORRECTO);
+				} else {
+					resultado.setCodigo(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD);
+					resultado.setDescripcion(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD);
+				}
+			}
+		}
+		return resultado;
+	}
+
+	public Scspws getClienteSCSP() {
+		return clienteSCSP;
+	}
+
+	public void setClienteSCSP(Scspws clienteSCSP) {
+		this.clienteSCSP = clienteSCSP;
+	}
+
+	public String getCertificadoVerificacion() {
+		return certificadoVerificacion;
+	}
+
+	public void setCertificadoVerificacion(String certificadoVerificacion) {
+		this.certificadoVerificacion = certificadoVerificacion;
+	}
+
+	public String getFinalidad() {
+		return finalidad;
+	}
+
+	public void setFinalidad(String finalidad) {
+		this.finalidad = finalidad;
+	}
+
+	public String getNombreSolicitante() {
+		return nombreSolicitante;
+	}
+
+	public void setNombreSolicitante(String nombreSolicitante) {
+		this.nombreSolicitante = nombreSolicitante;
+	}
+
+	public String getIdentificadorSolicitante() {
+		return identificadorSolicitante;
+	}
+
+	public void setIdentificadorSolicitante(String identificadorSolicitante) {
+		this.identificadorSolicitante = identificadorSolicitante;
+	}
+
+	public VerificacionDao getVerificacionDao() {
+		return verificacionDao;
+	}
+
+	public void setVerificacionDao(VerificacionDao verificacionDao) {
+		this.verificacionDao = verificacionDao;
+	}
+	
+	
+
+}

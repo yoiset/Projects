@@ -1,0 +1,323 @@
+
+package es.redsara.intermediacion.scsp.esquemas.ws.peticion;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Clase Java para DatosEspecificosPeticionType complex type.
+ * 
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * 
+ * <pre>
+ * &lt;complexType name="DatosEspecificosPeticionType">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="SolicitanteDatos">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                 &lt;sequence>
+ *                   &lt;element name="Tipo" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *                 &lt;/sequence>
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
+ *         &lt;element name="Solicitud">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                 &lt;sequence>
+ *                   &lt;element name="numSoporte" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *                   &lt;element name="DatosNacimiento">
+ *                     &lt;complexType>
+ *                       &lt;complexContent>
+ *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                           &lt;sequence>
+ *                             &lt;element name="Fecha" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *                           &lt;/sequence>
+ *                         &lt;/restriction>
+ *                       &lt;/complexContent>
+ *                     &lt;/complexType>
+ *                   &lt;/element>
+ *                 &lt;/sequence>
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "DatosEspecificosPeticionType", propOrder = {
+    "solicitanteDatos",
+    "solicitud"
+})
+public class DatosEspecificosPeticionType {
+
+    @XmlElement(name = "SolicitanteDatos", required = true)
+    protected DatosEspecificosPeticionType.SolicitanteDatos solicitanteDatos;
+    @XmlElement(name = "Solicitud", required = true)
+    protected DatosEspecificosPeticionType.Solicitud solicitud;
+
+    /**
+     * Obtiene el valor de la propiedad solicitanteDatos.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DatosEspecificosPeticionType.SolicitanteDatos }
+     *     
+     */
+    public DatosEspecificosPeticionType.SolicitanteDatos getSolicitanteDatos() {
+        return solicitanteDatos;
+    }
+
+    /**
+     * Define el valor de la propiedad solicitanteDatos.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DatosEspecificosPeticionType.SolicitanteDatos }
+     *     
+     */
+    public void setSolicitanteDatos(DatosEspecificosPeticionType.SolicitanteDatos value) {
+        this.solicitanteDatos = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad solicitud.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DatosEspecificosPeticionType.Solicitud }
+     *     
+     */
+    public DatosEspecificosPeticionType.Solicitud getSolicitud() {
+        return solicitud;
+    }
+
+    /**
+     * Define el valor de la propiedad solicitud.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DatosEspecificosPeticionType.Solicitud }
+     *     
+     */
+    public void setSolicitud(DatosEspecificosPeticionType.Solicitud value) {
+        this.solicitud = value;
+    }
+
+
+    /**
+     * <p>Clase Java para anonymous complex type.
+     * 
+     * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;sequence>
+     *         &lt;element name="Tipo" type="{http://www.w3.org/2001/XMLSchema}string"/>
+     *       &lt;/sequence>
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "tipo"
+    })
+    public static class SolicitanteDatos {
+
+        @XmlElement(name = "Tipo", required = true)
+        protected String tipo;
+
+        /**
+         * Obtiene el valor de la propiedad tipo.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getTipo() {
+            return tipo;
+        }
+
+        /**
+         * Define el valor de la propiedad tipo.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setTipo(String value) {
+            this.tipo = value;
+        }
+
+    }
+
+
+    /**
+     * <p>Clase Java para anonymous complex type.
+     * 
+     * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;sequence>
+     *         &lt;element name="numSoporte" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+     *         &lt;element name="DatosNacimiento">
+     *           &lt;complexType>
+     *             &lt;complexContent>
+     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *                 &lt;sequence>
+     *                   &lt;element name="Fecha" type="{http://www.w3.org/2001/XMLSchema}string"/>
+     *                 &lt;/sequence>
+     *               &lt;/restriction>
+     *             &lt;/complexContent>
+     *           &lt;/complexType>
+     *         &lt;/element>
+     *       &lt;/sequence>
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "numSoporte",
+        "datosNacimiento"
+    })
+    public static class Solicitud {
+
+        protected String numSoporte;
+        @XmlElement(name = "DatosNacimiento", required = true)
+        protected DatosEspecificosPeticionType.Solicitud.DatosNacimiento datosNacimiento;
+
+        /**
+         * Obtiene el valor de la propiedad numSoporte.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getNumSoporte() {
+            return numSoporte;
+        }
+
+        /**
+         * Define el valor de la propiedad numSoporte.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setNumSoporte(String value) {
+            this.numSoporte = value;
+        }
+
+        /**
+         * Obtiene el valor de la propiedad datosNacimiento.
+         * 
+         * @return
+         *     possible object is
+         *     {@link DatosEspecificosPeticionType.Solicitud.DatosNacimiento }
+         *     
+         */
+        public DatosEspecificosPeticionType.Solicitud.DatosNacimiento getDatosNacimiento() {
+            return datosNacimiento;
+        }
+
+        /**
+         * Define el valor de la propiedad datosNacimiento.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link DatosEspecificosPeticionType.Solicitud.DatosNacimiento }
+         *     
+         */
+        public void setDatosNacimiento(DatosEspecificosPeticionType.Solicitud.DatosNacimiento value) {
+            this.datosNacimiento = value;
+        }
+
+
+        /**
+         * <p>Clase Java para anonymous complex type.
+         * 
+         * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+         * 
+         * <pre>
+         * &lt;complexType>
+         *   &lt;complexContent>
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+         *       &lt;sequence>
+         *         &lt;element name="Fecha" type="{http://www.w3.org/2001/XMLSchema}string"/>
+         *       &lt;/sequence>
+         *     &lt;/restriction>
+         *   &lt;/complexContent>
+         * &lt;/complexType>
+         * </pre>
+         * 
+         * 
+         */
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name = "", propOrder = {
+            "fecha"
+        })
+        public static class DatosNacimiento {
+
+            @XmlElement(name = "Fecha", required = true)
+            protected String fecha;
+
+            /**
+             * Obtiene el valor de la propiedad fecha.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getFecha() {
+                return fecha;
+            }
+
+            /**
+             * Define el valor de la propiedad fecha.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setFecha(String value) {
+                this.fecha = value;
+            }
+
+        }
+
+    }
+
+}

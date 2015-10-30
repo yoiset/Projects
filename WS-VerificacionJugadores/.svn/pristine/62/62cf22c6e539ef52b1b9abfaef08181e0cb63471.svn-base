@@ -1,0 +1,56 @@
+package es.gob.cnjuego.ws.verificacionjugadores.interceptor;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
+
+import org.apache.cxf.binding.soap.SoapFault;
+import org.apache.cxf.binding.soap.SoapMessage;
+import org.apache.cxf.binding.soap.saaj.SAAJInInterceptor;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+import org.apache.ws.security.WSSecurityEngineResult;
+import org.apache.ws.security.components.crypto.Crypto;
+import org.apache.ws.security.components.crypto.Merlin;
+import org.w3c.dom.Document;
+
+public class InterceptorEntradaControlarSeguridad extends WSS4JInInterceptor {
+
+	/**
+	 * Verifica la validez del timestamp del mensaje. Si el timestamp ha expirado,
+	 * lanza un fault que aborta inmediatamente el procesamiento del mensaje.
+	 */
+	public void handleMessage(SoapMessage mensaje) throws Fault {
+		try {
+			Document documentoXML = this.toDocument(mensaje);
+			DgojWSSecurityEngine securityEngine = new DgojWSSecurityEngine();
+			securityEngine.processSecurityHeader(documentoXML, null, null, new Merlin());
+			mensaje.put(SECURITY_PROCESSED, Boolean.TRUE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new SoapFault("Error de seguridad: " + e.getMessage(), e, mensaje.getVersion().getSender());
+		}
+	}
+	
+    public Document toDocument(SoapMessage mensaje) throws TransformerConfigurationException, TransformerException, SOAPException, IOException {
+        SAAJInInterceptor.INSTANCE.handleMessage(mensaje);
+        SOAPMessage soapMsg = mensaje.getContent(SOAPMessage.class);
+		Source src = soapMsg.getSOAPPart().getContent();  
+		TransformerFactory tf = TransformerFactory.newInstance();  
+		Transformer transformer = tf.newTransformer();  
+		DOMResult result = new DOMResult();  
+		transformer.transform(src, result);  
+		return (Document)result.getNode();  
+	}  
+	
+}

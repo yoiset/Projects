@@ -1,0 +1,84 @@
+package com.dgoj.juegoExterno.business.bean;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.dgoj.juegoExterno.business.bean.type.TipoDescargaProhibidos;
+
+/**
+ * @author ylopezconnectis
+ *
+ */
+public class JugHistoricoBean implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+    private Long idHistoricoDescarga;
+	
+	private Date fechaDescarga;
+	
+	private String tipo;
+	
+	private ComunidadBean comunidad;
+	
+	private String confirmada;
+	
+	private Long ultimo;
+
+	
+	
+	public Long getIdHistoricoDescarga() {
+		return idHistoricoDescarga;
+	}
+
+	public void setIdHistoricoDescarga(Long idHistoricoDescarga) {
+		this.idHistoricoDescarga = idHistoricoDescarga;
+	}
+
+	public Date getFechaDescarga() {
+		return fechaDescarga;
+	}
+
+	public void setFechaDescarga(Date fechaDescarga) {
+		this.fechaDescarga = fechaDescarga;
+	}
+
+	public String getTipo() {
+		if(tipo==null) return "-";
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+
+	public String getConfirmada() {
+		if(confirmada==null) return "-";
+		return confirmada;
+	}
+
+	public void setConfirmada(String confirmada) {
+		this.confirmada = confirmada;
+	}
+
+	public ComunidadBean getComunidad() {
+		return comunidad;
+	}
+
+	public void setComunidad(ComunidadBean comunidad) {
+		this.comunidad = comunidad;
+	}
+
+	public Long getUltimo() {
+		return ultimo;
+	}
+
+	public void setUltimo(Long ultimo) {
+		this.ultimo = ultimo;
+	}
+
+}

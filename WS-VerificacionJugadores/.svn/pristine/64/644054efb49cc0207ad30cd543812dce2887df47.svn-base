@@ -1,0 +1,130 @@
+package es.gob.cnjuego.ws.service;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import es.gob.cnjuego.ws.dao.JugadoresOperadorDAO;
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJ;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.to.DatosInterdictosDTO;
+import es.gob.cnjuego.ws.util.ServiceCN;
+import es.gob.cnjuego.ws.verificacionjugadores.Jugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoRGIAJ;
+import es.mir.juego.component.ws.service.InfoResultado;
+
+@Service(value="servicioGestionRGIAJ")
+public class ServicioGestionRGIAJImpl implements ServicioGestionRGIAJ {
+	
+
+	Logger log = Logger.getLogger(ServicioGestionRGIAJImpl.class);
+	@Autowired
+	private JugadoresOperadorDAO jugadoresOperadorDAO;
+	
+	@Override
+	public DatosInterdictosDTO altaRegistro(DatosInterdictosDTO solicitud)
+	{
+//		solicitud.setDatosCertificado(AccesoAETramitacionesCertificado.getInstance().altaRegistroRGIAJ(solicitud));
+		return solicitud;
+	}
+	@Override
+	public DatosInterdictosDTO modificacionRegistro(DatosInterdictosDTO solicitud)
+	{
+//		solicitud.setDatosCertificado(AccesoAETramitacionesCertificado.getInstance().modificarRegistroRGIAJ(solicitud));
+		return solicitud;
+	}
+	@Override
+	public DatosInterdictosDTO bajaRegistro(DatosInterdictosDTO solicitud)
+	{
+//		solicitud.setDatosCertificado(AccesoAETramitacionesCertificado.getInstance().bajaRegistroRGIAJ(solicitud));
+		return solicitud;
+	}
+	@Override
+	public DatosInterdictosDTO generarCertificado(DatosInterdictosDTO solicitud){
+//		solicitud.setDatosCertificado(AccesoAETramitacionesCertificado.getInstance().generarCertificadoRGIAJ(solicitud));
+		return solicitud;
+	}
+	@Override
+	public DatosInterdictosDTO consultaDatosUsuario(String dni) throws Exception
+	{
+		DatosInterdictosDTO res = null;
+		try{
+//			res = AccesoJuego.getInstance().obtenerDatosRGIAJ(dni);
+		}catch(Exception ex)
+		{
+			log.error("ServicioGestionRGIAJImpl.consultaDatosUsuario():Error al consultar los datos del RGIAJ",ex);
+			throw (ex);
+		}
+		return res;
+	}
+	
+	@Override
+	public boolean existeUsuario(String dni) throws Exception
+	{
+		boolean res=false;
+		try {
+//		res = AccesoJuegoDni.getInstance().existeUsuarioRGIAJ(dni);
+		} catch (Exception ex)
+		{
+			log.error("ServicioGestionRGIAJImpl.existeUsuario():Error al consultar un dni al RGIAJ: JuegoDniService", ex);
+			throw (ex);
+		}
+		return res;
+	}
+	
+	
+	@Override
+	public List<InfoResultado> compruebaExisteListaUsuarios(List<String> listadni) throws Exception	
+	
+	{
+		try {
+//			return AccesoJuegoDni.getInstance().existeListaUsuariosRGIAJ(listadni);
+			return null;
+		} catch (Exception ex)
+		{
+			log.error("ServicioGestionRGIAJImpl.compruebaExisteListaUsuarios():Error al consultar una lista de dni al RGIAJ: JuegoDniService", ex);
+			throw (ex);
+		}
+	}
+	
+	@Override
+	public List<JugadoresCambioRGIAJ> obtenerCambiosRGIAJ(OperadorEntity operador) throws Exception
+	{
+		List<JugadoresCambioRGIAJ> res = null;
+		
+		try{
+			res = jugadoresOperadorDAO.obtenerCambiosJugadores(operador);
+		}catch(Exception ex)
+		{
+			log.error("ServicioGestionRGIAJImpl.obtenerCambiosRGIAJ():No se ha podido realizar la consulta de altas del RGIAJ", ex);
+			throw ex;
+		}
+		return res;
+	}
+	
+	@Override
+	public ResultadoRGIAJ validarJugador(Jugador jugador, int modo) throws Exception {
+		ServicioJugadoresTestWS servicioTest=ServiceCN.getServicioJugadoresTestWS();
+		
+		switch (modo) {
+		case 1:
+			return  servicioTest.obtenerResultadoRGIAJTestWS(modo, jugador);
+        case 2:			
+			
+			break;	
+       case 3:
+    	   return servicioTest.obtenerResultadoRGIAJTestWS(modo, jugador);
+    	  
+    		   
+		default:
+			break;
+		}
+		return null;
+	}
+	
+	
+	
+	
+}

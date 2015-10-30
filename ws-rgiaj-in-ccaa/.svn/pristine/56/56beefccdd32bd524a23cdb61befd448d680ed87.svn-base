@@ -1,0 +1,85 @@
+package es.dgoj.rgiaj.business.repository;
+
+import static org.junit.Assert.*;
+
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import es.dgoj.rgiaj.business.model.OperadorEntity;
+import es.dgoj.rgiaj.business.repository.OperadoresRepository;
+
+/**
+ * Esta clase implementa las pruebas unitarias del repositorio. 
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+		"classpath:/spring/integration-core-config.xml",
+		"classpath:/spring/app-custom-persistence-hibernate.xml", 
+		"classpath:/spring/app-test-datasource.xml"})
+public class OperadoresRepositoryTestCase {
+
+	@Autowired 
+	private OperadoresRepository repository;
+
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+	
+	@Test
+	public void testGetOperadorByHashExistente() {
+		OperadorEntity operador = this.repository.getOperadorByHash("8Mtqm/8fyKc4AszApw1XaDKdRMg=");
+		assertNotNull(operador);
+		
+		assertEquals("8Mtqm/8fyKc4AszApw1XaDKdRMg=", operador.getHashCertificado());
+		assertEquals("NO TIENE", operador.getCif());
+		assertEquals("mnemo-auditorseguridad", operador.getRazonSocial());
+	}
+	
+	@Test
+	public void testGetOperadorByHashNoExistente() throws Exception {
+		OperadorEntity operador = this.repository.getOperadorByHash("XXXXXX");
+		assertNull(operador);
+	}
+
+	/**
+	 * Comprobamos que las propiedades de configuración de la aplicación están
+	 * disponibles.
+	 */
+	@Test
+	public void testGetConfiguraciones() throws Exception {
+		String valor = this.repository.getConfiguraciones().get("endpoint.scspJuego");
+		assertNotNull(valor);
+
+		valor = this.repository.getConfiguraciones().get("clave.inexistente");
+		assertNull(valor);
+	}
+	
+	@Test
+	public void testReloadCacheConfiguraciones() throws Exception {
+		Map<String, String> cache = this.repository.getConfiguraciones();
+		String valor1 = cache.get("endpoint.scspJuego");
+		assertNotNull(valor1);
+
+		// Reemplazamos el valor actual en la caché y la recargamos
+		cache.put("endpoint.scspJuego", "XXXXXXXX");
+		this.repository.reloadCacheConfiguraciones();
+		
+		// Comprobamos que se ha restaurado el valor original
+		cache = this.repository.getConfiguraciones();
+		String valor2 = cache.get("endpoint.scspJuego");
+		assertEquals(valor1, valor2);
+		this.repository.reloadCacheConfiguraciones();
+	}
+	
+}

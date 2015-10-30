@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+  <definition name="app/errorPage" extends="baseLayout">
+    <put-attribute name="main" value="/WEB-INF/views/ErrorGenerico.jsp" />
+  </definition>
+
+  <definition name="tiles/tipoDocIdentidad" extends="baseLayout">
+    <put-attribute name="main" value="/WEB-INF/views/tipoDocIdentidad/tipoDocIdentidad.jsp" />
+  </definition>
+
+  <definition name="tiles/startNewTipoDocIdentidad" extends="baseLayout">
+    <put-attribute name="main" value="/WEB-INF/views/tipoDocIdentidad/newTipoDocIdentidad.jsp" />
+  </definition>
+  
+  <definition name="tiles/startEditTipoDocIdentidad" extends="baseLayout">
+    <put-attribute name="main" value="/WEB-INF/views/tipoDocIdentidad/editTipoDocIdentidad.jsp" />
+  </definition>
+  
+</tiles-definitions>

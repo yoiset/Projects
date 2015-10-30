@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+           http://www.springframework.org/schema/jdbc 
+           http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+           http://www.springframework.org/schema/jee 
+           http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+
+<!-- DataSource configuration -->
+<!-- este datasource permite establecer el usuario y la contraseña desde la aplicacion
+al obtener el DS. Este caso sirve para cuando en el tomcat no se quiere establecer el usuario
+y la contrasenha como nos han indicado que pasa en algun caso. La factoria asume que 
+el tipo de datasource devuelto por tomcat es  -->
+	<bean id="dataSource"
+		class="com.dgoj.core.persistence.datasource.CustomJndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:comp/env/${jdbc.jndiName}</value>
+		</property>
+		<property name="datasourceUsername" value="${jdbc.username}"/>
+		<property name="datasourcePassword" ref="jdbcEncryptPass"/>
+	</bean>
+
+	<!-- contrasena cifrada. -->
+	<bean id="jdbcEncryptPass" class="com.dgoj.core.common.encrypt.DecryptionUtil">
+		<property name="cifrado" value="${jdbc.password}" />
+	</bean>
+
+</beans>

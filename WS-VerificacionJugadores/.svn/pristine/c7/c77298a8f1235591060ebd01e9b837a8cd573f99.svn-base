@@ -1,0 +1,209 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJEntity;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.entity.PeticionEntity;
+
+public class VerificacionDaoTestCase extends SpringTestCase {
+	
+	private VerificacionDao dao;
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		VerificacionDao daoBean = (VerificacionDao)this.getContext().getBean("VerificacionDao");
+		this.setDao(daoBean);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+	}
+	
+	@Test
+	public void testInit() throws Exception {
+		assertNotNull(this.getDao());
+	}
+
+	@Test
+	public void testGetOperadorByHashExistente() throws Exception {
+		OperadorEntity operador = this.getDao().getOperadorByHash("8Mtqm/8fyKc4AszApw1XaDKdRMg=");
+		assertNotNull(operador);
+		assertEquals("autoridad.com", operador.getEmail());
+		assertEquals("8Mtqm/8fyKc4AszApw1XaDKdRMg=", operador.getHashCertificado());
+		assertEquals("NO TIENE", operador.getCif());
+		assertEquals("mnemo-auditorseguridad", operador.getRazonSocial());
+	}
+
+	@Test
+	public void testGetOperadorByHashNoExistente() throws Exception {
+		OperadorEntity operador = this.getDao().getOperadorByHash("123456789");
+		assertNull(operador);
+	}
+
+	@Test
+	public void testGetPeticionByIdExistente() throws Exception {
+		PeticionEntity peticion = this.getDao().getPeticionesById(1853);
+		assertNotNull(peticion);
+		assertEquals(1853, peticion.getIdPeticion());
+		assertEquals(8, peticion.getIdOperador().intValue());
+		assertEquals("verificarJugador", peticion.getCodPeticion());
+	}
+
+	@Test
+	public void testGetPeticionByIdNoExistente() throws Exception {
+		PeticionEntity peticion = this.getDao().getPeticionesById(-15);
+		assertNull(peticion);
+	}
+
+	@Test
+	public void testAgregarPeticionCompleta() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fecha1 = dateFormat.parse("2011-11-18");
+		Date fecha2 = dateFormat.parse("2012-03-21");
+		
+		PeticionEntity peticion1 = new PeticionEntity();
+		peticion1.setCodPeticion("Prueba");
+		peticion1.setIdOperador(8L);
+		peticion1.setPeticion("petición SOAP XML");
+		peticion1.setFechaPeticion(fecha1);
+		peticion1.setRespuesta("respuesta SOAP XML");
+		peticion1.setFechaRespuesta(fecha2);
+		peticion1.setFault("fault SOAP XML");
+		
+		this.getDao().agregarPeticion(peticion1);
+		assertTrue(peticion1.getIdPeticion() > 0);
+		PeticionEntity peticion2 = this.getDao().getPeticionesById(peticion1.getIdPeticion());
+		assertNotNull(peticion2);
+		assertEquals(peticion1.getIdPeticion(), peticion2.getIdPeticion());
+		assertEquals(peticion1.getCodPeticion(), peticion2.getCodPeticion());
+		assertEquals(peticion1.getFault(), peticion2.getFault());
+		assertEquals(peticion1.getIdOperador(), peticion2.getIdOperador());
+		assertEquals(peticion1.getPeticion(), peticion2.getPeticion());
+		assertEquals(dateFormat.format(peticion1.getFechaPeticion()), dateFormat.format(peticion2.getFechaPeticion()));
+		assertEquals(peticion1.getRespuesta(), peticion2.getRespuesta());
+		assertEquals(dateFormat.format(peticion1.getFechaRespuesta()), dateFormat.format(peticion2.getFechaRespuesta()));
+	}
+
+	@Test
+	public void testAgregarPeticionSinOperador() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fecha1 = dateFormat.parse("2011-11-18");
+		Date fecha2 = dateFormat.parse("2012-03-21");
+		
+		PeticionEntity peticion1 = new PeticionEntity();
+		peticion1.setCodPeticion("Prueba");
+		peticion1.setIdOperador(null); // Sin operador!
+		peticion1.setPeticion("petición SOAP XML");
+		peticion1.setFechaPeticion(fecha1);
+		peticion1.setRespuesta("respuesta SOAP XML");
+		peticion1.setFechaRespuesta(fecha2);
+		peticion1.setFault("fault SOAP XML");
+		
+		this.getDao().agregarPeticion(peticion1);
+		assertTrue(peticion1.getIdPeticion() > 0);
+		PeticionEntity peticion2 = this.getDao().getPeticionesById(peticion1.getIdPeticion());
+		assertNotNull(peticion2);
+		assertEquals(peticion1.getIdPeticion(), peticion2.getIdPeticion());
+		assertEquals(peticion1.getCodPeticion(), peticion2.getCodPeticion());
+		assertEquals(peticion1.getFault(), peticion2.getFault());
+		assertEquals(null, peticion2.getIdOperador());
+		assertEquals(peticion1.getPeticion(), peticion2.getPeticion());
+		assertEquals(dateFormat.format(peticion1.getFechaPeticion()), dateFormat.format(peticion2.getFechaPeticion()));
+		assertEquals(peticion1.getRespuesta(), peticion2.getRespuesta());
+		assertEquals(dateFormat.format(peticion1.getFechaRespuesta()), dateFormat.format(peticion2.getFechaRespuesta()));
+	}
+
+	@Test
+	public void testActualizarPeticion() throws Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		// Agregamos una petición 
+		PeticionEntity peticion1 = new PeticionEntity();
+		peticion1.setCodPeticion("Prueba");
+		peticion1.setIdOperador(8L);
+		peticion1.setPeticion("petición SOAP XML");
+		peticion1.setFechaPeticion(dateFormat.parse("2010-11-18"));
+		peticion1.setRespuesta(null);
+		peticion1.setFechaRespuesta(null);
+		peticion1.setFault(null);
+		this.getDao().agregarPeticion(peticion1);
+		assertTrue(peticion1.getIdPeticion() > 0);
+		
+		// Recuperamos la petición y la actualizamos
+		PeticionEntity peticion2 = this.getDao().getPeticionesById(peticion1.getIdPeticion());
+		assertNotNull(peticion2);
+		peticion2.setRespuesta("respuesta SOAP XML");
+		peticion2.setFechaRespuesta(dateFormat.parse("2010-12-31"));
+		peticion2.setFault("fault SOAP XML");
+		this.getDao().actualizarPeticion(peticion2);
+		
+		// Recuperamos la petición actualizada y validamos
+		PeticionEntity peticion3 = this.getDao().getPeticionesById(peticion1.getIdPeticion());
+		assertNotNull(peticion3);
+		assertEquals(peticion2.getIdPeticion(), peticion3.getIdPeticion());
+		assertEquals(peticion2.getCodPeticion(), peticion3.getCodPeticion());
+		assertEquals(peticion2.getFault(), peticion3.getFault());
+		assertEquals(peticion2.getIdOperador(), peticion3.getIdOperador());
+		assertEquals(peticion2.getPeticion(), peticion3.getPeticion());
+		assertEquals(dateFormat.format(peticion2.getFechaPeticion()), dateFormat.format(peticion3.getFechaPeticion()));
+		assertEquals(peticion2.getRespuesta(), peticion3.getRespuesta());
+		assertEquals(dateFormat.format(peticion2.getFechaRespuesta()), dateFormat.format(peticion3.getFechaRespuesta()));
+	}
+
+	@Test
+	public void testGetCambiosJugadores() throws Exception {
+		List<JugadoresCambioRGIAJEntity> resultado = this.getDao().getCambiosJugadores(8);
+		assertNotNull(resultado);
+		assertTrue(!resultado.isEmpty());
+		JugadoresCambioRGIAJEntity cambio = resultado.get(0);
+		
+		assertEquals(8, cambio.getIdOperador().longValue());
+	}
+	
+	/**
+	 * Comprobamos que las propiedades de configuración de la aplicación están
+	 * disponibles.
+	 */
+	@Test
+	public void testGetConfiguraciones() throws Exception {
+		String valor = this.getDao().getConfiguraciones().get("endpoint.scspJuego");
+		assertNotNull(valor);
+
+		valor = this.getDao().getConfiguraciones().get("clave.inexistente");
+		assertNull(valor);
+	}
+
+	/**
+	 * Comprobamos la invocación del procedimiento que guarda los datos de la conexión
+	 * HTTP del cliente.
+	 */
+	@Test
+	public void testGuardarInfoInvocacionHttp() throws Exception {
+		String datos = "Prueba invocacion PL/SQL";
+		this.getDao().guardarInfoInvocacionHttp(datos);
+	}
+
+	@Test
+	public void testReloadCacheConfiguraciones() throws Exception {
+		
+	}
+	
+	public VerificacionDao getDao() {
+		return dao;
+	}
+
+	public void setDao(VerificacionDao dao) {
+		this.dao = dao;
+	}
+
+}

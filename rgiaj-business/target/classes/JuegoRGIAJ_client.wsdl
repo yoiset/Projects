@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+                  xmlns:tns="http://rgiaj.dgoj.es/" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                  name="JuegoRGIAJ"
+                   targetNamespace="http://rgiaj.dgoj.es/">
+  <wsdl:types>
+  
+    <xsd:schema targetNamespace="http://rgiaj.dgoj.es/">
+     
+      <xsd:element name="JugProhibicionQueryRequest" type="tns:JugProhibicionQueryRequest"> </xsd:element>
+      <xsd:element name="JugProhibicionQueryRequest2" type="tns:JugProhibicionQueryRequest"> </xsd:element>
+      <xsd:element name="JugProhibicionQueryRequest3" type="tns:JugProhibicionQueryRequest"> </xsd:element>
+      <xsd:element name="JugProhibicionQueryRequest4" type="tns:JugProhibicionQueryRequest"> </xsd:element>
+      <xsd:element name="JugProhibicionQueryRequest5" type="tns:JugProhibicionQueryRequest"> </xsd:element>
+      <xsd:element name="JugProhibicionQueryRequest6" type="tns:JugProhibicionQueryRequest"> </xsd:element>
+      
+      <xsd:complexType name="JugProhibicionQueryRequest">
+      <xsd:complexContent> 
+			  <xsd:extension base="tns:AbstractQueryEntityRquest"> 
+		          <xsd:sequence>
+		            <xsd:element name="codComunidad" type="xsd:string" maxOccurs="1" nillable="false"/>
+		            <xsd:element name="formatoDescarga" type="xsd:string"/>
+		            <xsd:element name="tipoDescarga" type="xsd:string"/>
+			         <xsd:element name="desde" type="xsd:dateTime"/>
+			         <xsd:element name="last" type="xsd:long"  nillable="true"/>
+			          <xsd:element name="service" type="xsd:boolean" nillable="true"/>
+		          </xsd:sequence>
+	          </xsd:extension>
+          </xsd:complexContent>
+      </xsd:complexType>
+
+      
+      <xsd:element name="prohibidosResponse">
+        <xsd:complexType>
+          <xsd:sequence> 
+            <xsd:element name="resultado" type="xsd:base64Binary"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+              
+      
+      <xsd:element name="Boolean" type="xsd:boolean">
+<!--         <xsd:complexType> -->
+<!--           <xsd:sequence> -->
+<!--             <xsd:element name="resultado" type="xsd:boolean"/> -->
+<!--           </xsd:sequence> -->
+<!--         </xsd:complexType> -->
+      </xsd:element>
+      
+
+      
+      <xsd:element name="ultimasDescargasConfirmadasResponse" type="xsd:string">
+        <xsd:complexType>
+      		<xsd:sequence>      			
+      			<xsd:element name="ultimasDescargas" type="tns:JugProhibicionBeanWS" minOccurs="0" maxOccurs="unbounded"/>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      
+           
+      <xsd:element name="ComunidadRequest" type="xsd:string">
+      <xsd:complexType>
+        <xsd:sequence>
+         <xsd:element name="codigoComunidad" type="xsd:string" maxOccurs="1" nillable="false"> </xsd:element>
+         </xsd:sequence>
+         </xsd:complexType>
+        </xsd:element> 
+      
+      <xsd:element name="ComunidadResponse" type="xsd:string">
+       <xsd:complexType> 
+        <xsd:sequence>
+         <xsd:element name="codigo" type="xsd:string"></xsd:element>
+         <xsd:element name="descripcion" type="xsd:string"></xsd:element>
+         </xsd:sequence>
+         </xsd:complexType>
+      </xsd:element>
+      
+       <xsd:element name="FaultError" type="xsd:string">
+       <xsd:complexType> 
+        <xsd:sequence>
+         <xsd:element name="codigoError" type="xsd:string"></xsd:element>
+         <xsd:element name="descError" type="xsd:string"></xsd:element>
+         </xsd:sequence>
+         </xsd:complexType>
+      </xsd:element>
+      
+
+
+    <xsd:complexType name="AbstractQueryEntityRquest"> 
+        <xsd:sequence> 
+            <xsd:element name="firstResult" type="xsd:int"/> 
+            <xsd:element name="maxResults" type="xsd:int"/> 
+             <xsd:element name="queryTimeout" type="xsd:int"/> 
+              <xsd:element name="calculateNumResults" type="xsd:boolean"/> 
+               <xsd:element name="fixDatetimes" type="xsd:boolean"/> 
+                <xsd:element name="orders" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                 <xsd:element name="order" type="xsd:string"/>
+                 <xsd:element name="fieldName" type="xsd:string"/> 
+        </xsd:sequence> 
+	</xsd:complexType>  
+
+
+	
+	 <xsd:element name="JugHistoricoQueryRequest" type="xsd:string">
+		     <xsd:complexType name="JugHistoricoQueryRequest"> 
+				    <xsd:complexContent> 
+				        <xsd:extension base="tns:AbstractQueryEntityRquest"> 
+				            <xsd:sequence> 
+				                <xsd:element name="codComunidad" type="xsd:string"/> 
+				                 <xsd:element name="fechaDesde" type="xsd:date"/> 
+				                 <xsd:element name="fechaHasta" type="xsd:date"/>
+				                 <xsd:element name="confirmada" type="xsd:boolean" nillable="true"/> 
+				            </xsd:sequence> 
+				        </xsd:extension> 
+				    </xsd:complexContent> 
+			</xsd:complexType>  
+      </xsd:element>
+	
+	
+	<xsd:element name="JugHistoricoSearchResponse" type="xsd:string"> 
+	    <xsd:complexType name="JugHistoricoSearchResponse"> 
+		    <xsd:complexContent> 
+		        <xsd:extension base="tns:SearchResponse"> 
+		            <xsd:sequence> 
+<!-- 		            lista -->
+		                <xsd:element name="listaHistorico" type="tns:JugHistoricoBeanWS" minOccurs="0" maxOccurs="unbounded"/>  
+		                     
+		            </xsd:sequence> 
+		        </xsd:extension> 
+		    </xsd:complexContent> 
+		</xsd:complexType>
+      </xsd:element>
+	
+	
+	
+	<xsd:element name="ComunidadQueryRequest" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest2" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest3" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest4" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest5" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest6" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest7" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest8" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest9" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest10" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest11" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest12" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest13" type="tns:ComunidadQueryRequest"></xsd:element>
+	<xsd:element name="ComunidadQueryRequest14" type="tns:ComunidadQueryRequest"></xsd:element>
+	
+	
+	<xsd:element name="UsuarioQueryRequest" type="tns:UsuarioQueryRequest"></xsd:element>
+	<xsd:element name="UsuarioQueryRequest1" type="tns:UsuarioQueryRequest"></xsd:element>
+	<xsd:element name="UsuarioQueryRequest2" type="tns:UsuarioQueryRequest"></xsd:element>
+	<xsd:element name="UsuarioQueryRequest3" type="tns:UsuarioQueryRequest"></xsd:element>
+	
+	 <xsd:complexType name="ComunidadQueryRequest"> 
+		    <xsd:complexContent> 
+		        <xsd:extension base="tns:AbstractQueryEntityRquest"> 
+		            <xsd:sequence> 
+		                <xsd:element name="codComunidad" type="xsd:string"/> 
+		                 <xsd:element name="idComunidad" type="xsd:long"/> 
+		                 <xsd:element name="descripcion" type="xsd:string"/> 
+		                 <xsd:element name="activo" type="xsd:int"/> 
+		                 
+		                 <xsd:element name="fechaDesde" type="xsd:dateTime"/> 
+		                 <xsd:element name="certificado" type="xsd:string"/> 
+		                 
+		                  <xsd:element name="hashCertificado" type="xsd:string"/> 
+		                  <xsd:element name="indActivo" type="xsd:int"/> 
+		                   
+		                  <xsd:element name="fechaHasta" type="xsd:dateTime"/>
+		                  <xsd:element name="fechaCarga" type="xsd:dateTime"/>
+		                  
+		                  <xsd:element name="fingerSha1" type="xsd:string"/>
+		                     
+		            </xsd:sequence> 
+		        </xsd:extension> 
+		    </xsd:complexContent> 
+	</xsd:complexType> 
+	
+	
+	   <xsd:complexType name="UsuarioQueryRequest">  
+		    <xsd:complexContent> 
+		        <xsd:extension base="tns:ComunidadQueryRequest"> 
+		            <xsd:sequence> 
+		                <xsd:element name="id" type="xsd:long"/> 
+		                 <xsd:element name="usuario" type="xsd:string"/> 
+<!-- 		                 <xsd:element name="descripcion" type="xsd:string"/>  -->
+		            </xsd:sequence> 
+		        </xsd:extension> 
+		    </xsd:complexContent> 
+	</xsd:complexType> 
+      
+	
+	<xsd:element name="ComunidadSearchResponse" type="xsd:string">  
+	   <xsd:complexType name="ComunidadSearchResponse"> 
+		    <xsd:complexContent> 
+		        <xsd:extension base="tns:SearchResponse">  
+		            <xsd:sequence> 
+		                <xsd:element name="listaComunidad" type="tns:ComunidadCertificadoBeanWS" minOccurs="0" maxOccurs="unbounded"/>  
+		                  <xsd:element name="listaUsuario" type="tns:UsuarioComunidadBeanWS" minOccurs="0" maxOccurs="unbounded"/>  
+		                     
+		            </xsd:sequence> 
+		        </xsd:extension> 
+		    </xsd:complexContent> 
+	    </xsd:complexType>   
+      </xsd:element>
+	
+
+   <xsd:element name="ComunidadCertificadoBeanResponse" type="tns:ComunidadCertificadoBeanWS">
+	   
+    </xsd:element>
+    
+     <xsd:element name="UsuarioComunidadBeanResponse" type="tns:UsuarioComunidadBeanWS">
+	   
+    </xsd:element>
+      
+      <xsd:complexType name="ComunidadCertificadoBeanWS"> 
+		    <xsd:complexContent> 
+		        <xsd:extension base="tns:ComunidadBeanWS"> 
+		            <xsd:sequence> 
+		                <xsd:element name="fechaDesde" type="xsd:dateTime"/>  
+		                 <xsd:element name="certificado" type="xsd:string"/>  
+		                  <xsd:element name="hashCertificado" type="xsd:string"/>
+		                  <xsd:element name="indActivo" type="xsd:int"/>
+		                  
+		                  <xsd:element name="fechaHasta" type="xsd:dateTime"/>
+		                  <xsd:element name="fechaCarga" type="xsd:dateTime"/>
+		                     
+		                  <xsd:element name="fingerSha1" type="xsd:string"/>  
+		            </xsd:sequence> 
+		        </xsd:extension> 
+		    </xsd:complexContent> 
+	    </xsd:complexType>  
+	    
+	    
+	     <xsd:complexType name="UsuarioComunidadBeanWS"> 
+		    <xsd:complexContent> 
+		        <xsd:extension base="tns:ComunidadBeanWS"> 
+		            <xsd:sequence> 
+		                <xsd:element name="id" type="xsd:long"/>  
+		                 <xsd:element name="usuario" type="xsd:string"/>  
+<!-- 		                  <xsd:element name="descripcion" type="xsd:string"/> -->
+		                  <xsd:element name="activo" type="xsd:int"/>
+		            </xsd:sequence> 
+		        </xsd:extension> 
+		    </xsd:complexContent> 
+	    </xsd:complexType>  
+   
+     <xsd:complexType name="SearchResponse"> 
+        <xsd:sequence> 
+            <xsd:element name="numResults" type="xsd:long"/> 
+             <xsd:element name="hasNext" type="xsd:boolean"/> 
+              <xsd:element name="lapse" type="xsd:long"/> 
+        </xsd:sequence> 
+	</xsd:complexType>  
+	
+	
+	<xsd:complexType name="ComunidadBeanWS"> 
+        <xsd:sequence> 
+            <xsd:element name="idComunidad" type="xsd:long"/> 
+             <xsd:element name="codigo" type="xsd:string"/> 
+              <xsd:element name="descripcion" type="xsd:string"/> 
+        </xsd:sequence> 
+	</xsd:complexType>
+	
+	
+	
+    <xsd:element name="JugProhibicionBeanWS" type="tns:JugProhibicionBeanWS">
+		
+	</xsd:element>
+	
+	<xsd:complexType  name="JugProhibicionBeanWS"> 
+        <xsd:sequence> 
+            <xsd:element name="idComunidad" type="xsd:long"/> 
+             <xsd:element name="codigo" type="xsd:string"/> 
+              <xsd:element name="descripcion" type="xsd:string"/> 
+	          <xsd:element name="fechaDescarga" type="xsd:dateTime"/> 
+	          <xsd:element name="ultimo" type="xsd:long"/> 
+        </xsd:sequence> 
+	</xsd:complexType>
+	  
+	  <xsd:complexType name="JugHistoricoBeanWS">   
+	        <xsd:sequence> 
+	            <xsd:element name="idHistoricoDescarga" type="xsd:long"/>  
+	             <xsd:element name="fechaDescarga" type="xsd:dateTime"/> 
+	              <xsd:element name="tipo" type="xsd:string"/> 
+	              <xsd:element name="comunidad" type="tns:ComunidadBeanWS"/> 
+	               <xsd:element name="confirmada" type="xsd:string"/> 
+	                 <xsd:element name="ultimo" type="xsd:long"/>
+	        </xsd:sequence> 
+	</xsd:complexType>
+	
+	
+		<xsd:element name="ComunidadBeanResponse">
+		<xsd:complexType>
+			  <xsd:sequence> 
+	            <xsd:element name="ComunidadBeanWS" type="tns:ComunidadBeanWS" minOccurs="0" maxOccurs="unbounded"/> 
+	        </xsd:sequence> 
+        </xsd:complexType>
+	    </xsd:element>
+
+      
+        </xsd:schema>
+       
+        
+  </wsdl:types>
+  
+  <wsdl:message name="JugProhibicionQueryRequest">
+    <wsdl:part element="tns:JugProhibicionQueryRequest" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="JugProhibicionQueryRequest2">
+    <wsdl:part element="tns:JugProhibicionQueryRequest2" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="JugProhibicionQueryRequest3">
+    <wsdl:part element="tns:JugProhibicionQueryRequest3" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="JugProhibicionQueryRequest4">
+    <wsdl:part element="tns:JugProhibicionQueryRequest4" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="JugProhibicionQueryRequest5">
+    <wsdl:part element="tns:JugProhibicionQueryRequest5" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="prohibidosResponse">
+    <wsdl:part element="tns:prohibidosResponse" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="Boolean">
+  	<wsdl:part name="parameters" element="tns:Boolean"></wsdl:part>
+  </wsdl:message>
+
+  <wsdl:message name="ultimasDescargasConfirmadasResponse">
+  	<wsdl:part name="parameters" element="tns:ultimasDescargasConfirmadasResponse"></wsdl:part>
+  </wsdl:message>
+  
+  <wsdl:message name="JugHistoricoBeanWS">
+  	<wsdl:part name="parameters" element="tns:JugHistoricoBeanRequest"></wsdl:part>
+  </wsdl:message>
+  
+   <wsdl:message name="JugProhibicionBeanWS">
+  	<wsdl:part name="parameters" element="tns:JugProhibicionBeanWS"></wsdl:part>
+  </wsdl:message>  
+  
+  <wsdl:message name="string">
+  	<wsdl:part name="codComunidad" type="xsd:string"></wsdl:part> 
+  </wsdl:message>
+  
+    <wsdl:message name="string2">
+  	<wsdl:part name="user" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  
+   <wsdl:message name="UsuarioQueryRequest">
+    <wsdl:part element="tns:UsuarioQueryRequest" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="UsuarioQueryRequest1">
+    <wsdl:part element="tns:UsuarioQueryRequest1" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="UsuarioQueryRequest2">
+    <wsdl:part element="tns:UsuarioQueryRequest2" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="UsuarioQueryRequest3">
+    <wsdl:part element="tns:UsuarioQueryRequest3" name="parameters"/>
+  </wsdl:message>
+
+   <wsdl:message name="ComunidadBeanResponse">
+  	<wsdl:part name="parameters" element="tns:ComunidadBeanResponse"></wsdl:part>
+  </wsdl:message>
+  
+
+    
+  <wsdl:message name="Fault">
+  	<wsdl:part name="fault" element="tns:FaultError"></wsdl:part>
+  </wsdl:message>
+  
+
+  
+  <wsdl:message name="JugHistoricoQueryRequest">
+    <wsdl:part element="tns:JugHistoricoQueryRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="JugHistoricoSearchResponse">
+    <wsdl:part element="tns:JugHistoricoSearchResponse" name="parameters"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:message name="ComunidadQueryRequest">
+    <wsdl:part element="tns:ComunidadQueryRequest" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ComunidadQueryRequest2">
+    <wsdl:part element="tns:ComunidadQueryRequest2" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ComunidadQueryRequest3">
+    <wsdl:part element="tns:ComunidadQueryRequest3" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ComunidadQueryRequest4">
+    <wsdl:part element="tns:ComunidadQueryRequest4" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ComunidadQueryRequest5">
+    <wsdl:part element="tns:ComunidadQueryRequest5" name="parameters"/>
+  </wsdl:message>
+   <wsdl:message name="ComunidadQueryRequest6">
+    <wsdl:part element="tns:ComunidadQueryRequest6" name="parameters"/>
+  </wsdl:message>
+  
+  
+   <wsdl:message name="ComunidadQueryRequest7">
+    <wsdl:part element="tns:ComunidadQueryRequest7" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="ComunidadQueryRequest8">
+    <wsdl:part element="tns:ComunidadQueryRequest8" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="ComunidadQueryRequest9">
+    <wsdl:part element="tns:ComunidadQueryRequest9" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="ComunidadQueryRequest10">
+    <wsdl:part element="tns:ComunidadQueryRequest10" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="ComunidadQueryRequest11">
+    <wsdl:part element="tns:ComunidadQueryRequest11" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="ComunidadQueryRequest12">
+    <wsdl:part element="tns:ComunidadQueryRequest12" name="parameters"/>
+  </wsdl:message>
+  
+   <wsdl:message name="ComunidadQueryRequest13">
+    <wsdl:part element="tns:ComunidadQueryRequest13" name="parameters"/>
+  </wsdl:message>
+  
+    <wsdl:message name="ComunidadQueryRequest14">
+    <wsdl:part element="tns:ComunidadQueryRequest14" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ComunidadSearchResponse">
+    <wsdl:part element="tns:ComunidadSearchResponse" name="parameters"/>
+  </wsdl:message>  
+  
+    <wsdl:message name="void">
+    </wsdl:message>
+  
+    <wsdl:message name="ComunidadCertificadoBeanResponse">
+    <wsdl:part element="tns:ComunidadCertificadoBeanResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="JuegoRGIAJ">
+    
+<!--     Start Interface Methods from IJugProhibicionService -->
+    
+    <wsdl:operation name="prohibidosList">
+      <wsdl:input message="tns:JugProhibicionQueryRequest"/>
+      <wsdl:output message="tns:prohibidosResponse"/>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+        
+    <wsdl:operation name="confirmHistoricoDescargas">
+    	<wsdl:input message="tns:JugProhibicionQueryRequest2"></wsdl:input>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+     </wsdl:operation>
+     
+      <wsdl:operation name="confirmHistoricoDescargasPendientes">
+    	<wsdl:input message="tns:JugProhibicionQueryRequest3"></wsdl:input>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+     </wsdl:operation>
+
+    <wsdl:operation name="hayPendiente">
+    	<wsdl:input message="tns:JugProhibicionQueryRequest4"></wsdl:input>
+    	<wsdl:output message="tns:Boolean"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+     </wsdl:operation>
+     
+
+                
+    <wsdl:operation name="ultimasDescargasConfirmadas">
+    	<wsdl:input message="tns:JugProhibicionQueryRequest5"></wsdl:input>
+    	<wsdl:output message="tns:ultimasDescargasConfirmadasResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+        </wsdl:operation>
+        
+        
+        
+    <wsdl:operation name="getComunidad">
+    	<wsdl:input message="tns:string2"> </wsdl:input>
+    	<wsdl:output message="tns:JugProhibicionBeanWS"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+
+ <!--     End Interface Methods from IJugProhibicionService -->
+  
+  
+  <!--     Star Interface Methods from IJugHistoricoDescargaService -->
+    
+    <wsdl:operation name="getHistorico">
+    	<wsdl:input message="tns:JugHistoricoQueryRequest"></wsdl:input>
+    	<wsdl:output message="tns:JugHistoricoSearchResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+  
+   <!--     End Interface Methods from IJugHistoricoDescargaService --> 
+   
+   
+   <!--     Start Interface Methods from IComunidadService --> 
+
+    <wsdl:operation name="getCertificadoComunidad">
+    	<wsdl:input message="tns:ComunidadQueryRequest"></wsdl:input>
+    	<wsdl:output message="tns:ComunidadSearchResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+      <wsdl:operation name="getComunidadList">
+        <wsdl:input message="tns:void"></wsdl:input>
+    	<wsdl:output message="tns:ComunidadBeanResponse"></wsdl:output>
+        <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+     <wsdl:operation name="addCertificadoComunidad">
+        <wsdl:input message="tns:ComunidadQueryRequest14"></wsdl:input>
+        <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+     </wsdl:operation>
+     
+      <wsdl:operation name="existOtroCertificadoActivoComunidad">
+    	<wsdl:input message="tns:ComunidadQueryRequest2"></wsdl:input>
+    	<wsdl:output message="tns:Boolean"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+        <wsdl:operation name="getCertificadoActivoComunidad">
+    	<wsdl:input message="tns:ComunidadQueryRequest3"></wsdl:input>
+    	<wsdl:output message="tns:ComunidadCertificadoBeanResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+    <wsdl:operation name="updateCertificadoComunidad">
+    	<wsdl:input message="tns:ComunidadQueryRequest4"></wsdl:input>
+    	<wsdl:output message="tns:void"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+     <wsdl:operation name="isCertificadoActivo">
+    	<wsdl:input message="tns:ComunidadQueryRequest5"></wsdl:input>
+    	<wsdl:output message="tns:Boolean"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+    <wsdl:operation name="removeCertificadoComunidad">
+    	<wsdl:input message="tns:ComunidadQueryRequest6"></wsdl:input>
+    	<wsdl:output message="tns:void"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+    <wsdl:operation name="existCertificadoComunidad">
+    	<wsdl:input message="tns:ComunidadQueryRequest7"></wsdl:input>
+    	<wsdl:output message="tns:Boolean"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+     <wsdl:operation name="existCertificadoActivoOtraComunidad">
+    	<wsdl:input message="tns:ComunidadQueryRequest8"></wsdl:input>
+    	<wsdl:output message="tns:Boolean"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+    </wsdl:operation>
+    
+  <!--     End Interface Methods from IComunidadService --> 
+  
+  
+  <!--     Start Interface Methods from IComunidadUsuarioService --> 
+            
+          <wsdl:operation name="existUsuario">
+	    	<wsdl:input message="tns:UsuarioQueryRequest"></wsdl:input>
+	    	<wsdl:output message="tns:Boolean"></wsdl:output>
+	        <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+         </wsdl:operation>
+         
+         <wsdl:operation name="addUsuario">
+	    	<wsdl:input message="tns:UsuarioQueryRequest1"></wsdl:input>
+	        <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+         </wsdl:operation>
+         
+         <wsdl:operation name="editUsuario">
+	    	<wsdl:input message="tns:UsuarioQueryRequest2"></wsdl:input>
+	        <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+         </wsdl:operation>
+         
+         <wsdl:operation name="removeUsuario">
+	    	<wsdl:input message="tns:UsuarioQueryRequest3"></wsdl:input> 
+	        <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+         </wsdl:operation>
+         
+         <wsdl:operation name="getUsuarioComunidad">
+	    	<wsdl:input message="tns:ComunidadQueryRequest13"></wsdl:input>
+	    	<wsdl:output message="tns:ComunidadSearchResponse"></wsdl:output>
+	        <wsdl:fault name="fault" message="tns:Fault"></wsdl:fault>
+         </wsdl:operation>
+           
+   <!--     End Interface Methods from IComunidadUsuarioService --> 
+  
+  </wsdl:portType>
+  
+  <wsdl:binding name="JuegoRGIAJBinding" type="tns:JuegoRGIAJ">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+   
+    <wsdl:operation name="prohibidosList">
+	      <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/prohibidosList" />
+	      <wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	       <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+    
+     <wsdl:operation name="hayPendiente">
+     <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/hayPendiente"/>
+    	 <wsdl:input>
+	        <soap:body use="literal" />
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+     </wsdl:operation>
+    
+     <wsdl:operation name="confirmHistoricoDescargas">
+      <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/confirmHistoricoDescargas"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+     </wsdl:operation>
+     
+      <wsdl:operation name="confirmHistoricoDescargasPendientes">
+      <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/confirmHistoricoDescargasPendientes"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+     </wsdl:operation>
+
+    <wsdl:operation name="ultimasDescargasConfirmadas">
+     <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/ultimasDescargasConfirmadas"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+     </wsdl:operation>
+        
+        
+        
+    <wsdl:operation name="getComunidad">
+    <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/getComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+    
+    
+     <wsdl:operation name="getHistorico">
+    	 <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/JuegoRGIAJ/getHistorico"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+    
+    
+    <wsdl:operation name="getCertificadoComunidad">
+    	<soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/getCertificadoComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+      <wsdl:operation name="getComunidadList">
+       <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/getComunidadList"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+     <wsdl:operation name="addCertificadoComunidad">
+        <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/addCertificadoComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+     </wsdl:operation>
+     
+      <wsdl:operation name="existOtroCertificadoActivoComunidad">
+    	 <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/existOtroCertificadoActivoComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+     <wsdl:operation name="getCertificadoActivoComunidad">
+    	 <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/getCertificadoActivoComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+    <wsdl:operation name="updateCertificadoComunidad">
+    	 <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/updateCertificadoComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+     <wsdl:operation name="isCertificadoActivo">
+    	 <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/isCertificadoActivo"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+    <wsdl:operation name="removeCertificadoComunidad">
+    	 <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/removeCertificadoComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+    <wsdl:operation name="existCertificadoComunidad">
+    	 <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/existCertificadoComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+     <wsdl:operation name="existCertificadoActivoOtraComunidad">
+    	<soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/existCertificadoActivoOtraComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+    </wsdl:operation>
+    
+    
+    
+    
+     <wsdl:operation name="existUsuario">
+	    	<soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/existUsuario"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+         </wsdl:operation>
+         
+         <wsdl:operation name="addUsuario">
+	    	<soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/addUsuario"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+         </wsdl:operation>
+         
+         <wsdl:operation name="editUsuario">
+	    	<soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/editUsuario"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+         </wsdl:operation>
+         
+         <wsdl:operation name="removeUsuario">
+	    	<soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/removeUsuario"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+         </wsdl:operation>
+         
+         <wsdl:operation name="getUsuarioComunidad">
+	    <soap:operation soapAction="http://rgiaj.dgoj.es/JuegoRGIAJ/getUsuarioComunidad"/>
+    	<wsdl:input>
+	        <soap:body use="literal"/>
+	      </wsdl:input>
+	      <wsdl:output>
+	        <soap:body use="literal"/>
+	      </wsdl:output>
+	      <wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+         </wsdl:operation>
+    
+    
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="JuegoRGIAJ">
+    <wsdl:port binding="tns:JuegoRGIAJBinding" name="JuegoRGIAJSOAP">
+      <soap:address location="http://localhost/ws-rgiaj-in-ccaa/JuegoRGIAJ/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,20 @@
+package es.gob.cnjuego.ws.dao;
+
+public class CriterioBusquedaOperador {
+	private String razonSocial; 
+	private Integer idModalidad;
+
+	public String getRazonSocial() {
+		return razonSocial;
+	}
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+
+	public Integer getIdModalidad() {
+		return idModalidad;
+	}
+	public void setIdModalidad(Integer idModalidad) {
+		this.idModalidad = idModalidad;
+	}
+}

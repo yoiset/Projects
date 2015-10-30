@@ -1,0 +1,80 @@
+package com.dgoj.rgiaj.ws;
+
+import javax.jws.Oneway;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+
+import es.dgoj.rgiaj.ComunidadRequest;
+import es.dgoj.rgiaj.ComunidadResponse;
+import es.dgoj.rgiaj.ConfirmHistoricoDescargasRequest;
+import es.dgoj.rgiaj.Fault;
+import es.dgoj.rgiaj.HayPendienteRequest;
+import es.dgoj.rgiaj.HayPendienteResponse;
+import es.dgoj.rgiaj.JuegoRGIAJ;
+import es.dgoj.rgiaj.ProhibidosRequest;
+import es.dgoj.rgiaj.ProhibidosResponse;
+import es.dgoj.rgiaj.UltimasDescargasConfirmadasRequest;
+import es.dgoj.rgiaj.UltimasDescargasConfirmadasResponse;
+
+public class JuegoRGIAJImpl implements JuegoRGIAJ {
+	
+	 private JuegoRGIAJController controller;
+	
+
+
+	@Override
+	@WebResult(name = "hasPendingResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public HayPendienteResponse hayPendiente(
+			@WebParam(partName = "parameters", name = "hasPendingRequest", targetNamespace = "http://rgiaj.dgoj.es/") HayPendienteRequest parameters)
+			throws Fault {
+		// TODO Auto-generated method stub
+		return controller.hayPendiente(parameters);
+	}
+
+	@Override
+	@WebResult(name = "ultimasDescargasConfirmadasResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public UltimasDescargasConfirmadasResponse ultimasDescargasConfirmadas(
+			@WebParam(partName = "parameters", name = "ultimasDescargasConfirmadasRequest", targetNamespace = "http://rgiaj.dgoj.es/") UltimasDescargasConfirmadasRequest parameters)
+			throws Fault {
+		// TODO Auto-generated method stub
+		return controller.ultimaDescargaConfirmada(parameters);
+	}
+
+	@Override
+	@Oneway
+	@WebMethod
+	public void confirmHistoricoDescargas(
+			@WebParam(partName = "parameters", name = "confirmHistoricoDescargasRequest", targetNamespace = "http://rgiaj.dgoj.es/") ConfirmHistoricoDescargasRequest parameters)
+			throws Fault {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	@WebResult(name = "ComunidadResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod
+	public ComunidadResponse getComunidad(
+			@WebParam(partName = "parameters", name = "ComunidadRequest", targetNamespace = "http://rgiaj.dgoj.es/") ComunidadRequest parameters)
+			throws Fault {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@WebResult(name = "prohibidosResponse", targetNamespace = "http://rgiaj.dgoj.es/", partName = "parameters")
+	@WebMethod(action = "http://rgiaj.dgoj.es/prohibidosList")
+	public ProhibidosResponse prohibidosList(@WebParam(partName = "parameters", name = "prohibidosRequest", targetNamespace = "http://rgiaj.dgoj.es/") ProhibidosRequest parameters)
+			throws Fault {
+		
+	 	// TODO Auto-generated method stub
+		 return controller.getProhibidos(parameters);
+	}
+
+	public void setController(JuegoRGIAJController controller) {
+		this.controller = controller;
+	}
+
+}

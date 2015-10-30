@@ -1,0 +1,129 @@
+package es.gob.cnjuego.ws.dao;
+
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJ;
+import es.gob.cnjuego.ws.entity.JugadoresOperador;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.verificacionjugadores.SpringTestCase;
+
+public class JugadoresOperadorDAOTest extends SpringTestCase {
+	
+	private JugadoresOperadorDAO dao; 
+	private OperadorDAO opDAO;
+	
+	@Before
+	public void setUp() throws Exception{
+		super.setUp();
+		dao=  (JugadoresOperadorDAO)getContext().getBean("jugadoresOperadorDAO");
+		opDAO= (OperadorDAO)getContext().getBean("operadorDAO");
+	}
+	
+	
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+	}
+	
+	@Test
+	public void testInit() throws Exception {
+		assertNotNull(this.getDao());
+		assertNotNull(this.getOpDAO());
+	}
+	
+	@Test
+	public void testExisteJugadorIdentificado() throws Exception {
+		
+		/*Nombre, DNI, Apellido1, Apellido2, Fecha Nac coicidentes y Cache_Identidad=0, RES_identidad=COD003 */
+		JugadoresOperador jugador= dao.existeJugadorIdentificado("00000000T", "Maria", "Gonzalez", new GregorianCalendar(1960,03,10).getTime());
+		assertNotNull(jugador);
+		
+		JugadoresOperador jugador2= dao.existeJugadorIdentificado("00000001R", "lorena", "d'con", new GregorianCalendar(1955,04,18).getTime());
+		assertNull(jugador2);
+		
+		JugadoresOperador jugador3= dao.existeJugadorIdentificado("10000949C", "olga", "san miguel","chao", new GregorianCalendar(1940,05,02).getTime());
+		assertNotNull(jugador3);
+		
+		JugadoresOperador jugador4= dao.existeJugadorIdentificado("10000949D", "olga", "san miguel","chao", new GregorianCalendar(1940,05,02).getTime());
+		assertNull(jugador4);
+		
+		JugadoresOperador jugador5= dao.existeJugadorIdentificado("10000949C", "olga", "san miguel","chaoo", new GregorianCalendar(1940,05,02).getTime());
+		assertNull(jugador5);
+		
+		JugadoresOperador jugador6= dao.existeJugadorIdentificado("20000717D", "ricardo", "gaºrcia","gaºrcia", new GregorianCalendar(1967,10,03).getTime());
+		assertNull(jugador6);
+		
+		/*DNI coicidente, y Apellido2 no vacio. Cache_Identidad=0, RES_identidad=COD003 */
+		JugadoresOperador jugador7 =dao.existeJugadorIdentificadoConApellido2("20000717D", new GregorianCalendar(1967,10,03).getTime());
+	    assertNotNull(jugador7);
+	    
+	    JugadoresOperador jugador8 =dao.existeJugadorIdentificadoConApellido2("32456789",new Date(59, 8, 13)); // new GregorianCalendar(1959,11,13).getTime()
+	    assertNotNull(jugador8);
+	    
+	    JugadoresOperador jugador9 =dao.existeJugadorIdentificadoConApellido2("X2975617S",new Date(69, 3, 19)); // new GregorianCalendar(1959,11,13).getTime()
+	    assertNull(jugador9);
+	    
+	    
+	    /*DNI coicidente, y Apellido2 vacio. Cache_Identidad=0, RES_identidad=COD003 */
+	    JugadoresOperador jugador10 =dao.existeJugadorIdentificadoSinApellido2("X2975617S", new Date(69, 3, 19));
+	    assertNotNull(jugador10);
+	    
+	    JugadoresOperador jugador11 =dao.existeJugadorIdentificadoSinApellido2("32456789", new Date(59, 8, 13));
+	    //assertNull(jugador11); no hace lo que debe hacer. Hay que revisarla
+	    
+	    
+	    /*Jugadores que estan dado de alta en el RGIAJ por un operador y cuya Fecha Valor menor a la actual*/
+	    OperadorEntity op=opDAO.obtenerOperador("A20854626");  // ID Operador 12
+	    assertNotNull(op);
+	    List<JugadoresCambioRGIAJ> list =dao.obtenerCambiosJugadores(op);
+	    assertNotNull(list);
+	    System.out.println("");
+	    System.out.println("Resultado de la lista RGIAJ. Id Operador: " + op.getIdOperador());
+	    System.out.println("");
+	    System.out.println("CIF: " + op.getCif());
+	    System.out.print("        DNI:" + " ");
+	    System.out.print  ("      Evento:" + "");
+	    System.out.print  ("      Fecha Valor:" + " ");
+	    for (JugadoresCambioRGIAJ jug : list) {
+	    	System.out.println("");
+			System.out.print("      " +  jug.getDni());
+			System.out.print("      " +  jug.getEvento());
+			System.out.print("      " +  jug.getFechaValor());
+		}  
+	    System.out.println(""); 
+	    
+	    OperadorEntity op2=opDAO.obtenerOperador("2053-5725");  // ID Operador 3
+	    assertNotNull(op2);
+		
+	    /*Este operador no tiene jugadores registrador en el RGIAJ. Se espera lista vacia*/
+	    List<JugadoresCambioRGIAJ> list2 =dao.obtenerCambiosJugadores(op2);
+	    assertNotNull(list2);
+	    assertEquals(new ArrayList<JugadoresCambioRGIAJ>(), list2);
+	}
+
+
+	public JugadoresOperadorDAO getDao() {
+		return dao;
+	}
+
+
+	public void setDao(JugadoresOperadorDAO dao) {
+		this.dao = dao;
+	}
+
+
+	public OperadorDAO getOpDAO() {
+		return opDAO;
+	}
+
+}

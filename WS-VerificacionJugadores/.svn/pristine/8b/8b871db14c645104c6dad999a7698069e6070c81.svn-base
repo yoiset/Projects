@@ -1,0 +1,782 @@
+package es.gob.cnjuego.ws.verificacionjugadores.control;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.naming.InitialContext;
+import javax.persistence.Cache;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.ws.handler.soap.SOAPMessageContext;
+
+import org.apache.log4j.Logger;
+
+import es.gob.cnjuego.ws.dao.DNIDebugIdentidadDAO;
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJ;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.service.ServicioGestionCertificados;
+import es.gob.cnjuego.ws.service.ServicioGestionJugadores;
+import es.gob.cnjuego.ws.service.ServicioGestionRGIAJ;
+import es.gob.cnjuego.ws.service.ServicioIdentidad;
+import es.gob.cnjuego.ws.util.CodigoEstadoSCSP;
+import es.gob.cnjuego.ws.util.Constantes;
+import es.gob.cnjuego.ws.util.Propiedades;
+import es.gob.cnjuego.ws.util.ServiceCN;
+import es.gob.cnjuego.ws.util.validation.ValidadorNIF;
+import es.gob.cnjuego.ws.verificacionjugadores.CambioRGIAJ;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+import es.gob.cnjuego.ws.verificacionjugadores.Jugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoIdentidad;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoJugador;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoRGIAJ;
+import es.gob.cnjuego.ws.verificacionjugadores.ResultadoType;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarCambiosRGIAJFault;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarCambiosRGIAJFault_Exception;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarIdentidadFault;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarIdentidadFault_Exception;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarJugadorFault;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarJugadorFault_Exception;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarRGIAJFault;
+import es.gob.cnjuego.ws.verificacionjugadores.VerificarRGIAJFault_Exception;
+import es.gob.cnjuego.ws.verificacionjugadores.control.validacion.ValidadorJugador;
+import es.mir.juego.component.ws.service.InfoResultado;
+
+
+public class VerificacionJugadoresControlBean {
+
+	private static final String JNDI_SERVICIO_DNI_DEBUG_IDENTIDAD = "SedeWSEAR/DNIDebugIdentidadDAOImpl/local";
+	private static final String JNDI_SERVICIO_SERVICIO_TRADUCCION = "SedeWSEAR/ServicioTraduccionCaracteresImpl/local";
+	private static final String JNDI_SERVICIO_RGIAJ="SedeWSEAR/ServicioGestionRGIAJImpl/local";
+	private static final String JNDI_SERVICIO_IDENTIDAD="SedeWSEAR/ServicioIdentidadImpl/local";
+	private static final String JNDI_SERVICIO_GESTION_CERTIFICADOS="SedeWSEAR/ServicioGestionCertificadosImpl/local";
+	private static final String JNDI_SERVICIO_GESTION_JUGADORES="SedeWSEAR/ServicioGestionJugadoresImpl/local";
+	private static final String JNDI_SERVICIO_JUGADORES_PRUEBA="SedeWSEAR/ServicioJugadoresTestWSImpl/local";
+	private static final String PROP_MODO_DEBUG_IDENTIDAD="identidad.modoDebug";
+	private static final String CLAVE_DNI_DEBUG_IDENTIDAD="DNI_PRUEBA";
+	private Logger log = Logger.getLogger(VerificacionJugadoresControlBean.class);
+	
+	public List<ResultadoJugador> verificarJugador(List<Jugador> jugadores, int modo)	throws VerificarJugadorFault_Exception {
+		
+		String original = null;
+		String traduccion = null;
+		List<ResultadoJugador> resultadoJugadores = null;
+		HashMap<String, Jugador> mapJugadores = new HashMap<String, Jugador>();
+		List<ResultadoRGIAJ> resultadosRGIAJ = null;
+		resultadoJugadores = new ArrayList<ResultadoJugador>();
+		List<Jugador> jugadoresValidos = new ArrayList<Jugador>();
+		
+		try {
+			original = getCaracteresCache(Constantes.CACHE_KEY_CARACTERES_ORIGINAL);
+			traduccion = getCaracteresCache(Constantes.CACHE_KEY_CARACTERES_TRADUCCION);
+		} catch(Exception ex )
+		{
+			log.error("Error al obtener caracteres de traducciÃƒÂ³n",ex);
+			throw new VerificarJugadorFault_Exception("Error interno", new VerificarJugadorFault());
+		}
+		
+		
+		for (Iterator<Jugador> iter=jugadores.iterator();iter.hasNext();)
+		{
+			Jugador jugador = (Jugador)iter.next();
+			ValidadorJugador.formateaDatosJugador(jugador,original,traduccion);
+			String res_validacion = ValidadorJugador.validarJugador(jugador);
+			if (res_validacion != null){
+				resultadoJugadores.add(this.generarResultadoJugadorInvalido(jugador, res_validacion));
+			}
+			else{
+				//Sistema de jugadores de prueba
+				ResultadoJugador resPrueba = null;
+				try{
+					resPrueba = this.resultadoJugadorServicioPrueba(modo, jugador);
+				} catch(Exception ex)
+				{
+					throw new VerificarJugadorFault_Exception("Error interno", new VerificarJugadorFault());
+				}
+				if (resPrueba != null)
+					resultadoJugadores.add(resPrueba);
+				else {	
+					mapJugadores.put(jugador.getDni().toUpperCase(), jugador);
+					jugadoresValidos.add(jugador);
+				}
+			}
+		}
+		
+		try {
+			resultadosRGIAJ = this.verificarRGIAJ(jugadoresValidos, false,modo);
+		}catch(Exception ex)
+		{
+			throw new VerificarJugadorFault_Exception("Error al verificar los jugadores en el RGIAJ", new VerificarJugadorFault());
+		}
+		
+		if (resultadosRGIAJ != null)
+		{
+			for (Iterator<ResultadoRGIAJ> iter = resultadosRGIAJ.iterator();iter.hasNext();)
+			{
+				ResultadoRGIAJ resRGIAJ = (ResultadoRGIAJ)iter.next();
+				ResultadoJugador resJugador = new ResultadoJugador();
+				resJugador.setDni(resRGIAJ.getDni());
+				resJugador.setResultadoRGIAJ(resRGIAJ.getResultadoRGIAJ());
+				ResultadoType resIdentidad = null;
+				try {
+					if (resRGIAJ.getResultadoRGIAJ().getCodigo().equals(CodigosVerificacion.COD_FORMATO_INCORRECTO))
+						resIdentidad = resRGIAJ.getResultadoRGIAJ();
+					else
+						resIdentidad = obtenerResultadoIdentidad(mapJugadores.get(resRGIAJ.getDni()));
+				} catch(Exception ex)
+				{
+					throw new VerificarJugadorFault_Exception("Error interno", new VerificarJugadorFault());
+				}
+				resJugador.setResultadoIdentidad(resIdentidad);
+				resultadoJugadores.add(resJugador);
+			}
+		}
+		
+		
+		return resultadoJugadores;
+	}
+	
+	
+	public List<ResultadoRGIAJ> verificarRGIAJ(List<Jugador> jugadores, boolean validar, int modo)
+	throws VerificarRGIAJFault_Exception {
+		String original = null;
+		String traduccion = null;
+		List<ResultadoRGIAJ> resultados = new ArrayList<ResultadoRGIAJ>();
+		List<InfoResultado> inforesultados = null;
+		List<String> listadni = new ArrayList<String>();
+		ServicioGestionRGIAJ gestionRGIAJ = null;
+	
+		try {
+//			InitialContext ic = new InitialContext();
+//			gestionRGIAJ = (ServicioGestionRGIAJ) ic.lookup(JNDI_SERVICIO_RGIAJ);
+		} catch (Exception ex)
+			{
+			log.error("Error interno", ex);
+			throw new VerificarRGIAJFault_Exception("Error interno", new VerificarRGIAJFault());
+			}
+		
+		// Se realiza la verificaciÃƒÂ³n de todos los jugadores a la vez al servicio del RGIAJ JuegoDniService
+		try {
+			original = getCaracteresCache(Constantes.CACHE_KEY_CARACTERES_ORIGINAL);
+			traduccion = getCaracteresCache(Constantes.CACHE_KEY_CARACTERES_TRADUCCION);
+		} catch(Exception ex )
+		{
+			log.error("Error al obtener caracteres de traducciÃƒÂ³n",ex);
+			throw new VerificarRGIAJFault_Exception("Error interno", new VerificarRGIAJFault());
+		}
+		for (Iterator<Jugador> iter=jugadores.iterator(); iter.hasNext();)
+		{
+			Jugador jugador = (Jugador)iter.next();
+			if (validar){
+				ValidadorJugador.formateaDatosJugador(jugador,original,traduccion);
+				String res_validacion = ValidadorJugador.validarJugador(jugador);
+				if (res_validacion != null){
+					resultados.add(this.generarResultadoRGIAJInvalido(jugador, res_validacion));
+				}else{
+					//Sistema de jugadores de prueba
+					ResultadoRGIAJ resPrueba = null;
+					try{
+						resPrueba = this.resultadoRGIAJServicioPrueba(modo, jugador);
+					} catch(Exception ex)
+					{
+						throw new VerificarRGIAJFault_Exception("Error interno", new VerificarRGIAJFault());
+					}
+					if (resPrueba != null)
+						resultados.add(resPrueba);
+					else
+						listadni.add(jugador.getDni());
+				}
+			}else
+				listadni.add(jugador.getDni());
+		}
+		try {
+			if (!listadni.isEmpty())
+				inforesultados = gestionRGIAJ.compruebaExisteListaUsuarios(listadni);
+		} catch (Exception ex)
+		{
+			throw new VerificarRGIAJFault_Exception("Error tÃƒÂ©cnico", new VerificarRGIAJFault());
+		}
+		
+		if ((inforesultados != null && !inforesultados.isEmpty()))
+		{
+			obtenerListaResultadosRGIAJ(inforesultados, resultados);
+		}
+		
+			
+		return resultados;
+	}
+	
+	
+	
+	
+	
+	
+	
+	//TODO se llama desde verificarIdentidad
+	public List<ResultadoIdentidad> verificarIdentidad(List<Jugador> jugadores, int modo)
+	throws VerificarIdentidadFault_Exception {
+
+		List<ResultadoIdentidad> resultadosIdentidad = new ArrayList<ResultadoIdentidad>();
+		
+		
+		try {
+			String original = getCaracteresCache(Constantes.CACHE_KEY_CARACTERES_ORIGINAL);
+			String traduccion = getCaracteresCache(Constantes.CACHE_KEY_CARACTERES_TRADUCCION);
+		
+			for (Iterator<Jugador> iter=jugadores.iterator(); iter.hasNext();)
+			{
+				Jugador jugador = (Jugador)iter.next();
+				ResultadoIdentidad resIdentidad = new ResultadoIdentidad();
+				resIdentidad.setDni(jugador.getDni());
+				ValidadorJugador.formateaDatosJugador(jugador,original,traduccion);
+				String res_validacion = ValidadorJugador.validarJugador(jugador);
+				if (res_validacion != null)
+					resIdentidad = this.generarResultadoIdentidadInvalido(jugador, res_validacion);
+				else
+				{
+					//Sistema de jugadores de prueba
+					ResultadoIdentidad resPrueba = null;
+					try{
+						resPrueba = this.resultadoIdentidadServicioPrueba(modo, jugador);
+					} catch(Exception ex)
+					{
+						throw new VerificarRGIAJFault_Exception("Error interno", new VerificarRGIAJFault());
+					}
+					if (resPrueba != null)
+						resIdentidad = resPrueba;
+					else
+						resIdentidad.setResultadoIdentidad(this.obtenerResultadoIdentidad(jugador));
+					
+				}
+					
+				resultadosIdentidad.add(resIdentidad);
+			}
+		}catch(Exception ex)
+		{
+			log.debug("Error interno", ex);
+			throw new VerificarIdentidadFault_Exception("Error interno", new VerificarIdentidadFault());
+		}
+						
+		return resultadosIdentidad;
+		
+	}
+
+
+	public List<CambioRGIAJ> verificarAltasRGIAJ(OperadorEntity operador)
+	throws VerificarCambiosRGIAJFault_Exception{
+		List<CambioRGIAJ> res = null;
+		List<JugadoresCambioRGIAJ> queryRes;
+		ServicioGestionRGIAJ gestionRGIAJ = null;
+		
+		try {
+			InitialContext ic = new InitialContext();
+			gestionRGIAJ = (ServicioGestionRGIAJ) ic.lookup(JNDI_SERVICIO_RGIAJ);
+		} catch (Exception ex)
+			{
+			log.error("Error interno", ex);
+			throw new VerificarCambiosRGIAJFault_Exception("Error interno", new VerificarCambiosRGIAJFault());
+			}
+		try {
+			queryRes = gestionRGIAJ.obtenerCambiosRGIAJ(operador);
+		} catch (Exception ex)
+		{
+			log.error("No se ha podido realizar la consulta de cambios rgiaj", ex);
+			throw new VerificarCambiosRGIAJFault_Exception("Error interno", new VerificarCambiosRGIAJFault());
+		}
+		if (queryRes != null && !queryRes.isEmpty())
+		{
+			res = new ArrayList<CambioRGIAJ>();
+			for (Iterator<JugadoresCambioRGIAJ>iter=queryRes.iterator();iter.hasNext();)
+			{
+				JugadoresCambioRGIAJ cambio = iter.next();
+				CambioRGIAJ resultado = new CambioRGIAJ();
+				resultado.setDNI(cambio.getDni());
+				resultado.setMotivoCambio(cambio.getEvento());
+				XMLGregorianCalendar fechaXML = null;
+				try{
+					GregorianCalendar gc = new GregorianCalendar();
+					gc.setTime(cambio.getFechaValor());
+					fechaXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
+				}catch(Exception ex)
+				{
+					log.error("Error al formatear la fecha de registro",ex);
+					throw new VerificarCambiosRGIAJFault_Exception("Error interno", new VerificarCambiosRGIAJFault());
+				}
+//	TODO  descomentar esto			resultado.setFechaCambio(fechaXML);
+				res.add(resultado);
+			}
+		}
+		return res;
+	}
+	
+/**
+ * 	Metodo auxiliar para mapear la lista de los resultados de juegodniservice con la lista de resultadoRGIAJ
+ * @param inforesultados
+ * @return
+ */
+	private void obtenerListaResultadosRGIAJ(List<InfoResultado> inforesultados, List<ResultadoRGIAJ> resultados)
+	{
+		
+
+		if (inforesultados != null && !inforesultados.isEmpty()){
+			for (Iterator<InfoResultado> iter2 = inforesultados.iterator(); iter2.hasNext();)
+			{
+				InfoResultado infoRes = (InfoResultado)iter2.next();
+				ResultadoRGIAJ result = new ResultadoRGIAJ();
+				result.setDni(infoRes.getDni());
+				ResultadoType resultado = new ResultadoType();
+//TODO descomentar esto				resultado.setCodPrueba(1);
+				if (infoRes.isResultado()){
+					resultado.setCodigo(CodigosVerificacion.COD_INSCRITO_RGIAJ);
+					resultado.setDescripcion(CodigosVerificacion.DESC_INSCRITO_RGIAJ);
+				} else {
+					resultado.setCodigo(CodigosVerificacion.COD_NO_INSCRITO_RGIAJ);
+					resultado.setDescripcion(CodigosVerificacion.DESC_NO_INSCRITO_RGIAJ);
+				}
+				result.setResultadoRGIAJ(resultado);
+				resultados.add(result);
+			}
+		}
+		
+	
+	}
+	
+	
+	private ResultadoType obtenerResultadoIdentidad(Jugador jugador) throws Exception
+	{
+		ResultadoType res = new ResultadoType();
+
+
+		ServicioIdentidad servicioIdentidad = null;
+
+		try {
+//			InitialContext ic = new InitialContext();
+//			servicioIdentidad = (ServicioIdentidad) ic.lookup(JNDI_SERVICIO_IDENTIDAD);
+			servicioIdentidad= ServiceCN.getServicioIdentidad();
+		} catch (Exception ex)
+		{
+			log.debug("Error interno", ex);
+			throw (ex);
+		}
+		try {
+			//Comprobacion modo debug identidad
+			String debugIdentidad = Propiedades.getInstance().getPropiedad(PROP_MODO_DEBUG_IDENTIDAD);
+			CodigoEstadoSCSP codigo= new CodigoEstadoSCSP(); 
+			boolean cache = true;
+			//modo debug identidad desactivado, se emplea cache
+			if (debugIdentidad == null ||debugIdentidad.equals("") || debugIdentidad.equals("false") ){
+				if (!ValidadorJugador.todosCaracteresAlfanumericos(jugador))
+					cache = false;
+				}
+			else if (debugIdentidad.equals("true")){
+//	TODO descomentar			if (Cache.getInstancia().get(Constantes.CACHE_KEY_DNI_PRUEBA) == null)
+//					this.initDebugIdentidad();
+//				Collection<String> dniPrueba = (Collection<String>)Cache.getInstancia().get(Constantes.CACHE_KEY_DNI_PRUEBA);
+				
+//				if (dniPrueba != null && !dniPrueba.isEmpty() && dniPrueba.contains(jugador.getDni()))
+//					cache=false;
+//				else if (!ValidadorJugador.todosCaracteresAlfanumericos(jugador))
+//	TODO descomentar				cache = false;
+					
+			}
+			log.debug("VerificacionJugadoresControlBean.obtenerResultadoIdentidad() - Procediendo a verificar identidad de usuario: " + jugador.getDni() + " con cache = " + cache);
+			if (cache)
+				codigo = servicioIdentidad.consultarIdentidadUsuarioConCache(jugador.getDni(),jugador.getNombre(), 
+						jugador.getApellido1(), jugador.getApellido2(), jugador.getFechaNacimiento());
+			else
+				codigo = servicioIdentidad.consultarIdentidadUsuario(jugador.getDni(),jugador.getNombre(), 
+						jugador.getApellido1(), jugador.getApellido2(), jugador.getFechaNacimiento());
+					
+			
+			
+			res.setCodigo(codigo.getCodigo());
+			res.setDescripcion(codigo.getDescripcion());
+			
+
+		}catch(Exception ex)
+		{
+			log.debug("No se ha podido verificar la identidad", ex);
+			res.setCodigo(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD);
+			res.setDescripcion(CodigosVerificacion.DESC_NO_VERIFICACION_IDENTIDAD);
+		}
+		return res;
+	}
+	
+	public OperadorEntity validarCertificadoObtenerOperador(String certificado) throws Exception
+	{
+		ServicioGestionCertificados gestCertificados;
+		try {
+//			InitialContext ic = new InitialContext();
+//			gestCertificados = (ServicioGestionCertificados) ic.lookup(JNDI_SERVICIO_GESTION_CERTIFICADOS);
+			gestCertificados=ServiceCN.getServicioGestionCertificados();
+			
+		} catch (Exception ex)
+			{
+			log.error("Error interno", ex);
+			throw ex;
+			}
+			return gestCertificados.validarCertificadoObtenerOperador(certificado);
+	}
+
+
+	
+	//TODO se llama desde verificarIdentidad
+	public OperadorEntity autenticarOperador(SOAPMessage mensaje) throws Exception
+	{
+		log.debug("Comprobando operador en petición");
+		OperadorEntity operador = null;
+		try {
+			if (mensaje.getProperty("OPERADOR") != null)
+			{
+				try {
+					operador = (OperadorEntity)mensaje.getProperty("OPERADOR");
+				}catch (Exception ex)
+				{
+					//el parÃƒÂ¡metro no es un operador, no autenticado
+					return null;
+				}
+			}
+			else
+				throw new Exception();
+		}catch (Exception ex)
+		{
+			log.error("No se ha encontrado el operador en la peticiÃƒÂ³n",ex);
+			throw ex;
+		}
+		return operador;
+	}
+	
+	//TODO se llama desde verificarIdentidad
+	public int obtenerIDPeticion(SOAPMessageContext contexto) throws Exception
+	{
+		log.debug("Obteniendo ID Peticion WS");
+		int id=0;
+		try{
+			id = (Integer)contexto.get("ID_PETICION");
+		}catch (Exception ex){
+			log.error("Error al obtener el id de peticion WS");
+			throw ex;
+		}
+		return id;
+	}
+	
+	
+	
+
+	//TODO se llama desde verificarIdentidad
+	public void almacenarConsultaJugadoresOperador(List<Jugador> jugadores, List resultados, OperadorEntity operador, boolean identidad, boolean rgiaj, int idPeticion)throws Exception
+	{
+		ServicioGestionJugadores servicioJugadores = null;
+		log.debug("Inicio almacenar consulta jugadores");
+		if (jugadores != null)
+		{
+			try {
+//				InitialContext ic = new InitialContext();
+//				servicioJugadores = (ServicioGestionJugadores) ic.lookup(JNDI_SERVICIO_GESTION_JUGADORES);
+				servicioJugadores= ServiceCN.getServicioGestionJugadores();
+			} catch (Exception ex)
+			{
+				log.debug("Error interno", ex);
+				throw (ex);
+			}
+
+			for (Iterator<Jugador> iter=jugadores.iterator();iter.hasNext();)
+			{
+				Jugador jugador = (Jugador)iter.next();
+				if (ValidadorNIF.isNifNie(jugador.getDni()))
+				{
+					if (identidad && rgiaj){
+						String res_rgiaj = null;
+						String res_identidad = null;
+						boolean validado = true;
+						int indicador = 1;
+						if (!ValidadorJugador.todosCaracteresAlfanumericos(jugador))
+							validado=false;
+						for (Iterator<ResultadoJugador> iterRes=resultados.iterator();iterRes.hasNext();)
+						{
+							ResultadoJugador resJugador = iterRes.next();
+							if (resJugador.getDni().equalsIgnoreCase(jugador.getDni())){
+								res_rgiaj=resJugador.getResultadoRGIAJ().getCodigo();
+								res_identidad = resJugador.getResultadoIdentidad().getCodigo();
+								if (res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_CORRECTA_CACHE))
+									resJugador.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+								if (res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_CACHE))
+									resJugador.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA);
+								if (res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_CORRECTA_TEST))
+									resJugador.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+								if (res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_TEST))
+									resJugador.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA);
+								if (res_identidad.equals(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD_TEST))
+									resJugador.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD);
+								
+								if (resJugador.getResultadoRGIAJ() != null && resJugador.getResultadoRGIAJ().getCodigo().equals("4"))
+									indicador = 4;
+								
+								break;
+							
+							}
+						}
+						
+						servicioJugadores.almacenarConsultaJugador(operador, jugador.getDni(), jugador.getNombre(), 
+								jugador.getApellido1(), jugador.getApellido2(), jugador.getFechaNacimiento(), indicador, indicador, res_rgiaj, res_identidad, idPeticion,validado);	
+					} else if (identidad){
+						String res_identidad = null;
+						boolean validado = true;
+						int indicador = 1;
+						if (!ValidadorJugador.todosCaracteresAlfanumericos(jugador))
+							validado=false;
+						for (Iterator<ResultadoIdentidad> iterRes=resultados.iterator();iterRes.hasNext();)
+						{
+							ResultadoIdentidad resIdentidad = iterRes.next();
+							if (resIdentidad.getDni().equalsIgnoreCase(jugador.getDni())){
+								res_identidad = resIdentidad.getResultadoIdentidad().getCodigo();
+								if (res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_CORRECTA_CACHE))
+									resIdentidad.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+								if (res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_CACHE))
+									resIdentidad.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA);
+								if (res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_CORRECTA_TEST)){
+									indicador=4;
+									resIdentidad.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+								}
+									
+								if (res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_TEST)){
+									indicador=4;
+									resIdentidad.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA);
+								}
+								if (res_identidad.equals(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD_TEST)){
+									indicador=4;
+									resIdentidad.getResultadoIdentidad().setCodigo(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD);
+								}
+
+								break;
+							}
+						}
+						servicioJugadores.almacenarConsultaJugador(operador, jugador.getDni(), jugador.getNombre(), 
+								jugador.getApellido1(), jugador.getApellido2(), jugador.getFechaNacimiento(), indicador, 0, null, res_identidad,idPeticion,validado);	
+					} else if (rgiaj){
+						String res_rgiaj = null;
+						int indicador = 1;
+						for (Iterator<ResultadoRGIAJ> iterRes=resultados.iterator();iterRes.hasNext();)
+						{
+							ResultadoRGIAJ resRGIAJ = iterRes.next();
+							if (resRGIAJ.getDni().equalsIgnoreCase(jugador.getDni())){
+								res_rgiaj = resRGIAJ.getResultadoRGIAJ().getCodigo();
+								if (resRGIAJ.getResultadoRGIAJ().getCodigo().equals("4"))
+									indicador = 4;
+								break;
+							}
+						}
+						servicioJugadores.almacenarConsultaJugador(operador, jugador.getDni(), jugador.getNombre(), 
+								jugador.getApellido1(), jugador.getApellido2(), jugador.getFechaNacimiento(), 0, indicador, res_rgiaj,null,idPeticion,true);	
+					}
+
+				}
+
+			}
+
+		}
+	}
+	
+	//TODO se llama desde verificarIdentidad
+	public boolean existenJugadoresRepetidos(List<Jugador> jugadores)
+	{
+		boolean res = false;
+		List<String> presentes = new ArrayList<String>();
+		if (jugadores != null && !jugadores.isEmpty())
+		{
+			for (Iterator<Jugador> iter=jugadores.iterator();iter.hasNext();)
+			{
+				Jugador actual = iter.next();
+				if (!presentes.isEmpty() && presentes.contains(actual.getDni().toUpperCase())){
+					res = true;
+					break;					
+				}else
+					presentes.add(actual.getDni().toUpperCase());
+			}
+		}
+		return res;
+	}
+	
+	
+	private ResultadoJugador generarResultadoJugadorInvalido(Jugador jugador, String codError)
+	{
+		ResultadoJugador res = new ResultadoJugador();
+		res.setDni(jugador.getDni());
+		ResultadoType restype = new ResultadoType();
+		restype.setCodigo(codError);
+		if (CodigosVerificacion.COD_FORMATO_INCORRECTO.equals(codError))
+			restype.setDescripcion(CodigosVerificacion.DESC_FORMATO_INCORRECTO);
+		if (CodigosVerificacion.COD_CARACTERES_INVALIDOS.equals(codError))
+			restype.setDescripcion(CodigosVerificacion.DESC_CARACTERES_INVALIDOS);
+		res.setResultadoIdentidad(restype);
+		res.setResultadoRGIAJ(restype);
+		
+		return res;
+	}
+	
+	
+	
+	private ResultadoRGIAJ generarResultadoRGIAJInvalido(Jugador jugador, String codError)
+	{
+		ResultadoRGIAJ res = new ResultadoRGIAJ();
+		res.setDni(jugador.getDni());
+		ResultadoType restype = new ResultadoType();
+		restype.setCodigo(codError);
+		if (CodigosVerificacion.COD_FORMATO_INCORRECTO.equals(codError))
+			restype.setDescripcion(CodigosVerificacion.DESC_FORMATO_INCORRECTO);
+		if (CodigosVerificacion.COD_CARACTERES_INVALIDOS.equals(codError))
+			restype.setDescripcion(CodigosVerificacion.DESC_CARACTERES_INVALIDOS);
+		res.setResultadoRGIAJ(restype);
+		
+		return res;
+	}
+	
+	
+	
+	
+	
+	private ResultadoIdentidad generarResultadoIdentidadInvalido(Jugador jugador, String codError)
+	{
+		ResultadoIdentidad res = new ResultadoIdentidad();
+		res.setDni(jugador.getDni());
+		ResultadoType restype = new ResultadoType();
+		restype.setCodigo(codError);
+		if (CodigosVerificacion.COD_FORMATO_INCORRECTO.equals(codError))
+			restype.setDescripcion(CodigosVerificacion.DESC_FORMATO_INCORRECTO);
+		if (CodigosVerificacion.COD_CARACTERES_INVALIDOS.equals(codError))
+			restype.setDescripcion(CodigosVerificacion.DESC_CARACTERES_INVALIDOS);
+		res.setResultadoIdentidad(restype);
+		
+		return res;
+	}	
+	
+	
+	private void initDebugIdentidad() throws Exception{
+		
+		DNIDebugIdentidadDAO debugIdentidad = null;
+		try {
+			InitialContext ic = new InitialContext();
+			debugIdentidad = (DNIDebugIdentidadDAO) ic.lookup(JNDI_SERVICIO_DNI_DEBUG_IDENTIDAD);
+		} catch (Exception ex)
+		{
+			log.debug("Error interno", ex);
+			throw (ex);
+		}	
+		
+//		Cache.getInstancia().put(Constantes.CACHE_KEY_DNI_PRUEBA, debugIdentidad.obtenerListaDni());
+		
+	}
+	
+//private void initTraduccionCaracteres() throws Exception{
+//	
+//	ServicioTraduccionCaracteres srvTraduccion = null;
+//	
+//	try {
+//		InitialContext ic = new InitialContext();
+//		srvTraduccion = (ServicioTraduccionCaracteres) ic.lookup(JNDI_SERVICIO_SERVICIO_TRADUCCION);
+//	} catch (Exception ex)
+//	{
+//		log.debug("Error interno", ex);
+//		throw (ex);
+//	}
+	
+	
+//	List<TraduccionCaracteres> traducciones = srvTraduccion.leerTraduccion();
+//	String original = "";
+//	String traduccion="";
+	//String original = "ÃƒÂ¡ÃƒÂ ÃƒÂ¤ÃƒÂ¢Ãƒï¿½Ãƒâ‚¬Ãƒâ€žÃƒâ€šÃƒÂ©ÃƒÂ¨ÃƒÂ«ÃƒÂªÃƒâ€°ÃƒË†Ãƒâ€¹ÃƒÅ ÃƒÂ­ÃƒÂ¬ÃƒÂ¯ÃƒÂ®Ãƒï¿½ÃƒÅ’ÃƒÅ½Ãƒï¿½ÃƒÂ³ÃƒÂ²ÃƒÂ¶ÃƒÂ´Ãƒâ€œÃƒâ€™Ãƒâ€“Ãƒâ€�ÃƒÂºÃƒÂ¹ÃƒÂ»ÃƒÅ¡Ãƒâ„¢Ãƒâ€º";
+	//String traduccion="aaaaaaaaeeeeeeeeiiiiiiiioooooooouuuuuu";
+
+//	int i=0;
+//	for (Iterator<TraduccionCaracteres> iter = traducciones.iterator(); iter.hasNext();){
+//		TraduccionCaracteres trad = iter.next();
+//		original = original + trad.getOriginal();
+//		traduccion = traduccion + trad.getTraduccion();
+//		i++;
+//	}
+//	Cache.getInstancia().put(Constantes.CACHE_KEY_CARACTERES_ORIGINAL, original);
+//	Cache.getInstancia().put(Constantes.CACHE_KEY_CARACTERES_TRADUCCION, traduccion);
+//	
+//}
+	
+	
+	
+	
+	
+	private ResultadoJugador resultadoJugadorServicioPrueba(int modo, Jugador jugador) throws Exception
+	{
+		ResultadoJugador res = null;
+//		ServicioJugadoresTestWS servicioJugadoresTestWS = null;
+//		try {
+//			InitialContext ic = new InitialContext();
+//			servicioJugadoresTestWS = (ServicioJugadoresTestWS) ic.lookup(JNDI_SERVICIO_JUGADORES_PRUEBA);
+//			res = servicioJugadoresTestWS.obtenerResultadoJugadorTestWS(modo, jugador);
+//		} catch (Exception ex)
+//		{
+//			log.debug("Error interno", ex);
+//			throw (ex);
+//		}
+		
+		return res;
+	}
+	
+	
+	
+	private ResultadoRGIAJ resultadoRGIAJServicioPrueba(int modo, Jugador jugador) throws Exception
+	{
+		ResultadoRGIAJ res = null;
+//		ServicioJugadoresTestWS servicioJugadoresTestWS = null;
+//		try {
+//			InitialContext ic = new InitialContext();
+//			servicioJugadoresTestWS = (ServicioJugadoresTestWS) ic.lookup(JNDI_SERVICIO_JUGADORES_PRUEBA);
+//			res = servicioJugadoresTestWS.obtenerResultadoRGIAJTestWS(modo, jugador);
+//		} catch (Exception ex)
+//		{
+//			log.debug("Error interno", ex);
+//			throw (ex);
+//		}
+		
+		return res;
+	}
+	
+	
+	private ResultadoIdentidad resultadoIdentidadServicioPrueba(int modo, Jugador jugador) throws Exception
+	{
+		ResultadoIdentidad res = null;
+//		ServicioJugadoresTestWS servicioJugadoresTestWS = null;
+//		try {
+//			InitialContext ic = new InitialContext();
+//			servicioJugadoresTestWS = (ServicioJugadoresTestWS) ic.lookup(JNDI_SERVICIO_JUGADORES_PRUEBA);
+//			res = servicioJugadoresTestWS.obtenerResultadoIdentidadTestWS(modo, jugador);
+//		} catch (Exception ex)
+//		{
+//			log.debug("Error interno", ex);
+//			throw (ex);
+//		}
+		
+		return res;
+	}
+	
+	
+	private String getCaracteresCache(String tipoCaracteres)throws Exception
+	{ 
+		return null;
+		
+		
+//		if (Cache.getInstancia().get(tipoCaracteres) == null)
+//			try {
+//				this.initTraduccionCaracteres();
+//			}catch(Exception e)
+//			{
+//				throw e;
+//			}
+//		return (String)Cache.getInstancia().get(tipoCaracteres);
+	}
+	
+	
+	
+}

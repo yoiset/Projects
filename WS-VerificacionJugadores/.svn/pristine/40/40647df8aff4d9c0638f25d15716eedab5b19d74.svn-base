@@ -1,0 +1,110 @@
+package es.gob.cnjuego.ws.verificacionjugadores.control.validacion;
+
+import org.apache.log4j.Logger;
+
+
+import es.gob.cnjuego.ws.util.FormatoDatosIdentificacion;
+import es.gob.cnjuego.ws.util.Propiedades;
+import es.gob.cnjuego.ws.util.validation.ValidadorNIF;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+import es.gob.cnjuego.ws.verificacionjugadores.Jugador;
+
+public class ValidadorJugador {
+
+	
+	/**
+	 * Método para validar un jugador: se valida restricciones de NIF y NIE, y se formatea fecha de nacimiento
+	 * @param dni
+	 * @param nombre
+	 * @param apellido1
+	 * @param apellido2
+	 * @param fechaNac
+	 * @return
+	 */
+	
+	private Logger log = Logger.getLogger(ValidadorJugador.class);
+	
+	public static String validarJugador(Jugador jugador)
+	{
+		String res = null;
+
+		if (!validarCaracteresJugador(jugador))
+			return CodigosVerificacion.COD_CARACTERES_INVALIDOS;
+		
+		//Formatear fecha de nacimiento
+		if (ValidadorNIF.isNifNie(jugador.getDni())){
+			if (!FormatoDatosIdentificacion.validarCampo(jugador.getNombre()) 
+					|| !FormatoDatosIdentificacion.validarCampo(jugador.getApellido1()))
+				res = CodigosVerificacion.COD_FORMATO_INCORRECTO;
+			else {
+				if (ValidadorNIF.isNifOrNie(jugador.getDni())){
+				//es un nif, si el apellido2 es nulo, no valida correctamente
+					if (!FormatoDatosIdentificacion.validarCampo(jugador.getApellido2()))
+						res = CodigosVerificacion.COD_FORMATO_INCORRECTO;
+					
+				}
+			}
+		}else
+			res = CodigosVerificacion.COD_FORMATO_INCORRECTO;
+		
+		
+		return res;
+	}
+	
+	/**
+	 * Función para formatear los datos de un jugador para comprobaciones y almacenamiento en caché
+	 * @param dni
+	 * @param nombre
+	 * @param apellido1
+	 * @param apellido2
+	 * @param fechaNac
+	 */
+	public static void formateaDatosJugador(Jugador jugador, String original, String traduccion)
+	{
+		
+		//TODO comentada esta linea solo para que compile....ver mas adelante
+		FormatoDatosIdentificacion.formateaFechaNacimiento(jugador.getFechaNacimiento());
+		jugador.setNombre(FormatoDatosIdentificacion.formateaAcentos(jugador.getNombre(),original, traduccion));
+		jugador.setApellido1(FormatoDatosIdentificacion.formateaAcentos(jugador.getApellido1(),original, traduccion));
+		jugador.setApellido2(FormatoDatosIdentificacion.formateaAcentos(jugador.getApellido2(), original, traduccion));
+		jugador.setDni(jugador.getDni().toUpperCase());
+	}
+	
+	
+	public static boolean validarCaracteresJugador(Jugador jugador)
+	{
+		boolean res = true;
+		String invalidos = Propiedades.getPropiedad("scsp.caracteresInvalidos");
+		if (jugador.getNombre() != null && !FormatoDatosIdentificacion.validarCaracteres(jugador.getNombre(),invalidos))
+			return false;
+		if (jugador.getApellido1() != null && !FormatoDatosIdentificacion.validarCaracteres(jugador.getApellido1(),invalidos))
+			return false;
+		if (jugador.getApellido2() != null && !FormatoDatosIdentificacion.validarCaracteres(jugador.getApellido2(),invalidos))
+			return false;
+		
+		return res;
+	}
+	
+	
+	public static boolean todosCaracteresAlfanumericos(Jugador jugador)
+	{
+		boolean res = true;
+		
+		String permitidos = Propiedades.getPropiedad("scsp.caracteresPermitidos");
+		if (jugador.getNombre() != null && !FormatoDatosIdentificacion.todosCaracteresPermitidos(jugador.getNombre(),permitidos))
+			return false;
+		if (jugador.getApellido1() != null && !FormatoDatosIdentificacion.todosCaracteresPermitidos(jugador.getApellido1(),permitidos))
+			return false;
+		if (jugador.getApellido2() != null && !FormatoDatosIdentificacion.todosCaracteresPermitidos(jugador.getApellido2(),permitidos))
+			return false;
+		
+		return res;
+	
+	}
+	
+	
+	
+
+	
+	
+}

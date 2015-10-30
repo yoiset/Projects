@@ -1,0 +1,28 @@
+log4j.rootLogger=INFO, STDOUT, loggerAplicacion
+log4j.appender.loggerAplicacion=org.apache.log4j.RollingFileAppender
+
+log4j.appender.loggerAplicacion.File=c:/temp/verificacion_jugadores.log
+#log4j.appender.loggerAplicacion.File=logs/verificacion_jugadores.log
+log4j.appender.loggerAplicacion.layout=org.apache.log4j.PatternLayout
+log4j.appender.loggerAplicacion.layout.ConversionPattern=%d %-5p [%t] %c - %m%n
+log4j.appender.loggerAplicacion.MaxFileSize=5000KB
+log4j.appender.loggerAplicacion.MaxBackupIndex=4
+
+log4j.appender.STDOUT=org.apache.log4j.ConsoleAppender
+log4j.appender.STDOUT.layout=org.apache.log4j.PatternLayout
+log4j.appender.STDOUT.layout.ConversionPattern=%d %-5p %c{1} - %m%n
+
+#Configuración nivel de log de aplicación
+log4j.logger.es=DEBUG
+
+#Configuración nivel de log de frameworks
+log4j.logger.org.springframework=DEBUG
+log4j.logger.org.springframework.security=DEBUG
+log4j.logger.net.sf.cglib.proxy=DEBUG
+log4j.logger.org.apache.struts2=DEBUG
+#log4j.logger.org.apache=DEBUG
+#log4j.logger.org.jboss=DEBUG
+#log4j.logger.com.opensymphony=DEBUG
+#log4j.logger.freemarker.beans=DEBUG
+#log4j.logger.freemarker.cache=DEBUG
+

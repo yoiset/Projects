@@ -1,0 +1,63 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Header>
+		<wsse:Security
+			xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+			xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+			soap:mustUnderstand="1">
+			<wsse:BinarySecurityToken
+				EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"
+				ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3"
+				wsu:Id="X509-D112D1DB58586E621A13619707784364">MIIECjCCA3OgAwIBAgIEPNSpvDANBgkqhkiG9w0BAQUFADA2MQswCQYDVQQGEwJFUzENMAsGA1UEChMERk5NVDEYMBYGA1UECxMPRk5NVCBDbGFzZSAyIENBMB4XDTExMTAxMDA3NDYzOFoXDTE1MTAxMDA3NDYzOFowgdAxCzAJBgNVBAYTAkVTMQ0wCwYDVQQKEwRGTk1UMRgwFgYDVQQLEw9GTk1UIENsYXNlIDIgQ0ExETAPBgNVBAsTCFB1YmxpY29zMRIwEAYDVQQLEwk1MDAwNzAwMTUxcTBvBgNVBAMUaERFU0NSSVBDSU9OIEFQTElDQUNJT05FUy5ER09KVUVHTy5FUyAtIEVOVElEQUQgRElSRUNDSdNOIEdFTkVSQUwgREUgT1JERU5BQ0nTTiBERUwgSlVFR08gLSBDSUYgUzI4MDExMDlGMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMvvvxir2K7tgs0uxyiRWvtb5T3fAwAkOCJg00jx7JD6AuO0FOT9Tz3F6e//9/vBhG9FWTeNLYPCUb0/clzMJCgnkYF+W9ROpADiW8twSer/sRqyy4WYTyHM/ImoyWt+/JSpFmMXLNexM01FPJd7LK5Pw5s/tWvj/bDqEkYmEseQIDAQABo4IBiDCCAYQwgYwGA1UdEQSBhDCBgaR/MH0xGDAWBgkrBgEEAaxmAQ8TCVMyODAxMTA5RjE4MDYGCSsGAQQBrGYBDhQpRElSRUNDSdNOIEdFTkVSQUwgREUgT1JERU5BQ0nTTiBERUwgSlVFR08xJzAlBgkrBgEEAaxmAQgTGEFQTElDQUNJT05FUy5ER09KVUVHTy5FUzAJBgNVHRMEAjAAMCsGA1UdEAQkMCKADzIwMTExMDEwMDc0NjM4WoEPMjAxNTEwMTAwNzQ2MzhaMAsGA1UdDwQEAwIFoDARBglghkgBhvhCAQEEBAMCBaAwHQYDVR0OBBYEFHwW8SArg7lZdrlyOMM3CHFzhVDNMB8GA1UdIwQYMBaAFECadkSXdAfErBTLHo1POkV8MNdhMFsGA1UdHwRUMFIwUKBOoEykSjBIMQswCQYDVQQGEwJFUzENMAsGA1UEChMERk5NVDEYMBYGA1UECxMPRk5NVCBDbGFzZSAyIENBMRAwDgYDVQQDEwdDUkw5MjAyMA0GCSqGSIb3DQEBBQUAA4GBAH1VAyJCUwWVeqMc7DgMZRyqklfRD+4AHovTHc2/ZsIXRZUdWEuFO5+sSRxN+mRswgf4vOkat1FhQkv4Wj5vkn9RTPgq9UBfjDZwt19c/tbfUq2Zxr+AvGpGVZa3KAB3oulQzT0fXfsXVfsZtybfFgt0MHT4PzHg1rwipQjegLJl
+			</wsse:BinarySecurityToken>
+			<wsu:Timestamp wsu:Id="TS-1">
+				<wsu:Created>2013-02-27T13:12:57.998Z</wsu:Created>
+				<wsu:Expires>2013-02-27T13:17:57.998Z</wsu:Expires>
+			</wsu:Timestamp>
+			<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+				Id="SIG-2">
+				<ds:SignedInfo>
+					<ds:CanonicalizationMethod
+						Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+						<ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#"
+							PrefixList="soap" />
+					</ds:CanonicalizationMethod>
+					<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+					<ds:Reference URI="#TS-1">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+								<ec:InclusiveNamespaces
+									xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="wsse soap" />
+							</ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>qIeIw96tRuL6PWMHX+8awxt3Beg=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#Id-29940642">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+								<ec:InclusiveNamespaces
+									xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="" />
+							</ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>QkaD2e8O0usEBs0pVQ/VW2KhZ7M=</ds:DigestValue>
+					</ds:Reference>
+				</ds:SignedInfo>
+				<ds:SignatureValue>lDQcAmBA/+xkFtBtopDJmbSi5U2uj4SuOdvbxMEy3CAGhBwFoCw09iTOUYhJkk7JccYzH5UR9yuhXVLJNGZn7AoxGhH7nQSmQUI/F8t0WdkHXQ9zmfSiJ2ste06ILrcSJr2iZSaLyg5fQuCRO6N80YJY7uCXqLhgYHNxYqC6IyM=
+				</ds:SignatureValue>
+				<ds:KeyInfo Id="KI-D112D1DB58586E621A13619707784365">
+					<wsse:SecurityTokenReference wsu:Id="STR-D112D1DB58586E621A13619707784366">
+						<wsse:Reference URI="#X509-D112D1DB58586E621A13619707784364"
+							ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" />
+					</wsse:SecurityTokenReference>
+				</ds:KeyInfo>
+			</ds:Signature>
+		</wsse:Security>
+	</soap:Header>
+	<soap:Body
+		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+		wsu:Id="Id-29940642">
+		<ns2:verificarCambiosRGIAJResponse
+			xmlns:ns2="http://ws.cnjuego.gob.es/VerificacionJugadores/" />
+	</soap:Body>
+</soap:Envelope>

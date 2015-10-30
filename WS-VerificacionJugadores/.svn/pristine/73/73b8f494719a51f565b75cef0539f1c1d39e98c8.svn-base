@@ -1,0 +1,96 @@
+
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * Resultado de una verificación en RGIAJ:
+ * 						dni: Documento Nacional de Identidad correspondiente.
+ * 						resultadoIdentidad: de tipo ResultadoType. Resultado de la
+ * 						verificación en RGIAJ.
+ * 					
+ * 
+ * <p>Clase Java para ResultadoRGIAJ complex type.
+ * 
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * 
+ * <pre>
+ * &lt;complexType name="ResultadoRGIAJ">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="dni" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="resultadoRGIAJ" type="{http://ws.cnjuego.gob.es/VerificacionJugadores/}ResultadoType"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "ResultadoRGIAJ", propOrder = {
+    "dni",
+    "resultadoRGIAJ"
+})
+public class ResultadoRGIAJ {
+
+    @XmlElement(required = true)
+    protected String dni;
+    @XmlElement(required = true)
+    protected ResultadoType resultadoRGIAJ;
+
+    /**
+     * Obtiene el valor de la propiedad dni.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDni() {
+        return dni;
+    }
+
+    /**
+     * Define el valor de la propiedad dni.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDni(String value) {
+        this.dni = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad resultadoRGIAJ.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ResultadoType }
+     *     
+     */
+    public ResultadoType getResultadoRGIAJ() {
+        return resultadoRGIAJ;
+    }
+
+    /**
+     * Define el valor de la propiedad resultadoRGIAJ.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ResultadoType }
+     *     
+     */
+    public void setResultadoRGIAJ(ResultadoType value) {
+        this.resultadoRGIAJ = value;
+    }
+
+}

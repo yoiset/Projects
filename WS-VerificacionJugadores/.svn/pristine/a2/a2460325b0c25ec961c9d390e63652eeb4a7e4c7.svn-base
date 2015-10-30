@@ -1,0 +1,528 @@
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://ws.cnjuego.gob.es/VerificacionJugadores/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws.cnjuego.gob.es/VerificacionJugadores/"
+	name="VerificacionJugadores" xmlns:wsp="http://www.w3.org/ns/ws-policy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsaws="http://www.w3.org/2005/08/addressing" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+	xmlns:sp13="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200802">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://ws.cnjuego.gob.es/VerificacionJugadores/">
+			<xsd:annotation>
+				<xsd:documentation>Esquema para la definición de los tipos que
+					intervienen en las operaciones de verificación en Registro General
+					de Interdicciones
+					de Acceso al Juego, de identidad del jugador y
+					mayoría de edad, o de
+					ambos.
+				</xsd:documentation>
+			</xsd:annotation>
+			
+			
+			<xsd:element name="verificarJugador">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="jugadores" type="tns:Jugador"
+							maxOccurs="100" minOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="verificarJugadorResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resultadosJugador" type="tns:ResultadoJugador"
+							maxOccurs="100" minOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="verificarJugadorFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="verificarJugadorFault" type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			
+			<xsd:complexType name="ResultadoType">
+				<xsd:annotation>
+					<xsd:documentation>Resultado de una verificación o Baja:
+						codigo: código que
+						identifica un tipo de resultado obtenido.
+						descripción: descripción
+						y/o especificación del código indicado.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="codigo" type="xsd:string" maxOccurs="1"
+						minOccurs="1" />
+					<xsd:element name="descripcion" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			
+			<xsd:complexType name="Jugador">
+				<xsd:annotation>
+					<xsd:documentation>Jugador a verificar. Para un jugador se
+						especifican:
+						dni: Documento Nacional de Identidad, incluyendo el
+						número de
+						identificación del documento y la letra asociada
+						(NIF/NIE).
+						nombreCompleto: Tal y como se especifica en el Documento
+						Nacional
+						de Identidad.
+						fechaNacimiento: fecha de nacimiento definida
+						de acuerdo a la especificación de
+						http://www.w3.org/2001/XMLSchema
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="dni" type="xsd:string" maxOccurs="1"
+						minOccurs="1">
+					</xsd:element>
+					<xsd:element name="nombre" type="xsd:string" maxOccurs="1"
+						minOccurs="1">
+					</xsd:element>
+					<xsd:element name="apellido1" type="xsd:string"
+						maxOccurs="1" minOccurs="1">
+					</xsd:element>
+					<xsd:element name="apellido2" type="xsd:string"
+						maxOccurs="1" minOccurs="0" />
+					<xsd:element name="fechaNacimiento" type="xsd:date"
+						maxOccurs="1" minOccurs="1">
+					</xsd:element>
+					<xsd:element name="numSoporte" type="xsd:string"
+						maxOccurs="1" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			
+			<xsd:complexType name="ResultadoJugador">
+				<xsd:annotation>
+					<xsd:documentation>Resultado de verificación de un jugador. Incluye
+						el resultado de verificar en RGIAJ y su identidad:
+						dni: El
+						Documento Nacional de Identidad del jugador.
+						resultadoRGIAJ:
+						Resultado de la verificación en RGIAJ
+						resultadoIdentidad: Resultado
+						de la verificación de identidad
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="dni" type="xsd:string" maxOccurs="1"
+						minOccurs="1">
+					</xsd:element>
+					<xsd:element name="resultadoRGIAJ" type="tns:ResultadoType"
+						maxOccurs="1" minOccurs="0">
+					</xsd:element>
+					<xsd:element name="resultadoIdentidad" type="tns:ResultadoType"
+						maxOccurs="1" minOccurs="0">
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:element name="verificarRGIAJ">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="jugadores" type="tns:Jugador"
+							maxOccurs="100" minOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="verificarRGIAJResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resultadosRGIAJ" type="tns:ResultadoRGIAJ"
+							maxOccurs="100" minOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="verificarRGIAJFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="verificarRGIAJFault" type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="ResultadoRGIAJ">
+				<xsd:annotation>
+					<xsd:documentation>Resultado de una verificación en RGIAJ:
+						dni:
+						Documento Nacional de Identidad correspondiente.
+						resultadoIdentidad: de tipo ResultadoType. Resultado de la
+						verificación en RGIAJ.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="dni" type="xsd:string" maxOccurs="1"
+						minOccurs="1" />
+					<xsd:element name="resultadoRGIAJ" type="tns:ResultadoType"
+						maxOccurs="1" minOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="verificarIdentidad">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="jugadores" type="tns:Jugador"
+							maxOccurs="100" minOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="verificarIdentidadResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resultadosIdentidad" type="tns:ResultadoIdentidad"
+							maxOccurs="100" minOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="ResultadoIdentidad">
+				<xsd:annotation>
+					<xsd:documentation>Resultado de una verificación de identidad:
+						dni:
+						Documento Nacional de Identidad correspondiente.
+						resultadoIdentidad: de tipo ResultadoType. Resultado de la
+						verificación de identidad
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="dni" type="xsd:string" maxOccurs="1"
+						minOccurs="1" />
+					<xsd:element name="resultadoIdentidad" type="tns:ResultadoType"
+						maxOccurs="1" minOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="verificarIdentidadFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="verificarIdentidadFault" type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="verificarCambiosRGIAJ">
+				<xsd:complexType>
+					<xsd:sequence />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="verificarCambiosRGIAJResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="cambioRGIAJ" type="tns:CambioRGIAJ"
+							maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="verificarCambiosRGIAJFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="verificarCambiosRGIAJFault" type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		
+			<xsd:complexType name="CambioRGIAJ">
+				<xsd:sequence>
+					<xsd:element name="DNI" type="xsd:string" />
+					<xsd:element name="motivoCambio" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>A-Alta, B-Baja</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name='fechaCambio' type='xsd:dateTime' />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			
+			<xsd:element name="bajaJugador">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="bajaJugador" type="tns:baja"		maxOccurs="1" minOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			
+			<xsd:complexType name="baja">
+				<xsd:annotation>
+					<xsd:documentation>Jugador a dar de baja. Para un jugador se especifican:
+                      dni: Documento Nacional de Identidad, incluyendo el número de identificación del documento y la letra asociada (NIF/NIE).
+                       causa: Causa de la baja ‘A’ si jugador activo o ‘R’ solo preguntado en RGIAJ.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="dni" type="xsd:string" maxOccurs="1"
+						minOccurs="1">
+					</xsd:element>
+					<xsd:element name="causa" type="xsd:string" maxOccurs="1"
+						minOccurs="1">
+					</xsd:element>
+				
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			
+			
+			<xsd:element name="bajaJugadorResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resultadoBaja" type="tns:ResultadoType"		maxOccurs="1" minOccurs="1">
+					</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			
+			<xsd:element name="bajaJugadorFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="bajaJugadorFault" type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="VerificarJugador">
+		<wsdl:part name="VerificarJugadorRequest" element="tns:verificarJugador" />
+	</wsdl:message>
+	<wsdl:message name="VerificarJugadorResponse">
+		<wsdl:part name="VerificarJugadorResponse" element="tns:verificarJugadorResponse" />
+	</wsdl:message>
+	<wsdl:message name="VerificarJugadorFault">
+		<wsdl:part name="VerificarJugadorFault" element="tns:verificarJugadorFault" />
+	</wsdl:message>
+	<wsdl:message name="VerificarRGIAJRequest">
+		<wsdl:part name="VerificarRGIAJRequest" element="tns:verificarRGIAJ" />
+	</wsdl:message>
+	<wsdl:message name="VerificarRGIAJResponse">
+		<wsdl:part name="VerificarRGIAJResponse" element="tns:verificarRGIAJResponse" />
+	</wsdl:message>
+	<wsdl:message name="VerificarRGIAJFault">
+		<wsdl:part name="VerificarRGIAJFault" element="tns:verificarRGIAJFault" />
+	</wsdl:message>
+	<wsdl:message name="VerificarIdentidadRequest">
+		<wsdl:part name="VerificarIdentidadRequest" element="tns:verificarIdentidad" />
+	</wsdl:message>
+	<wsdl:message name="VerificarIdentidadResponse">
+		<wsdl:part name="VerificarIdentidadResponse" element="tns:verificarIdentidadResponse" />
+	</wsdl:message>
+	<wsdl:message name="VerificarIdentidadFault">
+		<wsdl:part name="VerificarIdentidadFault" element="tns:verificarIdentidadFault" />
+	</wsdl:message>
+	<wsdl:message name="verificarCambiosRGIAJRequest">
+		<wsdl:part name="VerificarCambiosRGIAJRequest" element="tns:verificarCambiosRGIAJ" />
+	</wsdl:message>
+	<wsdl:message name="verificarCambiosRGIAJResponse">
+		<wsdl:part name="VerificarCambiosRGIAJResponse" element="tns:verificarCambiosRGIAJResponse" />
+	</wsdl:message>
+	<wsdl:message name="verificarCambiosRGIAJFault">
+		<wsdl:part name="VerificarCambiosRGIAJFault" element="tns:verificarCambiosRGIAJFault" />
+	</wsdl:message>
+	
+	<wsdl:message name="bajaJugadorRequest">
+		<wsdl:part name="bajaJugadorRequest" element="tns:bajaJugador"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="bajaJugadorResponse">
+		<wsdl:part name="bajaJugadorResponse" element="tns:bajaJugadorResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="bajaJugadorFault">
+		<wsdl:part name="bajaJugadorFault" element="tns:bajaJugadorFault"></wsdl:part>
+	</wsdl:message>
+	
+	
+	<wsdl:portType name="VerificacionJugadores">
+		<wsdl:operation name="verificarJugador">
+			<wsdl:input message="tns:VerificarJugador" />
+			<wsdl:output message="tns:VerificarJugadorResponse">
+				<wsp:PolicyReference URI="#PoliticaSeguridad" />
+			</wsdl:output>
+			<wsdl:fault name="fault" message="tns:VerificarJugadorFault" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="verificarRGIAJ">
+			<wsdl:input message="tns:VerificarRGIAJRequest" />
+			<wsdl:output message="tns:VerificarRGIAJResponse">
+				<wsp:PolicyReference URI="#PoliticaSeguridad" />
+			</wsdl:output>
+			<wsdl:fault name="fault" message="tns:VerificarRGIAJFault" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="verificarIdentidad">
+			<wsdl:input message="tns:VerificarIdentidadRequest" />
+			<wsdl:output message="tns:VerificarIdentidadResponse">
+				<wsp:PolicyReference URI="#PoliticaSeguridad" />
+			</wsdl:output>
+			<wsdl:fault name="fault" message="tns:VerificarIdentidadFault" />
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="verificarCambiosRGIAJ">
+			<wsdl:input message="tns:verificarCambiosRGIAJRequest" />
+			<wsdl:output message="tns:verificarCambiosRGIAJResponse">
+				<wsp:PolicyReference URI="#PoliticaSeguridad" />
+			</wsdl:output>
+			<wsdl:fault name="fault" message="tns:verificarCambiosRGIAJFault" />
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="bajaJugador">
+			<wsdl:input message="tns:bajaJugadorRequest"></wsdl:input>
+			<wsdl:output message="tns:bajaJugadorResponse">
+			 <wsp:PolicyReference URI="#PoliticaSeguridad" />
+			</wsdl:output>
+            <wsdl:fault name="fault" message="tns:bajaJugadorFault">  </wsdl:fault>
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	
+	
+	<wsdl:binding name="VerificacionJugadoresBinding" type="tns:VerificacionJugadores">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="verificarJugador">
+			<soap:operation
+				soapAction="https://ws.cnjuego.gob.es/VerificacionJugadores/verificarJugador" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="verificarRGIAJ">
+			<soap:operation
+				soapAction="https://ws.cnjuego.gob.es/VerificacionJugadores/verificarRGIAJ" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="verificarIdentidad">
+			<soap:operation
+				soapAction="https://ws.cnjuego.gob.es/VerificacionJugadores/verificarIdentidad" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="verificarCambiosRGIAJ">
+			<soap:operation
+				soapAction="https://ws.cnjuego.gob.es/VerificacionJugadores/verificarCambiosRGIAJ" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		
+		<wsdl:operation name="bajaJugador">
+			<soap:operation
+				soapAction="https://ws.cnjuego.gob.es/VerificacionJugadores/bajaJugador" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="fault">
+				<soap:fault name="fault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+	</wsdl:binding>
+	<wsdl:service name="VerificacionJugadores">
+		<wsdl:port name="VerificacionJugadoresSOAP" binding="tns:VerificacionJugadoresBinding">
+			<soap:address
+				location="https://ws-pre.cnjuego.gob.es/VerificacionJugadores/VerificacionJugadores" />
+		</wsdl:port>
+	</wsdl:service>
+
+	<!-- 
+		La siguiente politica se usa *solamente* en los mensajes de respuesta 
+		enviados por el servidor. Así que está asociada a los elementos <wsdl:output> 
+		La politica declara que se deben incluir cabeceras para el timestamp, la 
+		firma digital y la parte publica del certificado.
+	-->
+	<wsp:Policy wsu:Id="PoliticaSeguridad">
+		<sp:AsymmetricBinding>
+			<wsp:Policy>
+                <sp:InitiatorToken>
+                   <wsp:Policy>
+                      <sp:X509Token
+                         sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Once">
+                         <wsp:Policy>
+                            <sp:WssX509V3Token10 />
+                         </wsp:Policy>
+                      </sp:X509Token>
+                   </wsp:Policy>
+                </sp:InitiatorToken>
+				<sp:RecipientToken>
+                   <wsp:Policy>
+                      <sp:X509Token
+                         sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Once">
+                           <wsp:Policy>
+                              <sp:WssX509V3Token10 />
+                           </wsp:Policy>
+                      </sp:X509Token>
+					</wsp:Policy>
+				</sp:RecipientToken>
+				<sp:AlgorithmSuite>
+					<wsp:Policy>
+						<sp:Basic128 />
+					</wsp:Policy>
+				</sp:AlgorithmSuite>
+				<sp:Layout>
+					<wsp:Policy>
+						<sp:Strict />
+					</wsp:Policy>
+				</sp:Layout>
+				<sp:IncludeTimestamp />
+                <sp:OnlySignEntireHeadersAndBody/>
+			</wsp:Policy>
+		</sp:AsymmetricBinding>
+		<sp:SignedParts>
+			<sp:Body/>
+		</sp:SignedParts>            
+		<sp:SupportingTokens>
+			<wsp:Policy>
+				<sp:X509Token
+					sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never">
+					<wsp:Policy>
+						<sp:WssX509v3Token10 />
+					</wsp:Policy>
+				</sp:X509Token>
+			</wsp:Policy>
+		</sp:SupportingTokens>
+	</wsp:Policy>
+
+</wsdl:definitions>

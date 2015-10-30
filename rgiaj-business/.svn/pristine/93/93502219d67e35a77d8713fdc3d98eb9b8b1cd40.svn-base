@@ -1,0 +1,109 @@
+package es.dgoj.rgiaj.business.beans;
+
+import java.util.Date;
+
+import com.dgoj.core.common.entity.AbstractQueryEntity;
+
+import es.dgoj.rgiaj.JugHistoricoQueryRequest;
+
+/**
+ * @author ylopezconnectis
+ *
+ */
+public class JugHistoricoQueryBean extends AbstractQueryEntity {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	private String codComunidad;
+	
+	private Date fechaDesde;
+	private Date fechaHasta;
+	
+	private Boolean confirmada;
+	
+	private String procedencia;
+	
+	
+	
+	public JugHistoricoQueryBean() {
+		super();
+	}
+	
+	public JugHistoricoQueryBean(String codComunidad) {
+		super();
+		this.codComunidad = codComunidad;
+	}
+
+
+	public String getCodComunidad() {
+		return codComunidad;
+	}
+
+
+	public void setCodComunidad(String codComunidad) {
+		this.codComunidad = codComunidad;
+	}
+	
+	
+	public static JugHistoricoQueryBean toBean(JugHistoricoQueryRequest request){
+		JugHistoricoQueryBean bean= new JugHistoricoQueryBean();
+		
+		if(request!=null){
+			bean.setCalculateNumResults(request.isCalculateNumResults());
+			bean.setCodComunidad(request.getCodComunidad());
+			bean.setFirstResult(request.getFirstResult());
+			bean.setFixDatetimes(request.isFixDatetimes());
+			bean.setMaxResults(request.getMaxResults());
+			bean.setQueryTimeout(request.getQueryTimeout());
+			bean.setFirstResult(request.getFirstResult());
+			
+			bean.setFechaDesde(request.getFechaDesde());
+			bean.setFechaHasta(request.getFechaHasta());
+			bean.setConfirmada(request.isConfirmada() );
+			
+			bean.setOrder(request.getOrder());
+			bean.setFieldName(request.getFieldName());
+		}
+		
+		return bean;
+	}
+
+	public Date getFechaDesde() {
+		return fechaDesde;
+	}
+
+	public void setFechaDesde(Date fechaDesde) {
+		this.fechaDesde = fechaDesde;
+	}
+
+	public Date getFechaHasta() {
+		return fechaHasta;
+	}
+
+	public void setFechaHasta(Date fechaHasta) {
+		this.fechaHasta = fechaHasta;
+	}
+
+	public Boolean getConfirmada() {
+		return confirmada;
+	}
+
+	public void setConfirmada(Boolean confirmada) {
+		this.confirmada = confirmada;
+	}
+
+	public String getProcedencia() {
+		return procedencia;
+	}
+
+	public void setProcedencia(String procedencia) {
+		this.procedencia = procedencia;
+	}
+	
+
+
+}

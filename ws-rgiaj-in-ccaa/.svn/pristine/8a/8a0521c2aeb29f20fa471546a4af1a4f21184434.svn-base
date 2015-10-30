@@ -1,0 +1,7 @@
+package com.dgoj.juegoExterno.business.bean.type;
+
+public enum FormatoDescargaProhibidos {
+	XML,
+	Texto, 
+	Ambos
+}

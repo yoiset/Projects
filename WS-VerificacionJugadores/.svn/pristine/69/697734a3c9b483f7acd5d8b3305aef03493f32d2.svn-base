@@ -1,0 +1,108 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
+
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJ;
+import es.gob.cnjuego.ws.entity.JugadoresOperador;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+
+public class JugadoresOperadorDAO {
+
+	private Logger log = Logger.getLogger(JugadoresOperadorDAO.class);
+
+	@PersistenceContext
+	EntityManager manager;
+	
+	@Transactional
+	public void almacenarJugadorOperador(JugadoresOperador jug)
+	{
+		manager.persist(jug);
+	}
+	
+	public List<JugadoresCambioRGIAJ> obtenerCambiosJugadores(OperadorEntity operador)
+	{
+		Query query = manager.createQuery("SELECT c FROM JugadoresCambioRGIAJ c where c.operador=:operador and c.fechaValor < sysdate");
+		query.setParameter("operador", operador);
+		List<JugadoresCambioRGIAJ> res = query.getResultList();
+		return res;
+	}
+	
+	public JugadoresOperador existeJugadorIdentificadoSinApellido2(String nif, Date fechaNac){
+		JugadoresOperador jugador = null;
+		Query query = manager.createQuery("SELECT c FROM JugadoresOperador c where c.dni=:dni and c.fechaNac=:fechaNac and c.resultadoIdentidad=:resIdentidad and c.cacheIdentidad=0 order by c.fechaAlta desc");
+		query.setParameter("dni", nif);
+		query.setParameter("fechaNac", fechaNac);
+		query.setParameter("resIdentidad", CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+		List<JugadoresOperador> res = query.getResultList();
+		if (res != null && !res.isEmpty())
+			{
+			jugador = (JugadoresOperador)res.iterator().next();
+			}
+		
+		return jugador;
+	}
+
+	public JugadoresOperador existeJugadorIdentificadoConApellido2(String nif, Date fechaNac){
+		JugadoresOperador jugador = null;
+		Query query = manager.createQuery("SELECT c FROM JugadoresOperador c where c.dni=:dni and c.fechaNac=:fechaNac and c.resultadoIdentidad=:resIdentidad and c.cacheIdentidad=0 and c.apellido2 is not null order by c.fechaAlta desc");
+		query.setParameter("dni", nif);
+		query.setParameter("fechaNac", fechaNac);
+		query.setParameter("resIdentidad", CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+		List<JugadoresOperador> res = query.getResultList();
+		if (res != null && !res.isEmpty())
+			{
+			jugador = (JugadoresOperador)res.iterator().next();
+			}
+		
+		return jugador;
+	}
+	
+	public JugadoresOperador existeJugadorIdentificado(String nif,String nombre, String apellido1, String apellido2, Date fechaNac){
+		JugadoresOperador jugador = null;
+		Query query = manager.createQuery("SELECT c FROM JugadoresOperador c where c.dni=:dni and c.nombre=:nombre and c.apellido1=:apellido1 and c.apellido2=:apellido2 and c.fechaNac=:fechaNac and c.resultadoIdentidad=:resIdentidad and c.cacheIdentidad=0");
+		query.setParameter("dni", nif);
+		query.setParameter("nombre", nombre);
+		query.setParameter("apellido1", apellido1);
+		query.setParameter("apellido2", apellido2);
+		query.setParameter("fechaNac", fechaNac);
+		query.setParameter("resIdentidad", CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+		List<JugadoresOperador> res = query.getResultList();
+		if (res != null && !res.isEmpty())
+			{
+			jugador = (JugadoresOperador)res.iterator().next();
+			}
+		
+		return jugador;
+	}
+
+	public JugadoresOperador existeJugadorIdentificado(String nif,String nombre, String apellido1, Date fechaNac){
+		JugadoresOperador jugador = null;
+		Query query = manager.createQuery("SELECT c FROM JugadoresOperador c where c.dni=:dni and c.nombre=:nombre and c.apellido1=:apellido1 and c.fechaNac=:fechaNac and c.resultadoIdentidad=:resIdentidad and c.cacheIdentidad=0");
+		query.setParameter("dni", nif);
+		query.setParameter("nombre", nombre);
+		query.setParameter("apellido1", apellido1);
+		
+		query.setParameter("fechaNac", fechaNac);
+		query.setParameter("resIdentidad", CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+		List<JugadoresOperador> res = query.getResultList();
+		if (res != null && !res.isEmpty())
+			{
+			jugador = (JugadoresOperador)res.iterator().next();
+			}
+		
+		return jugador;
+	}
+
+
+	
+	
+}

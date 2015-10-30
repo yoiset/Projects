@@ -1,0 +1,230 @@
+package com.dgoj.juegoExterno.business.service.impl;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipOutputStream;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.xml.sax.SAXException;
+
+import com.dgoj.juegoExterno.business.bean.JugProhibicionBean;
+import com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean;
+import com.dgoj.juegoExterno.business.exceptions.JuegoExternoException;
+import com.dgoj.juegoExterno.business.model.JugComunidad;
+import com.dgoj.juegoExterno.business.model.JugHistoricodescargasproh;
+import com.dgoj.juegoExterno.business.model.JugProhibicion;
+import com.dgoj.juegoExterno.business.repository.IJugHistoricoDescargasprohRepository;
+import com.dgoj.juegoExterno.business.repository.IJugProhibicionRepository;
+import com.dgoj.juegoExterno.business.service.IJugProhibicionService;
+import com.mysema.query.SearchResults;
+
+/**
+ * @author ylopezconnectis
+ *
+ */
+@Service("JugProhibicionService")
+public class JugProhibicionServiceImpl implements IJugProhibicionService {
+	
+	
+	
+	
+	@Autowired
+	private IJugProhibicionRepository<JugProhibicion, Long> jugProhibicionRepository;
+	
+	@Autowired
+	private IJugHistoricoDescargasprohRepository<JugHistoricodescargasproh, Long> jugHistoricodescargasprohRepository;
+	
+	
+	private Logger log= Logger.getLogger(IJugProhibicionService.class);
+
+	
+
+	/* (non-Javadoc)
+	 * @see com.dgoj.juegoExterno.business.service.IJugProhibicionService#getProhibidosList(com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean)
+	 */
+	@Override
+	public byte[] getProhibidosList(JugProhibicionQueryBean queryBean) throws JuegoExternoException {
+		// TODO Auto-generated method stub
+		SearchResults<JugProhibicion> search=jugProhibicionRepository.getProhibidoList(queryBean);
+		
+		ByteArrayOutputStream out=new ByteArrayOutputStream();
+		ZipOutputStream zipOut=new ZipOutputStream(out);
+		
+		if(search.getResults()!=null){			
+		   switch (queryBean.getFormatoDescargaProhibidos()) {
+				case XML:
+					 getXML(search.getResults(), queryBean, zipOut, out);
+					 break;
+				case Texto:
+					getText(search.getResults(), queryBean,  zipOut, out);
+					break;
+				case Ambos:
+					getAmbos(search.getResults(), queryBean, zipOut, out);
+					break;
+			}
+		   insertHistoricoDescargas(queryBean);
+		 }
+		
+		closeOutputStream(zipOut);
+		return out.toByteArray();
+	}
+	
+	
+	
+	/** Actualiza el historial de Descargas de Prohibidos
+	 * @param queryBean
+	 * @throws JuegoExternoException
+	 */
+	@Transactional
+	private void insertHistoricoDescargas(JugProhibicionQueryBean queryBean) throws JuegoExternoException {
+		jugHistoricodescargasprohRepository.insertHistoricoDescargas(queryBean);
+	}
+	
+	
+	/** Confirma el historial de Descargas de Prohibidos
+	 * @see com.dgoj.juegoExterno.business.service.IJugProhibicionService#confirmHistoricoDescargas(com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean)
+	 */
+	@Transactional
+	public void confirmHistoricoDescargas(JugProhibicionQueryBean queryBean) throws JuegoExternoException {
+		JugHistoricodescargasproh entity=jugProhibicionRepository.getLast(queryBean.getCodComunidad());
+		entity.setConfirmada(1);
+		jugHistoricodescargasprohRepository.updateHistoricoDescargas(entity);
+	}
+	
+	
+
+	/** Retorna si la ultima descarga esta por confirmar
+	 * @see com.dgoj.juegoExterno.business.service.IJugProhibicionService#hasPending(com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean)
+	 */
+	@Override
+	public boolean hasPending(JugProhibicionQueryBean queryBean) {
+		JugHistoricodescargasproh entity=jugProhibicionRepository.getLast(queryBean.getCodComunidad());
+		if(entity.getConfirmada()!=null && entity.getConfirmada().equals(1)) return false;
+		return true;
+	}
+	
+	/** Confirma el historial de Descargas de Prohibidos Pendiente
+	 * @param queryBean
+	 * @throws JuegoExternoException 
+	 */
+	@Transactional
+	public void confirmHistoricoDescargasPendiente(JugProhibicionQueryBean queryBean) throws JuegoExternoException{
+		JugHistoricodescargasproh entity=jugProhibicionRepository.getLast(queryBean.getCodComunidad());
+		entity.setConfirmada(1);
+		jugHistoricodescargasprohRepository.updateHistoricoDescargas(entity);
+	}
+	
+	
+	
+	
+	/** Devuelve el Bean con la comunidad y el codigo
+	 * @see com.dgoj.juegoExterno.business.service.IJugProhibicionService#getComunidad(java.lang.String)
+	 */
+	public JugProhibicionBean getComunidad(String user){
+		JugComunidad entity=jugProhibicionRepository.getComunidad(user);
+		JugProhibicionBean bean=new JugProhibicionBean();
+		 if(entity!=null){
+			 bean.setIdComunidad(entity.getId());
+			 bean.setCodComunidad(entity.getCodigo());			 
+			 bean.setDescripcionComunidad(entity.getDescripcion());
+		 }
+		 return bean;
+	}
+	
+	
+	/** Devuelve el Bean con las ultimas descargas confirmadas por una comunidad
+	 * @see com.dgoj.juegoExterno.business.service.IJugProhibicionService#getUltimasDescargasConfirmadas(com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean)
+	 */
+	public List<JugProhibicionBean> getUltimasDescargasConfirmadas(JugProhibicionQueryBean queryBean)throws JuegoExternoException{
+		List<JugHistoricodescargasproh> list=jugHistoricodescargasprohRepository.getUltimasDescargasConfirmadas(queryBean);
+		List<JugProhibicionBean> result=new ArrayList<JugProhibicionBean>();
+		
+		if(list!=null)
+		for (JugHistoricodescargasproh entity : list) 
+			result.add(new JugProhibicionBean(entity.getFechaDescarga(), entity.getUltimo()));
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * @param prohibicionList
+	 * @param query
+	 * @param zipOut
+	 * @param out
+	 * @throws JuegoExternoException
+	 */
+	private void getXML(List<JugProhibicion> prohibicionList, JugProhibicionQueryBean query,  ZipOutputStream zipOut,ByteArrayOutputStream out) throws JuegoExternoException{
+		XMLFileSupport xmlFile=new XMLFileSupport();
+		try {
+			long last = xmlFile.writeProhibidosXml(zipOut, prohibicionList);
+			query.setLast(last);
+		} catch (IOException e) {
+			log.error("Error creando el outPut Stream: ", e);
+			throw new JuegoExternoException(e);
+		} catch (SAXException e) {
+			log.error("Error creando fichero XML: ", e);
+			throw new JuegoExternoException(e);
+		}
+	}
+	
+
+	
+	/**
+	 * @param prohibicionList
+	 * @param query
+	 * @param zipOut
+	 * @param out
+	 * @throws JuegoExternoException
+	 */
+	private void getText(List<JugProhibicion> prohibicionList,JugProhibicionQueryBean query, ZipOutputStream zipOut,ByteArrayOutputStream out) throws JuegoExternoException{
+		TextFileSupport textFile=new TextFileSupport();
+		try {
+			long last = textFile.writeProhibidosTexto(zipOut, prohibicionList);
+			query.setLast(last);
+		} catch (IOException e) {
+			log.error("Error creando el outPut Stream: ", e);
+			throw new JuegoExternoException(e);
+		}
+		
+	}
+
+
+	
+	/**
+	 * @param prohibicionList
+	 * @param query
+	 * @param zipOut
+	 * @param out
+	 * @throws JuegoExternoException
+	 */
+	private void getAmbos(List<JugProhibicion> prohibicionList, JugProhibicionQueryBean query, ZipOutputStream zipOut,ByteArrayOutputStream out) throws JuegoExternoException{
+		getText(prohibicionList, query, zipOut, out);
+        getXML(prohibicionList, query, zipOut, out);	
+		
+	}
+	
+	
+	/**
+	 * @param zipOut
+	 * @throws JuegoExternoException
+	 */
+	private void closeOutputStream(ZipOutputStream zipOut)	throws JuegoExternoException {
+		try {
+			zipOut.close();
+		} catch (IOException e) {
+			log.error("Error cerrando el fichero zip: ", e);
+			throw new JuegoExternoException(e);
+		}
+	}
+
+	
+}

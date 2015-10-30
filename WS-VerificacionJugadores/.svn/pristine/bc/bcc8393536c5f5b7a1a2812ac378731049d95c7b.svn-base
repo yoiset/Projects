@@ -1,0 +1,30 @@
+package es.gob.cnjuego.ws.service;
+
+import java.util.List;
+
+import es.gob.cnjuego.ws.entity.JugadoresCambioRGIAJ;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.to.DatosInterdictosDTO;
+import es.mir.juego.component.ws.service.InfoResultado;
+
+public interface ServicioGestionRGIAJ {
+
+	
+	public DatosInterdictosDTO altaRegistro(DatosInterdictosDTO solicitud);
+	
+	public DatosInterdictosDTO modificacionRegistro(DatosInterdictosDTO solicitud);
+	
+	public DatosInterdictosDTO bajaRegistro(DatosInterdictosDTO solicitud);
+	
+	public DatosInterdictosDTO consultaDatosUsuario(String dni) throws Exception;
+	
+	public DatosInterdictosDTO generarCertificado(DatosInterdictosDTO solicitud);
+	
+	public boolean existeUsuario(String dni) throws Exception;
+	
+	public List<InfoResultado> compruebaExisteListaUsuarios(List<String> listadni) throws Exception;
+	
+	public List<JugadoresCambioRGIAJ> obtenerCambiosRGIAJ(OperadorEntity operador) throws Exception;
+
+
+}

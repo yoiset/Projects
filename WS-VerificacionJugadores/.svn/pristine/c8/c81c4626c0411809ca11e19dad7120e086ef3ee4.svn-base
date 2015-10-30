@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true" threshold="all"
+	xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="LOGFILE" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="c:/temp/verificacion_ws.log" />
+		<param name="MaxFileSize" value="10240KB" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} %p %c - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Definicion de logger para las aplicaciones -->
+	<logger name="STDOUT">
+		<priority value="ERROR" />
+		<appender-ref ref="LOGFILE" />
+	</logger>
+
+	<logger name="org.apache.cxf">
+		<priority value="ERROR" />
+		<appender-ref ref="LOGFILE" />
+	</logger>
+
+	<logger name="httpclient">
+		<level value="INFO" />
+		<appender-ref ref="LOGFILE" />
+	</logger>
+
+	<logger name="com">
+		<level value="ERROR" />
+		<appender-ref ref="LOGFILE" />
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="INFO" />
+		<appender-ref ref="LOGFILE" />
+	</logger>
+
+	<logger name="org.hibernate">
+		<level value="ERROR" />
+		<appender-ref ref="LOGFILE" />
+	</logger>
+
+	<logger name="es.gob.cnjuego.ws.verificacionjugadores">
+		<level value="DEBUG" />
+		<appender-ref ref="LOGFILE" />
+	</logger>
+
+</log4j:configuration>

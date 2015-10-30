@@ -1,0 +1,107 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import es.gob.cnjuego.ws.dao.VerificacionDao;
+
+public class VerificacionCambiosRGIAJ extends SpringTestCase{
+
+
+
+	
+	private VerificacionDao dao;
+	private VerificacionJugadores proxy;
+	
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		this.setDao((VerificacionDao)this.getContext().getBean("VerificacionDao"));
+		this.setProxy((VerificacionJugadores)this.getContext().getBean("VerificacionJugadoresService"));
+	}
+
+	/**
+	 * Verificamos que la configuración de los ficheros es correcta.
+	 */
+	@Test
+	public void testInit() throws Exception {
+		assertNotNull(this.getProxy());
+	}
+	
+	
+	/******************************************************************************************************************************/
+	/*                          CASOS PRUEBA OPERACION verificarIdentidad                                                           */
+	/******************************************************************************************************************************/
+	
+	
+	@Test
+	public void testVerificarCambios1_1() throws Exception {
+		List<CambioRGIAJ> respuesta = this.getProxy().verificarCambiosRGIAJ();
+		assertNotNull(respuesta);
+		System.out.println("Cambios RGIAJ del Operador 8: ");
+		System.out.println("Jugador: DNI             Motivo             Fecha");
+		int i=1;
+		int size=String.valueOf(respuesta.size()).length();
+		String zeros="";
+		int decimal=0;
+		if(size>1 && respuesta.size()>1){
+			for (int j = 1; j < size; j++) {
+				zeros+="0";
+			}
+			decimal=Integer.parseInt("1"+zeros );
+		}
+		for (CambioRGIAJ item : respuesta) {
+			String tag=(i<decimal)? zeros+i+"- " : i+"- ";
+			System.out.print(tag);
+			System.out.print(item.getDNI());
+			System.out.print("             ");			
+			System.out.print(item.getMotivoCambio());
+			System.out.print("             ");
+			System.out.println(item.getFechaCambio());
+			i++;
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * Para facilitar las pruebas unitarias
+	 */
+	private ResultadoIdentidad getResultadoIdentidadByDni(String dni, List<ResultadoIdentidad> lista) {
+		for (ResultadoIdentidad resultado : lista) {
+			if (resultado.getDni().equals(dni)) {
+				return resultado;
+			}
+		}
+		return null;
+	}
+	
+	
+
+	public VerificacionDao getDao() {
+		return dao;
+	}
+
+	public void setDao(VerificacionDao dao) {
+		this.dao = dao;
+	}
+
+	public VerificacionJugadores getProxy() {
+		return proxy;
+	}
+
+	public void setProxy(VerificacionJugadores proxy) {
+		this.proxy = proxy;
+	}	
+
+
+
+}

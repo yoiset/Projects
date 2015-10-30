@@ -1,0 +1,231 @@
+
+package es.dgoj.rgiaj;
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
+import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
+
+
+/**
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the es.dgoj.rgiaj package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
+ * provided in this class.
+ * 
+ */
+@XmlRegistry
+public class ObjectFactory {
+
+    private final static QName _JugHistoricoQueryRequest_QNAME = new QName("http://rgiaj.dgoj.es/", "JugHistoricoQueryRequest");
+    private final static QName _Boolean_QNAME = new QName("http://rgiaj.dgoj.es/", "Boolean");
+    private final static QName _ComunidadQueryRequest_QNAME = new QName("http://rgiaj.dgoj.es/", "ComunidadQueryRequest");
+    private final static QName _ComunidadSearchResponse_QNAME = new QName("http://rgiaj.dgoj.es/", "ComunidadSearchResponse");
+    private final static QName _ComunidadCertificadoBeanResponse_QNAME = new QName("http://rgiaj.dgoj.es/", "ComunidadCertificadoBeanResponse");
+    private final static QName _JugHistoricoSearchResponse_QNAME = new QName("http://rgiaj.dgoj.es/", "JugHistoricoSearchResponse");
+
+    /**
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: es.dgoj.rgiaj
+     * 
+     */
+    public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link ComunidadSearchResponse }
+     * 
+     */
+    public ComunidadSearchResponse createComunidadSearchResponse() {
+        return new ComunidadSearchResponse();
+    }
+
+    /**
+     * Create an instance of {@link ComunidadQueryRequest }
+     * 
+     */
+    public ComunidadQueryRequest createComunidadQueryRequest() {
+        return new ComunidadQueryRequest();
+    }
+
+    /**
+     * Create an instance of {@link ComunidadCertificadoBeanResponse }
+     * 
+     */
+    public ComunidadCertificadoBeanResponse createComunidadCertificadoBeanResponse() {
+        return new ComunidadCertificadoBeanResponse();
+    }
+
+    /**
+     * Create an instance of {@link FaultError }
+     * 
+     */
+    public FaultError createFaultError() {
+        return new FaultError();
+    }
+
+    /**
+     * Create an instance of {@link JugProhibicionQueryRequest }
+     * 
+     */
+    public JugProhibicionQueryRequest createJugProhibicionQueryRequest() {
+        return new JugProhibicionQueryRequest();
+    }
+
+    /**
+     * Create an instance of {@link AbstractQueryEntityRquest }
+     * 
+     */
+    public AbstractQueryEntityRquest createAbstractQueryEntityRquest() {
+        return new AbstractQueryEntityRquest();
+    }
+
+    /**
+     * Create an instance of {@link ProhibidosResponse }
+     * 
+     */
+    public ProhibidosResponse createProhibidosResponse() {
+        return new ProhibidosResponse();
+    }
+
+    /**
+     * Create an instance of {@link ComunidadResponse }
+     * 
+     */
+    public ComunidadResponse createComunidadResponse() {
+        return new ComunidadResponse();
+    }
+
+    /**
+     * Create an instance of {@link JugHistoricoSearchResponse }
+     * 
+     */
+    public JugHistoricoSearchResponse createJugHistoricoSearchResponse() {
+        return new JugHistoricoSearchResponse();
+    }
+
+    /**
+     * Create an instance of {@link JugProhibicionBean }
+     * 
+     */
+    public JugProhibicionBean createJugProhibicionBean() {
+        return new JugProhibicionBean();
+    }
+
+    /**
+     * Create an instance of {@link UltimasDescargasConfirmadasResponse }
+     * 
+     */
+    public UltimasDescargasConfirmadasResponse createUltimasDescargasConfirmadasResponse() {
+        return new UltimasDescargasConfirmadasResponse();
+    }
+
+    /**
+     * Create an instance of {@link JugHistoricoBean }
+     * 
+     */
+    public JugHistoricoBean createJugHistoricoBean() {
+        return new JugHistoricoBean();
+    }
+
+    /**
+     * Create an instance of {@link JugHistoricoQueryRequest }
+     * 
+     */
+    public JugHistoricoQueryRequest createJugHistoricoQueryRequest() {
+        return new JugHistoricoQueryRequest();
+    }
+
+    /**
+     * Create an instance of {@link ComunidadBeanResponse }
+     * 
+     */
+    public ComunidadBeanResponse createComunidadBeanResponse() {
+        return new ComunidadBeanResponse();
+    }
+
+    /**
+     * Create an instance of {@link ComunidadBean }
+     * 
+     */
+    public ComunidadBean createComunidadBean() {
+        return new ComunidadBean();
+    }
+
+    /**
+     * Create an instance of {@link ComunidadRequest }
+     * 
+     */
+    public ComunidadRequest createComunidadRequest() {
+        return new ComunidadRequest();
+    }
+
+    /**
+     * Create an instance of {@link SearchResponse }
+     * 
+     */
+    public SearchResponse createSearchResponse() {
+        return new SearchResponse();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link JugHistoricoQueryRequest }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://rgiaj.dgoj.es/", name = "JugHistoricoQueryRequest")
+    public JAXBElement<JugHistoricoQueryRequest> createJugHistoricoQueryRequest(JugHistoricoQueryRequest value) {
+        return new JAXBElement<JugHistoricoQueryRequest>(_JugHistoricoQueryRequest_QNAME, JugHistoricoQueryRequest.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Boolean }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://rgiaj.dgoj.es/", name = "Boolean")
+    public JAXBElement<Boolean> createBoolean(Boolean value) {
+        return new JAXBElement<Boolean>(_Boolean_QNAME, Boolean.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ComunidadQueryRequest }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://rgiaj.dgoj.es/", name = "ComunidadQueryRequest")
+    public JAXBElement<ComunidadQueryRequest> createComunidadQueryRequest(ComunidadQueryRequest value) {
+        return new JAXBElement<ComunidadQueryRequest>(_ComunidadQueryRequest_QNAME, ComunidadQueryRequest.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ComunidadSearchResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://rgiaj.dgoj.es/", name = "ComunidadSearchResponse")
+    public JAXBElement<ComunidadSearchResponse> createComunidadSearchResponse(ComunidadSearchResponse value) {
+        return new JAXBElement<ComunidadSearchResponse>(_ComunidadSearchResponse_QNAME, ComunidadSearchResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ComunidadCertificadoBeanResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://rgiaj.dgoj.es/", name = "ComunidadCertificadoBeanResponse")
+    public JAXBElement<ComunidadCertificadoBeanResponse> createComunidadCertificadoBeanResponse(ComunidadCertificadoBeanResponse value) {
+        return new JAXBElement<ComunidadCertificadoBeanResponse>(_ComunidadCertificadoBeanResponse_QNAME, ComunidadCertificadoBeanResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link JugHistoricoSearchResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://rgiaj.dgoj.es/", name = "JugHistoricoSearchResponse")
+    public JAXBElement<JugHistoricoSearchResponse> createJugHistoricoSearchResponse(JugHistoricoSearchResponse value) {
+        return new JAXBElement<JugHistoricoSearchResponse>(_JugHistoricoSearchResponse_QNAME, JugHistoricoSearchResponse.class, null, value);
+    }
+
+}

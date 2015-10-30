@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Notas</title>
+<link href="documentacion/notas.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h2>INDICE</h2>
+<a href="#descripcion">Descripción</a><br>
+<a href="#deploy">Despliegue local</a><br>
+<a href="#service">Sobre la generación de las clases</a><br>
+<a href="#monitor">Configuración y uso del TCP/IP Monitor</a><br>
+<a href="#testcases">Ejecución de las pruebas unitarias</a><br>
+
+<h2><a name="descripcion">Descripción</a></h2>
+<ul>
+<li>
+Esta aplicación es un servicio-web para que los operadores controlen el estado de los jugadores.</li>
+<li>Tecnologías: Spring 3.0.7, CXF 2.7.2, JPA</li>
+<li>Partimos de una definición del servicio web (wsdl) y generamos las clases de la implemetación automáticamente con CXF.</li>
+<li>La definición del servicio está en <a href="resources/VerificacionJugadores.wsdl">VerificacionJugadores.wsdl</a>. Ese fichero tiene una referencia a <a href="resources/VerificacionJugadores_schema.xsd">VerificacionJugadores_schema.xsd</a>, que define los tipos de datos.<br></li>
+<li>Requerimientos para poner en marcha: <b>JDK 1.7</b>, <b>Eclipse 3.7</b> y <b>JBoss 7.x</b>.<br></li>
+<li>
+Ruta del servicio desplegado (local): <a href="http://localhost:8080/VerificacionJugadores2/services/VerificacionJugadoresServicePort?wsdl">http://localhost:8080/VerificacionJugadores2/services/VerificacionJugadoresServicePort?wsdl</a>
+</li>
+</ul>
+<h2><a name="deploy">Despliegue local</a></h2>
+<b>Paso 1:</b> Asociar el servidor JBoss 7.x a Eclipse (usando el plugin de JBoss)<br>
+<br>
+<b>Paso 2:</b> Asociar el proyecto al servidor (usando el plugin de JBoss)<br>
+<br>
+<b>Paso 3:</b> Arrancar el servidor<br>
+<br>
+<b>Paso 4:</b> Abrir la siguiente dirección para comprobar que el servicio está desplegado:<br>
+<br>
+<a href="http://localhost:8080/VerificacionJugadores2/services/VerificacionJugadoresServicePort?wsdl">http://localhost:8080/VerificacionJugadores2/services/VerificacionJugadoresServicePort?wsdl</a><br>
+<br>
+<b>Paso 5:</b> Ejecutar las <a href="#testcases">pruebas unitarias</a><br>
+<br>
+<h2><a name="service">Sobre la generación de las clases</a></h2>
+Las <i>clases skeleton</i> utilizadas por CXF son generadas por un script <b>build.xml</b> (Ant) a partir del fichero WSDL 
+que contiene la definición del servicio. Como las estructuras de datos definidas en el servicio contienen atributos de tipo <b>xsd:date</b>,
+debemos establecer un <i>mapping</i> para que las clases que genera CXF tengan atributos de tipo Date (por defecto se generan con tipo XMLGregorianCalendar).
+Más información en la <a href="http://cxf.apache.org/docs/wsdl-to-java.html">documentación de CXF sobre el tema</a>.<br>
+<br>
+El script the Ant ya está configurado para generar todo correctamente. Para generar las clases (skeletons) con CXF, hacer lo siguiente:<br>
+<br>
+<b>Paso 1:</b> Desde Eclipse, si es necesario modificar la definición del servicio en <a href="resources/VerificacionJugadores.wsdl">VerificacionJugadores.wsdl</a>. Las estructuras de datos están definidas en <a href="resources/VerificacionJugadores_schema.xsd">VerificacionJugadores_schema.xsd</a>.<br>
+<br>
+<b>Paso 2:</b> Regenerar las clases a partir de la definición del servicio. Para esto, arrastrar el fichero <a href="build.xml">build.xml</a> a la vista de Ant. Luego,
+ejecutar la tarea <b>WSDLToJava</b> del script. <br>
+<br>
+El script lanza el proceso de generación de clases con CXF. Las clases son creadas en la carpeta <b>generated</b> del proyecto.<br>
+<br>
+<img src="documentacion/image1.png"/><br>
+<br>
+<b>Paso 3:</b> Refrescar el proyecto para que Eclipse cargue las clases generadas.<br>
+<br>
+<b>Paso 4:</b> Implementar los cambios del funcionamiento del servicio en la clase
+<b>agenda.AgendaImpl</b><br>
+
+<h2><a name="monitor">Configuración y uso del TCP/IP Monitor</a></h2>
+El <b>TCP/IP monitor</b> es un plugin de Eclipse que permite inspeccionar los mensajes SOAP de las invocaciones de un web-service. El monitor intercepta las llamadas y muestra
+los mensajes de entrada y salida por una consola. Pasos para configurar TCP/IP Monitor:<br>
+<br>
+<b>Paso 1:</b> Abrir la vista del monitor desde el menú de Eclipse: <code><b>Window -> Show View -> Other...</b></code><br>
+<br>
+<b>Paso 2:</b> En la vista del monitor abrir el menú con el botón derecho. Elegir la opción <b>Properties</b>. 
+Configurar los valores como se muestra a continuación. Nótese que estamos configurando el puerto <b>80</b> para interceptar las llamadas, así que las
+invocaciones del servicio deben enviarse a ese puerto para que el monitor las intercepte.<br>
+<br>
+<img src="documentacion/image2.png"/><br>
+<br>
+<b>Paso 3:</b> Para arrancar el monitor, seleccionar la configuración y pinchar en <b>Start</b><br>
+<br>
+<img src="documentacion/image3.png"/><br>
+<br>
+<b>Paso 4:</b> Invocar el web-service al puerto <b>80</b>. El monitor mostrará los mensajes interceptados:<br>
+<br>
+<img src="documentacion/image4.png"/><br>
+<br>
+<br>
+<h2><a name="testcases">Ejecución de las pruebas unitarias</a></h2>
+<b>Paso 1:</b> Comprobar que el servicio está desplegado.<br>
+<br>
+<b>Paso 2:</b> Desde Eclipse, ejecutar la clase <b>agenda.TestAgendaService</b> con <b>JUnit</b>.<br>
+<br>
+<b>Paso 3:</b> Los tests son muy simples: invocan las operaciones del servicio como si tratara de un cliente remoto.<br>
+<br>
+</body>
+</html>

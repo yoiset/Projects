@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<project name="VerificarJugadores" default="init" basedir=".">   
+
+	<target name="init" depends="">
+		<property name="project.dir" value="${basedir}"/>
+		<property name="temp.dir" value="${basedir}/temp"/>
+		<echo message="* * * * * * PROPIEDADES DE CONFIGURACION: * * * * * * *"/>
+		<echo message="*"/>
+		<echo message="*              basedir = ${basedir}"/>
+		<echo message="*          project.dir = ${project.dir}"/>
+		<echo message="*             temp.dir = ${temp.dir}"/>
+		<echo message="*"/>
+		<echo message="* * * * * * * * * * * * * * * * * * * * * * * * * * * *"/>
+		<mkdir dir="${temp.dir}"/>
+		<path id="cxf.classpath">
+			<fileset dir="${project.dir}/WebContent/WEB-INF/lib">
+				<include name="*.jar"/>
+			</fileset>
+			<fileset dir="${project.dir}/extra-lib">
+				<include name="*.jar"/>
+			</fileset>
+		</path>
+	</target>
+
+	<target name="WSDLToJava" depends="init">
+	     <java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+	         <arg value="-client"/>
+	         <arg value="-d"/>
+	         <arg value="generated"/>
+	         <arg value="-b"/>
+	         <arg value="resources/binding.xml"/>
+	         <arg value="resources/VerificacionJugadores.wsdl"/>
+	         <classpath>
+	            <path refid="cxf.classpath"/>
+	         </classpath>
+	     </java>
+	</target>	
+		
+</project>

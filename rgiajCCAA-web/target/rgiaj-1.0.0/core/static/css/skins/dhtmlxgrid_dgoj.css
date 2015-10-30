@@ -1,0 +1,109 @@
+
+/*============================*/
+/* dhtmlxGrid evr*/
+/*============================*/
+div.gridbox_evr .xhdr{
+	background-color:#eff4df;	
+}
+div.gridbox_evr table.hdr tr{
+	background-color:#ffffff;	
+}
+
+div.gridbox_evr table.obj tr td{
+	font-family: tahoma;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	border-width:0px 0px 0px 0px;
+	padding-right:4px;
+	padding-left:4px;
+}
+div.gridbox_evr table.hdr td div.hdrcell{
+	width:auto;
+	padding-left:10px;
+	width:100% !ie;
+}
+
+div.gridbox_evr table.hdr td {
+	border: 1px solid #ced49c;
+	border-width: 0px 1px 1px 0px;
+	padding:8px 0px 9px 0px;
+	background-color:#eff4df;
+/*
+	background-image:url("./imgs/dhxgrid_evr/separator.png");
+	background-position:right -2px;
+	background-repeat:repeat-y;
+	*/
+	font-family: tahoma;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	color: #000000;
+	vertical-align:top;
+	text-align:left;
+}
+
+div.gridbox_evr {
+	border:1px solid  #ced49c;
+}
+
+div.gridbox_evr {
+  border:1px solid  #ced49c;
+}
+div.gridbox table.obj tr  td{
+    padding-top:8px;
+    padding-bottom:8px;
+	height:30px;
+}
+
+div.gridbox table.obj tr  td.editable{
+    padding:0px;
+}
+div.gridbox table.obj tr  td.editable div.treegrid_cell{
+	padding-left:4px;
+	padding-top:1px;
+}
+div.gridbox_evr table.obj tr.rowselected{
+	background-color:#BBBBBB;
+	color: #000000;
+}
+div.gridbox_evr table.obj tr.rowselected td{
+	background-color:#BBBBBB;
+}
+div.gridbox_evr table.obj.row20px tr.rowselected td{
+	background-color:#BBBBBB;
+	color: #000000;
+}
+div.gridbox_evr table.obj tr.rowselected td.cellselected {
+	background-color:#BBBBBB;
+	color: #000000;
+}
+div.gridbox_evr .odd_evr{
+	background-color:#eff4df;
+}
+
+div.gridbox_evr .ev_evr{
+	background-color:#ffffff;
+}
+
+.gridbox_evr .dhx_combo_edit, .gridbox_evr .dhx_textarea{
+    font-family: tahoma;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+}
+
+.dhx_combo_select{
+    font-family: tahoma;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	position: absolute;
+}
+
+.gridbox_evr .dhx_combo_edit{
+	padding:1px 0px 1px 1px;
+}
+.gridbox_evr .dhx_sub_row {
+	background-color:transparent;
+}

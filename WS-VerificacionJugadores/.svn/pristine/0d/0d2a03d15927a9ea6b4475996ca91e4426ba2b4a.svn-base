@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:servicio="http://ws.cnjuego.gob.es/VerificacionJugadores/"
+	xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xmlns:sec="http://cxf.apache.org/configuration/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+        http://cxf.apache.org/transports/http/configuration
+        http://cxf.apache.org/schemas/configuration/http-conf.xsd		
+        http://cxf.apache.org/configuration/security
+        http://cxf.apache.org/schemas/configuration/security.xsd">
+
+	<!--
+	-->
+	<bean id="passwordCallback" class="es.gob.cnjuego.ws.verificacionjugadores.ClientPasswordCallback"/>
+		
+  <!-- 
+		address="http://10.34.104.50:18080/VerificacionJugadores/VerificacionJugadores" 
+		address="https://ws-pre.cnjuego.gob.es/VerificacionJugadores/VerificacionJugadores" 
+  -->
+	  <bean name="interceptorFirmarMensajesEnviados" class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+	   <constructor-arg>
+	      <map>
+	         <entry key="action" value="Signature Timestamp"/>
+	         <entry key="user" value="operador01"/>
+	         <entry key="passwordCallbackRef">
+	            <ref bean="passwordCallback"/>
+	         </entry>
+	         <entry key="signaturePropFile" value="tests/client_sign.properties"/>
+	      </map>
+	   </constructor-arg>
+	</bean>
+  
+  	<jaxws:client id="VerificacionJugadoresService"
+		serviceName="servicio:VerificacionJugadores" 
+		address="http://localhost:80/VerificacionJugadores2/services/VerificacionJugadoresServicePort" 
+		endpointName="servicio:VerificacionJugadoresServicePort"
+		serviceClass="es.gob.cnjuego.ws.verificacionjugadores.VerificacionJugadores">
+		<jaxws:outInterceptors>
+	        <ref bean="interceptorFirmarMensajesEnviados"/>
+		</jaxws:outInterceptors>
+	</jaxws:client>
+
+</beans>

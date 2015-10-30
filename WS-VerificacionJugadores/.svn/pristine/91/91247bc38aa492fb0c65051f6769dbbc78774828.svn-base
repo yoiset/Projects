@@ -1,0 +1,111 @@
+package es.gob.cnjuego.ws.verificacionjugadores;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.handler.soap.SOAPMessageContext;
+
+import org.apache.cxf.jaxws.context.WrappedMessageContext;
+import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.Message;
+
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.verificacionjugadores.control.VerificacionJugadoresController;
+import es.gob.cnjuego.ws.verificacionjugadores.interceptor.InterceptorEntradaProcesarCertificado;
+
+public class VerificacionJugadoresImpl implements VerificacionJugadores {
+
+	@Resource
+	WebServiceContext webServiceContext;
+	
+	/**
+	 * Retorna el operador que fue inyectado en el contexto por un interceptor.
+	 * El operador se recupera de la base de datos a partir del certificado que viene en la cabecera
+	 * de la petición del web service.
+	 */
+	private OperadorEntity getOperador() {
+	    MessageContext context = webServiceContext.getMessageContext();
+	    WrappedMessageContext wrappedContext = (WrappedMessageContext)context;
+	    Message mensaje = wrappedContext.getWrappedMessage();
+	    Exchange ex = mensaje.getExchange();
+	    OperadorEntity operador = (OperadorEntity)ex.getInMessage().get(InterceptorEntradaProcesarCertificado.OPERADOR);
+	    return operador;
+	}
+	
+	@Override
+	public List<ResultadoJugador> verificarJugador(List<Jugador> jugadores)	throws VerificarJugadorFault_Exception {
+		return this.verificarJugador(jugadores, this.getOperador());
+	}
+
+	public List<ResultadoJugador> verificarJugador(List<Jugador> jugadores, OperadorEntity operador) throws VerificarJugadorFault_Exception {
+		ResultadoType r1 = new ResultadoType();
+		r1.setCodigo("COD002");
+		r1.setDescripcion("El usuario no está inscrito en el RGIAJ");
+		
+		ResultadoType r2 = new ResultadoType();
+		r2.setCodigo("COD004");
+		r2.setDescripcion("La identidad del usuario es incorrecta - Titular no identificado");
+		
+		ResultadoJugador r3 = new ResultadoJugador();
+		r3.setDni("99999028L");
+		r3.setResultadoIdentidad(r1);
+		r3.setResultadoRGIAJ(r2);
+
+		List<ResultadoJugador> lista = new ArrayList<>();
+		lista.add(r3);
+		return lista;
+	}
+	
+	@Override
+	public List<ResultadoIdentidad> verificarIdentidad(List<Jugador> jugadores) throws VerificarIdentidadFault_Exception {
+		return this.verificarIdentidad(jugadores, this.getOperador());
+	}
+
+	public List<ResultadoIdentidad> verificarIdentidad(List<Jugador> jugadores, OperadorEntity operador) throws VerificarIdentidadFault_Exception {
+		
+		List<ResultadoIdentidad> result=null;
+		
+		VerificacionJugadoresController controller=new VerificacionJugadoresController(operador, jugadores);  // Se instancia el Controller
+		controller.checkDesabilitado(); //chequear operador deshabilitado
+		controller.checkJugadoresRepetidos();// chquear jugadores repetidos
+		
+		try {
+			result= controller.validate();
+			// tomar Id Peticion
+			// almacenarConsultaJugadoresOperador con Id Peticion
+			controller.registrarPeticion(((SOAPMessageContext)webServiceContext.getMessageContext()),result, true, false);
+			
+		} catch (Exception e) {
+			VerificarIdentidadFault fault3 = new VerificarIdentidadFault();
+			fault3.setVerificarIdentidadFault(CodigosVerificacion.ERROR_INTERNO);
+			throw new VerificarIdentidadFault_Exception(CodigosVerificacion.DESC_ERROR_INTERNO, fault3); 
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<ResultadoRGIAJ> verificarRGIAJ(List<Jugador> jugadores)	throws VerificarRGIAJFault_Exception {
+		return this.verificarRGIAJ(jugadores, this.getOperador());
+	}
+
+	public List<ResultadoRGIAJ> verificarRGIAJ(List<Jugador> jugadores, OperadorEntity operador)	throws VerificarRGIAJFault_Exception {
+		return null;
+	}
+
+	@Override
+	public List<CambioRGIAJ> verificarCambiosRGIAJ() throws VerificarCambiosRGIAJFault_Exception {
+		return this.verificarCambiosRGIAJ(this.getOperador());
+	}
+
+	public List<CambioRGIAJ> verificarCambiosRGIAJ(OperadorEntity operador) throws VerificarCambiosRGIAJFault_Exception {
+		return null;
+	}	
+	
+	
+	
+
+}

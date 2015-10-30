@@ -1,0 +1,126 @@
+/**
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %(c) Copyright 2007. GAMCO S.L.
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Proyecto: Red Program
+ * % Modulo: redProgram Web App
+ * % Autor/es: Yoiset Lopez<nombre>
+ * % Fecha: 05/08/2013
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Modificaciones (autor, fecha, modificaciones)
+ * % <Autor>, <fecha>, <modificaciones>
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %
+ * %  The persistent class module
+ * %
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+package es.gamco.redprogram.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the Clasi_Q database table.
+ * 
+ */
+@Entity
+public class Clasi_Q implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private int id;
+
+	private String tipo;
+
+	//bi-directional many-to-many association to Res_Agencia_Mes
+	@ManyToMany
+	@JoinTable(
+		name="Q1"
+		, joinColumns={
+			@JoinColumn(name="Clasi_Q_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Res_Agencia_Mes_Agencias_id", referencedColumnName="Agencias_id"),
+			@JoinColumn(name="Res_Agencia_Mes_Ej_Fiscal_id", referencedColumnName="Ej_Fiscal_id"),
+			@JoinColumn(name="Res_Agencia_Mes_mes", referencedColumnName="mes")
+			}
+		)
+	private List<Res_Agencia_Mes> resAgenciaMes1;
+
+	//bi-directional many-to-many association to Res_Agencia_Mes
+	@ManyToMany
+	@JoinTable(
+		name="Q2"
+		, joinColumns={
+			@JoinColumn(name="Clasi_Q_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Res_Agencia_Mes_Agencias_id", referencedColumnName="Agencias_id"),
+			@JoinColumn(name="Res_Agencia_Mes_Ej_Fiscal_id", referencedColumnName="Ej_Fiscal_id"),
+			@JoinColumn(name="Res_Agencia_Mes_mes", referencedColumnName="mes")
+			}
+		)
+	private List<Res_Agencia_Mes> resAgenciaMes2;
+
+	//bi-directional many-to-many association to Res_Agencia_Mes
+	@ManyToMany
+	@JoinTable(
+		name="Q3"
+		, joinColumns={
+			@JoinColumn(name="Clasi_Q_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Res_Agencia_Mes_Agencias_id", referencedColumnName="Agencias_id"),
+			@JoinColumn(name="Res_Agencia_Mes_Ej_Fiscal_id", referencedColumnName="Ej_Fiscal_id"),
+			@JoinColumn(name="Res_Agencia_Mes_mes", referencedColumnName="mes")
+			}
+		)
+	private List<Res_Agencia_Mes> resAgenciaMes3;
+
+	public Clasi_Q() {
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTipo() {
+		return this.tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public List<Res_Agencia_Mes> getResAgenciaMes1() {
+		return this.resAgenciaMes1;
+	}
+
+	public void setResAgenciaMes1(List<Res_Agencia_Mes> resAgenciaMes1) {
+		this.resAgenciaMes1 = resAgenciaMes1;
+	}
+
+	public List<Res_Agencia_Mes> getResAgenciaMes2() {
+		return this.resAgenciaMes2;
+	}
+
+	public void setResAgenciaMes2(List<Res_Agencia_Mes> resAgenciaMes2) {
+		this.resAgenciaMes2 = resAgenciaMes2;
+	}
+
+	public List<Res_Agencia_Mes> getResAgenciaMes3() {
+		return this.resAgenciaMes3;
+	}
+
+	public void setResAgenciaMes3(List<Res_Agencia_Mes> resAgenciaMes3) {
+		this.resAgenciaMes3 = resAgenciaMes3;
+	}
+
+}

@@ -1,0 +1,83 @@
+
+package es.dgoj.rgiaj;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Java class for UsuarioQueryRequest complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="UsuarioQueryRequest">
+ *   &lt;complexContent>
+ *     &lt;extension base="{http://rgiaj.dgoj.es/}ComunidadQueryRequest">
+ *       &lt;sequence>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="usuario" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *       &lt;/sequence>
+ *     &lt;/extension>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "UsuarioQueryRequest", propOrder = {
+    "id",
+    "usuario"
+})
+public class UsuarioQueryRequest
+    extends ComunidadQueryRequest
+{
+
+    protected long id;
+    @XmlElement(required = true)
+    protected String usuario;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
+
+    /**
+     * Gets the value of the usuario property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * Sets the value of the usuario property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUsuario(String value) {
+        this.usuario = value;
+    }
+
+}

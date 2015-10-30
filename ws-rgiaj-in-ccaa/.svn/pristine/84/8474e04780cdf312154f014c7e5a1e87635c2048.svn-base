@@ -1,0 +1,239 @@
+package com.dgoj.juegoExterno.business.repository.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.springframework.stereotype.Repository;
+
+import com.dgoj.juegoExterno.business.bean.JugHistoricoQueryBean;
+import com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean;
+import com.dgoj.juegoExterno.business.bean.type.TipoDescargaProhibidos;
+import com.dgoj.juegoExterno.business.exceptions.JuegoExternoException;
+import com.dgoj.juegoExterno.business.model.JugComunidad;
+import com.dgoj.juegoExterno.business.model.JugHistoricodescargasproh;
+import com.dgoj.juegoExterno.business.model.JugProhibicion;
+import com.dgoj.juegoExterno.business.repository.IJugHistoricoDescargasprohRepository;
+import com.jeveris.persistence.hibernate.repository.impl.HibernateBaseRepositoryImpl;
+import com.mysema.query.SearchResults;
+
+@Repository("jugHistoricodescargasprohRepository")
+public class JugHistoricodescargasprohRepositoryImpl extends  HibernateBaseRepositoryImpl<JugHistoricodescargasproh, Long> implements IJugHistoricoDescargasprohRepository <JugHistoricodescargasproh, Long> {
+
+	/* (non-Javadoc)
+	 * @see com.dgoj.juegoExterno.business.repository.IJugHistoricodescargasprohRepository#updateHistoricoDescargas(com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean)
+	 */
+	@Override
+	public void insertHistoricoDescargas(JugProhibicionQueryBean queryBean)	throws JuegoExternoException {
+		// TODO Auto-generated method stub
+		JugHistoricodescargasproh entity = new JugHistoricodescargasproh();
+		if (TipoDescargaProhibidos.Completa.equals(queryBean.getTipoDescargaProhibidos())) 
+			entity.setCompleta(1);
+		 else entity.setCompleta(0);
+		
+		entity.setFechaDescarga(new Date());
+		entity.setJugComunidad(getComunidad(queryBean.getCodComunidad()));
+		entity.setUltimo(getLast());
+		entity.setConfirmada(0);
+		getSession().persist(entity);		
+	}
+	
+	
+	
+	
+	
+	@Override
+	public void updateHistoricoDescargas(JugHistoricodescargasproh entity)	throws JuegoExternoException {
+		// TODO Auto-generated method stub
+		
+		getSession().merge(entity);
+		
+	}
+	
+	
+	
+
+
+	@Override
+	public List<JugHistoricodescargasproh> getUltimasDescargasConfirmadas(JugProhibicionQueryBean queryBean) throws JuegoExternoException {
+		// TODO Auto-generated method stub
+		String hql="select h from JugHistoricodescargasproh h " +
+				"where h.jugComunidad.codigo =:codigo  " +
+				"and  h.confirmada=1 " +
+				"order by h.fechaDescarga desc";
+		Query query = getSession().createQuery(hql).setParameter("codigo", queryBean.getCodComunidad()).setMaxResults(queryBean.getMaxResults());
+		return query.list();
+	}
+	
+	
+	
+	/** Obtiene el ultimo pedido     could not resolve property: jugComunidad.codigo of: com.dgoj.juegoExterno.business.model.JugProhibicion
+	 * @param codComunidad
+	 * @return
+	 */
+	private long getLast(){ 
+		
+		long result=0;
+		String hql="select p from JugProhibicion p where p.jugComunidad.codigo='NAC' and p.jugTipoProhibicion.codigo= 'RGIAJ' order by  p.idProhibicionEnvio desc";		
+		Query query = getSession().createQuery(hql).setMaxResults(1);
+		result=((JugProhibicion)query.uniqueResult()).getIdProhibicionEnvio();		
+	    return result;
+	}
+	
+	
+	/** Devuelve una comunidad dado el Codigo
+	 * @param code
+	 * @return
+	 */
+	private JugComunidad getComunidad(String code){
+		Property propCodComunidad = Property.forName("codigo");	
+		
+		Criteria crit = getSession().createCriteria(JugComunidad.class);
+		
+		crit.add(propCodComunidad.eq(code));	
+	    return ((JugComunidad)crit.uniqueResult());
+	}
+
+
+
+
+
+	
+
+
+
+
+
+	/** Obtiene el resultado de busqueda de historico
+	 * @see com.dgoj.juegoExterno.business.repository.IJugHistoricoDescargasprohRepository#getHistorico(com.dgoj.juegoExterno.business.bean.JugHistoricoQueryBean)
+	 */
+	@Override
+	public SearchResults<JugHistoricodescargasproh> getHistorico(JugHistoricoQueryBean query) {
+		// TODO Auto-generated method stub
+//		Criteria crit=getSession().createCriteria(JugHistoricodescargasproh.class);
+//		if(query.getCodComunidad()!=null){
+//			crit.createAlias("jugComunidad.codigo", "codigoComunidad");
+//			Property codigoComunidad = Property.forName("codigoComunidad");
+//			crit.add(codigoComunidad.eq(query.getCodComunidad()));
+//		}
+//			
+//		
+//		if(query.getFechaDesde()!=null)
+//			crit.add(Property.forName("fechaDescarga"). between(query.getFechaDesde(), query.getFechaHasta()) );
+//		
+//		
+//		crit.addOrder(Order.desc("fechaDescarga"));
+//		
+//		Long numResults = (Long) crit.setProjection(Projections.rowCount()).uniqueResult();
+//		crit.setProjection(null);
+//		
+//		crit.setFirstResult(query.getFirstResult());
+//		crit.setMaxResults(query.getMaxResults());
+//		
+		
+		String hql="";
+				   
+		if(query.getCodComunidad()!=null)
+			hql+= "select h from JugHistoricodescargasproh h where h.jugComunidad.codigo=:codigo ";
+		
+		if(query.getFechaDesde()!=null)
+			if(!hql.isEmpty())
+			  hql+= "and h.fechaDescarga >=:fechaDesde ";
+			else hql+="select h from JugHistoricodescargasproh h where h.fechaDescarga >=:fechaDesde ";
+		
+		if(query.getFechaHasta()!=null)
+			if(!hql.isEmpty())
+		      hql+= "and h.fechaDescarga <=:fechaHasta ";
+			else hql+= "select h from JugHistoricodescargasproh h where h.fechaDescarga <=:fechaHasta "; 
+		
+		if(query.getConfirmada()!=null){
+			if(!hql.isEmpty())
+				   hql+= "and h.confirmada=:conf ";
+			else hql+= "select h from JugHistoricodescargasproh h where h.confirmada=:conf "; 
+		}
+		
+		if(query.getFieldName()==null){
+			if(!hql.isEmpty())
+				  hql+="order by fechaDescarga desc";
+			else hql+= "select h from JugHistoricodescargasproh h order by fechaDescarga desc";
+		} else{
+			String order="desc";
+			if(query.getOrder()!=null && query.getOrder().equalsIgnoreCase("asc"))
+			 order="asc";
+			if(!hql.isEmpty())
+				  hql+="order by " + query.getFieldName() + " " +  order;
+			else hql+= "select h from JugHistoricodescargasproh h order by " + query.getFieldName() + " " + order;
+			
+		}
+		
+		
+			
+		
+		Query query1= getSession().createQuery(hql);
+		
+		if(query.getCodComunidad()!=null)
+			query1.setParameter("codigo", query.getCodComunidad());
+		
+		if(query.getFechaDesde()!=null)
+			query1.setParameter("fechaDesde", query.getFechaDesde());
+		
+		if(query.getFechaHasta()!=null)
+			query1.setParameter("fechaHasta", query.getFechaHasta());
+		
+		if(query.getConfirmada()!=null){
+			int conf=0;
+			if(query.getConfirmada()) conf=1;
+			query1.setParameter("conf", conf);
+		}
+			
+		int rowCount=query1.list().size();
+		List<JugHistoricodescargasproh> list = query1.setFirstResult(query.getFirstResult()).setMaxResults(query.getMaxResults()).list();
+		if(list!=null)
+		 return new SearchResults<JugHistoricodescargasproh>(list,new Long(query.getMaxResults()),new Long(query.getFirstResult()) ,rowCount);
+		
+		return null;
+	}
+	
+	
+	public List<JugComunidad> getComunidadList() {
+		// TODO Auto-generated method stub
+		String hql="select c from JugComunidad c order by id desc";
+		return getSession().createQuery(hql).list();
+	
+   }
+
+
+
+
+	
+	
+//	private void update(){
+//		entityManager.joinTransaction();
+//		JugHistoricodescargasproh jugHistoricodescargasproh = new JugHistoricodescargasproh();
+//		if (queryBean.getTipoDescargaProhibidos().Completa == TipoDescargaProhibidos.Completa) {
+//			jugHistoricodescargasproh.setCompleta(1);
+//		} else {
+//			jugHistoricodescargasproh.setCompleta(0);
+//		}
+//		
+//		
+//		jugHistoricodescargasproh.setFechaDescarga(new Date());
+//		jugHistoricodescargasproh.setJugComunidad(jugComunidadHome.buscarPorCodigo(comunidad.getCodigo()));
+//		if (ultimo == 0) {
+//			Long lastId = (Long) entityManager.createQuery("select max(idProhibicionEnvio) from JugProhibicion where jugComunidad.codigo = 'NAC' and jugTipoProhibicion.codigo = 'RGIAJ' ").getSingleResult();
+//			if (lastId != null) {
+//				ultimo = lastId;
+//			}
+//		}
+//		jugHistoricodescargasproh.setUltimo(ultimo);
+//		entityManager.persist(jugHistoricodescargasproh);
+//		entityManager.flush();
+//	}
+
+	
+	
+}

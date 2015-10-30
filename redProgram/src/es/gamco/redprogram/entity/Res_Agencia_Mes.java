@@ -1,0 +1,192 @@
+/**
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %(c) Copyright 2007. GAMCO S.L.
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Proyecto: Red Program
+ * % Modulo: redProgram Web App
+ * % Autor/es: Yoiset Lopez<nombre>
+ * % Fecha: 05/08/2013
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * % Modificaciones (autor, fecha, modificaciones)
+ * % <Autor>, <fecha>, <modificaciones>
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ * %
+ * %  The persistence class module
+ * %
+ * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+package es.gamco.redprogram.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+/**
+ * The persistent class for the Res_Agencia_Mes database table.
+ * 
+ */
+@Entity
+@Table(name="Res_Agencia_Mes")
+public class Res_Agencia_Mes implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private Res_Agencia_MesPK id;
+
+	@Column(name="Calidad")
+	private Integer calidad;
+
+	@Column(name="Convergencia")
+	private Integer convergencia;
+
+	@Column(name="Ojetivo_Alcanzado_Q1")
+	private Integer ojetivo_Alcanzado_Q1;
+
+	@Column(name="Ptos_Carrera")
+	private Integer ptos_Carrera;
+
+	@Column(name="Ptos_Clasificacion")
+	private Integer ptos_Clasificacion;
+
+	@Column(name="Ptos_resultado")
+	private Integer ptos_resultado;
+
+	@Column(name="Revelacion", nullable=true)
+	private Boolean revelacion;
+
+	@Column(name="Ventas_netas_h")
+	private float ventas_netas_h;
+
+	
+	//bi-directional many-to-one association to Agencia
+	@ManyToOne
+	@JoinColumn(name="Agencias_id",  referencedColumnName="id",updatable=false,nullable=false,insertable=false)
+	private Agencia agencia;
+
+	//bi-directional many-to-one association to Categoria
+	@ManyToOne
+	@JoinColumn(name="Categoria_id")
+	private Categoria categoria;
+
+	//bi-directional many-to-one association to Ej_Fiscal
+	@ManyToOne
+	@JoinColumn(name="Ej_Fiscal_id", nullable=false, insertable=false, updatable=false)
+	private Ej_Fiscal ejFiscal;
+	
+//	@ManyToOne
+//	@JoinColumns({
+//			@JoinColumn(name="Agencias_id",  referencedColumnName="Res_Agencia_Mes_Agencias_id", nullable=false,insertable=false,updatable=false),
+//			@JoinColumn(name="Ej_Fiscal_id", referencedColumnName="Res_Agencia_Mes_Ej_Fiscal_id", nullable=false,insertable=false,updatable=false),
+//			@JoinColumn(name="mes",referencedColumnName="Res_Agencia_Mes_mes", nullable=false,insertable=false,updatable=false)
+//	})
+	private Q1 q1;
+	
+
+	public Res_Agencia_Mes() {
+	}
+
+	public Res_Agencia_MesPK getId() {
+		return this.id;
+	}
+
+	public void setId(Res_Agencia_MesPK id) {
+		this.id = id;
+	}
+
+	public Integer getCalidad() {
+		return this.calidad;
+	}
+
+	public void setCalidad(Integer calidad) {
+		this.calidad = calidad;
+	}
+
+	public Integer getConvergencia() {
+		return this.convergencia;
+	}
+
+	public void setConvergencia(Integer convergencia) {
+		this.convergencia = convergencia;
+	}
+
+	public Integer getOjetivo_Alcanzado_Q1() {
+		return this.ojetivo_Alcanzado_Q1;
+	}
+
+	public void setOjetivo_Alcanzado_Q1(Integer ojetivo_Alcanzado_Q1) {
+		this.ojetivo_Alcanzado_Q1 = ojetivo_Alcanzado_Q1;
+	}
+
+	public Integer getPtos_Carrera() {
+		return this.ptos_Carrera;
+	}
+
+	public void setPtos_Carrera(Integer ptos_Carrera) {
+		this.ptos_Carrera = ptos_Carrera;
+	}
+
+	public Integer getPtos_Clasificacion() {
+		return this.ptos_Clasificacion;
+	}
+
+	public void setPtos_Clasificacion(Integer ptos_Clasificacion) {
+		this.ptos_Clasificacion = ptos_Clasificacion;
+	}
+
+	public Integer getPtos_resultado() {
+		return this.ptos_resultado;
+	}
+
+	public void setPtos_resultado(Integer ptos_resultado) {
+		this.ptos_resultado = ptos_resultado;
+	}
+
+	public Boolean getRevelacion() {
+		return this.revelacion;
+	}
+
+	public void setRevelacion(Boolean revelacion) {
+		this.revelacion = revelacion;
+	}
+
+	public float getVentas_netas_h() {
+		return this.ventas_netas_h;
+	}
+
+	public void setVentas_netas_h(float ventas_netas_h) {
+		this.ventas_netas_h = ventas_netas_h;
+	}
+
+	
+	public Agencia getAgencia() {
+		return this.agencia;
+	}
+
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
+
+	public Categoria getCategoria() {
+		return this.categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public Ej_Fiscal getEjFiscal() {
+		return this.ejFiscal;
+	}
+
+	public void setEjFiscal(Ej_Fiscal ejFiscal) {
+		this.ejFiscal = ejFiscal;
+	}
+
+	
+}

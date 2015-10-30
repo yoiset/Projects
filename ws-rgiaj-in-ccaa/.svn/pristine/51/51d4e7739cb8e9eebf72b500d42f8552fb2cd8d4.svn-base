@@ -1,0 +1,48 @@
+package com.dgoj.juegoExterno.business.repository;
+
+import java.util.List;
+
+import com.dgoj.juegoExterno.business.bean.JugHistoricoQueryBean;
+import com.dgoj.juegoExterno.business.bean.JugProhibicionQueryBean;
+import com.dgoj.juegoExterno.business.exceptions.JuegoExternoException;
+import com.dgoj.juegoExterno.business.model.JugComunidad;
+import com.dgoj.juegoExterno.business.model.JugHistoricodescargasproh;
+import com.jeveris.persistence.hibernate.repository.IHibernateBaseRepository;
+import com.mysema.query.SearchResults;
+
+public interface IJugHistoricoDescargasprohRepository <T, ID> extends IHibernateBaseRepository<JugHistoricodescargasproh, Long>  {
+	
+	/** Actualiza el historico de descargas
+	 * @param query
+	 * @throws JuegoExternoException
+	 */
+	public void insertHistoricoDescargas(JugProhibicionQueryBean query) throws JuegoExternoException;
+	
+		
+	/**
+	 * @param entity
+	 * @throws JuegoExternoException
+	 */
+	public void updateHistoricoDescargas(JugHistoricodescargasproh entity)	throws JuegoExternoException;
+	
+	
+	
+	/**
+	 * @param queryBean
+	 * @return
+	 * @throws JuegoExternoException
+	 */
+	public List<JugHistoricodescargasproh> getUltimasDescargasConfirmadas(JugProhibicionQueryBean queryBean)throws JuegoExternoException;
+	
+	
+	
+	
+
+	/**
+	 * @param query
+	 * @return
+	 */
+	public SearchResults<JugHistoricodescargasproh> getHistorico(	JugHistoricoQueryBean query) ;
+	
+
+}

@@ -1,0 +1,16 @@
+package es.gob.cnjuego.ws.service;
+
+
+
+import java.util.Date;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+
+public interface ServicioGestionJugadores {
+
+	public void almacenarConsultaJugador(OperadorEntity operador, String nif, String nombre, String apellido1, String apellido2, 
+			Date fNacimiento, int identidad, int rgiaj,String res_rgiaj, String res_identidad, int idPeticion, boolean validado);
+	public String identidadJugadorCache(String nif, Date fechaNac, String nombre, String apellido1, String apellido2) throws Exception;
+}

@@ -1,0 +1,193 @@
+package es.gob.cnjuego.ws.service;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import es.gob.cnjuego.ws.dao.DNIDebugIdentidadDAO;
+import es.gob.cnjuego.ws.dao.JugadoresOperadorDAO;
+import es.gob.cnjuego.ws.entity.JugadoresOperador;
+import es.gob.cnjuego.ws.entity.OperadorEntity;
+import es.gob.cnjuego.ws.util.Constantes;
+import es.gob.cnjuego.ws.util.validation.ValidadorNIF;
+import es.gob.cnjuego.ws.verificacionjugadores.CodigosVerificacion;
+
+/**
+ * Servicio para gestionar la Tabla Jugadores Operador y Debug Identidades. CACHE
+ * 
+ * @author ylopezconnectis
+ * 
+ */
+public class GestionJugadoresService {
+
+	private JugadoresOperadorDAO jugadoresOperadorDAO;
+	private DNIDebugIdentidadDAO dniDebugIdentidadDAO;
+
+	Logger log = Logger.getLogger(GestionJugadoresService.class);
+
+	public void almacenarConsultaJugador(OperadorEntity operador, String nif, String nombre,
+			String apellido1, String apellido2, Date fNacimiento, int identidad, int rgiaj,
+			String res_rgiaj, String res_identidad, int idPeticion, boolean validado) {
+		JugadoresOperador jugadoresOperador = new JugadoresOperador();
+		jugadoresOperador.setDni(nif);
+		jugadoresOperador.setNombre(nombre);
+		jugadoresOperador.setApellido1(apellido1);
+		jugadoresOperador.setApellido2(apellido2);
+		if (fNacimiento != null)
+			jugadoresOperador.setFechaNac(fNacimiento);
+		jugadoresOperador.setFechaAlta(new Date());
+		jugadoresOperador.setOperador(operador);
+		jugadoresOperador.setIndicadorIDentidad(identidad);
+		jugadoresOperador.setIndicadorRGIAJ(rgiaj);
+		jugadoresOperador.setResultadoIdentidad(res_identidad);
+		if (res_identidad != null
+				&& res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_CORRECTA_CACHE)) {
+			jugadoresOperador.setResultadoIdentidad(CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+			jugadoresOperador.setCacheIdentidad(Constantes.CACHE_IDENTIDAD_CONCACHE);
+		} else if (res_identidad != null
+				&& res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_CACHE)) {
+			jugadoresOperador.setResultadoIdentidad(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA);
+			jugadoresOperador.setCacheIdentidad(Constantes.CACHE_IDENTIDAD_CONCACHE);
+		} else if (res_identidad != null
+				&& res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_CORRECTA_TEST)) {
+			jugadoresOperador.setResultadoIdentidad(CodigosVerificacion.COD_IDENTIDAD_CORRECTA);
+			jugadoresOperador.setCacheIdentidad(Constantes.CACHE_IDENTIDAD_NOCACHE_TEST);
+		} else if (res_identidad != null
+				&& res_identidad.equals(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_TEST)) {
+			jugadoresOperador.setResultadoIdentidad(CodigosVerificacion.COD_IDENTIDAD_INCORRECTA);
+			jugadoresOperador.setCacheIdentidad(Constantes.CACHE_IDENTIDAD_NOCACHE_TEST);
+		} else if (res_identidad != null
+				&& res_identidad.equals(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD_TEST)) {
+			jugadoresOperador
+					.setResultadoIdentidad(CodigosVerificacion.COD_NO_VERIFICACION_IDENTIDAD);
+			jugadoresOperador.setCacheIdentidad(Constantes.CACHE_IDENTIDAD_NOCACHE_TEST);
+		}
+		if (!validado)
+			jugadoresOperador.setCacheIdentidad(Constantes.CACHE_IDENTIDAD_NOCACHE_VALIDACION);
+
+		if(operador.getModeEnabled()==Constantes.OP_HABILITADO_PRU){
+			if(res_identidad!=null && 
+			  (res_identidad.equals(CodigosVerificacion.COD_FORMATO_INCORRECTO) || res_identidad.equals(CodigosVerificacion.COD_CARACTERES_INVALIDOS))){
+				jugadoresOperador.setCacheIdentidad(Constantes.CACHE_IDENTIDAD_NOCACHE_TEST);
+				jugadoresOperador.setIndicadorIDentidad(Constantes.CACHE_IDENTIDAD_NOCACHE_TEST);
+			}
+			
+			if(res_rgiaj!=null && 
+			  (res_rgiaj.equals(CodigosVerificacion.COD_FORMATO_INCORRECTO) || res_rgiaj.equals(CodigosVerificacion.COD_CARACTERES_INVALIDOS)))
+				jugadoresOperador.setIndicadorRGIAJ(Constantes.CACHE_IDENTIDAD_NOCACHE_TEST);	
+		}
+		jugadoresOperador.setResultadoRGIAJ(res_rgiaj);
+		jugadoresOperador.setPeticionWSId(idPeticion);
+		
+		
+		jugadoresOperadorDAO.almacenarJugadorOperador(jugadoresOperador);
+
+	}
+	
+	/* Si el NIF está en la tabla de no cacheo se devuelve false */
+	public boolean esCacheable(String nif){
+		
+		List<String> listaNif = dniDebugIdentidadDAO.getListaDebugIdentidades();
+		
+		if (listaNif.contains(nif)){
+			return false;
+		} else {
+			return true;	
+		}
+		
+	}
+
+	
+	public String identidadJugadorCache(String nif, Date fechaNac, String nombre, String apellido1,
+			String apellido2) throws Exception {
+		String res = null;
+		JugadoresOperador jugador = null;
+		JugadoresOperador jugadorAux = null;
+		JugadoresOperador jugadorAux2 = null;
+		try {
+			// si es un NIE y el apellido2 es nulo, busco con apellido2=nulo, si
+			// no, busco apellido2!=nulo
+			if (!ValidadorNIF.isNifOrNie(nif) && apellido2 == null)
+				jugador = jugadoresOperadorDAO.existeJugadorIdentificado(nif, nombre, apellido1,
+						fechaNac);
+			else
+				jugador = jugadoresOperadorDAO.existeJugadorIdentificado(nif, nombre, apellido1,
+						apellido2, fechaNac);
+
+			if (jugador != null) {
+				// si tengo un jugador identificado igual
+				// si es un NIF, busco por apellido2
+				if (ValidadorNIF.isNifOrNie(nif))
+					jugadorAux2 = jugadoresOperadorDAO.existeJugadorIdentificadoConApellido2(nif,
+							fechaNac);
+				else {
+					// es un NIE, busco en primer lugar sin contar con el
+					// apellido2
+					jugadorAux = jugadoresOperadorDAO.existeJugadorIdentificadoSinApellido2(nif,
+							fechaNac);
+					if (jugadorAux != null) {
+						// si existe un registro sin contar con el apellido 2
+						if (apellido2 != null) {
+							// si el caso tiene apellido2, valido que coincida
+							// con el ultimo, y busco el ultimo que si tenga
+							// apellido
+							if (jugadorAux.getNombre() != null
+									&& jugadorAux.getNombre().equalsIgnoreCase(nombre)
+									&& jugadorAux.getApellido1() != null
+									&& jugadorAux.getApellido1().equalsIgnoreCase(apellido1))
+								jugadorAux2 = jugadoresOperadorDAO
+										.existeJugadorIdentificadoConApellido2(nif, fechaNac);
+							else
+								// si no coincide con el ultimo sin apellido,
+								// voy a devolver que no
+								jugadorAux2 = jugadorAux;
+						} else
+							jugadorAux2 = jugadorAux;
+					} else if (apellido2 != null)
+						jugadorAux2 = jugadoresOperadorDAO.existeJugadorIdentificadoConApellido2(
+								nif, fechaNac);
+				}
+			}
+
+			if (jugadorAux2 != null) {
+				if (jugadorAux2.getNombre() != null
+						&& jugadorAux2.getNombre().equalsIgnoreCase(nombre)
+						&& jugadorAux2.getApellido1() != null
+						&& jugadorAux2.getApellido1().equalsIgnoreCase(apellido1)
+						&& ((apellido2 == null) || (jugadorAux2.getApellido2() != null && jugadorAux2
+								.getApellido2().equalsIgnoreCase(apellido2)))) {
+					// El jugador es el mismo que el ultimo identificado en el
+					// cache
+					res = CodigosVerificacion.COD_IDENTIDAD_CORRECTA_CACHE;
+				} else
+					res = CodigosVerificacion.COD_IDENTIDAD_INCORRECTA_CACHE;
+			}
+
+		} catch (Exception ex) {
+			log.error(
+					"GestionJugadoresService.identidadJugadorCache(): Error al consultar el cache de identidad de jugador",
+					ex);
+			throw ex;
+		}
+
+		return res;
+	}
+
+	public JugadoresOperadorDAO getJugadoresOperadorDAO() {
+		return jugadoresOperadorDAO;
+	}
+
+	public void setJugadoresOperadorDAO(JugadoresOperadorDAO jugadoresOperadorDAO) {
+		this.jugadoresOperadorDAO = jugadoresOperadorDAO;
+	}
+
+	public DNIDebugIdentidadDAO getDniDebugIdentidadDAO() {
+		return dniDebugIdentidadDAO;
+	}
+
+	public void setDniDebugIdentidadDAO(DNIDebugIdentidadDAO dniDebugIdentidadDAO) {
+		this.dniDebugIdentidadDAO = dniDebugIdentidadDAO;
+	}
+
+}

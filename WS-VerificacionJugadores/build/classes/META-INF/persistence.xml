@@ -1,0 +1,9 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+	<persistence-unit name="VerificacionJugadoresUnit" transaction-type="RESOURCE_LOCAL">
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
+		</properties> 
+		<class>es.gob.cnjuego.ws.entity.OperadorEntity</class>
+		<class>es.gob.cnjuego.ws.entity.PeticionEntity</class>
+	</persistence-unit>
+</persistence>

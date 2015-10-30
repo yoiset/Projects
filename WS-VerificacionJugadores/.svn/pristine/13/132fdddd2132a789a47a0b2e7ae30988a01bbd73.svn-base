@@ -1,0 +1,11 @@
+package es.gob.cnjuego.ws.service;
+
+import java.util.List;
+
+import es.gob.cnjuego.ws.entity.TraduccionCaracteres;
+
+
+public interface ServicioTraduccionCaracteres {
+
+	public List<TraduccionCaracteres> leerTraduccion() ;
+}

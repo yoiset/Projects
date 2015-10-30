@@ -1,0 +1,119 @@
+package com.dgoj.juegoExterno.business.bean;
+
+import java.util.Date;
+
+import com.dgoj.core.common.entity.AbstractQueryEntity;
+import com.dgoj.juegoExterno.business.bean.type.FormatoDescargaProhibidos;
+import com.dgoj.juegoExterno.business.bean.type.TipoDescargaProhibidos;
+
+/**
+ * @author ylopezconnectis
+ *
+ */
+public class JugProhibicionQueryBean  extends AbstractQueryEntity {
+	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String codComunidad;	
+    private FormatoDescargaProhibidos formatoDescargaProhibidos;	
+	private TipoDescargaProhibidos  tipoDescargaProhibidos;
+	private Date desde;
+	
+	
+	/**
+	 *  Valor numerico de ultima descarga
+	 */
+	private Long last;
+	
+	
+	
+	
+	public JugProhibicionQueryBean(String codComunidad,
+			FormatoDescargaProhibidos formatoDescargaProhibidos,
+			TipoDescargaProhibidos tipoDescargaProhibidos, Date desde, Long last) {
+		super();
+		this.codComunidad = codComunidad;
+		this.formatoDescargaProhibidos = formatoDescargaProhibidos;
+		this.tipoDescargaProhibidos = tipoDescargaProhibidos;
+		this.desde=desde;
+		this.last=last;
+		setMaxResults(10);
+		setFirstResult(0);
+	}
+	
+	
+	
+	
+	public JugProhibicionQueryBean(String codComunidad) {
+		super();
+		this.codComunidad = codComunidad;
+		setMaxResults(10);
+		setFirstResult(0);
+	}
+
+
+
+
+	public JugProhibicionQueryBean() {
+		super();
+		setMaxResults(10);
+		setFirstResult(0);
+	}
+
+	public String getCodComunidad() {
+		return codComunidad;
+	}
+
+	public void setCodComunidad(String codComunidad) {
+		this.codComunidad = codComunidad;
+	}
+
+	public FormatoDescargaProhibidos getFormatoDescargaProhibidos() {
+		return formatoDescargaProhibidos;
+	}
+
+	public void setFormatoDescargaProhibidos(
+			FormatoDescargaProhibidos formatoDescargaProhibidos) {
+		this.formatoDescargaProhibidos = formatoDescargaProhibidos;
+	}
+
+	public TipoDescargaProhibidos getTipoDescargaProhibidos() {
+		return tipoDescargaProhibidos;
+	}
+
+	public void setTipoDescargaProhibidos(
+			TipoDescargaProhibidos tipoDescargaProhibidos) {
+		this.tipoDescargaProhibidos = tipoDescargaProhibidos;
+	}
+
+	public Long getLast() {
+		return last;
+	}
+
+	public void setLast(Long last) {
+		this.last = last;
+	}
+
+
+
+
+	public Date getDesde() {
+		return desde;
+	}
+
+
+
+
+	public void setDesde(Date desde) {
+		this.desde = desde;
+	}
+
+	
+	
+	
+	
+
+}

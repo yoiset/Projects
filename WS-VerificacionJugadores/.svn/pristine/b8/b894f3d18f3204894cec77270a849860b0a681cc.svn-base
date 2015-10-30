@@ -1,0 +1,48 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<soap:Fault>
+			<faultcode>soap:Server</faultcode>
+			<faultstring>Operador de Juego invÃ¡lido, revise su certificado de firma</faultstring>
+			<detail>
+				<ns2:verificarCambiosRGIAJFault
+					xmlns:ns2="http://ws.cnjuego.gob.es/VerificacionJugadores/">
+					<verificarCambiosRGIAJFault>ERR002</verificarCambiosRGIAJFault>
+				</ns2:verificarCambiosRGIAJFault>
+			</detail>
+		</soap:Fault>
+	</soap:Body>
+</soap:Envelope>
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<soap:Fault>
+			<faultcode>soap:Server</faultcode>
+			<faultstring>Operador de Juego invÃ¡lido, revise su certificado de firma</faultstring>
+			<detail>
+				<ns2:verificarCambiosRGIAJFault
+					xmlns:ns2="http://ws.cnjuego.gob.es/VerificacionJugadores/">
+					<verificarCambiosRGIAJFault>ERR002</verificarCambiosRGIAJFault>
+				</ns2:verificarCambiosRGIAJFault>
+			</detail>
+		</soap:Fault>
+	</soap:Body>
+</soap:Envelope>
+
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<soap:Fault>
+			<faultcode>soap:Server</faultcode>
+			<faultstring>El certificado no esta en la peticion</faultstring>
+		</soap:Fault>
+	</soap:Body>
+</soap:Envelope>
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<soap:Fault>
+			<faultcode>soap:Server</faultcode>
+			<faultstring>El certificado no esta en la peticion</faultstring>
+		</soap:Fault>
+	</soap:Body>
+</soap:Envelope>

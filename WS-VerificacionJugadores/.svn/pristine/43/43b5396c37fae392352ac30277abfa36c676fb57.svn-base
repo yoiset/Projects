@@ -1,0 +1,192 @@
+package es.gob.cnjuego.ws.dao;
+
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+@Repository(value="utilDAO")
+public class UtilDAOImpl implements UtilDAO {
+
+	@PersistenceContext//(unitName="JohanJPA",type=PersistenceContextType.TRANSACTION)
+	EntityManager em;
+	
+	
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#findAll(java.lang.Class, java.lang.String, boolean)
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T extends Object> List<T> findAll (Class<T> transferObjectClass, String sortColumn, boolean ascending){
+		
+		final String entityName = transferObjectClass.getSimpleName();
+		final Query query;
+		
+		if (ascending)
+			query = em.createQuery("from " + entityName + " e order by e." + sortColumn + " asc");
+		else
+			query = em.createQuery("from " + entityName + " e order by e." + sortColumn + " desc");
+		final List<T> resultList = query.getResultList();
+		
+		return resultList;	
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#findAll(java.lang.Class)
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T extends Object> List<T> findAll (Class<T> transferObjectClass){
+		
+		final String entityName = transferObjectClass.getSimpleName();
+		final Query query = em.createQuery("from " + entityName);
+		final List<T> resultList = query.getResultList();
+		
+		return resultList;	
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#find(java.lang.Class, java.lang.Object)
+	 */
+	@Override
+	public <T> T find(Class<T> transferObjectClass, Object id) {
+		return em.find(transferObjectClass, id);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#find(java.lang.Class, java.lang.Long)
+	 */
+	@Override
+	public <T> T find(Class<T> transferObjectClass, Long id) {
+		return em.find(transferObjectClass, id);
+	}
+
+	private Query createQuery (String query, Map<String,Object> params){
+		Query qQuery = em.createQuery(query);
+		if (params != null){
+			Iterator<String> it = params.keySet().iterator();
+			while (it.hasNext()){
+				String key = it.next();
+				Object value = params.get(key);
+				qQuery.setParameter(key, value);
+			}
+		}
+		return qQuery;
+	}
+		
+
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#findAllAndFilterLike(java.lang.Class, java.util.Map, java.lang.String, boolean)
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> List<T> findAllAndFilterLike(Class<T> transferObjectClass,
+			Map<String, Object> params, String sortColumn, boolean ascending) {
+		
+		final String entityName = transferObjectClass.getSimpleName();
+		StringBuffer sbQuery = new StringBuffer ("from ").append(entityName).append(" e");
+		final Query query;
+		Map<String,Object> params2 = new Hashtable<String,Object>();
+		boolean first = true;
+		if ((params != null) && (params.size() > 0)){
+			Iterator<String> it = params.keySet().iterator();
+			while (it.hasNext()){
+				String key = it.next();
+				if (first)
+					sbQuery.append(" where e.").append(key).append(" like :").append(key);
+				else
+					sbQuery.append(" and e.").append(key).append(" like :").append(key);
+				
+				first = false;
+				params2.put(key, params.get(key) + "%");
+			}
+		}
+		if (ascending)
+			sbQuery.append(" order by e." + sortColumn + " asc");
+		else
+			sbQuery.append(" order by e." + sortColumn + " desc");
+		
+		query = createQuery(sbQuery.toString(), params2);
+		
+		final List<T> resultList = query.getResultList();
+		
+		return resultList;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#findAllByQuery(java.lang.String, java.util.Map)
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> List<T> findAllByQuery(String query, Map<String, Object> params) {
+		Query qQuery = createQuery (query, params);
+		return qQuery.getResultList();
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#findSingleByQuery(java.lang.String, java.util.Map)
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> T findSingleByQuery(String query, Map<String, Object> params) {
+		
+		Query qQuery = createQuery (query, params);
+		Object obj = null;
+		
+		try {
+			obj = qQuery.getSingleResult();
+		} catch (NoResultException e){
+			e.getStackTrace();
+		}
+		
+		return (T)obj;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#find_s(java.lang.Class, java.lang.String)
+	 */
+	@Override
+	public <T> T find_s(Class<T> transferObjectClass, String id) {
+		return em.find(transferObjectClass, id);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#updateCollection(java.util.Collection)
+	 */
+	@Override
+	public <T> void updateCollection(Collection<T> obj){
+		for (Object o : obj)
+			em.merge(o);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#update(java.lang.Object)
+	 */
+	@Override
+	public void update(Object obj){
+		em.merge(obj);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ibm.gbs.johan.dao.UtilDAO#remove(java.lang.Class, java.lang.Object)
+	 */
+	@Override
+	public <T> void remove(Class<T> tipo, Object id){
+		Object obj = em.find(tipo, id);
+		em.remove(obj);
+	}
+	
+}

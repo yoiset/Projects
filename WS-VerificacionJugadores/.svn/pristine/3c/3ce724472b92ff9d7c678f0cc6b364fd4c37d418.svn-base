@@ -1,0 +1,63 @@
+package es.gob.cnjuego.ws.to;
+
+import javax.xml.bind.JAXBElement;
+
+import com.atos.mir.gcr.model.webservices.tramitacion.aexternas.InfoGenerarCertificado;
+
+import es.mir.juego.component.ws.service.TramitacionDatosPersonales;
+import es.mir.juego.component.ws.service.TramitacionRegistro;
+
+public class DatosInterdictosDTO {
+
+	private String nif;
+	private TramitacionDatosPersonales datosPersonales;
+	private TramitacionRegistro datosRegistro;
+	private InfoGenerarCertificado datosCertificado;
+	private String duracionAlta;
+	private JAXBElement<String> csv;
+    
+	
+	
+	public JAXBElement<String> getCsv() {
+		return csv;
+	}
+	public void setCsv(JAXBElement<String> csv) {
+		this.csv = csv;
+	}
+	public DatosInterdictosDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public String getNif() {
+		return nif;
+	}
+	public void setNif(String nif) {
+		this.nif = nif;
+	}
+	public TramitacionDatosPersonales getDatosPersonales() {
+		return datosPersonales;
+	}
+	public void setDatosPersonales(TramitacionDatosPersonales datosPersonales) {
+		this.datosPersonales = datosPersonales;
+	}
+	public TramitacionRegistro getDatosRegistro() {
+		return datosRegistro;
+	}
+	public void setDatosRegistro(TramitacionRegistro datosRegistro) {
+		this.datosRegistro = datosRegistro;
+	}
+	public InfoGenerarCertificado getDatosCertificado() {
+		return datosCertificado;
+	}
+	public void setDatosCertificado(InfoGenerarCertificado datosCertificado) {
+		this.datosCertificado = datosCertificado;
+	}
+	public String getDuracionAlta() {
+		return duracionAlta;
+	}
+	public void setDuracionAlta(String duracionAlta) {
+		this.duracionAlta = duracionAlta;
+	}
+	
+	
+}

@@ -1,0 +1,39 @@
+package com.dgoj.juegoExterno.business.repository;
+
+
+import java.util.List;
+
+import com.dgoj.juegoExterno.business.bean.ProhibicionQueryBean;
+import com.dgoj.juegoExterno.business.model.JugComunidad;
+import com.dgoj.juegoExterno.business.model.JugHistoricodescargasproh;
+import com.dgoj.juegoExterno.business.model.JugProhibicion;
+import com.jeveris.persistence.hibernate.repository.IHibernateBaseRepository;
+import com.mysema.query.SearchResults;
+
+public interface IJugProhibicionRepository<T, ID> extends IHibernateBaseRepository<JugProhibicion, Long> {
+	
+	/**
+	 * @param jugProhibidoBean
+	 * @return
+	 */
+	public SearchResults<JugProhibicion> getProhibidoList  (ProhibicionQueryBean jugProhibidoBean);
+	
+	/**
+	 * @param codComunidad
+	 * @return
+	 */
+	public JugHistoricodescargasproh getLastConfirmada(String codComunidad);
+	
+	
+	/**
+	 * @param user
+	 * @return
+	 */
+	public JugComunidad getComunidad(String user);
+
+	
+	public JugHistoricodescargasproh getLast(String codComunidad);
+	
+	public List<JugComunidad> getComunidadList();
+
+}
